@@ -1,0 +1,206 @@
+.pageShell {
+  --ink: #1d2a24;
+  --muted: #657168;
+  --paper: #f3efe5;
+  --paper-deep: #e7dfd0;
+  --cream: #fbf9f3;
+  --moss: #405e4d;
+  --moss-dark: #284236;
+  --clay: #b55f3d;
+  --teal: #2f7c78;
+  min-height: 100vh;
+  color: var(--ink);
+  background: radial-gradient(circle at 12% 9%, rgba(181, 95, 61, .08), transparent 25rem), linear-gradient(180deg, #f8f5ed 0, var(--paper) 42rem, #eee8dc 100%);
+}
+
+.siteHeader { display: flex; align-items: center; justify-content: space-between; min-height: 82px; padding: 16px clamp(20px, 4vw, 68px); border-bottom: 1px solid rgba(29, 42, 36, .16); }
+.brand { display: inline-flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
+.brandMark { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(29, 42, 36, .8); border-radius: 50%; font: 600 12px/1 var(--font-geist-mono), monospace; letter-spacing: -.08em; }
+.brand > span:last-child { display: flex; flex-direction: column; }
+.brand strong { font-family: Georgia, "Times New Roman", serif; font-size: 20px; font-weight: 500; }
+.brand small, .headerMeta, .sectionNumber, .cardRole, .cardAge, .modalEyebrow, .navLabel, .factGrid article > span, .referenceStrip > span, .mapNote { font-family: var(--font-geist-mono), ui-monospace, monospace; text-transform: uppercase; letter-spacing: .11em; }
+.brand small { margin-top: 2px; color: var(--muted); font-size: 9px; }
+.headerMeta { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 9px; }
+.headerMeta span { display: inline-flex; align-items: center; gap: 8px; }
+.headerMeta i { display: inline-block; width: 26px; height: 2px; }
+.legendSolid { background: var(--moss); }
+.legendDotted { border-top: 2px dashed #987862; }
+.legendTeal { background: var(--teal); }
+
+.sectionNumber { margin: 0 0 10px; color: var(--clay); font-size: 10px; font-weight: 700; }
+.explorerSection { padding: 24px 0 32px; overflow: hidden; background: rgba(250, 248, 242, .58); }
+.explorerHeader { display: flex; align-items: end; justify-content: space-between; gap: 24px; padding: 0 clamp(20px, 4vw, 68px) 26px; }
+.explorerHeader h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 4vw, 53px); font-weight: 400; letter-spacing: -.04em; }
+.explorerHeader h2 span { color: var(--clay); }
+.scrollControls { display: flex; align-items: center; gap: 10px; }
+.scrollControls > span { margin-right: 8px; color: var(--muted); font-size: 12px; }
+.scrollControls button, .closeButton { display: grid; width: 42px; height: 42px; place-items: center; color: var(--ink); border: 1px solid rgba(29, 42, 36, .28); border-radius: 50%; background: transparent; cursor: pointer; transition: 160ms ease; }
+.scrollControls button:hover, .closeButton:hover { color: var(--cream); border-color: var(--moss-dark); background: var(--moss-dark); transform: translateY(-2px); }
+.scrollControls svg, .closeButton svg, .lineageNav svg { width: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+.flipIcon { transform: scaleX(-1); }
+
+.treeViewport { position: relative; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scrollbar-color: var(--clay) var(--paper-deep); scrollbar-width: thin; outline: none; }
+.treeViewport:focus-visible { box-shadow: inset 0 0 0 2px var(--clay); }
+.treeCanvas { position: relative; min-width: 100%; border-top: 1px solid rgba(29, 42, 36, .13); border-bottom: 1px solid rgba(29, 42, 36, .13); }
+.timelineLine { position: absolute; right: 54px; bottom: 26px; left: 54px; height: 1px; background: rgba(29, 42, 36, .24); }
+.timelineLine span { position: absolute; bottom: -7px; color: var(--muted); font: 9px/1 var(--font-geist-mono), monospace; transform: translateX(-50%); }
+.timelineLine span:first-child { transform: none; }
+.timelineLine span:last-child { transform: translateX(-100%); }
+.timelineLine i { display: block; width: 1px; height: 12px; margin: 0 auto 8px; background: rgba(29, 42, 36, .35); }
+.branchLabel { position: absolute; top: 34px; display: flex; flex-direction: column; gap: 3px; color: var(--muted); font: 10px/1.35 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .07em; }
+.branchLabel span { color: var(--clay); font-size: 9px; }
+
+.connectorLayer { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.connectorLayer path { vector-effect: non-scaling-stroke; }
+.connectorLayer marker path { fill: var(--moss); }
+.edge_supported, .edge_candidate, .edge_context, .edge_gene_flow { fill: none; stroke-linecap: round; stroke-width: 1.65; }
+.edge_supported { stroke: var(--moss); }
+.edge_candidate { stroke: #9f785e; stroke-dasharray: 5 7; }
+.edge_context { stroke: #a6927f; stroke-dasharray: 2 8; }
+.edge_gene_flow { stroke: var(--teal); stroke-dasharray: 8 6; stroke-width: 2; }
+
+.taxonCard { position: absolute; z-index: 2; display: grid; width: 188px; height: 196px; padding: 10px; grid-template-rows: auto 92px auto auto; gap: 5px; overflow: hidden; color: var(--ink); text-align: left; border: 1px solid rgba(29, 42, 36, .22); border-radius: 4px; background: rgba(251, 249, 243, .97); cursor: pointer; transition: transform 140ms ease, border-color 140ms ease; }
+.taxonCard::after { position: absolute; inset: auto 0 0; height: 3px; content: ""; background: var(--clay); transform: scaleX(0); transform-origin: left; transition: transform 180ms ease; }
+.taxonCard:hover, .taxonCard:focus-visible { z-index: 3; border-color: var(--moss); outline: none; transform: translateY(-4px); }
+.taxonCard:hover::after, .taxonCard:focus-visible::after { transform: scaleX(1); }
+.cardRole { overflow: hidden; color: var(--muted); font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
+.cardImage { position: relative; display: block; overflow: hidden; border-radius: 2px; background: #d9d2c4; }
+.imageFrame { position: relative; width: 100%; height: 100%; min-height: inherit; overflow: hidden; background: #ded8cb; }
+.imageLoader { position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; color: var(--muted); font: 8px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .08em; }
+.specimenImage { object-fit: contain; opacity: 0; transition: opacity 120ms ease; }
+.imageLoaded { opacity: 1; }
+.imageLoading { opacity: 0; }
+.placeholderVisual { display: grid; width: 100%; height: 100%; place-items: center; align-content: center; gap: 7px; color: rgba(40, 66, 54, .66); background: radial-gradient(circle at 50% 38%, rgba(255,255,255,.55), transparent 35%), linear-gradient(135deg, #d8d2c4, #bfc5b7); }
+.placeholderVisual svg { width: 54px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.4; }
+.placeholderVisual span { font: 7px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .08em; }
+.cardName { align-self: end; overflow: hidden; font-family: Georgia, "Times New Roman", serif; font-size: 15px; line-height: 1.05; text-overflow: ellipsis; white-space: nowrap; }
+.cardAge { color: var(--clay); font-size: 8px; }
+.cardAction { position: absolute; right: 10px; bottom: 9px; color: var(--moss-dark); font-size: 9px; opacity: 0; transform: translateX(-4px); transition: 160ms ease; }
+.taxonCard:hover .cardAction, .taxonCard:focus-visible .cardAction { opacity: 1; transform: none; }
+
+.treeFootnote { display: grid; grid-template-columns: auto minmax(280px, 720px) auto; gap: 28px; align-items: center; margin: 24px clamp(20px, 4vw, 68px) 0; padding-top: 17px; border-top: 1px solid rgba(29, 42, 36, .16); color: var(--muted); font-size: 12px; }
+.treeFootnote strong { color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 500; }
+.treeFootnote p { margin: 0; line-height: 1.55; }
+.treeFootnote > span { color: var(--clay); font-size: 11px; white-space: nowrap; }
+
+.modalBackdrop { position: fixed; z-index: 50; inset: 0; display: grid; padding: 12px; place-items: center; overflow: hidden; background: rgba(17, 28, 23, .78); }
+.modal { position: relative; width: min(1240px, calc(100vw - 24px)); height: min(740px, calc(100vh - 24px)); overflow: hidden; color: var(--ink); border: 1px solid rgba(255,255,255,.28); border-radius: 8px; background: var(--cream); box-shadow: 0 20px 55px rgba(6, 15, 11, .28); }
+.modalInner { display: grid; width: min(980px, calc(100% - 260px)); height: 100%; margin: 0 auto; padding: 20px 0 14px; grid-template-rows: auto 40px minmax(0, 1fr) auto; }
+.closeButton { position: absolute; z-index: 3; top: 18px; right: 18px; background: var(--cream); }
+.modalHeader { padding-right: 38px; text-align: center; }
+.modalEyebrow { color: var(--clay); font-size: 8px; }
+.modalHeader h2 { margin: 5px 0 5px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 3.6vw, 48px); font-weight: 400; line-height: 1; letter-spacing: -.045em; }
+.modalHeader p { display: -webkit-box; max-width: 760px; margin: 0 auto 10px; overflow: hidden; color: var(--muted); font-family: Georgia, "Times New Roman", serif; font-size: 13px; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(29,42,36,.2); border-bottom: 0; border-radius: 4px 4px 0 0; }
+.tabs button { min-height: 39px; color: var(--muted); border: 0; border-right: 1px solid rgba(29,42,36,.2); background: transparent; cursor: pointer; font: 9px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .1em; }
+.tabs button:last-child { border-right: 0; }
+.tabs button:hover { color: var(--ink); background: #f0eadf; }
+.tabs button:focus-visible { position: relative; z-index: 1; outline: 2px solid var(--clay); outline-offset: -2px; }
+.tabs .activeTab, .tabs .activeTab:hover { color: var(--cream); background: var(--moss-dark); }
+.tabPanel, .overviewLayout, .fossilLayout { min-height: 0; overflow: hidden; border: 1px solid rgba(29,42,36,.2); background: #ece6da; }
+.overviewLayout { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); }
+.overviewVisual, .fossilVisual { display: grid; min-width: 0; min-height: 0; margin: 0; grid-template-rows: minmax(0, 1fr) auto; border-right: 1px solid rgba(29,42,36,.18); background: #ded8cb; }
+.overviewVisual > :first-child, .fossilVisual > :first-child { min-height: 0; }
+.overviewVisual figcaption, .fossilVisual figcaption { display: grid; padding: 10px 13px; gap: 4px; border-top: 1px solid rgba(29,42,36,.18); background: var(--paper-deep); }
+.overviewVisual figcaption strong, .fossilVisual figcaption strong { font-family: Georgia, "Times New Roman", serif; font-size: 15px; font-weight: 500; line-height: 1.1; }
+.overviewVisual figcaption span, .fossilVisual figcaption span { display: -webkit-box; overflow: hidden; color: var(--muted); font-size: 9px; line-height: 1.3; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.overviewVisual figcaption a, .fossilVisual figcaption a, .fossilRecords a { width: fit-content; color: var(--clay); font-size: 8px; text-decoration: none; border-bottom: 1px solid currentColor; }
+
+.overviewFacts { display: grid; min-width: 0; min-height: 0; grid-template-columns: repeat(2, 1fr); grid-template-rows: 74px repeat(2, minmax(0, 1fr)); border-left: 1px solid rgba(29,42,36,.15); }
+.overviewFacts article { min-width: 0; min-height: 0; padding: 11px 13px; overflow: hidden; border-right: 1px solid rgba(29,42,36,.18); border-bottom: 1px solid rgba(29,42,36,.18); }
+.overviewFacts article > span { color: var(--clay); font: 7px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .1em; }
+.overviewFacts h3 { margin: 5px 0 5px; font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 500; line-height: 1.05; }
+.overviewFacts p, .overviewFacts li { color: #536159; font-size: 10px; line-height: 1.32; }
+.overviewFacts p { margin: 0; }
+.overviewFacts ul { margin: 0; padding-left: 14px; }
+.overviewFacts li + li { margin-top: 2px; }
+.overviewFacts .keyFact { display: flex; grid-column: 1 / -1; padding: 10px 15px; flex-direction: column; justify-content: center; background: var(--moss-dark); }
+.keyFact span { color: #dfae91 !important; }
+.keyFact strong { margin-top: 3px; color: var(--cream); font-family: Georgia, "Times New Roman", serif; font-size: 23px; font-weight: 400; }
+.keyFact small { margin-top: 2px; overflow: hidden; color: #b6c3ba; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.overviewFacts .confidenceCard { background: #eee1d5; }
+.confidenceCard h3 { color: var(--clay); font-size: 14px; }
+
+.fossilLayout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+.fossilRecords { display: grid; min-height: 0; align-content: stretch; gap: 1px; background: rgba(29,42,36,.16); }
+.fossilRecords article { display: grid; min-height: 0; padding: 11px 13px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 12px; align-items: start; overflow: hidden; background: var(--cream); }
+.fossilRecords h3 { margin: 4px 0; font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 500; }
+.fossilRecords article > div > span { color: var(--clay); font: 8px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .08em; }
+.fossilRecords p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.32; }
+.fossilRecords a { margin-top: 2px; white-space: nowrap; }
+.emptyPanel { display: grid; height: 100%; min-height: 0; padding: 20px; place-items: center; color: var(--muted); text-align: center; }
+
+.mapWrap { display: grid; height: 100%; padding: 10px; grid-template-rows: minmax(0, 1fr) auto auto; background: #e7e3d8; }
+.mapCanvas { position: relative; min-height: 0; overflow: hidden; border: 1px solid rgba(29,42,36,.18); border-radius: 3px; background: #bfe1f3; }
+.mapImage { object-fit: contain; }
+.mapMarker { position: absolute; z-index: 2; display: grid; width: 22px; height: 22px; place-items: center; color: white; border: 2px solid white; border-radius: 50%; background: var(--clay); box-shadow: 0 2px 8px rgba(29,42,36,.35); font: 700 9px/1 var(--font-geist-mono), monospace; transform: translate(-50%, -50%); }
+.mapNote { margin: 6px 0; color: var(--muted); font-size: 7px; text-align: center; }
+.siteList { display: grid; margin: 0; padding: 0; gap: 1px; list-style: none; background: rgba(29,42,36,.15); }
+.siteList li { display: grid; padding: 7px 10px; grid-template-columns: auto 1fr auto; gap: 9px; align-items: center; background: var(--cream); font-size: 9px; }
+.siteList li > span:nth-child(2) { display: flex; flex-direction: column; gap: 2px; }
+.siteList small { color: var(--muted); font-size: 8px; }
+.siteDot { width: 7px; height: 7px; border-radius: 50%; background: var(--clay); }
+
+.referenceStrip { display: grid; min-height: 34px; padding-top: 7px; grid-template-columns: 100px 1fr; gap: 10px; overflow: hidden; border-top: 1px solid rgba(29,42,36,.2); }
+.referenceStrip > span { color: var(--muted); font-size: 8px; }
+.referenceStrip div { display: flex; align-items: flex-start; gap: 5px; overflow: hidden; }
+.referenceStrip a { padding: 4px 7px; color: var(--moss-dark); border: 1px solid rgba(40,66,54,.25); border-radius: 100px; font-size: 8px; text-decoration: none; white-space: nowrap; }
+.referenceStrip div > span { padding: 5px; color: var(--muted); font-size: 8px; white-space: nowrap; }
+.referenceStrip a:hover { color: var(--cream); background: var(--moss-dark); }
+
+.lineageNav { position: absolute; z-index: 2; top: 150px; display: flex; width: 112px; flex-direction: column; gap: 7px; }
+.navLeft { left: 18px; align-items: flex-start; }
+.navRight { right: 18px; align-items: flex-end; }
+.navLabel { margin: 0 5px 3px; color: var(--muted); font-size: 7px; }
+.lineageNav button { display: flex; width: 100%; min-height: 43px; padding: 7px 8px; align-items: center; justify-content: space-between; gap: 5px; color: var(--ink); border: 1px solid rgba(29,42,36,.2); border-radius: 3px; background: #f2ece1; cursor: pointer; transition: 150ms ease; }
+.lineageNav button:hover, .lineageNav button:focus-visible { color: var(--cream); border-color: var(--moss-dark); background: var(--moss-dark); outline: none; transform: translateX(3px); }
+.navLeft button:hover, .navLeft button:focus-visible { transform: translateX(-3px); }
+.lineageNav button span { overflow: hidden; font-family: Georgia, "Times New Roman", serif; font-size: 12px; line-height: 1.05; text-overflow: ellipsis; }
+.lineageNav svg { width: 14px; flex: 0 0 auto; }
+.navEmpty { display: none; }
+
+@media (max-width: 900px) {
+  .headerMeta { display: none; }
+  .treeFootnote { grid-template-columns: 1fr; gap: 8px; }
+  .treeFootnote > span { white-space: normal; }
+  .modalInner { width: calc(100% - 190px); }
+  .lineageNav { width: 86px; }
+  .lineageNav button { flex-direction: column; text-align: center; }
+  .overviewFacts p, .overviewFacts li { font-size: 9px; }
+}
+
+@media (max-width: 700px) {
+  .siteHeader { min-height: 70px; }
+  .explorerHeader { align-items: center; }
+  .scrollControls > span { display: none; }
+  .branchLabel { display: none; }
+  .modalBackdrop { padding: 0; place-items: stretch; }
+  .modal { width: 100vw; height: 100vh; overflow-y: auto; border: 0; border-radius: 0; }
+  .modalInner { display: block; width: auto; height: auto; margin: 0; padding: 24px 18px 38px; }
+  .closeButton { position: sticky; top: 12px; float: right; margin: 12px 12px -52px 0; }
+  .lineageNav { position: relative; top: auto; right: auto; left: auto; width: auto; padding: 0 70px 0 18px; flex-direction: row; align-items: center; }
+  .lineageNav { overflow-x: auto; }
+  .navLeft { margin-top: 16px; }
+  .navRight { margin-top: 8px; }
+  .navLabel { width: 46px; flex: 0 0 auto; }
+  .lineageNav button { width: auto; min-width: 94px; min-height: 42px; flex-direction: row; }
+  .modalHeader { padding-right: 0; }
+  .modalHeader h2 { font-size: clamp(36px, 12vw, 58px); }
+  .tabs { margin-top: 18px; }
+  .tabs button { min-height: 43px; font-size: 8px; }
+  .overviewLayout, .fossilLayout { grid-template-columns: 1fr; overflow: visible; }
+  .overviewVisual, .fossilVisual { min-height: 390px; border-right: 0; }
+  .overviewFacts { grid-template-rows: auto; }
+  .fossilRecords article { grid-template-columns: 1fr; gap: 12px; }
+  .tabPanel, .overviewLayout, .fossilLayout { margin-bottom: 10px; }
+  .referenceStrip { grid-template-columns: 1fr; }
+  .mapWrap { padding: 10px; }
+  .mapCanvas { min-height: 260px; }
+  .siteList li { grid-template-columns: auto 1fr; }
+  .siteList li > span:last-child { grid-column: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taxonCard, .specimenImage, .scrollControls button, .lineageNav button { transition: none; }
+}

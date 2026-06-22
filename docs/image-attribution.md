@@ -1,0 +1,22 @@
+# Human lineage image attribution
+
+The machine-readable version of this information is in `visualAssets` in [`data/human-lineage.json`](../data/human-lineage.json). All files below are modified only by resizing/compression unless stated otherwise.
+
+| Local file | Subject | Creator / credit | License | Source |
+| --- | --- | --- | --- | --- |
+| `jebel-irhoud.jpg` | Jebel Irhoud fossil composite | Philipp Gunz, MPI EVA Leipzig | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Homo_sapiens_from_Jebel_Irhoud.jpg) |
+| `neanderthal.jpg` | Neanderthal museum reconstruction | Werner Ustorf (photograph); model artist not stated in Commons metadata | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Neanderthal_man_reconstruction,_Natural_History_Museum,_London.jpg) |
+| `homo-heidelbergensis.png` | Forensic facial reconstruction labeled *Homo heidelbergensis* | Cicero Moraes | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Homo_heidelbergensis_-_forensic_facial_reconstruction.png) |
+| `homo-erectus.jpg` | Nariokotome Boy museum reconstruction | Neanderthal Museum | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Homo-erectus_Turkana-Boy_(Ausschnitt)_Fundort_Nariokotome,_Kenia,_Rekonstruktion_im_Neanderthal_Museum.jpg) |
+| `homo-habilis.jpg` | *Homo habilis* reconstructed skull casts | Tiia Monto | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Homo_habilis_2.jpg) |
+| `paranthropus-boisei.jpg` | *Paranthropus boisei* Smithsonian reconstruction | Ryan Schwark (photograph); model artist not stated in Commons metadata | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Paranthropus_boisei_facial_reconstruction_at_the_Smithsonian_National_Museum_of_Natural_History.jpg) |
+| `australopithecus-afarensis.jpg` | *Australopithecus afarensis* reconstructed skull cast | Durova | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Australopithecusafarensis_reconstruction.jpg) |
+| `ardipithecus-ramidus.jpg` | Reconstructed *Ardipithecus ramidus* hand bones | Bjoertvedt | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ardipithecus_ramidus_Ardi_IMG_5605_BMNH.jpg) |
+| `ardipithecus-skeleton.jpg` | Partial *Ardipithecus ramidus* skeleton reconstruction | Tobias Fluegel | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ardipithecus_Gesamt.jpg) |
+| `nakalipithecus-mandible.jpg` | *Nakalipithecus* mandible reconstruction | Nikhil Iyengar | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nakalipithecus_mandible.jpg) |
+| `ekembo-skeleton.jpg` | *Ekembo nyanzae* skeleton reconstruction | Ghedoghedo | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Ekembo_nyanzae_skeleton_7.jpg) |
+| `homo-erectus-full-body.jpg` | Full-body Nariokotome Boy reconstruction | Mauricio Antón | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Turkana_boy_by_Mauricio_Ant%C3%B3n.jpg) |
+| `neanderthal-full-body.jpg` | Full-body Neanderthal sculpture | Abraham (photograph); Henryk Fudali (sculpture) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:20230711_Neanderthal_Homo_neanderthalensis_Silesian_Zoological_Garden_Chorz%C3%B3w_Poland_01.jpg) |
+| `world-map.png` | Natural Earth Data world basemap | Natural Earth contributors | Public domain | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:NED_worldmap_110m.svg) |
+
+The dataset also embeds externally hosted museum reconstructions and fossil figures where local reuse rights were not established. Their source page, creator, reuse status, and scientific caveat remain recorded in `visualAssets`; they are not stored in this repository.
