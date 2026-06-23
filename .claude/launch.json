@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "wsl",
+      "runtimeArgs": ["bash", "-lc", "cd ~/Projects/FossilLineages && npm run dev -- -p 3300"],
+      "autoPort": false,
+      "port": 3300
+    }
+  ]
+}

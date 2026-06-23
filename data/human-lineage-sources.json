@@ -8,7 +8,12 @@
       "title": "Human Fossils: Species",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species",
-      "supports": ["species summaries", "date ranges", "trait summaries", "representative fossil catalogs"],
+      "supports": [
+        "species summaries",
+        "date ranges",
+        "trait summaries",
+        "representative fossil catalogs"
+      ],
       "qualityNote": "A readable expert synthesis and a strong starting index. Use the cited primary papers for disputed relationships and precise dates."
     },
     {
@@ -17,7 +22,12 @@
       "title": "Homo sapiens",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/homo-sapiens",
-      "supports": ["Homo sapiens overview", "anatomy", "distribution", "fossil catalog"]
+      "supports": [
+        "Homo sapiens overview",
+        "anatomy",
+        "distribution",
+        "fossil catalog"
+      ]
     },
     {
       "id": "si-neanderthalensis",
@@ -25,7 +35,11 @@
       "title": "Homo neanderthalensis",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/homo-neanderthalensis",
-      "supports": ["Neanderthal date range", "cold-adapted anatomy", "fossil catalog"]
+      "supports": [
+        "Neanderthal date range",
+        "cold-adapted anatomy",
+        "fossil catalog"
+      ]
     },
     {
       "id": "si-heidelbergensis",
@@ -33,7 +47,11 @@
       "title": "Homo heidelbergensis",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/homo-heidelbergensis",
-      "supports": ["traditional Middle Pleistocene Homo grouping", "anatomy", "fossil catalog"],
+      "supports": [
+        "traditional Middle Pleistocene Homo grouping",
+        "anatomy",
+        "fossil catalog"
+      ],
       "qualityNote": "The species circumscription is actively disputed; the dataset labels it a lineage-grade proxy rather than a settled direct ancestor."
     },
     {
@@ -42,7 +60,13 @@
       "title": "Homo erectus",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/homo-erectus",
-      "supports": ["1.89 Ma to 110 ka range", "human-like body proportions", "dispersal", "Acheulean association", "fossil catalog"]
+      "supports": [
+        "1.89 Ma to 110 ka range",
+        "human-like body proportions",
+        "dispersal",
+        "Acheulean association",
+        "fossil catalog"
+      ]
     },
     {
       "id": "si-homo-habilis",
@@ -50,7 +74,12 @@
       "title": "Homo habilis",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/homo-habilis",
-      "supports": ["Homo habilis range", "mosaic anatomy", "diet and tool hypotheses", "fossil catalog"]
+      "supports": [
+        "Homo habilis range",
+        "mosaic anatomy",
+        "diet and tool hypotheses",
+        "fossil catalog"
+      ]
     },
     {
       "id": "si-paranthropus-boisei",
@@ -58,7 +87,11 @@
       "title": "Paranthropus boisei",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/paranthropus-boisei",
-      "supports": ["robust australopith sister lineage", "chewing anatomy", "fossil catalog"]
+      "supports": [
+        "robust australopith sister lineage",
+        "chewing anatomy",
+        "fossil catalog"
+      ]
     },
     {
       "id": "si-australopithecus-afarensis",
@@ -66,7 +99,11 @@
       "title": "Australopithecus afarensis",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/australopithecus-afarensis",
-      "supports": ["3.85 Ma to 2.95 Ma range", "bipedal and climbing mosaic", "fossil catalog"]
+      "supports": [
+        "3.85 Ma to 2.95 Ma range",
+        "bipedal and climbing mosaic",
+        "fossil catalog"
+      ]
     },
     {
       "id": "si-australopithecus-anamensis",
@@ -74,7 +111,12 @@
       "title": "Australopithecus anamensis",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/australopithecus-anamensis",
-      "supports": ["4.2 Ma to 3.8 Ma range", "bipedal evidence", "woodland setting", "fossil catalog"]
+      "supports": [
+        "4.2 Ma to 3.8 Ma range",
+        "bipedal evidence",
+        "woodland setting",
+        "fossil catalog"
+      ]
     },
     {
       "id": "si-ardipithecus-ramidus",
@@ -82,7 +124,12 @@
       "title": "Ardipithecus ramidus",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/ardipithecus-ramidus",
-      "supports": ["4.4 Ma age", "locomotor mosaic", "woodland habitat", "ARA-VP-6/500 catalog"]
+      "supports": [
+        "4.4 Ma age",
+        "locomotor mosaic",
+        "woodland habitat",
+        "ARA-VP-6/500 catalog"
+      ]
     },
     {
       "id": "si-ardipithecus-kadabba",
@@ -90,7 +137,10 @@
       "title": "Ardipithecus kadabba",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/ardipithecus-kadabba",
-      "supports": ["5.8 Ma to 5.2 Ma range", "limited dental and postcranial evidence"]
+      "supports": [
+        "5.8 Ma to 5.2 Ma range",
+        "limited dental and postcranial evidence"
+      ]
     },
     {
       "id": "si-orrorin",
@@ -98,7 +148,11 @@
       "title": "Orrorin tugenensis",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/orrorin-tugenensis",
-      "supports": ["6.2 Ma to 5.8 Ma range", "femoral bipedality evidence", "BAR 1002'00 catalog"]
+      "supports": [
+        "6.2 Ma to 5.8 Ma range",
+        "femoral bipedality evidence",
+        "BAR 1002'00 catalog"
+      ]
     },
     {
       "id": "si-sahelanthropus",
@@ -106,7 +160,11 @@
       "title": "Sahelanthropus tchadensis",
       "organization": "Smithsonian Human Origins Program",
       "url": "https://humanorigins.si.edu/evidence/human-fossils/species/sahelanthropus-tchadensis",
-      "supports": ["7 Ma to 6 Ma range", "cranial traits", "TM 266-01-060-1 catalog"]
+      "supports": [
+        "7 Ma to 6 Ma range",
+        "cranial traits",
+        "TM 266-01-060-1 catalog"
+      ]
     },
     {
       "id": "hublin-2017",
@@ -116,7 +174,11 @@
       "year": 2017,
       "doi": "10.1038/nature22336",
       "url": "https://doi.org/10.1038/nature22336",
-      "supports": ["early Homo sapiens morphology", "Jebel Irhoud fossils", "pan-African origin interpretation"]
+      "supports": [
+        "early Homo sapiens morphology",
+        "Jebel Irhoud fossils",
+        "pan-African origin interpretation"
+      ]
     },
     {
       "id": "richter-2017",
@@ -126,7 +188,10 @@
       "year": 2017,
       "doi": "10.1038/nature22335",
       "url": "https://doi.org/10.1038/nature22335",
-      "supports": ["Jebel Irhoud age near 315 ka", "dating methods"]
+      "supports": [
+        "Jebel Irhoud age near 315 ka",
+        "dating methods"
+      ]
     },
     {
       "id": "vidal-2022",
@@ -136,7 +201,10 @@
       "year": 2022,
       "doi": "10.1038/s41586-021-04275-8",
       "url": "https://doi.org/10.1038/s41586-021-04275-8",
-      "supports": ["Omo I minimum age of 233 ± 22 ka", "tephra correlation"]
+      "supports": [
+        "Omo I minimum age of 233 ± 22 ka",
+        "tephra correlation"
+      ]
     },
     {
       "id": "green-2010",
@@ -146,7 +214,10 @@
       "year": 2010,
       "doi": "10.1126/science.1188021",
       "url": "https://doi.org/10.1126/science.1188021",
-      "supports": ["Neanderthal relatedness", "gene flow into many living non-African populations"]
+      "supports": [
+        "Neanderthal relatedness",
+        "gene flow into many living non-African populations"
+      ]
     },
     {
       "id": "meyer-2012",
@@ -156,7 +227,11 @@
       "year": 2012,
       "doi": "10.1126/science.1224344",
       "url": "https://doi.org/10.1126/science.1224344",
-      "supports": ["Denisovan genome", "Denisovan sister relationship to Neanderthals", "introgression"]
+      "supports": [
+        "Denisovan genome",
+        "Denisovan sister relationship to Neanderthals",
+        "introgression"
+      ]
     },
     {
       "id": "chen-2019",
@@ -166,7 +241,10 @@
       "year": 2019,
       "doi": "10.1038/s41586-019-1139-x",
       "url": "https://doi.org/10.1038/s41586-019-1139-x",
-      "supports": ["Xiahe mandible attribution", "Denisovans on the Tibetan Plateau by about 160 ka"]
+      "supports": [
+        "Xiahe mandible attribution",
+        "Denisovans on the Tibetan Plateau by about 160 ka"
+      ]
     },
     {
       "id": "anton-2014",
@@ -176,7 +254,11 @@
       "year": 2014,
       "doi": "10.1126/science.1236828",
       "url": "https://doi.org/10.1126/science.1236828",
-      "supports": ["early Homo variability", "body and brain evolution", "ecological hypotheses"]
+      "supports": [
+        "early Homo variability",
+        "body and brain evolution",
+        "ecological hypotheses"
+      ]
     },
     {
       "id": "spoor-2015",
@@ -186,7 +268,11 @@
       "year": 2015,
       "doi": "10.1038/nature14224",
       "url": "https://doi.org/10.1038/nature14224",
-      "supports": ["OH 7 reconstruction", "early Homo diversity", "taxonomic uncertainty"]
+      "supports": [
+        "OH 7 reconstruction",
+        "early Homo diversity",
+        "taxonomic uncertainty"
+      ]
     },
     {
       "id": "rizal-2019",
@@ -196,7 +282,10 @@
       "year": 2019,
       "doi": "10.1038/s41586-019-1863-2",
       "url": "https://doi.org/10.1038/s41586-019-1863-2",
-      "supports": ["youngest well-dated Homo erectus population", "Ngandong chronology"]
+      "supports": [
+        "youngest well-dated Homo erectus population",
+        "Ngandong chronology"
+      ]
     },
     {
       "id": "grun-2020",
@@ -206,7 +295,10 @@
       "year": 2020,
       "doi": "10.1038/s41586-020-2165-4",
       "url": "https://doi.org/10.1038/s41586-020-2165-4",
-      "supports": ["Kabwe 1 age estimate of 299 ± 25 ka", "Middle Pleistocene Homo taxonomy"]
+      "supports": [
+        "Kabwe 1 age estimate of 299 ± 25 ka",
+        "Middle Pleistocene Homo taxonomy"
+      ]
     },
     {
       "id": "cerling-2011",
@@ -216,7 +308,9 @@
       "year": 2011,
       "doi": "10.1073/pnas.1104627108",
       "url": "https://doi.org/10.1073/pnas.1104627108",
-      "supports": ["carbon-isotope evidence for a predominantly C4-resource diet in sampled Paranthropus boisei"]
+      "supports": [
+        "carbon-isotope evidence for a predominantly C4-resource diet in sampled Paranthropus boisei"
+      ]
     },
     {
       "id": "ungar-2008",
@@ -226,7 +320,10 @@
       "year": 2008,
       "doi": "10.1371/journal.pone.0002044",
       "url": "https://doi.org/10.1371/journal.pone.0002044",
-      "supports": ["dental microwear evidence", "caution against a simple habitual hard-object diet"]
+      "supports": [
+        "dental microwear evidence",
+        "caution against a simple habitual hard-object diet"
+      ]
     },
     {
       "id": "haile-selassie-2019",
@@ -236,7 +333,11 @@
       "year": 2019,
       "doi": "10.1038/s41586-019-1513-8",
       "url": "https://doi.org/10.1038/s41586-019-1513-8",
-      "supports": ["Australopithecus anamensis cranium", "temporal overlap with A. afarensis", "simple anagenesis caveat"]
+      "supports": [
+        "Australopithecus anamensis cranium",
+        "temporal overlap with A. afarensis",
+        "simple anagenesis caveat"
+      ]
     },
     {
       "id": "white-2009",
@@ -246,7 +347,12 @@
       "year": 2009,
       "doi": "10.1126/science.1175802",
       "url": "https://doi.org/10.1126/science.1175802",
-      "supports": ["Ardipithecus anatomy", "woodland context", "locomotor mosaic", "LCA inference limits"]
+      "supports": [
+        "Ardipithecus anatomy",
+        "woodland context",
+        "locomotor mosaic",
+        "LCA inference limits"
+      ]
     },
     {
       "id": "haile-selassie-2001",
@@ -256,7 +362,10 @@
       "year": 2001,
       "doi": "10.1038/35084063",
       "url": "https://doi.org/10.1038/35084063",
-      "supports": ["Ardipithecus kadabba fossils", "late Miocene age and setting"]
+      "supports": [
+        "Ardipithecus kadabba fossils",
+        "late Miocene age and setting"
+      ]
     },
     {
       "id": "daver-2022",
@@ -266,7 +375,10 @@
       "year": 2022,
       "doi": "10.1038/s41586-022-04901-z",
       "url": "https://doi.org/10.1038/s41586-022-04901-z",
-      "supports": ["Sahelanthropus femur and ulnae", "probable bipedality with arboreal behavior"]
+      "supports": [
+        "Sahelanthropus femur and ulnae",
+        "probable bipedality with arboreal behavior"
+      ]
     },
     {
       "id": "almecija-2013",
@@ -276,7 +388,11 @@
       "year": 2013,
       "doi": "10.1038/ncomms3888",
       "url": "https://doi.org/10.1038/ncomms3888",
-      "supports": ["Orrorin femur morphology", "mosaic affinities", "ancestry uncertainty"]
+      "supports": [
+        "Orrorin femur morphology",
+        "mosaic affinities",
+        "ancestry uncertainty"
+      ]
     },
     {
       "id": "almecija-2021",
@@ -286,7 +402,11 @@
       "year": 2021,
       "doi": "10.1126/science.abb4363",
       "url": "https://doi.org/10.1126/science.abb4363",
-      "supports": ["ape fossil record", "last-common-ancestor uncertainty", "limits of linear narratives"]
+      "supports": [
+        "ape fossil record",
+        "last-common-ancestor uncertainty",
+        "limits of linear narratives"
+      ]
     },
     {
       "id": "stevens-2013",
@@ -296,7 +416,10 @@
       "year": 2013,
       "doi": "10.1038/nature12161",
       "url": "https://doi.org/10.1038/nature12161",
-      "supports": ["Rukwapithecus", "ape–Old World monkey divergence by about 25.2 Ma"]
+      "supports": [
+        "Rukwapithecus",
+        "ape–Old World monkey divergence by about 25.2 Ma"
+      ]
     },
     {
       "id": "kunimatsu-2007",
@@ -306,7 +429,10 @@
       "year": 2007,
       "doi": "10.1073/pnas.0706190104",
       "url": "https://doi.org/10.1073/pnas.0706190104",
-      "supports": ["Nakalipithecus", "African great-ape context near 10 Ma"]
+      "supports": [
+        "Nakalipithecus",
+        "African great-ape context near 10 Ma"
+      ]
     },
     {
       "id": "mcnulty-2015",
@@ -316,7 +442,10 @@
       "year": 2015,
       "doi": "10.1016/j.jhevol.2015.03.009",
       "url": "https://doi.org/10.1016/j.jhevol.2015.03.009",
-      "supports": ["Ekembo taxonomy", "early Miocene hominoid anatomy"]
+      "supports": [
+        "Ekembo taxonomy",
+        "early Miocene hominoid anatomy"
+      ]
     },
     {
       "id": "scally-2012",
@@ -326,7 +455,10 @@
       "year": 2012,
       "doi": "10.1038/nature10842",
       "url": "https://doi.org/10.1038/nature10842",
-      "supports": ["African ape relationships", "gorilla lineage divergence estimates"]
+      "supports": [
+        "African ape relationships",
+        "gorilla lineage divergence estimates"
+      ]
     },
     {
       "id": "locke-2011",
@@ -336,7 +468,10 @@
       "year": 2011,
       "doi": "10.1038/nature09687",
       "url": "https://doi.org/10.1038/nature09687",
-      "supports": ["great-ape phylogeny", "orangutan lineage divergence estimates"]
+      "supports": [
+        "great-ape phylogeny",
+        "orangutan lineage divergence estimates"
+      ]
     },
     {
       "id": "carbone-2014",
@@ -346,7 +481,10 @@
       "year": 2014,
       "doi": "10.1038/nature13679",
       "url": "https://doi.org/10.1038/nature13679",
-      "supports": ["gibbon–great-ape split estimate", "hominoid phylogeny"]
+      "supports": [
+        "gibbon–great-ape split estimate",
+        "hominoid phylogeny"
+      ]
     },
     {
       "id": "pbdb-api",
@@ -354,7 +492,12 @@
       "title": "Paleobiology Database Data Service 1.2",
       "organization": "Paleobiology Database",
       "url": "https://paleobiodb.org/data1.2/",
-      "supports": ["downloadable fossil occurrences", "coordinates", "geological ages", "bibliographic references"],
+      "supports": [
+        "downloadable fossil occurrences",
+        "coordinates",
+        "geological ages",
+        "bibliographic references"
+      ],
       "qualityNote": "Excellent for reproducible occurrence queries, but individual records can be broad, duplicated, old, or taxonomically disputed. Preserve record and reference IDs and review records before display."
     },
     {
@@ -363,7 +506,11 @@
       "title": "MorphoSource",
       "organization": "Duke University",
       "url": "https://www.morphosource.org/",
-      "supports": ["museum-linked 2D and 3D specimen media", "per-item reuse rights", "specimen metadata"],
+      "supports": [
+        "museum-linked 2D and 3D specimen media",
+        "per-item reuse rights",
+        "specimen metadata"
+      ],
       "qualityNote": "Best candidate for downloadable 3D fossil models. Access and reuse conditions vary by media item."
     },
     {
@@ -372,7 +519,11 @@
       "title": "AfricanFossils.org",
       "organization": "National Museums of Kenya and partners",
       "url": "https://africanfossils.org/",
-      "supports": ["East African fossil 3D models", "specimen context", "educational browsing"],
+      "supports": [
+        "East African fossil 3D models",
+        "specimen context",
+        "educational browsing"
+      ],
       "qualityNote": "Especially useful for Kenyan hominins and associated fauna; verify the rights shown for each asset before redistribution."
     },
     {
@@ -381,7 +532,10 @@
       "title": "eFossils",
       "organization": "University of Texas at Austin",
       "url": "https://efossils.org/",
-      "supports": ["comparative primate and hominin anatomy", "2D and 3D teaching material"]
+      "supports": [
+        "comparative primate and hominin anatomy",
+        "2D and 3D teaching material"
+      ]
     },
     {
       "id": "commons-api",
@@ -389,8 +543,52 @@
       "title": "Wikimedia Commons API",
       "organization": "Wikimedia Foundation and contributors",
       "url": "https://commons.wikimedia.org/w/api.php",
-      "supports": ["open-license reconstruction images", "creator and license metadata"],
+      "supports": [
+        "open-license reconstruction images",
+        "creator and license metadata"
+      ],
       "qualityNote": "Useful for redistributable color imagery. Scientific accuracy is not guaranteed by the license; prefer photographed museum reconstructions and label all soft-tissue depictions as interpretations."
+    },
+    {
+      "id": "berger-2015",
+      "kind": "primary_research",
+      "title": "Homo naledi, a new species of the genus Homo from the Dinaledi Chamber, South Africa",
+      "authors": "Berger et al.",
+      "year": 2015,
+      "doi": "10.7554/eLife.09560",
+      "url": "https://doi.org/10.7554/eLife.09560",
+      "supports": [
+        "Homo naledi description",
+        "mosaic anatomy",
+        "Rising Star assemblage"
+      ]
+    },
+    {
+      "id": "brown-2004",
+      "kind": "primary_research",
+      "title": "A new small-bodied hominin from the Late Pleistocene of Flores, Indonesia",
+      "authors": "Brown et al.",
+      "year": 2004,
+      "doi": "10.1038/nature02999",
+      "url": "https://doi.org/10.1038/nature02999",
+      "supports": [
+        "Homo floresiensis description",
+        "LB1 skeleton",
+        "island dwarfism"
+      ]
+    },
+    {
+      "id": "dart-1925",
+      "kind": "primary_research",
+      "title": "Australopithecus africanus: The Man-Ape of South Africa",
+      "authors": "Dart",
+      "year": 1925,
+      "doi": "10.1038/115195a0",
+      "url": "https://doi.org/10.1038/115195a0",
+      "supports": [
+        "Taung Child",
+        "first African australopith"
+      ]
     }
   ]
 }

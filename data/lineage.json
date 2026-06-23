@@ -1,0 +1,1321 @@
+{
+  "schemaVersion": "2.0.0",
+  "datasetId": "human-lineage-v2",
+  "title": "How the human body changed: apes to us",
+  "updatedAt": "2026-06-22",
+  "timeUnit": "million_years_ago",
+  "intro": {
+    "focus": "Showing interesting evolutionary CHANGE across the human line and its living relatives, not a proven chain of direct ancestors.",
+    "honesty": "Images are the best current reconstructions, not photographs of the past. Relationships are shown as supported, candidate, or context; living apes are cousins, not ancestors."
+  },
+  "layout": {
+    "colSpacing": 212,
+    "laneSpacing": 250,
+    "padX": 70,
+    "baseLane": 2.6
+  },
+  "taxa": [
+    {
+      "id": "ekembo-nyanzae",
+      "scientificName": "Ekembo nyanzae",
+      "commonName": "an early Miocene ape",
+      "role": "Early ape body plan",
+      "branch": "ancestral-ape",
+      "posture": "quadruped",
+      "heightMeters": 0.5,
+      "olderMa": 20,
+      "youngerMa": 17,
+      "col": 0,
+      "lane": 0,
+      "regions": [
+        "Kenya (Rusinga Island)"
+      ],
+      "summary": "A well-known early ape, before any living ape lineage had taken on its specialised body. This is roughly where the ape story starts.",
+      "physicalChange": "A tailless ape that still moved as an above-branch quadruped — none of the suspensory, knuckle-walking or upright specialisations of living apes yet.",
+      "observedTraits": [
+        "no tail",
+        "above-branch quadruped",
+        "generalised hands and feet",
+        "monkey-like body proportions"
+      ],
+      "behavioralChange": "Lived in warm Miocene forests, moving carefully along branches and eating mostly fruit. Behaviour was ape-general, not yet chimp-like or human-like.",
+      "pressures": [
+        {
+          "change": "Loss of the tail and a more upright trunk",
+          "pressure": "Cautious climbing and feeding in the canopy favoured balance over a tail."
+        }
+      ],
+      "certainty": "Solid as an early ape; not a proven direct ancestor of living apes.",
+      "image": {
+        "src": "/images/human-lineage/ekembo-skeleton.jpg",
+        "local": true,
+        "kind": "fossil skeleton",
+        "creator": "Ghedoghedo",
+        "license": "CC BY-SA 3.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ekembo_nyanzae_skeleton_7.jpg",
+        "caveat": "A reconstructed museum skeleton; no life reconstruction is shown."
+      },
+      "fossilSites": [
+        {
+          "site": "Rusinga Island",
+          "country": "Kenya",
+          "lat": -0.4,
+          "lon": 34.17,
+          "specimen": "Rusinga Ekembo assemblage",
+          "note": "Skulls, teeth and partial skeletons of an early ape.",
+          "olderMa": 20,
+          "youngerMa": 17
+        }
+      ],
+      "sourceIds": [
+        "mcnulty-2015",
+        "almecija-2021"
+      ]
+    },
+    {
+      "id": "nakalipithecus-nakayamai",
+      "scientificName": "Nakalipithecus nakayamai",
+      "commonName": "a late Miocene African great ape",
+      "role": "Great-ape context",
+      "branch": "ancestral-ape",
+      "posture": "quadruped",
+      "heightMeters": 1.2,
+      "olderMa": 9.9,
+      "youngerMa": 9.8,
+      "col": 1.6,
+      "lane": 0,
+      "regions": [
+        "Kenya"
+      ],
+      "summary": "A large African ape living close to the time the gorilla and human–chimp lines were separating. Known mainly from a jaw and teeth.",
+      "physicalChange": "A big-bodied great ape with thick-enamelled teeth — evidence that African great apes were diversifying near the gorilla and chimp splits.",
+      "observedTraits": [
+        "large-bodied ape",
+        "thick molar enamel",
+        "known from jaw and teeth only"
+      ],
+      "behavioralChange": "Probably ate tough, fibrous plant foods, fitting a forest-to-woodland African setting around the time our lineage's cousins branched off.",
+      "pressures": [
+        {
+          "change": "Heavier, thick-enamelled chewing teeth",
+          "pressure": "Tougher, more fibrous foods in seasonal African forests."
+        }
+      ],
+      "certainty": "Useful context near the African-ape splits; too incomplete to be a named ancestor.",
+      "image": {
+        "src": "/images/human-lineage/nakalipithecus-mandible.jpg",
+        "local": true,
+        "kind": "fossil jaw",
+        "creator": "Nikhil Iyengar",
+        "license": "CC BY-SA 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Nakalipithecus_mandible.jpg",
+        "caveat": "Only jaw material is known; no face or body can be reconstructed with confidence."
+      },
+      "fossilSites": [
+        {
+          "site": "Nakali",
+          "country": "Kenya",
+          "lat": 1.7,
+          "lon": 36.4,
+          "specimen": "KNM-NA 46400",
+          "note": "Partial mandible and teeth.",
+          "olderMa": 9.9,
+          "youngerMa": 9.8
+        }
+      ],
+      "sourceIds": [
+        "kunimatsu-2007",
+        "almecija-2021"
+      ]
+    },
+    {
+      "id": "gorilla",
+      "scientificName": "Gorilla (living)",
+      "commonName": "gorilla",
+      "role": "Living cousin — split ~9 Ma",
+      "branch": "living-anchor",
+      "posture": "knuckle-walker",
+      "heightMeters": 1.7,
+      "olderMa": 9,
+      "youngerMa": 0,
+      "col": 2.4,
+      "lane": 1.7,
+      "regions": [
+        "Equatorial Africa (living)"
+      ],
+      "summary": "Gorillas are not our ancestors — they are cousins. Their line branched off the shared African-ape stem around 9 million years ago.",
+      "physicalChange": "The gorilla line went large and ground-dwelling: huge body, knuckle-walking arms, and a big chewing apparatus for leaves and stems.",
+      "observedTraits": [
+        "very large body",
+        "knuckle-walking",
+        "large gut and jaws for leaves",
+        "pronounced sexual size difference"
+      ],
+      "behavioralChange": "Settled into eating bulky low-quality vegetation in African forests, in stable family groups led by a dominant male.",
+      "pressures": [
+        {
+          "change": "Large body and big chewing/gut system",
+          "pressure": "A diet of abundant but low-energy leaves and stems rewards size and fermentation capacity."
+        },
+        {
+          "change": "Knuckle-walking forelimbs",
+          "pressure": "Moving a heavy body efficiently across the forest floor."
+        }
+      ],
+      "certainty": "A living relative shown to make the branching real — not on the human line.",
+      "image": {
+        "src": "/images/lineage/gorilla.jpg",
+        "local": true,
+        "kind": "photograph",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Gorille_des_plaines_de_l%27ouest_%C3%A0_l%27Espace_Zoologique.jpg",
+        "caveat": "A photograph of a living western gorilla."
+      },
+      "fossilSites": [],
+      "sourceIds": [
+        "scally-2012",
+        "almecija-2021"
+      ]
+    },
+    {
+      "id": "chimpanzee",
+      "scientificName": "Pan (living)",
+      "commonName": "chimpanzee & bonobo",
+      "role": "Closest living cousin — split ~7 Ma",
+      "branch": "living-anchor",
+      "posture": "knuckle-walker",
+      "heightMeters": 1.2,
+      "olderMa": 7,
+      "youngerMa": 0,
+      "col": 3.6,
+      "lane": 2.6,
+      "regions": [
+        "Equatorial Africa (living)"
+      ],
+      "summary": "Our closest living relatives. Their line and ours split from a shared ancestor roughly 7 million years ago — neither is a 'primitive human'.",
+      "physicalChange": "The chimp line kept a flexible climbing-and-knuckle-walking body and forest-fruit diet, while staying smaller-brained than later humans.",
+      "observedTraits": [
+        "knuckle-walking and agile climbing",
+        "long arms",
+        "fruit-and-prey omnivory",
+        "tool use in some populations"
+      ],
+      "behavioralChange": "Lives in dynamic social groups, uses simple tools, hunts occasionally — a window onto behaviours the shared ancestor may have had.",
+      "pressures": [
+        {
+          "change": "Versatile climbing + knuckle-walking body",
+          "pressure": "Forest life that mixes fruit trees with travel across the ground."
+        }
+      ],
+      "certainty": "A living relative, not an ancestor; our best living comparison point.",
+      "image": {
+        "src": "/images/lineage/chimpanzee.jpg",
+        "local": true,
+        "kind": "photograph",
+        "creator": "Giles Laurent",
+        "license": "CC BY-SA 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:015_Chimpanzee_at_Kibale_forest_National_Park_Photo_by_Giles_Laurent.jpg",
+        "caveat": "A photograph of a living chimpanzee."
+      },
+      "fossilSites": [],
+      "sourceIds": [
+        "almecija-2021"
+      ]
+    },
+    {
+      "id": "sahelanthropus-tchadensis",
+      "scientificName": "Sahelanthropus tchadensis",
+      "commonName": "‘Toumaï’",
+      "role": "Earliest candidate human relative",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.1,
+      "olderMa": 7,
+      "youngerMa": 6,
+      "col": 3.2,
+      "lane": 0,
+      "regions": [
+        "Chad"
+      ],
+      "summary": "One of the oldest fossils proposed to be on the human side of the split, found far west of the usual East African sites.",
+      "physicalChange": "Small ape-sized brain, but with reduced canines and a skull base hinting the head sat atop an upright spine — the first whispers of bipedality.",
+      "observedTraits": [
+        "small brain",
+        "reduced non-honing canines",
+        "forward-set foramen magnum",
+        "thick brow"
+      ],
+      "behavioralChange": "Lived in a mosaic of lake-edge forest and grassland, plausibly moving both upright on the ground and through trees.",
+      "pressures": [
+        {
+          "change": "Head balanced over the spine (hint of upright walking)",
+          "pressure": "Standing and moving upright in patchy woodland near water."
+        },
+        {
+          "change": "Smaller, blunter canines",
+          "pressure": "Shifts in diet and in male-to-male social signalling."
+        }
+      ],
+      "certainty": "Debated — possibly the earliest hominin, possibly an ape near the split.",
+      "image": {
+        "src": "/images/lineage/sahelanthropus-skull.jpg",
+        "local": true,
+        "kind": "fossil skull",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Sahelanthropus_tchadensis_-_TM_266-01-060-1.jpg",
+        "caveat": "The distorted Toumaï cranium; no body or face reconstruction is shown here."
+      },
+      "fossilSites": [
+        {
+          "site": "Toros-Menalla",
+          "country": "Chad",
+          "lat": 16.25,
+          "lon": 17.48,
+          "specimen": "TM 266-01-060-1 (Toumaï)",
+          "note": "Distorted but fairly complete cranium, plus a femur.",
+          "olderMa": 7,
+          "youngerMa": 6
+        }
+      ],
+      "sourceIds": [
+        "si-sahelanthropus",
+        "daver-2022"
+      ]
+    },
+    {
+      "id": "orrorin-tugenensis",
+      "scientificName": "Orrorin tugenensis",
+      "commonName": "‘Millennium Man’",
+      "role": "Candidate early relative",
+      "branch": "sibling",
+      "posture": "biped",
+      "heightMeters": 1.1,
+      "olderMa": 6.2,
+      "youngerMa": 5.8,
+      "col": 4.2,
+      "lane": -1.1,
+      "regions": [
+        "Kenya (Tugen Hills)"
+      ],
+      "summary": "A fragmentary late-Miocene form whose thigh bone is one of the earliest hints of upright walking.",
+      "physicalChange": "A femur built for at least some upright, weight-bearing walking — yet the arms still say 'good climber'.",
+      "observedTraits": [
+        "femur loaded for bipedal walking",
+        "strong climbing arms",
+        "thick molar enamel",
+        "ape-like canine"
+      ],
+      "behavioralChange": "Mixed woodland life rewarding both ground walking and tree climbing — locomotor flexibility rather than commitment.",
+      "pressures": [
+        {
+          "change": "Thigh bone adapted to upright loading",
+          "pressure": "Walking between scattered food patches on the ground."
+        }
+      ],
+      "certainty": "Bipedal signal is real; whether it sits on the human line is uncertain.",
+      "image": {
+        "src": "/images/lineage/orrorin.jpg",
+        "local": true,
+        "kind": "fossil",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Orrorin_tugenensis.jpg",
+        "caveat": "Fragmentary fossil material; appearance cannot be reconstructed in detail."
+      },
+      "fossilSites": [
+        {
+          "site": "Tugen Hills",
+          "country": "Kenya",
+          "lat": 0.7,
+          "lon": 35.86,
+          "specimen": "BAR 1002'00 femur",
+          "note": "Partial thigh bone showing bipedal loading.",
+          "olderMa": 6.1,
+          "youngerMa": 5.8
+        }
+      ],
+      "sourceIds": [
+        "si-orrorin",
+        "almecija-2013"
+      ]
+    },
+    {
+      "id": "ardipithecus-kadabba",
+      "scientificName": "Ardipithecus kadabba",
+      "commonName": "early Ardipithecus",
+      "role": "Candidate early relative",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.2,
+      "olderMa": 5.8,
+      "youngerMa": 5.2,
+      "col": 4.6,
+      "lane": 1.2,
+      "regions": [
+        "Ethiopia (Middle Awash)"
+      ],
+      "summary": "Sparse teeth and bones near the human–chimp divergence, showing early dental changes.",
+      "physicalChange": "Canines starting to lose their ape-like honing edge, with a toe bone read as compatible with upright walking.",
+      "observedTraits": [
+        "slightly reduced canines",
+        "toe bone hinting at bipedality",
+        "known from sparse material"
+      ],
+      "behavioralChange": "Woodland forager at the very base of the human line; too little is preserved to say much about behaviour.",
+      "pressures": [
+        {
+          "change": "Reduced canine honing",
+          "pressure": "Dietary and social shifts away from ape-style canine display."
+        }
+      ],
+      "certainty": "Real but sparse; relationship to later Ardipithecus is plausible, not proven.",
+      "image": {
+        "src": "/images/lineage/ardipithecus-kadabba.jpg",
+        "local": true,
+        "kind": "fossil teeth",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ardipithecus_kadabba_fossils.jpg",
+        "caveat": "Fragmentary dental and postcranial fossils."
+      },
+      "fossilSites": [
+        {
+          "site": "Middle Awash",
+          "country": "Ethiopia",
+          "lat": 10.3,
+          "lon": 40.3,
+          "specimen": "ALA-VP-2/10",
+          "note": "Teeth and a toe bone.",
+          "olderMa": 5.8,
+          "youngerMa": 5.2
+        }
+      ],
+      "sourceIds": [
+        "si-ardipithecus-kadabba",
+        "haile-selassie-2001"
+      ]
+    },
+    {
+      "id": "ardipithecus-ramidus",
+      "scientificName": "Ardipithecus ramidus",
+      "commonName": "‘Ardi’",
+      "role": "Early walker, still a climber",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.2,
+      "olderMa": 4.5,
+      "youngerMa": 4.3,
+      "col": 5.4,
+      "lane": 0,
+      "regions": [
+        "Ethiopia"
+      ],
+      "summary": "A remarkably complete early hominin showing that walking upright arrived piecemeal — not as a finished package.",
+      "physicalChange": "A pelvis that allowed upright walking, but kept a grasping, divergent big toe for climbing — a true mosaic, unlike any living ape.",
+      "observedTraits": [
+        "upright-capable pelvis",
+        "grasping big toe",
+        "no knuckle-walking",
+        "reduced canines",
+        "small brain"
+      ],
+      "behavioralChange": "Lived in woodland (not open savanna), moving upright on the ground and still climbing carefully in trees.",
+      "pressures": [
+        {
+          "change": "Upright walking added without losing climbing",
+          "pressure": "Woodland life that rewarded both ground travel and tree feeding."
+        }
+      ],
+      "certainty": "Strong as a species; an early hominin, but not a proven direct ancestor.",
+      "image": {
+        "src": "/images/lineage/ardipithecus-ramidus-skull.jpg",
+        "local": true,
+        "kind": "fossil skull cast",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ardipithecus_ramidus_skull_(2016.003.0002),_Royal_Tyrrell_Museum,_Drumheller,_Alberta,_2025-07-13.jpg",
+        "caveat": "A skull cast; the famous 'Ardi' skeleton is fragmentary."
+      },
+      "fossilSites": [
+        {
+          "site": "Aramis, Middle Awash",
+          "country": "Ethiopia",
+          "lat": 10.5,
+          "lon": 40.5,
+          "specimen": "ARA-VP-6/500 (Ardi)",
+          "note": "Partial skull, pelvis, hands and feet.",
+          "olderMa": 4.42,
+          "youngerMa": 4.38
+        }
+      ],
+      "sourceIds": [
+        "si-ardipithecus-ramidus",
+        "white-2009"
+      ]
+    },
+    {
+      "id": "australopithecus-anamensis",
+      "scientificName": "Australopithecus anamensis",
+      "commonName": "earliest Australopithecus",
+      "role": "Committed to walking",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.3,
+      "olderMa": 4.2,
+      "youngerMa": 3.8,
+      "col": 6.4,
+      "lane": 0,
+      "regions": [
+        "Kenya",
+        "Ethiopia"
+      ],
+      "summary": "The oldest widely accepted Australopithecus — the genus that walked the African woodlands for over a million years.",
+      "physicalChange": "Leg bones show more committed upright walking, while the jaws and teeth stay large and primitive.",
+      "observedTraits": [
+        "bipedal shin bone",
+        "large projecting jaw",
+        "thick molar enamel",
+        "likely still climbed"
+      ],
+      "behavioralChange": "Foraged in woodland and gallery forest near water, processing tougher plant foods with big teeth.",
+      "pressures": [
+        {
+          "change": "More habitual upright walking",
+          "pressure": "Travel between food patches in mixed woodland."
+        },
+        {
+          "change": "Big, thick-enamelled teeth",
+          "pressure": "Harder, grittier foods as habitats opened up."
+        }
+      ],
+      "certainty": "Strong species; close to the ancestry of later australopiths.",
+      "image": {
+        "src": "/images/lineage/anamensis-skull.png",
+        "local": true,
+        "kind": "fossil skull reconstruction",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Australopithecus_anamensis_skull.png",
+        "caveat": "Reconstructed cranium (MRD); soft tissue not shown."
+      },
+      "fossilSites": [
+        {
+          "site": "Woranso-Mille",
+          "country": "Ethiopia",
+          "lat": 11.44,
+          "lon": 40.52,
+          "specimen": "MRD-VP-1/1",
+          "note": "Nearly complete cranium.",
+          "olderMa": 3.82,
+          "youngerMa": 3.76
+        }
+      ],
+      "sourceIds": [
+        "si-australopithecus-anamensis",
+        "haile-selassie-2019"
+      ]
+    },
+    {
+      "id": "australopithecus-afarensis",
+      "scientificName": "Australopithecus afarensis",
+      "commonName": "‘Lucy’s species’",
+      "role": "Confident upright walker",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.2,
+      "olderMa": 3.85,
+      "youngerMa": 2.95,
+      "col": 7.4,
+      "lane": 0,
+      "regions": [
+        "Ethiopia",
+        "Kenya",
+        "Tanzania"
+      ],
+      "summary": "The famous 'Lucy' species — clearly bipedal on the ground, yet still built to climb, and still small-brained.",
+      "physicalChange": "A fully bipedal pelvis, knee and heel-strike (and footprints to prove it), combined with long arms and curved fingers for climbing.",
+      "observedTraits": [
+        "habitual bipedality",
+        "human-like knee and heel",
+        "long arms, curved fingers",
+        "small ape-sized brain"
+      ],
+      "behavioralChange": "Walked across open ground between trees, slept and fed in the canopy, and left the 3.6-million-year-old Laetoli footprint trail.",
+      "pressures": [
+        {
+          "change": "Walking established before the brain grew",
+          "pressure": "Efficient ground travel mattered earlier than big brains did."
+        }
+      ],
+      "certainty": "Very well sampled; close to the source of later lineages.",
+      "image": {
+        "src": "/images/lineage/afarensis-lucy.jpg",
+        "local": true,
+        "kind": "skeleton reconstruction",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Reconstruction_of_the_fossil_skeleton_of_%22Lucy%22_the_Australopithecus_afarensis.jpg",
+        "caveat": "A reconstructed skeleton showing the short, upright body plan."
+      },
+      "fossilSites": [
+        {
+          "site": "Hadar",
+          "country": "Ethiopia",
+          "lat": 11.14,
+          "lon": 40.6,
+          "specimen": "AL 288-1 (Lucy)",
+          "note": "~40% of one skeleton.",
+          "olderMa": 3.2,
+          "youngerMa": 3.18
+        },
+        {
+          "site": "Laetoli",
+          "country": "Tanzania",
+          "lat": -3.22,
+          "lon": 35.05,
+          "specimen": "Laetoli footprint trail",
+          "note": "Direct evidence of upright walking.",
+          "olderMa": 3.67,
+          "youngerMa": 3.63
+        }
+      ],
+      "sourceIds": [
+        "si-australopithecus-afarensis"
+      ]
+    },
+    {
+      "id": "australopithecus-africanus",
+      "scientificName": "Australopithecus africanus",
+      "commonName": "the Taung Child's species",
+      "role": "Southern African cousin",
+      "branch": "sibling",
+      "posture": "biped",
+      "heightMeters": 1.3,
+      "olderMa": 3.3,
+      "youngerMa": 2.1,
+      "col": 8.4,
+      "lane": -1.1,
+      "regions": [
+        "South Africa"
+      ],
+      "summary": "The first early human relative ever found in Africa (the 1924 Taung Child), showing the lineage had spread south.",
+      "physicalChange": "A rounder skull and slightly larger brain than Lucy's species, with a less projecting face — but still an australopith body.",
+      "observedTraits": [
+        "slightly larger brain",
+        "rounder braincase",
+        "more delicate face",
+        "bipedal with climbing traits"
+      ],
+      "behavioralChange": "Lived in the South African cave country, eating a flexible mix of plants and possibly some animal foods.",
+      "pressures": [
+        {
+          "change": "Modest brain and skull changes",
+          "pressure": "A broad, flexible diet in a more varied southern landscape."
+        }
+      ],
+      "certainty": "Solid species; its exact place near the origin of Homo is debated.",
+      "image": {
+        "src": "/images/lineage/africanus-face.jpg",
+        "local": true,
+        "kind": "face reconstruction",
+        "creator": "University of Zurich",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Australopithecus_africanus_face2_(University_of_Zurich).JPG",
+        "caveat": "A museum face reconstruction; pigmentation and hair are interpretive."
+      },
+      "fossilSites": [
+        {
+          "site": "Sterkfontein",
+          "country": "South Africa",
+          "lat": -26.02,
+          "lon": 27.73,
+          "specimen": "Sts 5 (Mrs Ples)",
+          "note": "Well-known adult cranium.",
+          "olderMa": 2.6,
+          "youngerMa": 2.1
+        },
+        {
+          "site": "Taung",
+          "country": "South Africa",
+          "lat": -27.53,
+          "lon": 24.78,
+          "specimen": "Taung Child",
+          "note": "The 1924 discovery that started African palaeoanthropology.",
+          "olderMa": 2.8,
+          "youngerMa": 2.6
+        }
+      ],
+      "sourceIds": [
+        "dart-1925",
+        "si-species-index",
+        "almecija-2021"
+      ]
+    },
+    {
+      "id": "paranthropus-boisei",
+      "scientificName": "Paranthropus boisei",
+      "commonName": "‘Nutcracker Man’",
+      "role": "Heavy-chewing dead-end cousin",
+      "branch": "sibling",
+      "posture": "biped",
+      "heightMeters": 1.3,
+      "olderMa": 2.3,
+      "youngerMa": 1.2,
+      "col": 9,
+      "lane": 1.3,
+      "regions": [
+        "East Africa"
+      ],
+      "summary": "A spectacular side-branch that solved survival with giant teeth and chewing muscles, while early Homo nearby went a different way.",
+      "physicalChange": "An extreme chewing machine: huge flat molars, thick enamel, flaring cheekbones and a bony crest on top of the skull for massive jaw muscles.",
+      "observedTraits": [
+        "huge molars",
+        "thick enamel",
+        "flared cheekbones",
+        "sagittal crest in males"
+      ],
+      "behavioralChange": "Processed large amounts of tough, low-quality plant food — a specialist strategy that ran alongside, and eventually lost to, tool-using Homo.",
+      "pressures": [
+        {
+          "change": "Massive teeth and chewing muscles",
+          "pressure": "Relying on abundant but tough, hard-to-chew vegetation, especially in lean seasons."
+        }
+      ],
+      "certainty": "A well-understood collateral branch — not a human ancestor.",
+      "image": {
+        "src": "/images/human-lineage/paranthropus-boisei.jpg",
+        "local": true,
+        "kind": "life reconstruction",
+        "creator": "Smithsonian NMNH (photo: Ryan Schwark)",
+        "license": "CC0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Paranthropus_boisei_facial_reconstruction_at_the_Smithsonian_National_Museum_of_Natural_History.jpg",
+        "caveat": "Chewing anatomy is fossil-based; hair, skin and eyes are interpretive."
+      },
+      "fossilSites": [
+        {
+          "site": "Olduvai Gorge",
+          "country": "Tanzania",
+          "lat": -2.99,
+          "lon": 35.35,
+          "specimen": "OH 5 (Zinj)",
+          "note": "Classic robust cranium.",
+          "olderMa": 1.86,
+          "youngerMa": 1.8
+        }
+      ],
+      "sourceIds": [
+        "si-paranthropus-boisei",
+        "cerling-2011",
+        "ungar-2008"
+      ]
+    },
+    {
+      "id": "homo-habilis",
+      "scientificName": "Homo habilis",
+      "commonName": "‘Handy Man’",
+      "role": "Early Homo, bigger brain",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.3,
+      "olderMa": 2.4,
+      "youngerMa": 1.4,
+      "col": 9.4,
+      "lane": 0,
+      "regions": [
+        "East and South Africa"
+      ],
+      "summary": "An early member of our own genus, with a bigger brain and smaller face than australopiths — but still a partly ape-like body.",
+      "physicalChange": "Brain expanding (~510–700 cc) and face/teeth shrinking, even while arms and hands kept climbing-related features.",
+      "observedTraits": [
+        "larger brain than australopiths",
+        "smaller face and teeth",
+        "curved finger bones",
+        "bipedal feet"
+      ],
+      "behavioralChange": "Lived alongside stone tools and cut-marked bones, gaining access to meat and marrow — a flexible, tool-assisted forager.",
+      "pressures": [
+        {
+          "change": "Brain growth with smaller teeth",
+          "pressure": "Tools doing the work teeth used to: cutting and accessing higher-energy foods."
+        }
+      ],
+      "certainty": "Real early Homo; its exact link to later Homo is debated.",
+      "image": {
+        "src": "/images/lineage/habilis-recon.png",
+        "local": true,
+        "kind": "forensic face reconstruction",
+        "creator": "Cícero Moraes",
+        "license": "CC BY-SA 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Homo_habilis_-_forensic_facial_reconstruction.png",
+        "caveat": "A forensic reconstruction from incomplete fossils; soft tissue is interpretive."
+      },
+      "fossilSites": [
+        {
+          "site": "Olduvai Gorge",
+          "country": "Tanzania",
+          "lat": -2.99,
+          "lon": 35.35,
+          "specimen": "OH 7",
+          "note": "Type specimen: jaw, teeth and hand bones.",
+          "olderMa": 1.85,
+          "youngerMa": 1.75
+        }
+      ],
+      "sourceIds": [
+        "si-homo-habilis",
+        "spoor-2015",
+        "anton-2014"
+      ]
+    },
+    {
+      "id": "homo-erectus",
+      "scientificName": "Homo erectus",
+      "commonName": "the first global human",
+      "role": "Modern body, first to leave Africa",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.7,
+      "olderMa": 1.9,
+      "youngerMa": 0.11,
+      "col": 10.6,
+      "lane": 0,
+      "regions": [
+        "Africa",
+        "Caucasus",
+        "East and Southeast Asia"
+      ],
+      "summary": "The turning point: the first hominin with a tall, modern-looking body that ranged across continents.",
+      "physicalChange": "Long legs, shorter arms, a narrow trunk and a bigger body and brain — built for long-distance walking and running on the ground.",
+      "observedTraits": [
+        "long legs, short arms",
+        "tall narrow body",
+        "larger brain and body",
+        "strong brow, low long skull"
+      ],
+      "behavioralChange": "Walked huge daily ranges, made Acheulean handaxes, ate a broader, energy-richer diet, and spread from Africa to Java.",
+      "pressures": [
+        {
+          "change": "Tall, long-legged ground-ranging body",
+          "pressure": "Bigger foraging ranges and heat management in open country."
+        },
+        {
+          "change": "Larger brain and body",
+          "pressure": "Richer, more reliable diet (including meat) able to fuel the cost."
+        }
+      ],
+      "certainty": "Strong as a broad grade; its many regional forms are debated.",
+      "image": {
+        "src": "/images/human-lineage/homo-erectus-full-body.jpg",
+        "local": true,
+        "kind": "full-body life reconstruction",
+        "creator": "Mauricio Antón",
+        "license": "CC BY 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Turkana_boy_by_Mauricio_Ant%C3%B3n.jpg",
+        "caveat": "Body proportions are fossil-based (Nariokotome Boy); skin and hair are interpretive."
+      },
+      "fossilSites": [
+        {
+          "site": "Nariokotome",
+          "country": "Kenya",
+          "lat": 4.14,
+          "lon": 35.87,
+          "specimen": "KNM-WT 15000 (Turkana Boy)",
+          "note": "Near-complete juvenile skeleton.",
+          "olderMa": 1.6,
+          "youngerMa": 1.5
+        },
+        {
+          "site": "Dmanisi",
+          "country": "Georgia",
+          "lat": 41.32,
+          "lon": 44.35,
+          "specimen": "Skull 5",
+          "note": "Earliest secure humans outside Africa.",
+          "olderMa": 1.85,
+          "youngerMa": 1.77
+        }
+      ],
+      "sourceIds": [
+        "si-homo-erectus",
+        "anton-2014",
+        "rizal-2019"
+      ]
+    },
+    {
+      "id": "homo-naledi",
+      "scientificName": "Homo naledi",
+      "commonName": "the deep-cave human",
+      "role": "Surprising small-brained cousin",
+      "branch": "sibling",
+      "posture": "biped",
+      "heightMeters": 1.45,
+      "olderMa": 0.335,
+      "youngerMa": 0.236,
+      "col": 11.6,
+      "lane": 1.3,
+      "regions": [
+        "South Africa"
+      ],
+      "summary": "A shock discovery: a small-brained human relative that survived surprisingly recently, found deep inside a cave system.",
+      "physicalChange": "A mosaic body — human-like feet and legs for walking, but curved fingers, a primitive shoulder and a brain only a third of ours.",
+      "observedTraits": [
+        "small (~500 cc) brain",
+        "human-like feet",
+        "curved fingers",
+        "climbing shoulder"
+      ],
+      "behavioralChange": "Walked the ground and climbed; its remains, deep in the Rising Star cave, hint at deliberate body disposal — still debated.",
+      "pressures": [
+        {
+          "change": "Small brain kept late in time",
+          "pressure": "Big brains are not inevitable — this lineage stayed small-brained and survived anyway."
+        }
+      ],
+      "certainty": "Securely a species; its origins and behaviour are actively debated.",
+      "image": {
+        "src": "/images/lineage/naledi-recon.jpg",
+        "local": true,
+        "kind": "face reconstruction",
+        "creator": "Cícero Moraes",
+        "license": "CC BY-SA 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Homo_naledi_facial_reconstruction.jpg",
+        "caveat": "A reconstruction from well-preserved skulls; soft tissue is interpretive."
+      },
+      "fossilSites": [
+        {
+          "site": "Rising Star Cave",
+          "country": "South Africa",
+          "lat": -25.91,
+          "lon": 27.79,
+          "specimen": "Dinaledi assemblage",
+          "note": "Hundreds of bones deep inside the cave.",
+          "olderMa": 0.335,
+          "youngerMa": 0.236
+        }
+      ],
+      "sourceIds": [
+        "berger-2015",
+        "si-species-index"
+      ]
+    },
+    {
+      "id": "homo-floresiensis",
+      "scientificName": "Homo floresiensis",
+      "commonName": "the ‘Hobbit’",
+      "role": "Island-dwarfed cousin",
+      "branch": "sibling",
+      "posture": "biped",
+      "heightMeters": 1.06,
+      "olderMa": 0.1,
+      "youngerMa": 0.05,
+      "col": 12,
+      "lane": 2.3,
+      "regions": [
+        "Indonesia (Flores)"
+      ],
+      "summary": "A roughly one-metre-tall human relative that survived on an Indonesian island into surprisingly recent times.",
+      "physicalChange": "Dramatically shrunk: barely a metre tall with a tiny grapefruit-sized brain, yet still walked upright and made tools.",
+      "observedTraits": [
+        "~1.06 m tall",
+        "very small brain",
+        "relatively large feet",
+        "made stone tools"
+      ],
+      "behavioralChange": "Lived isolated on Flores, hunting dwarf elephants and giant rodents — a textbook case of island dwarfism.",
+      "pressures": [
+        {
+          "change": "Whole-body shrinking",
+          "pressure": "Limited food on a small island favours smaller bodies (island dwarfism)."
+        }
+      ],
+      "certainty": "A real species; likely a dwarfed descendant of an earlier Homo such as erectus.",
+      "image": {
+        "src": "/images/lineage/floresiensis-cast.jpg",
+        "local": true,
+        "kind": "fossil cast",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Homo_Florensiensis-MGL_95216-P5030051-white.jpg",
+        "caveat": "A skeletal cast of the tiny-bodied 'Hobbit'."
+      },
+      "fossilSites": [
+        {
+          "site": "Liang Bua",
+          "country": "Indonesia",
+          "lat": -8.52,
+          "lon": 120.44,
+          "specimen": "LB1",
+          "note": "Partial skeleton of a ~1 m adult.",
+          "olderMa": 0.1,
+          "youngerMa": 0.05
+        }
+      ],
+      "sourceIds": [
+        "brown-2004",
+        "si-species-index"
+      ]
+    },
+    {
+      "id": "middle-pleistocene-homo",
+      "scientificName": "Middle Pleistocene Homo",
+      "commonName": "often called Homo heidelbergensis",
+      "role": "Big-brained shared ancestors",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.75,
+      "olderMa": 0.7,
+      "youngerMa": 0.2,
+      "col": 11.9,
+      "lane": 0,
+      "regions": [
+        "Africa",
+        "Europe",
+        "western Asia"
+      ],
+      "summary": "The broad, big-brained populations that gave rise to us, Neanderthals and Denisovans — the fork before the final three branches.",
+      "physicalChange": "Brains as large as modern ones in a still-robust, heavy-browed skull and a powerful body.",
+      "observedTraits": [
+        "large brain",
+        "massive brow ridges",
+        "large face",
+        "robust skeleton"
+      ],
+      "behavioralChange": "Hunted big game with wooden spears, used fire more routinely, and built shelters — increasingly complex foraging across two continents.",
+      "pressures": [
+        {
+          "change": "Brain reaching modern size",
+          "pressure": "Planning-heavy hunting, fire use and social learning across variable Ice-Age climates."
+        }
+      ],
+      "certainty": "Useful population-grade; the single species label is disputed.",
+      "image": {
+        "src": "/images/human-lineage/homo-heidelbergensis.png",
+        "local": true,
+        "kind": "forensic face reconstruction",
+        "creator": "Cícero Moraes",
+        "license": "CC BY-SA 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Homo_heidelbergensis_-_forensic_facial_reconstruction.png",
+        "caveat": "One face cannot represent all these populations; soft tissue is interpretive."
+      },
+      "fossilSites": [
+        {
+          "site": "Broken Hill (Kabwe)",
+          "country": "Zambia",
+          "lat": -14.44,
+          "lon": 28.45,
+          "specimen": "Kabwe 1",
+          "note": "Robust African cranium.",
+          "olderMa": 0.324,
+          "youngerMa": 0.274
+        }
+      ],
+      "sourceIds": [
+        "si-heidelbergensis",
+        "anton-2014",
+        "grun-2020"
+      ]
+    },
+    {
+      "id": "homo-neanderthalensis",
+      "scientificName": "Homo neanderthalensis",
+      "commonName": "Neanderthals",
+      "role": "Cold-adapted sibling (interbred with us)",
+      "branch": "sibling",
+      "posture": "biped",
+      "heightMeters": 1.65,
+      "olderMa": 0.4,
+      "youngerMa": 0.04,
+      "col": 13,
+      "lane": -1.2,
+      "regions": [
+        "Europe",
+        "western and central Asia"
+      ],
+      "summary": "Not primitive humans but a close sibling species — and many living people carry their DNA.",
+      "physicalChange": "A stocky, powerful, cold-adapted body with a long low skull, big nose and a brain as large as ours.",
+      "observedTraits": [
+        "robust barrel-chested body",
+        "large nose and midface",
+        "long low skull",
+        "large brain"
+      ],
+      "behavioralChange": "Skilled big-game hunters who made tools, used fire, cared for their injured, and buried some of their dead.",
+      "pressures": [
+        {
+          "change": "Stocky, heat-conserving body",
+          "pressure": "Surviving repeated Ice-Age cold in Europe and Asia."
+        }
+      ],
+      "certainty": "Very well known from fossils and genomes; interbred with Homo sapiens.",
+      "image": {
+        "src": "/images/human-lineage/neanderthal-full-body.jpg",
+        "local": true,
+        "kind": "full-body life reconstruction",
+        "creator": "Henryk Fudali (sculpture)",
+        "license": "CC BY-SA 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:20230711_Neanderthal_Homo_neanderthalensis_Silesian_Zoological_Garden_Chorz%C3%B3w_Poland_01.jpg",
+        "caveat": "Body proportions are fossil-based; hair, skin and clothing are interpretive."
+      },
+      "fossilSites": [
+        {
+          "site": "Shanidar Cave",
+          "country": "Iraq",
+          "lat": 36.83,
+          "lon": 44.22,
+          "specimen": "Shanidar 1",
+          "note": "Adult who survived serious injuries.",
+          "olderMa": 0.07,
+          "youngerMa": 0.045
+        }
+      ],
+      "sourceIds": [
+        "si-neanderthalensis",
+        "green-2010"
+      ]
+    },
+    {
+      "id": "denisovans",
+      "scientificName": "Denisovans",
+      "commonName": "the genome-first humans",
+      "role": "Sibling known mostly from DNA",
+      "branch": "sibling",
+      "posture": "biped",
+      "heightMeters": 1.6,
+      "olderMa": 0.4,
+      "youngerMa": 0.05,
+      "col": 13.2,
+      "lane": -2.2,
+      "regions": [
+        "Asia, from Siberia to Tibet"
+      ],
+      "summary": "A whole human population first recognised from DNA, not bones — sister group to the Neanderthals.",
+      "physicalChange": "Anatomy is still fragmentary (a finger bone, a jaw, some teeth), so much of their appearance is inferred from genes.",
+      "observedTraits": [
+        "very large molars",
+        "robust Tibetan jaw",
+        "genetically distinct from Neanderthals",
+        "sparse fossils"
+      ],
+      "behavioralChange": "Lived across Asia, including the high Tibetan Plateau, and passed high-altitude gene variants to living Tibetan people.",
+      "pressures": [
+        {
+          "change": "High-altitude adaptation (via genes)",
+          "pressure": "Living at low-oxygen Tibetan elevations."
+        }
+      ],
+      "certainty": "Genomically certain; many fossil attributions are tentative.",
+      "image": {
+        "src": "/images/lineage/xiahe-mandible.jpg",
+        "local": true,
+        "kind": "fossil jaw",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Xiahe_mandible.jpg",
+        "caveat": "The Xiahe mandible — one of the few securely Denisovan fossils; no skull or body is known."
+      },
+      "fossilSites": [
+        {
+          "site": "Denisova Cave",
+          "country": "Russia",
+          "lat": 51.4,
+          "lon": 84.68,
+          "specimen": "Denisova 3",
+          "note": "Finger bone that yielded the defining genome.",
+          "olderMa": 0.08,
+          "youngerMa": 0.05
+        },
+        {
+          "site": "Baishiya Karst Cave",
+          "country": "China",
+          "lat": 35.45,
+          "lon": 102.58,
+          "specimen": "Xiahe mandible",
+          "note": "Denisovans on the Tibetan Plateau.",
+          "olderMa": 0.17,
+          "youngerMa": 0.15
+        }
+      ],
+      "sourceIds": [
+        "meyer-2012",
+        "chen-2019"
+      ]
+    },
+    {
+      "id": "homo-sapiens",
+      "scientificName": "Homo sapiens",
+      "commonName": "us",
+      "role": "Living humans today",
+      "branch": "spine",
+      "posture": "biped",
+      "heightMeters": 1.7,
+      "olderMa": 0.315,
+      "youngerMa": 0,
+      "col": 13.4,
+      "lane": 0,
+      "regions": [
+        "Africa, then worldwide"
+      ],
+      "summary": "Our own species — assembled in Africa from connected populations, then spread across the planet.",
+      "physicalChange": "A high, rounded braincase, a flat face tucked under the brain, a chin, and a lightly built skeleton.",
+      "observedTraits": [
+        "high rounded skull",
+        "small face, projecting chin",
+        "lightly built skeleton",
+        "cumulative culture"
+      ],
+      "behavioralChange": "Symbolic art, language, long-distance trade and ever-accumulating technology — culture became the main way we adapt.",
+      "pressures": [
+        {
+          "change": "Globular brain and light skeleton",
+          "pressure": "Heavy reliance on social learning and culture rather than brute strength."
+        }
+      ],
+      "certainty": "Our species' reality is certain; no single fossil is 'the first human'.",
+      "image": {
+        "src": "/images/lineage/sapiens-akha.jpg",
+        "local": true,
+        "kind": "photograph",
+        "creator": "Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Akha_cropped_hires.JPG",
+        "caveat": "A photograph of a living person representing our species today."
+      },
+      "fossilSites": [
+        {
+          "site": "Jebel Irhoud",
+          "country": "Morocco",
+          "lat": 31.96,
+          "lon": -8.87,
+          "specimen": "Jebel Irhoud 1",
+          "note": "Among the earliest Homo sapiens fossils.",
+          "olderMa": 0.335,
+          "youngerMa": 0.295
+        },
+        {
+          "site": "Omo Kibish",
+          "country": "Ethiopia",
+          "lat": 5.4,
+          "lon": 35.93,
+          "specimen": "Omo I",
+          "note": "Early modern cranial form.",
+          "olderMa": 0.233,
+          "youngerMa": 0.2
+        }
+      ],
+      "sourceIds": [
+        "si-homo-sapiens",
+        "hublin-2017",
+        "vidal-2022"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "fromId": "ekembo-nyanzae",
+      "toId": "nakalipithecus-nakayamai",
+      "kind": "context"
+    },
+    {
+      "fromId": "nakalipithecus-nakayamai",
+      "toId": "gorilla",
+      "kind": "split"
+    },
+    {
+      "fromId": "nakalipithecus-nakayamai",
+      "toId": "chimpanzee",
+      "kind": "split"
+    },
+    {
+      "fromId": "nakalipithecus-nakayamai",
+      "toId": "sahelanthropus-tchadensis",
+      "kind": "context"
+    },
+    {
+      "fromId": "sahelanthropus-tchadensis",
+      "toId": "orrorin-tugenensis",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "sahelanthropus-tchadensis",
+      "toId": "ardipithecus-kadabba",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "ardipithecus-kadabba",
+      "toId": "ardipithecus-ramidus",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "ardipithecus-ramidus",
+      "toId": "australopithecus-anamensis",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "australopithecus-anamensis",
+      "toId": "australopithecus-afarensis",
+      "kind": "supported"
+    },
+    {
+      "fromId": "australopithecus-afarensis",
+      "toId": "australopithecus-africanus",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "australopithecus-afarensis",
+      "toId": "paranthropus-boisei",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "australopithecus-afarensis",
+      "toId": "homo-habilis",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "homo-habilis",
+      "toId": "homo-erectus",
+      "kind": "supported"
+    },
+    {
+      "fromId": "homo-erectus",
+      "toId": "homo-floresiensis",
+      "kind": "candidate"
+    },
+    {
+      "fromId": "homo-erectus",
+      "toId": "homo-naledi",
+      "kind": "context"
+    },
+    {
+      "fromId": "homo-erectus",
+      "toId": "middle-pleistocene-homo",
+      "kind": "supported"
+    },
+    {
+      "fromId": "middle-pleistocene-homo",
+      "toId": "homo-sapiens",
+      "kind": "supported"
+    },
+    {
+      "fromId": "middle-pleistocene-homo",
+      "toId": "homo-neanderthalensis",
+      "kind": "supported"
+    },
+    {
+      "fromId": "middle-pleistocene-homo",
+      "toId": "denisovans",
+      "kind": "supported"
+    },
+    {
+      "fromId": "homo-neanderthalensis",
+      "toId": "homo-sapiens",
+      "kind": "gene-flow"
+    },
+    {
+      "fromId": "denisovans",
+      "toId": "homo-sapiens",
+      "kind": "gene-flow"
+    }
+  ]
+}

@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "media.springernature.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        pathname: "/wikipedia/commons/**",
+      },
     ],
   },
 };
