@@ -87,10 +87,20 @@ type ExplorerProps = {
 
 const CARD_WIDTH = 178;
 const CARD_HEIGHT = 250;
-const PAD_TOP = 96;
+const CARD_PAD_TOP = 10;
+const CARD_PAD_BOTTOM = 11;
+const ROW_GAP = 5;
+const NAME_ROW_HEIGHT = 20;
+const AGE_ROW_HEIGHT = 13;
+// Fixed (never "auto") so the name/age rows can never be squeezed below the text's real
+// height by the grid — an auto row whose content has overflow:hidden contributes a
+// min-content of 0, so the grid can shrink it far below the text, which then renders at
+// full size anyway and visually bleeds into the figure area above it.
+const FOOTER_HEIGHT = CARD_PAD_TOP + CARD_PAD_BOTTOM + ROW_GAP * 2 + NAME_ROW_HEIGHT + AGE_ROW_HEIGHT;
 const MIN_FIG = 56;
 const MAX_FIG = 172;
 const MAX_HEIGHT_M = 1.75;
+const MIN_SCALE = 0.4;
 
 const eraLabels = [
   { col: 0.2, label: "Miocene apes", date: "~20 Ma" },
@@ -119,16 +129,21 @@ function formatRange(olderMa: number, youngerMa: number) {
   return `${formatAge(olderMa)} – ${formatAge(youngerMa)}`;
 }
 
-function figureHeight(heightMeters: number) {
+function figureHeight(heightMeters: number, scale: number, figureAreaHeight: number) {
   const ratio = Math.min(heightMeters, MAX_HEIGHT_M) / MAX_HEIGHT_M;
-  return Math.round(MIN_FIG + ratio * (MAX_FIG - MIN_FIG));
+  const minFig = Math.max(20, MIN_FIG * scale);
+  const maxFig = Math.max(minFig + 8, MAX_FIG * scale);
+  const raw = minFig + ratio * (maxFig - minFig);
+  // Hard cap to the actual figure-area box (minus the figBox's own bottom margin) so the
+  // image can never overflow its row regardless of how the scale math above resolves.
+  return Math.round(Math.min(raw, figureAreaHeight - 8));
 }
 
-function Figure({ taxon, eager = false }: { taxon: Taxon; eager?: boolean }) {
+function Figure({ taxon, scale, figureAreaHeight, eager = false }: { taxon: Taxon; scale: number; figureAreaHeight: number; eager?: boolean }) {
   const [loaded, setLoaded] = useState(false);
-  const height = figureHeight(taxon.heightMeters);
+  const height = figureHeight(taxon.heightMeters, scale, figureAreaHeight);
   return (
-    <div className={styles.figureArea}>
+    <div className={styles.figureArea} style={{ height: figureAreaHeight }}>
       <span className={styles.groundLine} aria-hidden="true" />
       <div className={styles.figBox} style={{ height }}>
         {!loaded && <span className={styles.figLoader} aria-hidden="true" />}
@@ -150,22 +165,33 @@ function TaxonCard({
   taxon,
   x,
   y,
+  cardHeight,
+  scale,
   onOpen,
 }: {
   taxon: Taxon;
   x: number;
   y: number;
+  cardHeight: number;
+  scale: number;
   onOpen: (id: string) => void;
 }) {
+  const figureAreaHeight = Math.max(30, cardHeight - FOOTER_HEIGHT);
   return (
     <button
       type="button"
       className={`${styles.figCard} ${branchAccent[taxon.branch]}`}
-      style={{ left: x, top: y, width: CARD_WIDTH, height: CARD_HEIGHT }}
+      style={{
+        left: x,
+        top: y,
+        width: CARD_WIDTH,
+        height: cardHeight,
+        gridTemplateRows: `${figureAreaHeight}px ${NAME_ROW_HEIGHT}px ${AGE_ROW_HEIGHT}px`,
+      }}
       onClick={() => onOpen(taxon.id)}
       aria-label={`Open details for ${taxon.scientificName}`}
     >
-      <Figure taxon={taxon} eager={taxon.col < 6} />
+      <Figure taxon={taxon} scale={scale} figureAreaHeight={figureAreaHeight} eager={taxon.col < 6} />
       <span className={styles.cardName}>{taxon.scientificName}</span>
       <span className={styles.cardAge}>{formatRange(taxon.olderMa, taxon.youngerMa)}</span>
     </button>
@@ -386,29 +412,57 @@ function DetailModal({
 export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const treeViewportRef = useRef<HTMLDivElement>(null);
+  const [viewportHeight, setViewportHeight] = useState(0);
 
   const { layout } = data;
   const taxaById = useMemo(() => new Map(data.taxa.map((t) => [t.id, t])), [data.taxa]);
   const sourcesById = useMemo(() => new Map(sources.map((s) => [s.id, s])), [sources]);
 
+  useEffect(() => {
+    const el = treeViewportRef.current;
+    if (!el) return;
+    const measure = () => setViewportHeight(el.clientHeight);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Lane spacing is derived from the ROUNDED card height plus a fixed gap (not from two
+  // independently-scaled values) so lanePx > cardHeight is guaranteed exactly, with no
+  // floating-point race — siblings one lane apart sit flush but never overlap, at any size.
+  const LANE_GAP = 2;
+  const { cardHeight, span, minLane } = useMemo(() => {
+    const laneValues = data.taxa.map((t) => layout.baseLane + t.lane);
+    const lo = Math.min(...laneValues);
+    const hi = Math.max(...laneValues);
+    const laneSpan = hi - lo || 1;
+    const naturalTotal = laneSpan * (CARD_HEIGHT + LANE_GAP) + CARD_HEIGHT + 24;
+    const available = viewportHeight || naturalTotal;
+    const ideal = (available - 24 - laneSpan * LANE_GAP) / (laneSpan + 1);
+    const h = Math.round(Math.max(MIN_SCALE * CARD_HEIGHT, Math.min(CARD_HEIGHT, ideal)));
+    return { cardHeight: h, span: laneSpan, minLane: lo };
+  }, [data.taxa, layout, viewportHeight]);
+
+  const scale = cardHeight / CARD_HEIGHT;
+  const lanePx = cardHeight + LANE_GAP;
+  const canvasHeight = Math.max(viewportHeight, span * lanePx + cardHeight + 24);
+
   const positions = useMemo(() => {
     const map = new Map<string, { x: number; y: number; cx: number; cy: number }>();
     for (const t of data.taxa) {
       const x = layout.padX + t.col * layout.colSpacing;
-      const y = PAD_TOP + (layout.baseLane + t.lane) * layout.laneSpacing;
-      map.set(t.id, { x, y, cx: x + CARD_WIDTH / 2, cy: y + CARD_HEIGHT / 2 });
+      const laneValue = layout.baseLane + t.lane;
+      const y = 12 + (laneValue - minLane) * lanePx;
+      map.set(t.id, { x, y, cx: x + CARD_WIDTH / 2, cy: y + cardHeight / 2 });
     }
     return map;
-  }, [data.taxa, layout]);
+  }, [data.taxa, layout, lanePx, minLane, cardHeight]);
 
-  const { canvasWidth, canvasHeight } = useMemo(() => {
+  const canvasWidth = useMemo(() => {
     let w = 0;
-    let h = 0;
-    for (const p of positions.values()) {
-      w = Math.max(w, p.x + CARD_WIDTH);
-      h = Math.max(h, p.y + CARD_HEIGHT);
-    }
-    return { canvasWidth: w + layout.padX, canvasHeight: h + 60 };
+    for (const p of positions.values()) w = Math.max(w, p.x + CARD_WIDTH);
+    return w + layout.padX;
   }, [positions, layout.padX]);
 
   const navEdges = useMemo(() => data.edges.filter((e) => e.kind !== "gene-flow"), [data.edges]);
@@ -449,33 +503,15 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
       <header className={styles.siteHeader}>
         <a className={styles.brand} href="#top" aria-label="Fossil Lineages home">
           <span className={styles.brandMark} aria-hidden="true">FL</span>
-          <span><strong>Fossil Lineages</strong><small>How the human body changed</small></span>
+          <span><strong>Fossil Lineages</strong></span>
         </a>
-        <div className={styles.headerMeta}>
-          <span><i className={styles.legendSolid} /> Supported step</span>
-          <span><i className={styles.legendDotted} /> Candidate / context</span>
-          <span><i className={styles.legendSplit} /> Split to living cousin</span>
-          <span><i className={styles.legendTeal} /> Later interbreeding</span>
+        <div className={styles.scrollControls}>
+          <button type="button" onClick={() => scrollTree(-1)} aria-label="Scroll left"><ArrowIcon direction="left" /></button>
+          <button type="button" onClick={() => scrollTree(1)} aria-label="Scroll right"><ArrowIcon direction="right" /></button>
         </div>
       </header>
 
-      <section className={styles.explorerSection} id="top" aria-labelledby="tree-heading">
-        <div className={styles.explorerHeader}>
-          <div>
-            <p className={styles.sectionNumber}>01 / WALK THE LINEAGE</p>
-            <h2 id="tree-heading">Watch the body <span>change</span></h2>
-            <p className={styles.lede}>
-              Figures are sized to real body height and stand on a shared ground line, so the change is visible as you
-              scroll. Click any figure for what changed, how it lived, and why.
-            </p>
-          </div>
-          <div className={styles.scrollControls}>
-            <span>Deep past → present</span>
-            <button type="button" onClick={() => scrollTree(-1)} aria-label="Scroll left"><ArrowIcon direction="left" /></button>
-            <button type="button" onClick={() => scrollTree(1)} aria-label="Scroll right"><ArrowIcon direction="right" /></button>
-          </div>
-        </div>
-
+      <section className={styles.explorerSection} id="top" aria-label="Evolutionary tree">
         <div className={styles.treeViewport} ref={treeViewportRef} tabIndex={0} aria-label="Scrollable evolutionary tree">
           <div className={styles.treeCanvas} style={{ width: canvasWidth, height: canvasHeight }}>
             {eraLabels.map((era) => (
@@ -500,19 +536,9 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
 
             {data.taxa.map((taxon) => {
               const p = positions.get(taxon.id)!;
-              return <TaxonCard key={taxon.id} taxon={taxon} x={p.x} y={p.y} onOpen={setSelectedId} />;
+              return <TaxonCard key={taxon.id} taxon={taxon} x={p.x} y={p.y} cardHeight={cardHeight} scale={scale} onOpen={setSelectedId} />;
             })}
           </div>
-        </div>
-
-        <div className={styles.treeFootnote}>
-          <strong>How to read this</strong>
-          <p>
-            Solid lines are well-supported steps; dashed lines are candidates or context — not proven direct ancestors.
-            Gorillas and chimps branch off as living <em>cousins</em>, and teal curves show later interbreeding. This is
-            a branching bush, not a ladder.
-          </p>
-          <span>Best-evidence reconstructions — interpretations, not photographs.</span>
         </div>
       </section>
 

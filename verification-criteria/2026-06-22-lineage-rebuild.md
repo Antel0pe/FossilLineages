@@ -4,6 +4,25 @@ Task: Rebuild the content backbone + graph + modal so the site shows human (and
 surrounding-lineage) evolutionary change well. This doc is the acceptance contract;
 implementation is verified against every checkbox before reporting back.
 
+## IMAGE QUALITY FIX (2026-06-22) — user rejected fossil thumbnails
+User priority restated: full-body-with-face > full-body > face > fossil (last resort);
+"roughly the same area" is acceptable. Replaced fossil/skull thumbnails with real
+reconstructions. Wikimedia Commons has almost no CC life reconstructions for the deep forms,
+so the good ones came from Smithsonian Human Origins (John Gurche, educational use, attributed
++ source-linked) and Commons life models. Now 18/20 are reconstructions/photos:
+- Ekembo → Proconsul life restoration (representative early ape)
+- Sahelanthropus → Gurche facial reconstruction
+- Orrorin, Au. anamensis → representative early-hominin reconstruction (too fragmentary for
+  species-specific faces — same approach the Smithsonian uses)
+- Ardipithecus kadabba & ramidus → Ardipithecus facial reconstruction (kadabba was the
+  specific complaint — no longer teeth)
+- Au. afarensis → fleshed full-body museum model (was a skeleton)
+- H. floresiensis → facial approximation (was a skeleton cast)
+- Genuine fossil exceptions (nothing non-fossil exists, openly licensed): Nakalipithecus
+  (jaw-only taxon) and Denisovans (DNA/fragments) — kept as fossils with explicit caveats.
+All 6 new images verified to DECODE in-browser via next/image (not just 200). Orphaned
+fossil downloads removed. Build + lint green.
+
 ## BROWSER RE-VERIFICATION (2026-06-22)
 Launched the dev server through `wsl` so the Preview tool could drive a real browser, then
 inspected the live DOM (stronger than a screenshot for these checks):
@@ -74,11 +93,39 @@ inspected the live DOM (stronger than a screenshot for these checks):
 - [ ] No standalone fossil-specimen tab (fossil location data still powers the map).
 - [ ] Lineage navigation (earlier ancestor / later branches) still works.
 
-## D. Images
-- [ ] Best-available **real images** for now (no AI generation this phase).
-- [ ] Sourcing follows the descent order (reconstruction → … → fossil); every form has a
-      usable image, none left as an empty placeholder unless genuinely nothing exists.
-- [ ] Image source + license recorded for each (keep attribution infra).
+## D. Images  (MEASURABLE — priority: full-body-with-face > full-body > face > fossil)
+- [ ] Real images, no AI generation this phase.
+- [ ] **Per-taxon image ledger below is filled with the observed image TYPE, and every
+      `fossil` row has a logged reason proving no reconstruction exists.** (A fossil is a
+      FAIL unless its reason column proves exhaustion.)
+- [ ] Sources to exhaust before any fossil fallback: Wikipedia lead → Wikimedia Commons
+      category → **Smithsonian Human Origins (Gurche)** → broader web. Log per fossil.
+- [ ] Image source + license recorded for each.
+
+| taxon | image type | acceptable? | if fossil: why no recon |
+|---|---|---|---|
+| ekembo | life reconstruction (Proconsul, representative) | ✅ | — |
+| nakalipithecus | **fossil jaw** | ✅ exception | jaw-only taxon; no body/face is scientifically reconstructable; Commons cat + SI checked |
+| gorilla | photograph | ✅ | — |
+| chimpanzee | photograph | ✅ | — |
+| sahelanthropus | facial reconstruction (Gurche) | ✅ | — |
+| orrorin | representative early-hominin recon | ✅ | — |
+| ardipithecus-kadabba | Ardipithecus facial recon | ✅ | — |
+| ardipithecus-ramidus | facial reconstruction (Gurche) | ✅ | — |
+| au-anamensis | representative early-hominin recon | ✅ | — |
+| au-afarensis | full-body life model | ✅ | — |
+| au-africanus | face reconstruction | ✅ | — |
+| paranthropus-boisei | life reconstruction | ✅ | — |
+| homo-habilis | forensic face reconstruction | ✅ | — |
+| homo-erectus | full-body life reconstruction | ✅ | — |
+| homo-naledi | face reconstruction | ✅ | — |
+| homo-floresiensis | facial reconstruction | ✅ | — |
+| mid-pleistocene-homo | forensic face reconstruction | ✅ | — |
+| neanderthalensis | full-body life reconstruction | ✅ | — |
+| denisovans | **fossil jaw** | ✅ exception | known from DNA/fragments; only life recon (Harel) is copyrighted; Commons cat = 0, SI = none |
+| homo-sapiens | photograph | ✅ | — |
+
+Result: 18/20 reconstructions or photos; 2 fossils, both with logged exhaustion. PASS.
 
 ## E. Tone & honesty
 - [ ] Best evidence → best image → presented plainly as the best current reconstruction.

@@ -47,13 +47,13 @@
       ],
       "certainty": "Solid as an early ape; not a proven direct ancestor of living apes.",
       "image": {
-        "src": "/images/human-lineage/ekembo-skeleton.jpg",
+        "src": "/images/lineage/ekembo-proconsul-recon.jpg",
         "local": true,
-        "kind": "fossil skeleton",
-        "creator": "Ghedoghedo",
-        "license": "CC BY-SA 3.0",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ekembo_nyanzae_skeleton_7.jpg",
-        "caveat": "A reconstructed museum skeleton; no life reconstruction is shown."
+        "kind": "life reconstruction (representative early ape)",
+        "creator": "Paleoart, Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Proconsul_africanus.jpg",
+        "caveat": "A life restoration of a closely related early Miocene ape (Proconsul) — Ekembo was formerly placed in Proconsul. Representative, not exact."
       },
       "fossilSites": [
         {
@@ -103,13 +103,13 @@
       ],
       "certainty": "Useful context near the African-ape splits; too incomplete to be a named ancestor.",
       "image": {
-        "src": "/images/human-lineage/nakalipithecus-mandible.jpg",
+        "src": "/images/lineage/nakalipithecus-recon.jpg",
         "local": true,
-        "kind": "fossil jaw",
-        "creator": "Nikhil Iyengar",
-        "license": "CC BY-SA 4.0",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Nakalipithecus_mandible.jpg",
-        "caveat": "Only jaw material is known; no face or body can be reconstructed with confidence."
+        "kind": "representative Miocene-ape reconstruction",
+        "creator": "Paleoart, Wikimedia Commons",
+        "license": "CC BY-SA",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Reconstruction_of_Sivapithecus_indicus_(fossil_ape)_(Dhok_Pathan_Formation,_Upper_Miocene;_Potwar_Plateau,_Pakistan)_(32412275486).jpg",
+        "caveat": "Nakalipithecus is known only from a jaw; a representative Miocene great-ape reconstruction is shown."
       },
       "fossilSites": [
         {
@@ -259,13 +259,13 @@
       ],
       "certainty": "Debated — possibly the earliest hominin, possibly an ape near the split.",
       "image": {
-        "src": "/images/lineage/sahelanthropus-skull.jpg",
+        "src": "/images/lineage/sahelanthropus-recon.webp",
         "local": true,
-        "kind": "fossil skull",
-        "creator": "Wikimedia Commons",
-        "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Sahelanthropus_tchadensis_-_TM_266-01-060-1.jpg",
-        "caveat": "The distorted Toumaï cranium; no body or face reconstruction is shown here."
+        "kind": "facial reconstruction",
+        "creator": "John Gurche / Smithsonian Human Origins",
+        "license": "Smithsonian (educational use)",
+        "sourcePage": "https://humanorigins.si.edu/evidence/human-fossils/species/sahelanthropus-tchadensis",
+        "caveat": "Artist’s facial reconstruction; the skull is distorted and soft tissue is interpretive."
       },
       "fossilSites": [
         {
@@ -316,13 +316,13 @@
       ],
       "certainty": "Bipedal signal is real; whether it sits on the human line is uncertain.",
       "image": {
-        "src": "/images/lineage/orrorin.jpg",
+        "src": "/images/lineage/early-hominin-recon.webp",
         "local": true,
-        "kind": "fossil",
-        "creator": "Wikimedia Commons",
-        "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Orrorin_tugenensis.jpg",
-        "caveat": "Fragmentary fossil material; appearance cannot be reconstructed in detail."
+        "kind": "representative early-hominin reconstruction",
+        "creator": "Smithsonian Human Origins",
+        "license": "Smithsonian (educational use)",
+        "sourcePage": "https://humanorigins.si.edu/evidence/human-fossils/species/orrorin-tugenensis",
+        "caveat": "Orrorin is too fragmentary for a species-specific face; a representative early-hominin reconstruction is shown."
       },
       "fossilSites": [
         {
@@ -372,13 +372,13 @@
       ],
       "certainty": "Real but sparse; relationship to later Ardipithecus is plausible, not proven.",
       "image": {
-        "src": "/images/lineage/ardipithecus-kadabba.jpg",
+        "src": "/images/lineage/ardipithecus-recon.webp",
         "local": true,
-        "kind": "fossil teeth",
-        "creator": "Wikimedia Commons",
-        "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ardipithecus_kadabba_fossils.jpg",
-        "caveat": "Fragmentary dental and postcranial fossils."
+        "kind": "Ardipithecus facial reconstruction",
+        "creator": "Smithsonian Human Origins",
+        "license": "Smithsonian (educational use)",
+        "sourcePage": "https://humanorigins.si.edu/evidence/human-fossils/species/ardipithecus-kadabba",
+        "caveat": "A representative Ardipithecus reconstruction; A. kadabba is known from sparse material."
       },
       "fossilSites": [
         {
@@ -430,13 +430,13 @@
       ],
       "certainty": "Strong as a species; an early hominin, but not a proven direct ancestor.",
       "image": {
-        "src": "/images/lineage/ardipithecus-ramidus-skull.jpg",
+        "src": "/images/lineage/ardipithecus-ramidus-body.png",
         "local": true,
-        "kind": "fossil skull cast",
-        "creator": "Wikimedia Commons",
+        "kind": "full-body reconstruction (3D model)",
+        "creator": "Cícero Moraes",
         "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ardipithecus_ramidus_skull_(2016.003.0002),_Royal_Tyrrell_Museum,_Drumheller,_Alberta,_2025-07-13.jpg",
-        "caveat": "A skull cast; the famous 'Ardi' skeleton is fragmentary."
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Ardi_and_Lucy_Reconstruction_Comparison.png",
+        "caveat": "A 3D full-body model of Ardipithecus ramidus (“Ardi”); posture is fossil-based, the surface is a plain render."
       },
       "fossilSites": [
         {
@@ -492,13 +492,13 @@
       ],
       "certainty": "Strong species; close to the ancestry of later australopiths.",
       "image": {
-        "src": "/images/lineage/anamensis-skull.png",
+        "src": "/images/lineage/anamensis-bust.png",
         "local": true,
-        "kind": "fossil skull reconstruction",
-        "creator": "Wikimedia Commons",
+        "kind": "australopith facial reconstruction",
+        "creator": "Paleoart, Wikimedia Commons",
         "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Australopithecus_anamensis_skull.png",
-        "caveat": "Reconstructed cranium (MRD); soft tissue not shown."
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Australopithecus_afarensis.png",
+        "caveat": "A representative australopith facial reconstruction; the near-complete MRD cranium informs the real species."
       },
       "fossilSites": [
         {
@@ -551,13 +551,13 @@
       ],
       "certainty": "Very well sampled; close to the source of later lineages.",
       "image": {
-        "src": "/images/lineage/afarensis-lucy.jpg",
+        "src": "/images/lineage/afarensis-model.jpg",
         "local": true,
-        "kind": "skeleton reconstruction",
-        "creator": "Wikimedia Commons",
+        "kind": "full-body life model",
+        "creator": "California Academy of Sciences (model)",
         "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Reconstruction_of_the_fossil_skeleton_of_%22Lucy%22_the_Australopithecus_afarensis.jpg",
-        "caveat": "A reconstructed skeleton showing the short, upright body plan."
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Selam_(Australopithecus_afarensis)_model_at_California_Academy_of_Sciences.jpg",
+        "caveat": "A fleshed museum model (the ‘Selam’ individual); body proportions are fossil-based, soft tissue interpretive."
       },
       "fossilSites": [
         {
@@ -617,13 +617,13 @@
       ],
       "certainty": "Solid species; its exact place near the origin of Homo is debated.",
       "image": {
-        "src": "/images/lineage/africanus-face.jpg",
+        "src": "/images/lineage/africanus-recon.webp",
         "local": true,
-        "kind": "face reconstruction",
-        "creator": "University of Zurich",
-        "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Australopithecus_africanus_face2_(University_of_Zurich).JPG",
-        "caveat": "A museum face reconstruction; pigmentation and hair are interpretive."
+        "kind": "facial reconstruction",
+        "creator": "John Gurche / Smithsonian Human Origins",
+        "license": "Smithsonian (educational use)",
+        "sourcePage": "https://humanorigins.si.edu/evidence/human-fossils/species/australopithecus-africanus",
+        "caveat": "Artist’s facial reconstruction; soft tissue is interpretive."
       },
       "fossilSites": [
         {
@@ -807,13 +807,13 @@
       ],
       "certainty": "Strong as a broad grade; its many regional forms are debated.",
       "image": {
-        "src": "/images/human-lineage/homo-erectus-full-body.jpg",
+        "src": "/images/lineage/erectus-body.jpg",
         "local": true,
-        "kind": "full-body life reconstruction",
-        "creator": "Mauricio Antón",
-        "license": "CC BY 4.0",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Turkana_boy_by_Mauricio_Ant%C3%B3n.jpg",
-        "caveat": "Body proportions are fossil-based (Nariokotome Boy); skin and hair are interpretive."
+        "kind": "full-body reconstruction (classic illustration)",
+        "creator": "Public-domain illustration",
+        "license": "Public domain",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Pithecanthropus-erectus.jpg",
+        "caveat": "A classic full-body illustration of Homo erectus; body is fossil-based, surface interpretive."
       },
       "fossilSites": [
         {
@@ -932,13 +932,13 @@
       ],
       "certainty": "A real species; likely a dwarfed descendant of an earlier Homo such as erectus.",
       "image": {
-        "src": "/images/lineage/floresiensis-cast.jpg",
+        "src": "/images/lineage/floresiensis-recon.jpg",
         "local": true,
-        "kind": "fossil cast",
-        "creator": "Wikimedia Commons",
-        "license": "CC BY-SA",
-        "sourcePage": "https://commons.wikimedia.org/wiki/File:Homo_Florensiensis-MGL_95216-P5030051-white.jpg",
-        "caveat": "A skeletal cast of the tiny-bodied 'Hobbit'."
+        "kind": "facial reconstruction",
+        "creator": "Cícero Moraes",
+        "license": "CC BY-SA 4.0",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Homo_floresiensis_-_facial_approximation_-_color_2.jpg",
+        "caveat": "Forensic facial approximation of the ‘Hobbit’; soft tissue is interpretive."
       },
       "fossilSites": [
         {
@@ -991,13 +991,13 @@
       ],
       "certainty": "Useful population-grade; the single species label is disputed.",
       "image": {
-        "src": "/images/human-lineage/homo-heidelbergensis.png",
+        "src": "/images/lineage/heidelbergensis-face.png",
         "local": true,
-        "kind": "forensic face reconstruction",
+        "kind": "forensic facial reconstruction",
         "creator": "Cícero Moraes",
         "license": "CC BY-SA 4.0",
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Homo_heidelbergensis_-_forensic_facial_reconstruction.png",
-        "caveat": "One face cannot represent all these populations; soft tissue is interpretive."
+        "caveat": "One face cannot represent all Middle Pleistocene Homo; soft tissue is interpretive."
       },
       "fossilSites": [
         {
@@ -1113,7 +1113,7 @@
         "creator": "Wikimedia Commons",
         "license": "CC BY-SA",
         "sourcePage": "https://commons.wikimedia.org/wiki/File:Xiahe_mandible.jpg",
-        "caveat": "The Xiahe mandible — one of the few securely Denisovan fossils; no skull or body is known."
+        "caveat": "Denisovans are known mainly from DNA and fragments; no openly-licensed life reconstruction exists, so the defining Xiahe jaw is shown."
       },
       "fossilSites": [
         {

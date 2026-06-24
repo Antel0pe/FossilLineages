@@ -9,45 +9,32 @@
   --clay: #b55f3d;
   --teal: #2f7c78;
   --gold: #9a7b3a;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
   color: var(--ink);
   background: radial-gradient(circle at 12% 9%, rgba(181, 95, 61, .08), transparent 25rem), linear-gradient(180deg, #f8f5ed 0, var(--paper) 42rem, #eee8dc 100%);
 }
 
 /* Header */
-.siteHeader { display: flex; align-items: center; justify-content: space-between; min-height: 82px; padding: 16px clamp(20px, 4vw, 68px); border-bottom: 1px solid rgba(29, 42, 36, .16); flex-wrap: wrap; gap: 12px; }
-.brand { display: inline-flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
-.brandMark { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(29, 42, 36, .8); border-radius: 50%; font: 600 12px/1 var(--font-geist-mono), monospace; letter-spacing: -.08em; }
-.brand > span:last-child { display: flex; flex-direction: column; }
-.brand strong { font-family: Georgia, "Times New Roman", serif; font-size: 20px; font-weight: 500; }
-.brand small, .headerMeta, .sectionNumber, .cardRole, .cardAge, .modalEyebrow, .navLabel, .blockTag, .referenceStrip > span, .cardPosture { font-family: var(--font-geist-mono), ui-monospace, monospace; text-transform: uppercase; letter-spacing: .11em; }
-.brand small { margin-top: 2px; color: var(--muted); font-size: 9px; }
-.headerMeta { display: flex; align-items: center; gap: 20px; color: var(--muted); font-size: 9px; flex-wrap: wrap; }
-.headerMeta span { display: inline-flex; align-items: center; gap: 8px; }
-.headerMeta i { display: inline-block; width: 26px; height: 0; border-top: 2px solid; }
-.legendSolid { border-color: var(--moss) !important; border-top-style: solid !important; }
-.legendDotted { border-color: #9f785e !important; border-top-style: dashed !important; }
-.legendSplit { border-color: var(--gold) !important; border-top-style: dashed !important; }
-.legendTeal { border-color: var(--teal) !important; border-top-style: dotted !important; }
+.siteHeader { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; height: 52px; padding: 0 clamp(16px, 3vw, 40px); border-bottom: 1px solid rgba(29, 42, 36, .16); }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; }
+.brandMark { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(29, 42, 36, .8); border-radius: 50%; font: 600 11px/1 var(--font-geist-mono), monospace; letter-spacing: -.08em; }
+.brand strong { font-family: Georgia, "Times New Roman", serif; font-size: 16px; font-weight: 500; }
+.cardRole, .cardAge, .modalEyebrow, .navLabel, .blockTag, .referenceStrip > span, .cardPosture { font-family: var(--font-geist-mono), ui-monospace, monospace; text-transform: uppercase; letter-spacing: .11em; }
 
-/* Section header */
-.sectionNumber { margin: 0 0 10px; color: var(--clay); font-size: 10px; font-weight: 700; }
-.explorerSection { padding: 26px 0 32px; overflow: hidden; background: rgba(250, 248, 242, .58); }
-.explorerHeader { display: flex; align-items: end; justify-content: space-between; gap: 28px; padding: 0 clamp(20px, 4vw, 68px) 24px; }
-.explorerHeader h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 4vw, 53px); font-weight: 400; letter-spacing: -.04em; }
-.explorerHeader h2 span { color: var(--clay); font-style: italic; }
-.lede { max-width: 640px; margin: 12px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
-.scrollControls { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
-.scrollControls > span { margin-right: 8px; color: var(--muted); font-size: 12px; }
-.scrollControls button, .closeButton { display: grid; width: 42px; height: 42px; place-items: center; color: var(--ink); border: 1px solid rgba(29, 42, 36, .28); border-radius: 50%; background: transparent; cursor: pointer; transition: 160ms ease; }
+.scrollControls { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.scrollControls button, .closeButton { display: grid; width: 34px; height: 34px; place-items: center; color: var(--ink); border: 1px solid rgba(29, 42, 36, .28); border-radius: 50%; background: transparent; cursor: pointer; transition: 160ms ease; }
 .scrollControls button:hover, .closeButton:hover { color: var(--cream); border-color: var(--moss-dark); background: var(--moss-dark); transform: translateY(-2px); }
 .scrollControls svg, .closeButton svg, .lineageNav svg { width: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
 .flipIcon { transform: scaleX(-1); }
 
 /* Tree canvas */
-.treeViewport { position: relative; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scrollbar-color: var(--clay) var(--paper-deep); scrollbar-width: thin; outline: none; }
+.explorerSection { display: flex; flex: 1 1 auto; min-height: 0; overflow: hidden; background: rgba(250, 248, 242, .58); }
+.treeViewport { position: relative; flex: 1 1 auto; min-height: 0; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scrollbar-color: var(--clay) var(--paper-deep); scrollbar-width: thin; outline: none; }
 .treeViewport:focus-visible { box-shadow: inset 0 0 0 2px var(--clay); }
-.treeCanvas { position: relative; min-width: 100%; border-top: 1px solid rgba(29, 42, 36, .13); border-bottom: 1px solid rgba(29, 42, 36, .13); background-image: linear-gradient(90deg, rgba(29,42,36,.04) 1px, transparent 1px); background-size: 212px 100%; }
+.treeCanvas { position: relative; min-width: 100%; height: 100%; background-image: linear-gradient(90deg, rgba(29,42,36,.04) 1px, transparent 1px); background-size: 212px 100%; }
 .eraLabel { position: absolute; top: 26px; display: flex; flex-direction: column; gap: 3px; max-width: 180px; color: var(--muted); font: 10px/1.35 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .07em; }
 .eraLabel span { color: var(--clay); font-size: 9px; }
 
@@ -80,12 +67,6 @@
 .cardMeta { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
 .cardAge { color: var(--clay); font-size: 8px; }
 .cardPosture { color: var(--muted); font-size: 7px; white-space: nowrap; }
-
-.treeFootnote { display: grid; grid-template-columns: auto minmax(280px, 760px) auto; gap: 28px; align-items: center; margin: 24px clamp(20px, 4vw, 68px) 0; padding-top: 17px; border-top: 1px solid rgba(29, 42, 36, .16); color: var(--muted); font-size: 12px; }
-.treeFootnote strong { color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 500; }
-.treeFootnote p { margin: 0; line-height: 1.55; }
-.treeFootnote em { color: var(--teal); font-style: italic; }
-.treeFootnote > span { color: var(--clay); font-size: 11px; }
 
 /* Modal */
 .modalBackdrop { position: fixed; z-index: 50; inset: 0; display: grid; padding: 12px; place-items: center; overflow: hidden; background: rgba(17, 28, 23, .78); }
@@ -159,8 +140,6 @@
 .lineageNav svg { width: 14px; flex: 0 0 auto; }
 
 @media (max-width: 900px) {
-  .headerMeta { width: 100%; }
-  .treeFootnote { grid-template-columns: 1fr; gap: 8px; }
   .modalBody { grid-template-columns: 1fr; }
   .mapWrap { grid-template-columns: 1fr; }
   .modalScroll { padding: 24px 16px 28px; }
@@ -169,7 +148,6 @@
 }
 
 @media (max-width: 700px) {
-  .explorerHeader { flex-direction: column; align-items: flex-start; }
   .eraLabel { display: none; }
   .modalBackdrop { padding: 0; place-items: stretch; }
   .modal { width: 100vw; height: 100vh; border: 0; border-radius: 0; }
