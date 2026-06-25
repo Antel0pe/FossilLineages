@@ -4,7 +4,7 @@
     {
       "name": "dev",
       "runtimeExecutable": "wsl",
-      "runtimeArgs": ["bash", "-lc", "cd ~/Projects/FossilLineages && npm run dev -- -p 3300"],
+      "runtimeArgs": ["bash", "-lc", "cd ~/Projects/FossilLineages && bun run dev -- -p 3300"],
       "autoPort": false,
       "port": 3300
     }

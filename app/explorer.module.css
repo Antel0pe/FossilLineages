@@ -25,6 +25,8 @@
 .cardRole, .cardAge, .modalEyebrow, .navLabel, .blockTag, .referenceStrip > span, .cardPosture { font-family: var(--font-geist-mono), ui-monospace, monospace; text-transform: uppercase; letter-spacing: .11em; }
 
 .scrollControls { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.storiesLink { display: inline-flex; align-items: center; height: 34px; padding: 0 16px; margin-right: 4px; color: var(--ink); border: 1px solid rgba(29, 42, 36, .28); border-radius: 17px; background: transparent; text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: 160ms ease; }
+.storiesLink:hover { color: var(--cream); border-color: var(--moss-dark); background: var(--moss-dark); transform: translateY(-2px); }
 .scrollControls button, .closeButton { display: grid; width: 34px; height: 34px; place-items: center; color: var(--ink); border: 1px solid rgba(29, 42, 36, .28); border-radius: 50%; background: transparent; cursor: pointer; transition: 160ms ease; }
 .scrollControls button:hover, .closeButton:hover { color: var(--cream); border-color: var(--moss-dark); background: var(--moss-dark); transform: translateY(-2px); }
 .scrollControls svg, .closeButton svg, .lineageNav svg { width: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }

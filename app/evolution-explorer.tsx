@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./explorer.module.css";
 
@@ -506,6 +507,7 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
           <span><strong>Fossil Lineages</strong></span>
         </a>
         <div className={styles.scrollControls}>
+          <Link href="/story" className={styles.storiesLink}>Stories</Link>
           <button type="button" onClick={() => scrollTree(-1)} aria-label="Scroll left"><ArrowIcon direction="left" /></button>
           <button type="button" onClick={() => scrollTree(1)} aria-label="Scroll right"><ArrowIcon direction="right" /></button>
         </div>
