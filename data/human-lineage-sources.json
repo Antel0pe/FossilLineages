@@ -589,6 +589,69 @@
         "Taung Child",
         "first African australopith"
       ]
+    },
+    {
+      "id": "susman-1994",
+      "kind": "primary_research",
+      "title": "Fossil evidence for early hominid tool use",
+      "authors": "Susman",
+      "year": 1994,
+      "doi": "10.1126/science.8036517",
+      "url": "https://doi.org/10.1126/science.8036517",
+      "supports": [
+        "OH 7 thumb/finger proportions consistent with forceful precision grip",
+        "early Homo hand anatomy linked to tool use"
+      ]
+    },
+    {
+      "id": "marzke-1997",
+      "kind": "primary_research",
+      "title": "Precision grips, hand morphology, and tools",
+      "authors": "Marzke",
+      "year": 1997,
+      "doi": "10.1002/(SICI)1096-8644(1997)25+:1+<91::AID-AJPA4>3.0.CO;2-G",
+      "url": "https://doi.org/10.1002/(SICI)1096-8644(1997)25+:1+%3C91::AID-AJPA4%3E3.0.CO;2-G",
+      "supports": [
+        "biomechanical link between hominin hand morphology and stone-tool-use grips"
+      ]
+    },
+    {
+      "id": "toth-1985",
+      "kind": "primary_research",
+      "title": "The Oldowan reassessed: a close look at early stone artifacts",
+      "authors": "Toth",
+      "year": 1985,
+      "doi": "10.1016/0305-4403(85)90056-1",
+      "url": "https://doi.org/10.1016/0305-4403(85)90056-1",
+      "supports": [
+        "experimental replication of Oldowan flake production",
+        "unreliability of unskilled hammerstone strikes vs. practiced ones"
+      ]
+    },
+    {
+      "id": "lieberman-bramble-2004",
+      "kind": "primary_research",
+      "title": "The evolution of marathon running: capabilities in humans",
+      "authors": "Lieberman & Bramble",
+      "year": 2004,
+      "doi": "10.1038/nature03052",
+      "url": "https://doi.org/10.1038/nature03052",
+      "supports": [
+        "endurance-running hypothesis",
+        "gluteus maximus, nuchal ligament, Achilles tendon, sweat-gland adaptations for distance running in Homo"
+      ]
+    },
+    {
+      "id": "liebenberg-2006",
+      "kind": "primary_research",
+      "title": "Persistence hunting by modern hunter-gatherers",
+      "authors": "Liebenberg",
+      "year": 2006,
+      "doi": "10.1086/508695",
+      "url": "https://doi.org/10.1086/508695",
+      "supports": [
+        "documented San persistence-hunting running game down to heat exhaustion without weapons"
+      ]
     }
   ]
 }

@@ -10,9 +10,9 @@ export default function EnduranceRunningScene() {
       </Link>
 
       <section className={styles.beat}>
-        <p className={styles.kicker}>~1.8 million years ago, East African savanna, near midday</p>
+        <p className={styles.kicker}>~2 million years ago, East African savanna, near midday</p>
         <h1 className={styles.headline}>
-          By midday, the chase always gives out before the prey does.
+          The antelope is always faster than we are.
         </h1>
       </section>
 
@@ -20,9 +20,10 @@ export default function EnduranceRunningScene() {
         <p className={styles.body}>
           By late morning the grass empties out. The big cats have already dragged themselves
           into whatever shade still holds together, flanks heaving, done for hours. The
-          antelope herds thin too, drifting toward the tree line, leaving the open ground to
-          whoever can stand to cross it. Thick-coated, breathing hard within minutes of any
-          real effort, the troop has never been able to use that emptiness for anything.
+          antelope herds thin too, drifting toward the tree line, until the open ground sits
+          empty under the sun, baked hard and shimmering. Thick-coated, breathing hard within
+          minutes of any real effort, no one from the troop has ever managed to bring
+          anything back from out there.
         </p>
       </section>
 
@@ -39,35 +40,38 @@ export default function EnduranceRunningScene() {
 
       <section className={styles.beat}>
         <p className={styles.body}>
-          One of us went down in the grass before the kudu did, folded over her own knees, and
-          didn't get back up for the rest of the day. We left her in what shade we could find
-          and kept moving without her, the gap between us and the kudu opening again with
-          every stride.
+          Another of us breaks first today, folding over her own knees in the open grass and
+          staying down, the rest of the band moving on without her into the heat-shimmer
+          ahead.
         </p>
         <p className={styles.body}>
-          The next time the herd scattered at midday, I went after the limping one myself,
-          breath sawing, skin gone slick under matted hair that wouldn't let any of the heat
-          out. My legs wanted to stop a hundred times before I let them. Twice I dropped to a
-          walk, chest heaving, the edges of everything swimming — and twice the kudu ahead of
-          me slowed to almost nothing in the same stride, head low, sides working like a
-          bellows. The second time I closed half the gap before my own legs folded under me in
-          the dirt, and the kudu staggered on into the trees without me.
+          When the herd scatters at midday, one stumbles, favoring a foreleg, and I run at
+          it, breath coming quick from the first stride, legs pumping, ground blurring past
+          while the gap between us is still short. Most days the limp isn&rsquo;t enough of a
+          head start: my legs give out long before the sun is even straight overhead, and the
+          gap opens again with every stride I lose. This time my legs hold a little longer,
+          heavy, breath sawing, fur soaked through and clinging, my whole body cooking under
+          it, the antelope ahead of me slowing in the same stride, head low, sides working
+          like a bellows, and the gap keeps closing instead of opening. I push past where my
+          legs usually quit, close what&rsquo;s left of the ground between us, and bring it
+          down in the dirt, both of us too spent to do anything but lie there.
         </p>
       </section>
 
       <section className={styles.beat}>
-        <p className={styles.kicker}>two hundred thousand years later</p>
+        <p className={styles.kicker}>five hundred thousand years later</p>
         <p className={styles.body}>
-          Around me the rest of the band peels off into whatever shade the acacias offer,
-          chests heaving, already done for the day. I keep moving. Off to the south, a jackal
-          that's been pacing the same kudu falls out of the chase entirely, slinking into a
-          thorn thicket, tongue lolling sideways out of its mouth.
+          When the herd scatters at midday this time, one favors a foreleg the same way, and
+          I&rsquo;m after it before it&rsquo;s gone twenty strides. Around me the band thins out as the heat climbs,
+          one after another dropping to a walk. I keep moving. Off to my left, another
+          runner&rsquo;s stride is already shortening, breath ragged, falling back from the
+          same antelope I&rsquo;m still closing on.
         </p>
         <p className={styles.body}>
-          By the time the kudu's legs give out under it, mouth foaming, flanks heaving against
-          ground gone hot enough to blister bare skin, I'm barely breathing hard. Sweat runs
-          freely down my bare arms and drips off my chin into the dust. My hands close around
-          a foreleg before it can find the strength to rise again.
+          The antelope&rsquo;s legs give out under it at last, mouth foaming, flanks heaving
+          against ground hot enough to blister bare skin. I&rsquo;m barely breathing hard.
+          Sweat runs freely down my bare arms and drips off my chin into the dust. My hands
+          close around a foreleg before it can find the strength to rise again.
         </p>
       </section>
 
@@ -92,7 +96,7 @@ export default function EnduranceRunningScene() {
           during running, a long Achilles tendon and arched foot that store and return
           elastic energy, and a dramatic increase in eccrine sweat glands paired with loss of
           body fur for evaporative cooling. Persistence hunting itself is not pure conjecture:
-          Louis Liebenberg documented modern San hunters in the Kalahari running game down to
+          Liebenberg (2006) documented modern San hunters in the Kalahari running game down to
           heat exhaustion without weapons, the same way described above, as a real-world
           analog for how the ancestral behavior likely worked. No single hypothesis is
           proven beyond debate, but these are credible, evidence-backed traits and behaviors,

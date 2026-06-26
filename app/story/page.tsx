@@ -23,8 +23,8 @@ const scenes: Scene[] = [
   },
   {
     slug: "endurance-running",
-    kicker: "~1.8 million years ago",
-    title: "By midday, the chase always gives out before the prey does.",
+    kicker: "~2 million years ago",
+    title: "The antelope is always faster than we are.",
     teaser:
       "Heat ends every hunt before it finishes — until a hairless, sweating runner learns to outlast the animal she's chasing.",
     image: "/images/lineage/erectus-body.jpg",
@@ -38,6 +38,15 @@ const scenes: Scene[] = [
       "A clumsy, glancing strike against a found stone gives way to a deliberate, practiced grip — and a carcass nothing else can open.",
     image: "/images/lineage/habilis-recon.png",
     alt: "Forensic facial reconstruction of Homo habilis",
+  },
+  {
+    slug: "megadont-jaw",
+    kicker: "~2.5 million years ago",
+    title: "The sweet, soft food runs out long before the rains do.",
+    teaser:
+      "A lean season leaves nothing but tough sedge and root to chew — until a massive, crested jaw learns to grind through it with ease.",
+    image: "/images/human-lineage/paranthropus-boisei.jpg",
+    alt: "Facial reconstruction of Paranthropus boisei, showing its heavy jaw and pronounced sagittal crest",
   },
 ];
 
