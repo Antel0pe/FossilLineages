@@ -13,6 +13,29 @@ change as a short sequence of beats, mostly narrated from the animal's own point
 grounded in real fossil evidence and named scientific hypotheses. `app/story/bipedalism/` is
 the canonical reference implementation — read it before writing a new scene.
 
+## Planning step (do this before drafting any prose)
+Confirmed 2026-06-26: scenes that go straight from skeleton to prose end up generically
+competent rather than sharply fitted to the specific trait — word-choice polish afterward
+can't fully rescue a generic base. Before writing a single sentence of prose, answer these
+four questions in writing, specific to THIS trait and pressure. A generic answer (one that
+could be copy-pasted onto a different scene unchanged) is a FAIL — redo it.
+1. **Register/tone, named.** What kind of experience is this, concretely — e.g. grim
+   attrition (winning by outlasting, not outrunning), sudden violent loss, slow suffocating
+   scarcity, frantic short-burst danger? Name it, and let it govern word choice (verbs of
+   wearing-down vs. verbs of flight, sentence length and rhythm, what counts as a relief vs.
+   a threat in this scene).
+2. **Strongest available sensory anchor for voice 1's struggle.** Out of everything real you
+   could show (texture, sound, smell, the specific failure mode of the unadapted body), pick
+   the single most concrete, least-generic image and build the beat around it — don't spread
+   evenly across several mediocre details.
+3. **Strongest available sensory anchor for voice 2's advantage.** Same exercise for the
+   adapted individual — pick one vivid, fresh-feeling image that makes the advantage felt,
+   not stated. It must differ from anchor 2's specific imagery (per the existing rule that
+   voice 2's second instance of the pressure needs fresh concrete detail).
+4. **The echo fact.** Name the specific real, non-obvious downstream fact this scene will
+   end on, before drafting — so beats 1–4 can be written knowing what they're building
+   toward, rather than the echo being bolted on after the fact.
+
 ## The locked structural skeleton
 Do not deviate from this order or invent new beats without checking with the user first.
 
@@ -83,8 +106,16 @@ Do not deviate from this order or invent new beats without checking with the use
    - **Exactly two voices, not three.** A user explicitly considered and rejected adding a
      third "everyone now has the adaptation" stage — voice 1 (struggle) and voice 2 (resolved)
      is the complete arc; a third stage added nothing.
-5. **Echo.** A specific, NON-OBVIOUS, factual downstream consequence of this exact trait —
-   something a reader wouldn't already know or expect, not "you're still doing this today."
+5. **Echo.** A specific, NON-OBVIOUS, factual payoff tied to this exact trait — something a
+   reader wouldn't already know or expect, not "you're still doing this today." This can be a
+   downstream biological consequence (e.g. the obstetric dilemma) OR a non-obvious
+   historical/epistemic twist about how the trait itself was discovered or understood (e.g.
+   megadont-jaw's "Nutcracker Man" misnomer — the famous nickname for *P. boisei*'s jaw
+   getting the food it evolved for wrong) — confirmed 2026-06-26 that the strongest available
+   non-obvious fact wins even when it's about the science's history rather than the animal's
+   biology. Whichever kind, let the irony/twist land through the stated facts themselves; do
+   not add a closing sentence that names the punchline ("X got its nickname backward") — cut,
+   rejected 2026-06-26, the facts alone should make the reader draw that conclusion.
    Tonally, this beat is ALLOWED to shift register — brief, factual/clinical, "did you know"
    delivery rather than continued narration. **Tried and reverted:** a lighter, chattier
    "fun fact" narrator voice ("here's the part nobody tells you...") — the user preferred the
