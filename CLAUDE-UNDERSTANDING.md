@@ -204,3 +204,18 @@ questions (asked next, not yet answered as of this entry).
     supported), but we don't drown the emotion in disclaimers.
   6. **Enough depth to feel rich, not sparse.** ~18–24 human-spine forms plus anchors; each
     step feels earned, the record feels populated.
+
+## Graph divergence labels (2026-06-27) — small, deliberate re-investment in the graph
+User floated a "canvas-based evolutionary change thing" idea: instead of (or alongside)
+lineage, show *why* two sibling species differ. Talked through it — landed on something
+narrower than it first sounded:
+- The graph stays the structural backbone, unchanged; this is an **addition**, not a redesign.
+- At a handful of pilot split points (where a taxon has 2+ children), add an always-visible,
+  short contrastive label naming the diverging strategies (e.g. "Fruit-foraging vs. leaf/stem
+  fallback diet") — a tag, not prose.
+- Explicitly checked against the 2026-06-23 pivot (scenes are the primary "why" vehicle now):
+  user confirmed this is "still the graph, deliberately" — a lightweight overview/index layer,
+  not a reversal of the scenes decision. Today's per-taxon `pressures` data is one-sided and
+  doesn't supply this contrast on its own; new comparative content has to be written per fork.
+- See `verification-criteria/2026-06-27-graph-divergence-labels.md` for the pilot fork list
+  and falsifiable criteria.

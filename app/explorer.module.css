@@ -48,6 +48,8 @@
 .edge_split { stroke: var(--gold); stroke-dasharray: 6 6; stroke-width: 1.8; }
 .edge_gene_flow { stroke: var(--teal); stroke-dasharray: 2 7; stroke-width: 2; }
 
+.divergenceTag { position: absolute; z-index: 3; max-width: 132px; padding: 6px 10px; color: var(--moss-dark); border: 1.5px dashed var(--gold); border-radius: 100px; background: rgba(251, 249, 243, .96); font: italic 10px/1.3 Georgia, serif; text-align: center; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 4px 10px rgba(20, 32, 26, .1); }
+
 /* Figure-dominant card */
 .figCard { position: absolute; z-index: 2; display: grid; padding: 10px 10px 11px; grid-template-rows: 186px auto auto; gap: 5px; overflow: hidden; color: var(--ink); text-align: left; border: 1px solid rgba(29, 42, 36, .2); border-left-width: 4px; border-radius: 5px; background: rgba(251, 249, 243, .98); cursor: pointer; transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease; }
 .figCard:hover, .figCard:focus-visible { z-index: 4; border-color: rgba(29, 42, 36, .4); outline: none; transform: translateY(-5px); box-shadow: 0 16px 30px rgba(20, 32, 26, .18); }

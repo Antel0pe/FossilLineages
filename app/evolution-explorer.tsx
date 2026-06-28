@@ -67,6 +67,12 @@ export type Edge = {
   kind: "supported" | "candidate" | "context" | "split" | "gene-flow";
 };
 
+export type Divergence = {
+  fromId: string;
+  siblingIds: string[];
+  label: string;
+};
+
 export type Layout = {
   colSpacing: number;
   laneSpacing: number;
@@ -79,6 +85,7 @@ export type LineageDataset = {
   edges: Edge[];
   layout: Layout;
   intro?: { focus: string; honesty: string };
+  divergences?: Divergence[];
 };
 
 type ExplorerProps = {
@@ -196,6 +203,14 @@ function TaxonCard({
       <span className={styles.cardName}>{taxon.scientificName}</span>
       <span className={styles.cardAge}>{formatRange(taxon.olderMa, taxon.youngerMa)}</span>
     </button>
+  );
+}
+
+function DivergenceTag({ label, x, y }: { label: string; x: number; y: number }) {
+  return (
+    <span className={styles.divergenceTag} style={{ left: x, top: y }}>
+      {label}
+    </span>
   );
 }
 
@@ -467,6 +482,40 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
   }, [positions, layout.padX]);
 
   const navEdges = useMemo(() => data.edges.filter((e) => e.kind !== "gene-flow"), [data.edges]);
+
+  // Placed just right of the parent card (a column gap that's always free) rather than
+  // literally between the siblings — at 2px lane gaps there's no slot wide enough to sit
+  // between two branches without clipping a card, so we instead search nearby lanes at the
+  // same x for one with no card underneath.
+  const divergenceTags = useMemo(() => {
+    const TAG_W = 132;
+    const TAG_H = 56;
+    const PAD = 6;
+    const overlaps = (ax: number, ay: number, aw: number, ah: number, bx: number, by: number, bw: number, bh: number) =>
+      ax < bx + bw + PAD && ax + aw + PAD > bx && ay < by + bh + PAD && ay + ah + PAD > by;
+
+    const tags: { key: string; label: string; x: number; y: number }[] = [];
+    for (const div of data.divergences ?? []) {
+      const from = positions.get(div.fromId);
+      const siblings = div.siblingIds.map((id) => positions.get(id));
+      if (!from || siblings.some((s) => !s)) continue;
+      const x = from.x + CARD_WIDTH + 14 + TAG_W / 2;
+      let y = from.cy;
+      for (const offset of [0, lanePx, -lanePx, lanePx * 2, -lanePx * 2]) {
+        const tryY = from.cy + offset;
+        const tagLeft = x - TAG_W / 2;
+        const tagTop = tryY - TAG_H / 2;
+        const collides = data.taxa.some((t) => {
+          const p = positions.get(t.id)!;
+          return overlaps(tagLeft, tagTop, TAG_W, TAG_H, p.x, p.y, CARD_WIDTH, cardHeight);
+        });
+        y = tryY;
+        if (!collides) break;
+      }
+      tags.push({ key: `${div.fromId}-${div.siblingIds.join("-")}`, label: div.label, x, y });
+    }
+    return tags;
+  }, [data.divergences, positions, data.taxa, cardHeight, lanePx]);
   const selected = selectedId ? taxaById.get(selectedId) : undefined;
 
   useEffect(() => {
@@ -540,6 +589,10 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
               const p = positions.get(taxon.id)!;
               return <TaxonCard key={taxon.id} taxon={taxon} x={p.x} y={p.y} cardHeight={cardHeight} scale={scale} onOpen={setSelectedId} />;
             })}
+
+            {divergenceTags.map((tag) => (
+              <DivergenceTag key={tag.key} label={tag.label} x={tag.x} y={tag.y} />
+            ))}
           </div>
         </div>
       </section>

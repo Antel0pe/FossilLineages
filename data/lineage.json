@@ -1317,5 +1317,27 @@
       "toId": "homo-sapiens",
       "kind": "gene-flow"
     }
+  ],
+  "divergences": [
+    {
+      "fromId": "nakalipithecus-nakayamai",
+      "siblingIds": ["gorilla", "chimpanzee"],
+      "label": "Bulk leaf-eating vs. fruit-foraging in groups"
+    },
+    {
+      "fromId": "australopithecus-afarensis",
+      "siblingIds": ["paranthropus-boisei", "homo-habilis"],
+      "label": "Mega-chewing plant specialist vs. tool-using omnivore"
+    },
+    {
+      "fromId": "homo-erectus",
+      "siblingIds": ["homo-floresiensis", "middle-pleistocene-homo"],
+      "label": "Island dwarfism vs. continued continental scaling"
+    },
+    {
+      "fromId": "middle-pleistocene-homo",
+      "siblingIds": ["homo-sapiens", "homo-neanderthalensis"],
+      "label": "Lightly-built dispersal generalist vs. cold-adapted robust specialist"
+    }
   ]
 }
