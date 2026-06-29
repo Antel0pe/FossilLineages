@@ -494,7 +494,7 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
     const overlaps = (ax: number, ay: number, aw: number, ah: number, bx: number, by: number, bw: number, bh: number) =>
       ax < bx + bw + PAD && ax + aw + PAD > bx && ay < by + bh + PAD && ay + ah + PAD > by;
 
-    const tags: { key: string; label: string; x: number; y: number }[] = [];
+    const tags: { key: string; label: string; x: number; y: number; linkIds: string[] }[] = [];
     for (const div of data.divergences ?? []) {
       const from = positions.get(div.fromId);
       const siblings = div.siblingIds.map((id) => positions.get(id));
@@ -512,10 +512,25 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
         y = tryY;
         if (!collides) break;
       }
-      tags.push({ key: `${div.fromId}-${div.siblingIds.join("-")}`, label: div.label, x, y });
+      tags.push({ key: `${div.fromId}-${div.siblingIds.join("-")}`, label: div.label, x, y, linkIds: [div.fromId, ...div.siblingIds] });
     }
     return tags;
   }, [data.divergences, positions, data.taxa, cardHeight, lanePx]);
+
+  // Faint connector lines from each tag to the taxa it describes (fromId + siblingIds), so it's
+  // visually unambiguous which lineage split a tag refers to — distinct from the edge_* ancestry
+  // lines (those are thicker, colour-coded by relationship kind; these are thin, uniform, dotted).
+  const tagConnectors = useMemo(() => {
+    const lines: { key: string; x1: number; y1: number; x2: number; y2: number }[] = [];
+    for (const tag of divergenceTags) {
+      for (const id of tag.linkIds) {
+        const p = positions.get(id);
+        if (!p) continue;
+        lines.push({ key: `${tag.key}-${id}`, x1: tag.x, y1: tag.y, x2: p.cx, y2: p.cy });
+      }
+    }
+    return lines;
+  }, [divergenceTags, positions]);
   const selected = selectedId ? taxaById.get(selectedId) : undefined;
 
   useEffect(() => {
@@ -583,6 +598,9 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
                   />
                 );
               })}
+              {tagConnectors.map((line) => (
+                <line key={line.key} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} className={styles.tagConnector} />
+              ))}
             </svg>
 
             {data.taxa.map((taxon) => {

@@ -38,11 +38,15 @@
         "generalised hands and feet",
         "monkey-like body proportions"
       ],
-      "behavioralChange": "Lived in warm Miocene forests, moving carefully along branches and eating mostly fruit. Behaviour was ape-general, not yet chimp-like or human-like.",
+      "behavioralChange": "Tooth-wear microwear shows a diet of soft, sugary fruit, not tough food — picked carefully while moving through the canopy on a flexible, bending lower back rather than swinging. Males had much larger, more projecting canines than females, pointing to male-male contests over access to mates, an ape-typical social pattern.",
       "pressures": [
         {
           "change": "Loss of the tail and a more upright trunk",
           "pressure": "Cautious climbing and feeding in the canopy favoured balance over a tail."
+        },
+        {
+          "change": "Strong canine sexual dimorphism",
+          "pressure": "Male-male competition for mating access, before any living ape lineage had specialised away from this generalised body."
         }
       ],
       "certainty": "Solid as an early ape; not a proven direct ancestor of living apes.",
@@ -94,11 +98,11 @@
         "thick molar enamel",
         "known from jaw and teeth only"
       ],
-      "behavioralChange": "Probably ate tough, fibrous plant foods, fitting a forest-to-woodland African setting around the time our lineage's cousins branched off.",
+      "behavioralChange": "Lived in dry, tough-leaved woodland rather than lush forest. Low, rounded molar cusps suggest a flexible diet — soft fruit and leaves day-to-day, with teeth tough enough to fall back on harder nuts and seeds when food was scarce, an early version of the fallback-feeding strategy seen later in Paranthropus.",
       "pressures": [
         {
           "change": "Heavier, thick-enamelled chewing teeth",
-          "pressure": "Tougher, more fibrous foods in seasonal African forests."
+          "pressure": "A more seasonal, less predictable woodland food supply than earlier forest apes had, rewarding resilience over specialisation."
         }
       ],
       "certainty": "Useful context near the African-ape splits; too incomplete to be a named ancestor.",
@@ -151,11 +155,11 @@
         "large gut and jaws for leaves",
         "pronounced sexual size difference"
       ],
-      "behavioralChange": "Settled into eating bulky low-quality vegetation in African forests, in stable family groups led by a dominant male.",
+      "behavioralChange": "Lives in stable family groups of 6-30 led by one or two silverbacks (often father and sons), who decide when and where the group travels and feeds. Diet tracks local forest: eastern gorillas lean on bulky leaves and stems, western gorillas eat far more fruit — flexibility within a basically bulk-vegetation strategy.",
       "pressures": [
         {
           "change": "Large body and big chewing/gut system",
-          "pressure": "A diet of abundant but low-energy leaves and stems rewards size and fermentation capacity."
+          "pressure": "Split from the shared African-ape stem during a period of shrinking Miocene forest; less abundant fruit favoured a body that could subsist on abundant but low-energy leaves and stems instead of competing for shrinking fruit patches."
         },
         {
           "change": "Knuckle-walking forelimbs",
@@ -201,11 +205,15 @@
         "fruit-and-prey omnivory",
         "tool use in some populations"
       ],
-      "behavioralChange": "Lives in dynamic social groups, uses simple tools, hunts occasionally — a window onto behaviours the shared ancestor may have had.",
+      "behavioralChange": "Lives in fission-fusion communities: a large group that knows each other but splits into small, shifting foraging parties day to day. Males stay in their birth community and build alliances with relatives; tool-assisted hunting (mostly by females, only at a few sites like Fongoli) tracks seasonal food scarcity rather than being a constant habit.",
       "pressures": [
         {
           "change": "Versatile climbing + knuckle-walking body",
           "pressure": "Forest life that mixes fruit trees with travel across the ground."
+        },
+        {
+          "change": "Flexible fission-fusion social system retained, not replaced",
+          "pressure": "Staying in forest/woodland with a fruit-centred diet kept the shared ancestor's social flexibility useful, while the human line's move to bipedalism and bigger cooperative groups built on top of that same root."
         }
       ],
       "certainty": "A living relative, not an ancestor; our best living comparison point.",
@@ -246,11 +254,11 @@
         "forward-set foramen magnum",
         "thick brow"
       ],
-      "behavioralChange": "Lived in a mosaic of lake-edge forest and grassland, plausibly moving both upright on the ground and through trees.",
+      "behavioralChange": "Lived along an ancient Lake Chad shoreline in a mosaic of gallery forest, savanna and lakeshore. Whether it walked upright is a live, unresolved fight: the skull suggested it to its describers, but a 2023-2024 re-analysis of the arm bone argues it looked more like a knuckle-walker's — current bones can't settle it either way.",
       "pressures": [
         {
           "change": "Head balanced over the spine (hint of upright walking)",
-          "pressure": "Standing and moving upright in patchy woodland near water."
+          "pressure": "If real, the same patchy lakeshore/woodland mosaic later seen in Ardipithecus and Orrorin: scattered food patches reward some ground travel even before full commitment to it."
         },
         {
           "change": "Smaller, blunter canines",
@@ -307,11 +315,11 @@
         "thick molar enamel",
         "ape-like canine"
       ],
-      "behavioralChange": "Mixed woodland life rewarding both ground walking and tree climbing — locomotor flexibility rather than commitment.",
+      "behavioralChange": "Lived in dry evergreen forest, not open savanna — undercutting the old 'savanna pushed us upright' story. Curved finger bones and arm shape say it still climbed regularly to forage, while the femur carried real bipedal loading: walking and climbing coexisted rather than one replacing the other. Teeth point to a plant-heavy diet like a chimp or gorilla's.",
       "pressures": [
         {
           "change": "Thigh bone adapted to upright loading",
-          "pressure": "Walking between scattered food patches on the ground."
+          "pressure": "Efficient travel between scattered food patches inside a forest, not escape from one — among the earliest concrete bipedal signals (~6 Ma), arriving 'unfinished' and staying that way for millions of years."
         }
       ],
       "certainty": "Bipedal signal is real; whether it sits on the human line is uncertain.",
@@ -363,11 +371,11 @@
         "toe bone hinting at bipedality",
         "known from sparse material"
       ],
-      "behavioralChange": "Woodland forager at the very base of the human line; too little is preserved to say much about behaviour.",
+      "behavioralChange": "Lived in densely-wooded habitat close to permanent water, not open grassland. A toe-joint angle suggests real toe-off push during walking, not just upright posture. Big molars and fibrous-food wear point to a tougher plant diet than chimpanzees' fruit-heavy one.",
       "pressures": [
         {
           "change": "Reduced canine honing",
-          "pressure": "Dietary and social shifts away from ape-style canine display."
+          "pressure": "Dietary and social shifts away from ape-style canine display, moving in parallel with the earliest bipedal push-off mechanics rather than as a separate cause."
         }
       ],
       "certainty": "Real but sparse; relationship to later Ardipithecus is plausible, not proven.",
@@ -421,11 +429,15 @@
         "reduced canines",
         "small brain"
       ],
-      "behavioralChange": "Lived in woodland (not open savanna), moving upright on the ground and still climbing carefully in trees.",
+      "behavioralChange": "Lived in woodland (not open savanna) as a varied omnivore — isotopes show fruit, nuts and maybe small vertebrates rather than grassland grazing. Striking near-absence of male-female canine size difference points to lower male-male aggression than typical apes, hinting at more cooperative or pair-bonded group dynamics.",
       "pressures": [
         {
           "change": "Upright walking added without losing climbing",
           "pressure": "Woodland life that rewarded both ground travel and tree feeding."
+        },
+        {
+          "change": "Reduced canine sexual dimorphism",
+          "pressure": "Less energy/risk spent on male-male canine threat-display may have freed capacity for the bipedal foraging strategies that followed."
         }
       ],
       "certainty": "Strong as a species; an early hominin, but not a proven direct ancestor.",
@@ -479,11 +491,11 @@
         "thick molar enamel",
         "likely still climbed"
       ],
-      "behavioralChange": "Foraged in woodland and gallery forest near water, processing tougher plant foods with big teeth.",
+      "behavioralChange": "Lived across a real habitat mosaic — riparian woodland and floodplain grassland along rivers feeding a lake, plus drier woodland and shrubland patches — likely moving between quite different micro-habitats rather than staying in one setting. Long forearms and wrist features say it still climbed regularly even with a more committed ground-walking gait than Ardipithecus.",
       "pressures": [
         {
           "change": "More habitual upright walking",
-          "pressure": "Travel between food patches in mixed woodland."
+          "pressure": "A shift toward more open woodland/grassland than Ardipithecus's denser forest rewarded efficient ground travel between scattered resource patches across a more open mosaic."
         },
         {
           "change": "Big, thick-enamelled teeth",
@@ -542,11 +554,15 @@
         "long arms, curved fingers",
         "small ape-sized brain"
       ],
-      "behavioralChange": "Walked across open ground between trees, slept and fed in the canopy, and left the 3.6-million-year-old Laetoli footprint trail.",
+      "behavioralChange": "Walked with a real but non-modern gait — more flexed limbs at footstrike than living humans, and ankle bones still closer to apes than us — while feeding flexibly: isotopes show individuals ranging from heavily forest-fed to heavily open-ground-fed within the same population. The 3.6-million-year-old Laetoli trail also shows two individuals walking side-by-side with synchronised steps, hinting at coordinated small-group movement.",
       "pressures": [
         {
           "change": "Walking established before the brain grew",
-          "pressure": "Efficient ground travel mattered earlier than big brains did."
+          "pressure": "Efficient ground travel between scattered, variable food patches mattered earlier than big brains did."
+        },
+        {
+          "change": "Wide individual dietary flexibility retained in one population",
+          "pressure": "That range (some more forest-fed, some more open-ground-fed) plausibly set up the next split: descendants could specialise in opposite directions — mechanical fallback-feeding (Paranthropus) vs. tool-assisted higher-quality foraging (Homo)."
         }
       ],
       "certainty": "Very well sampled; close to the source of later lineages.",
@@ -608,11 +624,11 @@
         "more delicate face",
         "bipedal with climbing traits"
       ],
-      "behavioralChange": "Lived in the South African cave country, eating a flexible mix of plants and possibly some animal foods.",
+      "behavioralChange": "Lived in South African cave country eating an almost entirely plant-based diet — a 2025 isotope study found animal protein made up under 10% of intake, leaning on gallery-forest resources rather than meat. More committed to ground-walking than the contemporaneous, more tree-climbing Paranthropus robustus nearby at Swartkrans, though it still used its arms for some climbing.",
       "pressures": [
         {
           "change": "Modest brain and skull changes",
-          "pressure": "A broad, flexible diet in a more varied southern landscape."
+          "pressure": "Solving food security through plant-dietary flexibility in gallery forest rather than through hunting or tool-assisted scavenging, unlike the path the Homo line later took."
         }
       ],
       "certainty": "Solid species; its exact place near the origin of Homo is debated.",
@@ -676,11 +692,11 @@
         "flared cheekbones",
         "sagittal crest in males"
       ],
-      "behavioralChange": "Processed large amounts of tough, low-quality plant food — a specialist strategy that ran alongside, and eventually lost to, tool-using Homo.",
+      "behavioralChange": "Despite a skull built for hard-object feeding, dental microwear shows fine striations rather than the heavy pitting hard food leaves behind — boisei likely ate soft food most days, like a modern gorilla, and only fell back on tough, hard, low-quality food in lean seasons. Its anatomy reflects emergency survival capacity, not typical daily diet.",
       "pressures": [
         {
           "change": "Massive teeth and chewing muscles",
-          "pressure": "Relying on abundant but tough, hard-to-chew vegetation, especially in lean seasons."
+          "pressure": "A bet on mechanical fallback capacity to survive lean seasons directly — the opposite strategy from sibling Homo habilis, which invested in tools to access higher-quality food instead. boisei's strategy worked for over a million years before ending without descendants."
         }
       ],
       "certainty": "A well-understood collateral branch — not a human ancestor.",
@@ -734,11 +750,11 @@
         "curved finger bones",
         "bipedal feet"
       ],
-      "behavioralChange": "Lived alongside stone tools and cut-marked bones, gaining access to meat and marrow — a flexible, tool-assisted forager.",
+      "behavioralChange": "Mostly scavenged rather than hunted: at many sites, stone-tool cut marks sit on top of carnivore tooth marks on the same bones, meaning predators reached carcasses first. Diet was a broad mix of fruit, leaves and scavenged meat/marrow, possibly organised around base camps with shared food processing.",
       "pressures": [
         {
           "change": "Brain growth with smaller teeth",
-          "pressure": "Tools doing the work teeth used to: cutting and accessing higher-energy foods."
+          "pressure": "Tools doing the work teeth used to: cutting and accessing higher-energy scavenged food — the opposite bet from sibling Paranthropus boisei's bigger-jaws fallback strategy, lower mechanical investment for higher cognitive/technological investment."
         }
       ],
       "certainty": "Real early Homo; its exact link to later Homo is debated.",
@@ -794,7 +810,7 @@
         "larger brain and body",
         "strong brow, low long skull"
       ],
-      "behavioralChange": "Walked huge daily ranges, made Acheulean handaxes, ate a broader, energy-richer diet, and spread from Africa to Java.",
+      "behavioralChange": "Walked huge daily ranges (the body plan fits endurance travel, though some pelvis fossils suggest power-running may fit just as well), made Acheulean handaxes for processing carcasses, tubers and nuts, and controlled fire by 1 million years ago (ash and burnt bone at Wonderwerk Cave). Spread out of Africa fast, reaching Europe and Southeast Asia within a few hundred thousand years.",
       "pressures": [
         {
           "change": "Tall, long-legged ground-ranging body",
@@ -802,7 +818,7 @@
         },
         {
           "change": "Larger brain and body",
-          "pressure": "Richer, more reliable diet (including meat) able to fuel the cost."
+          "pressure": "A richer, more reliable diet (meat plus tool-processed plant food) able to fuel the cost — locomotion and diet pressures reinforcing each other."
         }
       ],
       "certainty": "Strong as a broad grade; its many regional forms are debated.",
@@ -866,11 +882,11 @@
         "curved fingers",
         "climbing shoulder"
       ],
-      "behavioralChange": "Walked the ground and climbed; its remains, deep in the Rising Star cave, hint at deliberate body disposal — still debated.",
+      "behavioralChange": "Walked the ground and climbed; deep in the Rising Star cave, 2023 papers proposed deliberate burial pits and possible wall engravings, but a peer-reviewed rebuttal argues the evidence doesn't rule out natural causes (water transport, carnivore activity, a death trap) and that an easier historical cave route undercuts the 'carried bodies into danger' story. Whether the dead were treated with intention is a genuinely open question.",
       "pressures": [
         {
           "change": "Small brain kept late in time",
-          "pressure": "Big brains are not inevitable — this lineage stayed small-brained and survived anyway."
+          "pressure": "Surviving with a small brain this recently, alongside large-brained Homo, shows big brains were not the only viable strategy for this lineage's niche."
         }
       ],
       "certainty": "Securely a species; its origins and behaviour are actively debated.",
@@ -923,11 +939,11 @@
         "relatively large feet",
         "made stone tools"
       ],
-      "behavioralChange": "Lived isolated on Flores, hunting dwarf elephants and giant rodents — a textbook case of island dwarfism.",
+      "behavioralChange": "Cut marks on dwarf-Stegodon and giant-rat bones show organised carcass processing with an Oldowan-style toolkit, alongside tough, fibrous plant chewing — a mixed, demanding diet on a resource-limited island shared with other dwarfed and giant fauna.",
       "pressures": [
         {
           "change": "Whole-body shrinking",
-          "pressure": "Limited food on a small island favours smaller bodies (island dwarfism)."
+          "pressure": "Long isolation, limited food and few predators favoured smaller bodies (island dwarfism) — and the same pressure independently produced a second, unrelated dwarfing event in modern humans on Flores much later, showing the pressure itself does the work, not shared ancestry."
         }
       ],
       "certainty": "A real species; likely a dwarfed descendant of an earlier Homo such as erectus.",
@@ -982,11 +998,11 @@
         "large face",
         "robust skeleton"
       ],
-      "behavioralChange": "Hunted big game with wooden spears, used fire more routinely, and built shelters — increasingly complex foraging across two continents.",
+      "behavioralChange": "Capable of coordinated big-game hunting: the Schöningen site (Germany) preserves 9 engineered wooden spears used to kill dozens of horses at once, with fires built nearby apparently for cooking and group gathering afterward (though no hominin bones were found there, so the exact species is uncertain — it may be this grade or early Neanderthals). Built simple shelters rather than relying only on natural ones.",
       "pressures": [
         {
           "change": "Brain reaching modern size",
-          "pressure": "Planning-heavy hunting, fire use and social learning across variable Ice-Age climates."
+          "pressure": "Planning-heavy hunting, fire use and social coordination across variable Ice-Age climates outpacing skeletal modernisation — the shared behavioral toolkit that sapiens, Neanderthals and Denisovans each later built on differently."
         }
       ],
       "certainty": "Useful population-grade; the single species label is disputed.",
@@ -1041,11 +1057,11 @@
         "long low skull",
         "large brain"
       ],
-      "behavioralChange": "Skilled big-game hunters who made tools, used fire, cared for their injured, and buried some of their dead.",
+      "behavioralChange": "Isotopes show near-total carnivory, getting almost all protein from animal sources like a top predator — but dental calculus reveals real plant intake too, including cooked starches. The Shanidar 1 individual survived blindness and an amputated forearm into middle age, only possible with sustained group care (though the famous 'buried with flowers' story specifically has never been substantiated).",
       "pressures": [
         {
           "change": "Stocky, heat-conserving body",
-          "pressure": "Surviving repeated Ice-Age cold in Europe and Asia."
+          "pressure": "Surviving repeated Ice-Age cold in Europe and Asia, with biology (broad trunk, short limbs) layered under technological buffering (fire, hide-processing, likely clothing)."
         }
       ],
       "certainty": "Very well known from fossils and genomes; interbred with Homo sapiens.",
@@ -1098,11 +1114,11 @@
         "genetically distinct from Neanderthals",
         "sparse fossils"
       ],
-      "behavioralChange": "Lived across Asia, including the high Tibetan Plateau, and passed high-altitude gene variants to living Tibetan people.",
+      "behavioralChange": "Spread across an enormous range (Siberia to Taiwan, ~2,800 miles), adapting to wildly different environments. Butchered bones at Baishiya Cave (Tibetan Plateau, ~3,280m) show they hunted yak, snow leopard, wolf and pheasant — a high-altitude lifestyle reconstructed from faunal remains rather than their own skeleton. They also interbred not just with Neanderthals and modern humans but with a third 'superarchaic' ghost population ~700,000 years ago.",
       "pressures": [
         {
           "change": "High-altitude adaptation (via genes)",
-          "pressure": "Living at low-oxygen Tibetan elevations."
+          "pressure": "Living at low-oxygen Tibetan elevations — a rare case where we can directly observe the payoff: the EPAS1 gene variant still lets living Tibetans tolerate altitude today, passed forward through interbreeding after the species itself disappeared."
         }
       ],
       "certainty": "Genomically certain; many fossil attributions are tentative.",
@@ -1165,11 +1181,11 @@
         "lightly built skeleton",
         "cumulative culture"
       ],
-      "behavioralChange": "Symbolic art, language, long-distance trade and ever-accumulating technology — culture became the main way we adapt.",
+      "behavioralChange": "Earliest fossils (Jebel Irhoud, ~315 ka) already had a modern face and teeth on a still-archaic braincase shape — anatomical modernity arrived in pieces. Notably, sites spanning ~150,000 years (Irhoud, Omo, Herto) show the same flaked-tool style despite modern faces: symbolic art and cumulative culture clearly lagged well behind anatomical modernity, not a single package.",
       "pressures": [
         {
           "change": "Globular brain and light skeleton",
-          "pressure": "Heavy reliance on social learning and culture rather than brute strength."
+          "pressure": "Emerged from connected, dispersed African populations rather than one origin point; the long gap before symbolic culture appeared suggests the anatomical shift and the cultural shift were sequential, separate developments, not one cause."
         }
       ],
       "certainty": "Our species' reality is certain; no single fossil is 'the first human'.",
@@ -1327,7 +1343,7 @@
     {
       "fromId": "australopithecus-afarensis",
       "siblingIds": ["paranthropus-boisei", "homo-habilis"],
-      "label": "Mega-chewing plant specialist vs. tool-using omnivore"
+      "label": "Hard-food fallback insurance vs. tool-assisted scavenging"
     },
     {
       "fromId": "homo-erectus",
@@ -1336,8 +1352,8 @@
     },
     {
       "fromId": "middle-pleistocene-homo",
-      "siblingIds": ["homo-sapiens", "homo-neanderthalensis"],
-      "label": "Lightly-built dispersal generalist vs. cold-adapted robust specialist"
+      "siblingIds": ["homo-sapiens", "homo-neanderthalensis", "denisovans"],
+      "label": "Dispersal generalist vs. cold-adapted specialist vs. high-altitude Asian disperser"
     }
   ]
 }
