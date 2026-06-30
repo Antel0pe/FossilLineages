@@ -1,0 +1,108 @@
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 64px 24px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.back {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  font-size: 0.85rem;
+  color: var(--foreground);
+  opacity: 0.6;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.kicker {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0;
+}
+
+.headline {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+  margin: 0;
+  font-weight: 650;
+}
+
+.subhead {
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  line-height: 1.25;
+  margin: 0;
+  font-weight: 600;
+}
+
+.body {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.speculative {
+  border-left: 3px solid var(--foreground);
+  padding: 4px 0 4px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.speculativeLabel {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0;
+  font-weight: 600;
+}
+
+.speculativeBody {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  font-style: italic;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.sourceNote {
+  border-top: 1px solid rgba(29, 42, 36, 0.15);
+  padding-top: 24px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.65;
+}
+
+.related {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.related a {
+  color: var(--foreground);
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.related a:hover {
+  opacity: 1;
+}
