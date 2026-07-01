@@ -14,6 +14,13 @@ type LabItem = {
 
 const items: LabItem[] = [
   {
+    href: "/lab/geology-map",
+    kicker: "3,244 sites across 7 global programs",
+    title: "The planet's rock record, pinned to a map",
+    hook: "Ocean drill cores, continental columns, and outcrops from North America to the Japan Sea. Click any pin to read the layers, copy the image into an LLM, and get the geology explained.",
+    mode: "explorable",
+  },
+  {
     href: "/explore/pt-boundary",
     kicker: "Frazer Beach, NSW, Australia",
     title: "A real cliff face, read layer by layer",
@@ -79,6 +86,34 @@ const items: LabItem[] = [
     kicker: "Words you say today",
     title: "Quarantine, deadline, and one popular lie about salt",
     hook: "Two ordinary words are fossils of real historical horrors. A third 'fact' you've heard everywhere probably isn't true.",
+    mode: "read",
+  },
+  {
+    href: "/lab/oldest-stories",
+    kicker: "Australia · 7,000–14,000 years ago",
+    title: "These stories are real geological records",
+    hook: "Aboriginal oral traditions describe coastlines now underwater. Bathymetric maps of the seabed confirm them. One account preserves a star's position from 14,000 years ago.",
+    mode: "read",
+  },
+  {
+    href: "/lab/endosymbiosis",
+    kicker: "Earth · ~1.5–2 billion years ago",
+    title: "A bacterium got absorbed 2 billion years ago and never left",
+    hook: "Your mitochondria have their own circular DNA, divide independently, and are affected by antibiotics — because they are bacteria. All complex life exists because of one merger that happened once. Lynn Margulis figured this out in 1967, was rejected by 15 journals, and was vindicated within a decade.",
+    mode: "read",
+  },
+  {
+    href: "/lab/cambrian-explosion",
+    kicker: "Burgess Shale, British Columbia · ~508 million years ago",
+    title: "Evolution invented every body plan that has ever existed — then stopped",
+    hook: "In 25 million years at the start of the Cambrian, every major animal body plan appears in the fossil record. In the 500 million years since, no new ones have been invented. A quarry discovered by accident in 1909, and a theory about what happens when predators first develop eyes, explain why.",
+    mode: "read",
+  },
+  {
+    href: "/lab/deep-sea-vents",
+    kicker: "Galapagos Rift, Pacific · February 1977",
+    title: "Scientists sent a submersible to the deep ocean floor expecting barren cold desert. They found dense ecosystems thriving in total darkness on volcanic heat.",
+    hook: "Until 1977, all substantial ecosystems were assumed to depend on sunlight. At the Galapagos Rift, 2,500 metres below the surface, the submersible Alvin found giant tube worms, blind shrimp, enormous clams, crabs — communities as dense as a reef, powered entirely by chemosynthesis: bacteria using hydrogen sulphide from the Earth's interior. The discovery made Europa and Enceladus look like candidate homes for life.",
     mode: "read",
   },
 ];

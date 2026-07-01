@@ -1,0 +1,224 @@
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 64px 24px 120px;
+}
+
+.back {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  font-size: 0.85rem;
+  color: var(--foreground);
+  opacity: 0.6;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
+.intro {
+  margin-bottom: 48px;
+}
+
+.kicker {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 12px;
+}
+
+.title {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 16px;
+  font-weight: 650;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  opacity: 0.85;
+  margin: 0 0 14px;
+}
+
+.subtitle:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Explorable ────────────────────────────────────────── */
+
+.explorable {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 20px;
+  margin-bottom: 56px;
+  align-items: start;
+}
+
+.locationList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.locationBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  background: transparent;
+  border: 1px solid rgba(29, 42, 36, 0.16);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--foreground);
+  transition: 140ms ease;
+  width: 100%;
+}
+
+.locationBtn:hover {
+  border-color: rgba(29, 42, 36, 0.35);
+  background: rgba(29, 42, 36, 0.04);
+}
+
+.locationBtnActive {
+  border-color: rgba(47, 69, 56, 0.7);
+  background: rgba(47, 69, 56, 0.08);
+}
+
+.locationName {
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.locationMeta {
+  font-size: 0.72rem;
+  opacity: 0.6;
+  line-height: 1.3;
+}
+
+/* ── Panel ─────────────────────────────────────────────── */
+
+.panel {
+  border: 1px solid rgba(29, 42, 36, 0.16);
+  border-radius: 14px;
+  padding: 24px 24px 28px;
+  background: rgba(250, 248, 242, 0.7);
+  min-height: 340px;
+}
+
+.panelKicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 4px;
+}
+
+.panelAge {
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0.7;
+  margin: 0 0 20px;
+  letter-spacing: 0.02em;
+}
+
+.panelBlock {
+  margin-bottom: 20px;
+}
+
+.panelBlock:last-of-type {
+  margin-bottom: 0;
+}
+
+.panelBlockHeading {
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin: 0 0 8px;
+}
+
+.panelBody {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0 0 10px;
+}
+
+.panelBody:last-child {
+  margin-bottom: 0;
+}
+
+.panelNote {
+  margin: 16px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.75;
+  padding: 12px 14px;
+  border-left: 3px solid rgba(47, 69, 56, 0.4);
+  background: rgba(47, 69, 56, 0.05);
+  border-radius: 0 6px 6px 0;
+}
+
+/* ── Mechanism section ─────────────────────────────────── */
+
+.mechanismSection {
+  border-top: 1px solid rgba(29, 42, 36, 0.16);
+  padding-top: 40px;
+}
+
+.mechanismTitle {
+  font-size: 1.35rem;
+  font-weight: 650;
+  margin: 0 0 18px;
+  line-height: 1.2;
+}
+
+.mechanismBody {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  opacity: 0.88;
+  margin: 0 0 18px;
+}
+
+.mechanismBody:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Mobile ────────────────────────────────────────────── */
+
+@media (max-width: 620px) {
+  .page {
+    padding: 56px 16px 90px;
+  }
+
+  .explorable {
+    grid-template-columns: 1fr;
+  }
+
+  .locationList {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .locationBtn {
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  .locationMeta {
+    display: none;
+  }
+
+  .panel {
+    padding: 18px 16px 22px;
+    min-height: unset;
+  }
+}

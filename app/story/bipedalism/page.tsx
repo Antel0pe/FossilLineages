@@ -46,7 +46,7 @@ export default function BipedalismScene() {
         <p className={styles.body}>
           The next time we crossed it, I tried standing up partway every few strides, just to
           see — straining up onto my back legs, slow, every muscle in my hips fighting where
-          it isn't built to go, for half a breath before it gives out. Most strides that's all
+          it isn&rsquo;t built to go, for half a breath before it gives out. Most strides that&rsquo;s all
           it is, half a breath of nothing. But once it was enough: a shape low and pale at the
           treeline, and something in my chest dropped — I was down and bolting away from it as
           fast as my legs would carry me.
@@ -63,12 +63,12 @@ export default function BipedalismScene() {
         <p className={styles.body}>
           Off to my right, where the grass dips low, I catch movement before the others do —
           something quick and low, cutting through it. I move away from that side myself, and
-          it isn't until a few minutes later that one of the knuckle-walkers near that same
+          it isn&rsquo;t until a few minutes later that one of the knuckle-walkers near that same
           dip jerks upright, shrieks, and goes quiet. Whichever of them that was, they never
           saw it coming the way I did.
         </p>
         <p className={styles.body}>
-          At the fig tree we stay for hours, gorging until I can't fit another one in my
+          At the fig tree we stay for hours, gorging until I can&rsquo;t fit another one in my
           mouth. When the troop finally turns back, I carry a last handful home as well, both
           hands free the whole way, while the others make do with what they can hold between
           their teeth, dropping pieces with every stride.
@@ -76,7 +76,7 @@ export default function BipedalismScene() {
       </section>
 
       <section className={styles.beat}>
-        <p className={styles.kicker}>what's still with us</p>
+        <p className={styles.kicker}>what&rsquo;s still with us</p>
         <p className={styles.body}>
           The same narrowing of the pelvis that made upright walking efficient also narrowed
           the birth canal — one reason human childbirth is markedly longer, harder, and more

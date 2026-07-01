@@ -76,12 +76,12 @@ export default function EnduranceRunningScene() {
       </section>
 
       <section className={styles.beat}>
-        <p className={styles.kicker}>what's still with us</p>
+        <p className={styles.kicker}>what&rsquo;s still with us</p>
         <p className={styles.body}>
           Per kilogram of muscle, no other land mammal sheds heat through sweat as efficiently
           as a human. A horse, run hard enough for long enough in the heat of the day, will
           eventually have to stop and cool down — a sweating human, on the same hot ground,
-          often doesn't have to. In Wales&rsquo;s annual Man versus Horse Marathon, on hot
+          often doesn&rsquo;t have to. In Wales&rsquo;s annual Man versus Horse Marathon, on hot
           years, human runners have beaten every horse in the field.
         </p>
       </section>

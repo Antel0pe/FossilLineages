@@ -1,0 +1,29 @@
+{
+  "generated": "2026-06-30",
+  "sources": {
+    "macrostrat": {
+      "api": "https://macrostrat.org/api",
+      "license": "CC-BY 4.0",
+      "projects": {
+        "1": "North America",
+        "3": "eODP (ocean drill sites)",
+        "4": "Deep Sea/DSDP",
+        "5": "New Zealand",
+        "7": "Caribbean",
+        "8": "South America",
+        "9": "Africa"
+      }
+    },
+    "photos": {
+      "iodp_globus": "Free Globus account -> connect IODP endpoint -> core linescan images for all DSDP/ODP/IODP expeditions",
+      "iodp_lims": "https://web.iodp.tamu.edu/LORE/ (web portal, no public API)",
+      "note": "Ocean drill site photos not programmatically accessible - requires Globus batch download"
+    },
+    "expert_text": {
+      "odp_publications": "https://www-odp.tamu.edu/publications/[LEG]_IR/ -- per-site HTML chapters",
+      "note": "Peer-reviewed site descriptions by expedition geologists"
+    }
+  },
+  "site_count": 3244,
+  "sites_with_units": 60
+}
