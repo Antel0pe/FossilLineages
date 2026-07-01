@@ -5,46 +5,19 @@ import { MapContainer, TileLayer, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
-import SitePanel, { type Unit } from './SitePanel'
+import SitePanel, { type OutcropLocation } from './SitePanel'
 import styles from './geology-map.module.css'
 
-const PROJECT_COLORS: Record<string, string> = {
-  'North America': '#e8a030',
-  'eODP (ocean drill sites)': '#4a90d9',
-  'Deep Sea/DSDP': '#3a7bbd',
-  'New Zealand': '#2ea043',
-  'Caribbean': '#9b59b6',
-  'South America': '#e74c3c',
-  'Africa': '#f39c12',
-}
-
-type Feature = {
-  type: 'Feature'
-  geometry: { type: 'Point'; coordinates: [number, number] }
-  properties: {
-    col_id: number
-    name: string
-    group: string
-    project: string
-    project_id: number
-    source: string
-  }
-}
-
-type UnitEntry = { col_id: number; units: Unit[] }
-type ExpertEntry = {
-  source: string; citation: string; url: string; program: string
-  leg: number; site: number; location: { lat: number; lng: number }
-  ocean: string; water_depth_m: number; expert_text: string; note: string
-}
+const EXACT_COLOR = '#4ad982'
+const APPROX_COLOR = '#e8a030'
 
 type MarkersProps = {
-  features: Feature[]
+  locations: OutcropLocation[]
   selectedId: number | null
-  onSelect: (f: Feature) => void
+  onSelect: (loc: OutcropLocation) => void
 }
 
-function Markers({ features, selectedId, onSelect }: MarkersProps) {
+function Markers({ locations, selectedId, onSelect }: MarkersProps) {
   const map = useMap()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const clusterRef = useRef<any>(null)
@@ -52,7 +25,7 @@ function Markers({ features, selectedId, onSelect }: MarkersProps) {
   const markersRef = useRef<Map<number, any>>(new Map())
 
   useEffect(() => {
-    if (features.length === 0 || !map) return
+    if (locations.length === 0 || !map) return
 
     // Dynamically import to ensure we're in browser context
     import('leaflet.markercluster').then(() => {
@@ -67,11 +40,10 @@ function Markers({ features, selectedId, onSelect }: MarkersProps) {
         spiderfyOnMaxZoom: true,
       })
 
-      features.forEach(f => {
-        const [lng, lat] = f.geometry.coordinates
-        const color = PROJECT_COLORS[f.properties.project] ?? '#888888'
+      locations.forEach(loc => {
+        const color = loc.hasExactCoords ? EXACT_COLOR : APPROX_COLOR
 
-        const marker = L.circleMarker([lat, lng], {
+        const marker = L.circleMarker([loc.lat, loc.lng], {
           radius: 4,
           color,
           fillColor: color,
@@ -79,9 +51,10 @@ function Markers({ features, selectedId, onSelect }: MarkersProps) {
           weight: 0.5,
         })
 
-        marker.bindTooltip(f.properties.name, { direction: 'top', offset: [0, -4] })
-        marker.on('click', () => onSelect(f))
-        markersRef.current.set(f.properties.col_id, marker)
+        const label = `${loc.country} — ${loc.images.length} photo${loc.images.length !== 1 ? 's' : ''}`
+        marker.bindTooltip(label, { direction: 'top', offset: [0, -4] })
+        marker.on('click', () => onSelect(loc))
+        markersRef.current.set(loc.id, marker)
         cluster.addLayer(marker)
       })
 
@@ -96,56 +69,55 @@ function Markers({ features, selectedId, onSelect }: MarkersProps) {
         markersRef.current.clear()
       }
     }
-  }, [map, features, onSelect])
+  }, [map, locations, onSelect])
 
   // Highlight selected marker
   useEffect(() => {
     markersRef.current.forEach((marker, id) => {
-      const f = features.find(f => f.properties.col_id === id)
-      if (!f) return
-      const color = PROJECT_COLORS[f.properties.project] ?? '#888888'
+      const loc = locations.find(l => l.id === id)
+      if (!loc) return
+      const color = loc.hasExactCoords ? EXACT_COLOR : APPROX_COLOR
       if (id === selectedId) {
         marker.setStyle({ radius: 7, color: '#ffffff', fillColor: color, fillOpacity: 1, weight: 2 })
       } else {
         marker.setStyle({ radius: 4, color, fillColor: color, fillOpacity: 0.85, weight: 0.5 })
       }
     })
-  }, [selectedId, features])
+  }, [selectedId, locations])
 
   return null
 }
 
 export default function GeologyMap() {
-  const [features, setFeatures] = useState<Feature[]>([])
-  const [unitsData, setUnitsData] = useState<Record<string, UnitEntry>>({})
-  const [expertText, setExpertText] = useState<Record<string, ExpertEntry>>({})
-  const [selected, setSelected] = useState<Feature | null>(null)
+  const [locations, setLocations] = useState<OutcropLocation[]>([])
+  const [photoCount, setPhotoCount] = useState(0)
+  const [selected, setSelected] = useState<OutcropLocation | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([
-      fetch('/geology-data/sites.geojson').then(r => r.json()),
-      fetch('/geology-data/units-sample.json').then(r => r.json()),
-      fetch('/geology-data/expert-text-samples.json').then(r => r.json()),
-    ]).then(([geojson, units, expert]) => {
-      setFeatures(geojson.features)
-      setUnitsData(units)
-      setExpertText(expert)
-      setLoading(false)
-    }).catch(err => {
-      console.error('Failed to load geology data', err)
-      setLoading(false)
-    })
+    fetch('/geology-data/wikimedia-outcrops.json')
+      .then(r => r.json())
+      .then(data => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const locs: OutcropLocation[] = data.locations.map((l: any, i: number) => ({ ...l, id: i }))
+        setLocations(locs)
+        setPhotoCount(data.totalFiles ?? locs.reduce((a, l) => a + l.images.length, 0))
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Failed to load outcrop data', err)
+        setLoading(false)
+      })
   }, [])
 
-  const handleSelect = useCallback((f: Feature) => setSelected(f), [])
+  const handleSelect = useCallback((loc: OutcropLocation) => setSelected(loc), [])
   const handleClose = useCallback(() => setSelected(null), [])
 
   return (
     <div className={styles.container}>
       {loading && (
         <div className={styles.loading}>
-          <div className={styles.loadingInner}>Loading 3,244 geological sites…</div>
+          <div className={styles.loadingInner}>Loading outcrop photos…</div>
         </div>
       )}
 
@@ -164,10 +136,10 @@ export default function GeologyMap() {
             subdomains="abcd"
             maxZoom={19}
           />
-          {features.length > 0 && (
+          {locations.length > 0 && (
             <Markers
-              features={features}
-              selectedId={selected?.properties.col_id ?? null}
+              locations={locations}
+              selectedId={selected?.id ?? null}
               onSelect={handleSelect}
             />
           )}
@@ -175,9 +147,9 @@ export default function GeologyMap() {
       </div>
 
       <SitePanel
-        site={selected}
-        unitsData={unitsData}
-        expertText={expertText}
+        location={selected}
+        locationCount={locations.length}
+        photoCount={photoCount}
         onClose={handleClose}
       />
     </div>
