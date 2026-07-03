@@ -14,6 +14,13 @@ type LabItem = {
 
 const items: LabItem[] = [
   {
+    href: "/lab/grants-finches",
+    kicker: "Daphne Major, Galápagos · 1973–2012",
+    title: "Forty years of a beak changing size, in real measured numbers",
+    hook: "Click into a drought, a flood, or a new competitor arriving, and watch the same real data swing beak size the opposite way each time — no two events pushed it for the same reason.",
+    mode: "explorable",
+  },
+  {
     href: "/lab/geology-map",
     kicker: "3,244 sites across 7 global programs",
     title: "The planet's rock record, pinned to a map",

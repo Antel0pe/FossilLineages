@@ -1,0 +1,273 @@
+.page {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 64px 24px 120px;
+}
+
+.back {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  font-size: 0.85rem;
+  color: var(--foreground);
+  opacity: 0.6;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
+.intro {
+  margin-bottom: 40px;
+  max-width: 760px;
+}
+
+.kicker {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 12px;
+}
+
+.title {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  line-height: 1.15;
+  margin: 0 0 16px;
+  font-weight: 650;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  opacity: 0.85;
+  margin: 0 0 14px;
+}
+
+.subtitle:last-child {
+  margin-bottom: 0;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.legendSwatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chartsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.chartBlock {
+  border: 1px solid rgba(29, 42, 36, 0.16);
+  border-radius: 14px;
+  padding: 16px 16px 10px;
+  background: rgba(250, 248, 242, 0.5);
+}
+
+.chartHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.chartLabel {
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.chartUnit {
+  font-size: 0.78rem;
+  opacity: 0.6;
+}
+
+.chartSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chartSection {
+  cursor: pointer;
+  transition: opacity 140ms ease;
+}
+
+.chartSection:hover {
+  opacity: 0.4 !important;
+}
+
+.axisNote {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  opacity: 0.6;
+  margin: 6px 2px 0;
+}
+
+.panelColumn {
+  position: sticky;
+  top: 24px;
+}
+
+.panel {
+  border: 1px solid rgba(29, 42, 36, 0.16);
+  border-radius: 14px;
+  padding: 22px 22px 26px;
+  background: rgba(250, 248, 242, 0.7);
+  min-height: 320px;
+}
+
+.panelKicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 8px;
+}
+
+.panelTitle {
+  font-size: 1.3rem;
+  font-weight: 650;
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+
+.panelBody {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.panelBody:last-child {
+  margin-bottom: 8px;
+}
+
+.sourceList {
+  margin: 14px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid rgba(29, 42, 36, 0.14);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sourceLink {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: inherit;
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.sourceLink:hover {
+  opacity: 1;
+}
+
+.sectionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sectionListItem {
+  border: 1px solid rgba(29, 42, 36, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--foreground);
+  transition: 160ms ease;
+}
+
+.sectionListItem:hover {
+  border-color: var(--moss-dark, #2f4538);
+}
+
+.sectionListItemActive {
+  background: var(--moss-dark, #2f4538);
+  color: var(--cream, #faf8f2);
+  border-color: var(--moss-dark, #2f4538);
+}
+
+.provenanceSection {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(29, 42, 36, 0.16);
+  max-width: 760px;
+}
+
+.provenanceTitle {
+  font-size: 1.4rem;
+  font-weight: 650;
+  margin: 0 0 14px;
+}
+
+.provenanceBody {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0 0 14px;
+}
+
+.provenanceBody:last-child {
+  margin-bottom: 0;
+}
+
+.sourceCiteList {
+  padding-left: 20px;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 380px) {
+  .page {
+    padding: 56px 14px 90px;
+  }
+
+  .panel {
+    padding: 18px 16px 20px;
+  }
+
+  .chartBlock {
+    padding: 12px 10px 8px;
+  }
+}
