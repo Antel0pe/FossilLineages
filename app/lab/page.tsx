@@ -14,6 +14,13 @@ type LabItem = {
 
 const items: LabItem[] = [
   {
+    href: "/lab/chicxulub",
+    kicker: "Chicxulub crater, Yucatán · ~66 million years ago",
+    title: "Six kinds of evidence for one asteroid, and why each thing it caused happened",
+    hook: "Iridium in the dirt, soot in the air, plankton in the rock, ferns after fire, dinosaur bones, and fish caught mid-breath. Step through before, during, and after for each — and see why it happened, not just that it did.",
+    mode: "explorable",
+  },
+  {
     href: "/lab/grants-finches",
     kicker: "Daphne Major, Galápagos · 1973–2012",
     title: "Forty years of a beak changing size, in real measured numbers",
