@@ -219,3 +219,31 @@ narrower than it first sounded:
   doesn't supply this contrast on its own; new comparative content has to be written per fork.
 - See `verification-criteria/2026-06-27-graph-divergence-labels.md` for the pilot fork list
   and falsifiable criteria.
+
+## Branch-point comparison panel (2026-07-04) — the always-visible tag didn't survive contact
+User re-read the existing modals unprompted and specifically lit up on content that was
+already there and already branching (afarensis → 3–4 strategies, Middle Pleistocene Homo →
+3 strategies) — confirming the graph/modal backbone genuinely works and the earlier "scenes
+are the primary format" pivot (2026-06-23) doesn't mean this content is unloved, just under-
+surfaced. Two corrections to the 2026-06-27 entry above:
+- **The always-visible floating tag was the wrong shape.** User: it "doesn't add anything
+  nicely." Replaced with a click-to-open side panel (a small marker button at the branch
+  point, plus a chronological nav strip so you don't have to hunt the graph for it) —
+  interaction-gated depth, not ambient text clutter. Lesson for future graph additions: don't
+  default to an always-visible label for comparative/interpretive content; gate it behind a
+  click the same way the species modal already does.
+- **A contrast needs its baseline stated, not just the two endpoints.** User's own framing:
+  "the base might be like tree swinging mainly fruit eater or some simple background... this
+  should be relative to the change described." The panel always states the ancestor's own
+  baseline lifestyle first, then each descendant's bullet is written to name what it's being
+  contrasted against (the ancestor, or a specific sibling) — never a free-floating trait.
+- **Uncertainty about "is this really a divergence" has to be its own explicit line**, separate
+  from uncertainty about the underlying anatomy. User was explicit that they weren't sure
+  contrasting traits were "explicitly different to ancestor and sibling species" vs. just
+  presented as if they were — each panel now ends with a dedicated confidence line about the
+  *comparison framing itself* (e.g. whether the siblings really share that exact ancestor),
+  distinct from the existing per-species "how sure are we" in the modal.
+- New species get added specifically to deepen existing/plausible branch points (not to pad
+  the timeline) — e.g. Paranthropus robustus/Australopithecus sediba added as a second,
+  independent africanus-descended fork that echoes the afarensis-descended fork one region
+  over. See `verification-criteria/2026-07-04-lineage-branching-and-comparison-panel.md`.

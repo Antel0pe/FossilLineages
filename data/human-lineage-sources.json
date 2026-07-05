@@ -167,6 +167,109 @@
       ]
     },
     {
+      "id": "si-paranthropus-robustus",
+      "kind": "museum_synthesis",
+      "title": "Paranthropus robustus",
+      "organization": "Smithsonian Human Origins Program",
+      "url": "https://humanorigins.si.edu/evidence/human-fossils/species/paranthropus-robustus",
+      "supports": [
+        "1.8 Ma to 1.2 Ma range",
+        "megadont chewing anatomy",
+        "South African cave sites",
+        "fossil catalog"
+      ]
+    },
+    {
+      "id": "si-australopithecus-garhi",
+      "kind": "museum_synthesis",
+      "title": "Australopithecus garhi",
+      "organization": "Smithsonian Human Origins Program",
+      "url": "https://humanorigins.si.edu/evidence/human-fossils/species/australopithecus-garhi",
+      "supports": [
+        "about 2.5 Ma age",
+        "Bouri, Middle Awash fossils",
+        "association with cut-marked bone and early stone tools"
+      ]
+    },
+    {
+      "id": "si-australopithecus-sediba",
+      "kind": "museum_synthesis",
+      "title": "Australopithecus sediba",
+      "organization": "Smithsonian Human Origins Program",
+      "url": "https://humanorigins.si.edu/evidence/human-fossils/species/australopithecus-sediba",
+      "supports": [
+        "about 1.98 Ma age",
+        "Malapa, South Africa fossils",
+        "mosaic of Australopithecus and Homo-like traits"
+      ]
+    },
+    {
+      "id": "si-kenyanthropus-platyops",
+      "kind": "museum_synthesis",
+      "title": "Kenyanthropus platyops",
+      "organization": "Smithsonian Human Origins Program",
+      "url": "https://humanorigins.si.edu/evidence/human-fossils/species/kenyanthropus-platyops",
+      "supports": [
+        "about 3.5 Ma age",
+        "flat-faced cranial anatomy",
+        "West Turkana fossils",
+        "disputed species status"
+      ]
+    },
+    {
+      "id": "backwell-2001",
+      "kind": "primary_research",
+      "title": "Evidence of termite foraging by Swartkrans early hominids",
+      "authors": "Backwell & d'Errico",
+      "year": 2001,
+      "doi": "10.1073/pnas.221551598",
+      "url": "https://doi.org/10.1073/pnas.221551598",
+      "supports": [
+        "bone-tool wear patterns consistent with termite-mound foraging",
+        "Paranthropus robustus dietary flexibility"
+      ]
+    },
+    {
+      "id": "deheinzelin-1999",
+      "kind": "primary_research",
+      "title": "Environment and Behavior of 2.5-Million-Year-Old Bouri Hominids",
+      "authors": "de Heinzelin et al.",
+      "year": 1999,
+      "doi": "10.1126/science.284.5414.625",
+      "url": "https://doi.org/10.1126/science.284.5414.625",
+      "supports": [
+        "Bouri cut-marked and broken bone",
+        "earliest evidence tying stone-tool butchery to an Australopithecus-grade hominin"
+      ]
+    },
+    {
+      "id": "berger-2010",
+      "kind": "primary_research",
+      "title": "Australopithecus sediba: A New Species of Homo-Like Australopith from South Africa",
+      "authors": "Berger et al.",
+      "year": 2010,
+      "doi": "10.1126/science.1184944",
+      "url": "https://doi.org/10.1126/science.1184944",
+      "supports": [
+        "Malapa MH1/MH2 description",
+        "mosaic anatomy argument for a candidate Homo transitional form"
+      ]
+    },
+    {
+      "id": "leakey-2001",
+      "kind": "primary_research",
+      "title": "New hominin genus from eastern Africa shows diverse middle Pliocene lineages",
+      "authors": "Leakey et al.",
+      "year": 2001,
+      "doi": "10.1038/35102500",
+      "url": "https://doi.org/10.1038/35102500",
+      "supports": [
+        "KNM-WT 40000 description",
+        "proposed Kenyanthropus platyops species",
+        "flat-faced cranial morphology"
+      ]
+    },
+    {
       "id": "hublin-2017",
       "kind": "primary_research",
       "title": "New fossils from Jebel Irhoud, Morocco and the pan-African origin of Homo sapiens",

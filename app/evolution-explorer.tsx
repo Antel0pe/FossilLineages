@@ -67,10 +67,15 @@ export type Edge = {
   kind: "supported" | "candidate" | "context" | "split" | "gene-flow";
 };
 
+export type SiblingBullet = { id: string; bullet: string };
+
 export type Divergence = {
   fromId: string;
   siblingIds: string[];
   label: string;
+  ancestorBaseline: string;
+  siblingBullets: SiblingBullet[];
+  confidenceNote: string;
 };
 
 export type Layout = {
@@ -108,7 +113,12 @@ const FOOTER_HEIGHT = CARD_PAD_TOP + CARD_PAD_BOTTOM + ROW_GAP * 2 + NAME_ROW_HE
 const MIN_FIG = 56;
 const MAX_FIG = 172;
 const MAX_HEIGHT_M = 1.75;
-const MIN_SCALE = 0.4;
+// A floor of 0.4 made sense back when the tree never scrolled vertically and had to cram
+// every lane into the viewport. Now that .treeViewport scrolls vertically, an oversized lane
+// span (more branch points => more lanes) can lean on scroll instead of shrinking cards to
+// near-illegibility — so the floor only needs to guard against a handful of extra lanes, not
+// absorb unlimited vertical growth.
+const MIN_SCALE = 0.72;
 
 const eraLabels = [
   { col: 0.2, label: "Miocene apes", date: "~20 Ma" },
@@ -206,11 +216,66 @@ function TaxonCard({
   );
 }
 
-function DivergenceTag({ label, x, y }: { label: string; x: number; y: number }) {
+function DivergencePanel({
+  divergence,
+  ancestor,
+  siblings,
+  onClose,
+  onOpenSpecies,
+}: {
+  divergence: Divergence;
+  ancestor: Taxon;
+  siblings: { taxon: Taxon; bullet: string }[];
+  onClose: () => void;
+  onOpenSpecies: (id: string) => void;
+}) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    closeRef.current?.focus();
+  }, [divergence.fromId]);
+
   return (
-    <span className={styles.divergenceTag} style={{ left: x, top: y }}>
-      {label}
-    </span>
+    <div className={styles.divergenceBackdrop} onMouseDown={onClose}>
+      <section
+        className={styles.divergencePanel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="divergence-title"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <button ref={closeRef} type="button" className={styles.closeButton} onClick={onClose} aria-label="Close comparison">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+
+        <header className={styles.divergenceHeader}>
+          <span className={styles.modalEyebrow}>Branch point &middot; {siblings.length} strategies</span>
+          <h3 id="divergence-title">{divergence.label}</h3>
+        </header>
+
+        <article className={styles.ancestorBlock}>
+          <span className={styles.blockTag}>
+            Starting point &middot; <button type="button" className={styles.inlineTaxonLink} onClick={() => onOpenSpecies(ancestor.id)}>{ancestor.scientificName}</button>
+          </span>
+          <p>{divergence.ancestorBaseline}</p>
+        </article>
+
+        <ul className={styles.siblingBulletList}>
+          {siblings.map(({ taxon, bullet }) => (
+            <li key={taxon.id}>
+              <button type="button" className={styles.siblingBulletName} onClick={() => onOpenSpecies(taxon.id)}>
+                {taxon.scientificName}
+              </button>
+              <p>{bullet}</p>
+            </li>
+          ))}
+        </ul>
+
+        <article className={`${styles.block} ${styles.confidenceBlock}`}>
+          <span className={styles.blockTag}>How sure are we?</span>
+          <p>{divergence.confidenceNote}</p>
+        </article>
+      </section>
+    </div>
   );
 }
 
@@ -427,6 +492,7 @@ function DetailModal({
 
 export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [activeDivergenceKey, setActiveDivergenceKey] = useState<string | null>(null);
   const treeViewportRef = useRef<HTMLDivElement>(null);
   const [viewportHeight, setViewportHeight] = useState(0);
 
@@ -483,69 +549,66 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
 
   const navEdges = useMemo(() => data.edges.filter((e) => e.kind !== "gene-flow"), [data.edges]);
 
-  // Placed just right of the parent card (a column gap that's always free) rather than
-  // literally between the siblings — at 2px lane gaps there's no slot wide enough to sit
-  // between two branches without clipping a card, so we instead search nearby lanes at the
-  // same x for one with no card underneath.
-  const divergenceTags = useMemo(() => {
-    const TAG_W = 132;
-    const TAG_H = 56;
-    const PAD = 6;
-    const overlaps = (ax: number, ay: number, aw: number, ah: number, bx: number, by: number, bw: number, bh: number) =>
-      ax < bx + bw + PAD && ax + aw + PAD > bx && ay < by + bh + PAD && ay + ah + PAD > by;
-
-    const tags: { key: string; label: string; x: number; y: number; linkIds: string[] }[] = [];
+  const divergenceByKey = useMemo(() => {
+    const map = new Map<string, Divergence>();
     for (const div of data.divergences ?? []) {
-      const from = positions.get(div.fromId);
-      const siblings = div.siblingIds.map((id) => positions.get(id));
-      if (!from || siblings.some((s) => !s)) continue;
-      const x = from.x + CARD_WIDTH + 14 + TAG_W / 2;
-      let y = from.cy;
-      for (const offset of [0, lanePx, -lanePx, lanePx * 2, -lanePx * 2]) {
-        const tryY = from.cy + offset;
-        const tagLeft = x - TAG_W / 2;
-        const tagTop = tryY - TAG_H / 2;
-        const collides = data.taxa.some((t) => {
-          const p = positions.get(t.id)!;
-          return overlaps(tagLeft, tagTop, TAG_W, TAG_H, p.x, p.y, CARD_WIDTH, cardHeight);
-        });
-        y = tryY;
-        if (!collides) break;
-      }
-      tags.push({ key: `${div.fromId}-${div.siblingIds.join("-")}`, label: div.label, x, y, linkIds: [div.fromId, ...div.siblingIds] });
+      map.set(`${div.fromId}-${div.siblingIds.join("-")}`, div);
     }
-    return tags;
-  }, [data.divergences, positions, data.taxa, cardHeight, lanePx]);
+    return map;
+  }, [data.divergences]);
 
-  // Faint connector lines from each tag to the taxa it describes (fromId + siblingIds), so it's
-  // visually unambiguous which lineage split a tag refers to — distinct from the edge_* ancestry
-  // lines (those are thicker, colour-coded by relationship kind; these are thin, uniform, dotted).
-  const tagConnectors = useMemo(() => {
-    const lines: { key: string; x1: number; y1: number; x2: number; y2: number }[] = [];
-    for (const tag of divergenceTags) {
-      for (const id of tag.linkIds) {
-        const p = positions.get(id);
-        if (!p) continue;
-        lines.push({ key: `${tag.key}-${id}`, x1: tag.x, y1: tag.y, x2: p.cx, y2: p.cy });
-      }
-    }
-    return lines;
-  }, [divergenceTags, positions]);
+  // Ordered oldest-first by the latest-appearing sibling in each cluster (a proxy for "roughly
+  // when this split had played out"), so the index reads left-to-right the same way the graph does.
+  const chronoDivergences = useMemo(() => {
+    const rows = (data.divergences ?? []).map((div) => {
+      const key = `${div.fromId}-${div.siblingIds.join("-")}`;
+      const splitAge = Math.max(...div.siblingIds.map((id) => taxaById.get(id)?.olderMa ?? 0));
+      return { key, label: div.label, splitAge, siblingCount: div.siblingIds.length };
+    });
+    return rows.sort((a, b) => b.splitAge - a.splitAge);
+  }, [data.divergences, taxaById]);
+
+  const activeDivergence = activeDivergenceKey ? divergenceByKey.get(activeDivergenceKey) : undefined;
+  const activeDivergenceView = useMemo(() => {
+    if (!activeDivergence) return undefined;
+    const ancestor = taxaById.get(activeDivergence.fromId);
+    if (!ancestor) return undefined;
+    const siblings = activeDivergence.siblingBullets
+      .map((sb) => {
+        const taxon = taxaById.get(sb.id);
+        return taxon ? { taxon, bullet: sb.bullet } : undefined;
+      })
+      .filter((s): s is { taxon: Taxon; bullet: string } => Boolean(s));
+    return { divergence: activeDivergence, ancestor, siblings };
+  }, [activeDivergence, taxaById]);
+
+  const openSpecies = (id: string) => {
+    setActiveDivergenceKey(null);
+    setSelectedId(id);
+  };
+  const openDivergence = (key: string) => {
+    setSelectedId(null);
+    setActiveDivergenceKey(key);
+  };
+
   const selected = selectedId ? taxaById.get(selectedId) : undefined;
 
   useEffect(() => {
-    if (!selectedId) return;
+    if (!selectedId && !activeDivergenceKey) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedId(null);
+      if (event.key === "Escape") {
+        setSelectedId(null);
+        setActiveDivergenceKey(null);
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selectedId]);
+  }, [selectedId, activeDivergenceKey]);
 
   const scrollTree = (direction: -1 | 1) => {
     treeViewportRef.current?.scrollBy({ left: direction * 620, behavior: "smooth" });
@@ -578,6 +641,24 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
         </div>
       </header>
 
+      <nav className={styles.branchNav} aria-label="Jump to a branch point">
+        <span className={styles.branchNavLabel}>Branch points</span>
+        <div className={styles.branchNavList}>
+          {chronoDivergences.map((row) => (
+            <button
+              type="button"
+              key={row.key}
+              className={styles.branchNavItem}
+              onClick={() => openDivergence(row.key)}
+              aria-label={`Compare strategies: ${row.label}`}
+            >
+              <span className={styles.branchNavAge}>{formatAge(row.splitAge)}</span>
+              {row.label}
+            </button>
+          ))}
+        </div>
+      </nav>
+
       <section className={styles.explorerSection} id="top" aria-label="Evolutionary tree">
         <div className={styles.treeViewport} ref={treeViewportRef} tabIndex={0} aria-label="Scrollable evolutionary tree">
           <div className={styles.treeCanvas} style={{ width: canvasWidth, height: canvasHeight }}>
@@ -599,19 +680,12 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
                   />
                 );
               })}
-              {tagConnectors.map((line) => (
-                <line key={line.key} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} className={styles.tagConnector} />
-              ))}
             </svg>
 
             {data.taxa.map((taxon) => {
               const p = positions.get(taxon.id)!;
-              return <TaxonCard key={taxon.id} taxon={taxon} x={p.x} y={p.y} cardHeight={cardHeight} scale={scale} onOpen={setSelectedId} />;
+              return <TaxonCard key={taxon.id} taxon={taxon} x={p.x} y={p.y} cardHeight={cardHeight} scale={scale} onOpen={openSpecies} />;
             })}
-
-            {divergenceTags.map((tag) => (
-              <DivergenceTag key={tag.key} label={tag.label} x={tag.x} y={tag.y} />
-            ))}
           </div>
         </div>
       </section>
@@ -624,7 +698,18 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
           ancestors={navEdges.filter((e) => e.toId === selected.id).map((e) => taxaById.get(e.fromId)).filter((t): t is Taxon => Boolean(t))}
           descendants={navEdges.filter((e) => e.fromId === selected.id).map((e) => taxaById.get(e.toId)).filter((t): t is Taxon => Boolean(t))}
           onClose={() => setSelectedId(null)}
-          onNavigate={setSelectedId}
+          onNavigate={openSpecies}
+        />
+      )}
+
+      {activeDivergenceView && (
+        <DivergencePanel
+          key={activeDivergenceKey}
+          divergence={activeDivergenceView.divergence}
+          ancestor={activeDivergenceView.ancestor}
+          siblings={activeDivergenceView.siblings}
+          onClose={() => setActiveDivergenceKey(null)}
+          onOpenSpecies={openSpecies}
         />
       )}
     </main>
