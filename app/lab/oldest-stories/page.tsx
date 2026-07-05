@@ -129,21 +129,21 @@ export default function OldestStoriesPage() {
       <section className={styles.explorable} aria-label="Stories by location">
         <div className={styles.locationList} role="list">
           {LOCATIONS.map((loc) => (
-            <button
-              key={loc.id}
-              type="button"
-              role="listitem"
-              className={`${styles.locationBtn} ${
-                activeId === loc.id ? styles.locationBtnActive : ""
-              }`}
-              onClick={() => setActiveId(loc.id)}
-              aria-pressed={activeId === loc.id}
-            >
-              <span className={styles.locationName}>{loc.name}</span>
-              <span className={styles.locationMeta}>
-                {loc.people} &middot; {loc.age}
-              </span>
-            </button>
+            <div key={loc.id} role="listitem">
+              <button
+                type="button"
+                className={`${styles.locationBtn} ${
+                  activeId === loc.id ? styles.locationBtnActive : ""
+                }`}
+                onClick={() => setActiveId(loc.id)}
+                aria-pressed={activeId === loc.id}
+              >
+                <span className={styles.locationName}>{loc.name}</span>
+                <span className={styles.locationMeta}>
+                  {loc.people} &middot; {loc.age}
+                </span>
+              </button>
+            </div>
           ))}
         </div>
 
