@@ -27,6 +27,8 @@ function Markers({ locations, selectedId, onSelect }: MarkersProps) {
   useEffect(() => {
     if (locations.length === 0 || !map) return
 
+    const markers = markersRef.current
+
     // Dynamically import to ensure we're in browser context
     import('leaflet.markercluster').then(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,7 +56,7 @@ function Markers({ locations, selectedId, onSelect }: MarkersProps) {
         const label = `${loc.country} — ${loc.images.length} photo${loc.images.length !== 1 ? 's' : ''}`
         marker.bindTooltip(label, { direction: 'top', offset: [0, -4] })
         marker.on('click', () => onSelect(loc))
-        markersRef.current.set(loc.id, marker)
+        markers.set(loc.id, marker)
         cluster.addLayer(marker)
       })
 
@@ -66,7 +68,7 @@ function Markers({ locations, selectedId, onSelect }: MarkersProps) {
       if (clusterRef.current && map) {
         map.removeLayer(clusterRef.current)
         clusterRef.current = null
-        markersRef.current.clear()
+        markers.clear()
       }
     }
   }, [map, locations, onSelect])

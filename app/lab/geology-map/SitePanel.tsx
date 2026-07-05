@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import styles from './geology-map.module.css'
 
 export type OutcropImage = {
@@ -33,11 +33,13 @@ type SitePanelProps = {
 export default function SitePanel({ location, locationCount, photoCount, onClose }: SitePanelProps) {
   const [idx, setIdx] = useState(0)
   const [copyState, setCopyState] = useState<CopyState>('idle')
+  const [prevLocation, setPrevLocation] = useState(location)
 
-  useEffect(() => {
+  if (location !== prevLocation) {
+    setPrevLocation(location)
     setIdx(0)
     setCopyState('idle')
-  }, [location])
+  }
 
   const image = location?.images[idx] ?? null
 
