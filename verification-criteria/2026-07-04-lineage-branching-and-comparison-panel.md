@@ -175,3 +175,43 @@ panel positioning on their own screen) since that specific medium couldn't be ca
 - No literal column/era re-layout of the graph itself.
 - No change to the existing per-species `DetailModal` content or the ~5 existing species'
   `pressures`/`behavioralChange` text (only the new species get fresh writing there).
+
+## Follow-up 1 (2026-07-04, same day): remove on-graph markers
+User loved the panel + top nav pills but wanted the on-graph branch markers (and their
+dotted connector lines) gone entirely — the nav strip alone is enough to reach every panel.
+Removed `DivergenceMarker`, the `divergenceTags`/`tagConnectors` layout memoization, and the
+corresponding CSS. Verified: 0 graph markers, 0 connector lines in the DOM; all 6 nav pills
+still open their correct panel; `tsc --noEmit` shows only the pre-existing unrelated
+`leaflet.markercluster` error.
+
+## Follow-up 2 (2026-07-04, later): enrich existing panels + add Homo rudolfensis
+Per explicit feedback (see `feedback_causal_depth_ceiling.md` in project memory): one causal
+link (change → pressure → lifestyle) is the ceiling — more precision on an existing claim
+dilutes, but a genuinely separate, already-evidenced fact about the same species is welcome.
+Audited all 6 clusters against the underlying species data and added one separate fact each
+to 4 bullets that were previously single-dimension, using facts already present elsewhere in
+the dataset (no new research needed):
+
+| Sibling | Cluster | Added fact | Genuinely separate from original bullet? |
+|---|---|---|---|
+| Pan (chimpanzee) | apes | Tool use (termite-fishing, nut-cracking) | PASS — social/diet-tracking vs. manual tool skill, different dimension |
+| Australopithecus africanus | afarensis's 5 | Slightly larger, rounder braincase | PASS — cognitive/anatomical vs. diet, different dimension |
+| Homo floresiensis | erectus | Persisting stone toolmaking + Stegodon butchery despite shrunk brain | PASS — tool behavior vs. body/brain size, different dimension |
+| Middle Pleistocene Homo | erectus | Coordinated hunting, fire, built shelters | PASS — technology/behavior vs. body/brain scaling, different dimension |
+
+Also researched and added **Homo rudolfensis** as a 5th sibling in the afarensis cluster
+(now "Afarensis's five strategies"): contemporary with Homo habilis in the same Turkana
+Basin (~2.0–1.5 Ma per Smithsonian), bigger brain than habilis but molars kept large and no
+confirmed tool association — a genuine third early-Homo strategy, sourced from Smithsonian's
+own curated species list (`si-homo-rudolfensis`) plus the original KNM-ER 1470 description
+(Leakey 1973). Image: Mauricio Antón's CC BY 3.0 life reconstruction from Wikimedia Commons,
+downloaded locally with license/creator recorded.
+
+**Verification:** new taxon card renders (snapshot confirmed "Homo rudolfensis, 1.9 MA – 1.8
+MA"); image fetches 200/image-jpeg; new 5-way panel opens via nav pill and shows all 5
+siblings including rudolfensis with a comparison-point-naming bullet; the confidence note
+was updated to flag that habilis/rudolfensis specifically are true dated contemporaries
+(firmer than the cluster's shared-afarensis-ancestor framing). All 4 enriched bullets
+verified rendering with both the original and added sentence present. 25/25 cards, zero
+overlaps; zero failed network requests; `tsc --noEmit` shows only the pre-existing unrelated
+error.

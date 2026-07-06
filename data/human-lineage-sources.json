@@ -270,6 +270,33 @@
       ]
     },
     {
+      "id": "si-homo-rudolfensis",
+      "kind": "museum_synthesis",
+      "title": "Homo rudolfensis",
+      "organization": "Smithsonian Human Origins Program",
+      "url": "https://humanorigins.si.edu/evidence/human-fossils/species/homo-rudolfensis",
+      "supports": [
+        "1.9 Ma to 1.8 Ma range",
+        "KNM-ER 1470 cranium",
+        "contemporaneity with Homo habilis, Homo erectus and Paranthropus boisei in the Turkana Basin",
+        "larger brain and molars than Homo habilis"
+      ]
+    },
+    {
+      "id": "leakey-1973",
+      "kind": "primary_research",
+      "title": "Evidence for an advanced Plio-Pleistocene hominid from East Rudolf, Kenya",
+      "authors": "Leakey",
+      "year": 1973,
+      "doi": "10.1038/242447a0",
+      "url": "https://doi.org/10.1038/242447a0",
+      "supports": [
+        "KNM-ER 1470 original description",
+        "large cranial capacity distinct from contemporary Homo habilis",
+        "basis for the later Homo rudolfensis naming"
+      ]
+    },
+    {
       "id": "hublin-2017",
       "kind": "primary_research",
       "title": "New fossils from Jebel Irhoud, Morocco and the pan-African origin of Homo sapiens",
@@ -754,6 +781,77 @@
       "url": "https://doi.org/10.1086/508695",
       "supports": [
         "documented San persistence-hunting running game down to heat exhaustion without weapons"
+      ]
+    },
+    {
+      "id": "wynn-2013-turkana-hominin-isotopes",
+      "kind": "primary_research",
+      "title": "Stable isotope-based diet reconstructions of Turkana Basin hominins",
+      "authors": "Wynn et al.",
+      "year": 2013,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23733966/",
+      "supports": [
+        "Direct tooth-enamel isotope measurements for Kenyanthropus platyops showing a wide C3-to-C4 dietary range"
+      ]
+    },
+    {
+      "id": "cerling-2013-theropithecus-diet",
+      "kind": "primary_research",
+      "title": "Diet of Theropithecus from 4 to 1 Ma in Kenya",
+      "authors": "Cerling et al.",
+      "year": 2013,
+      "doi": "10.1073/pnas.1222571110",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3696767/",
+      "supports": [
+        "Isotope data showing Theropithecus brumpti was a committed C4 grass-grazing specialist in the same Turkana Basin landscape as Kenyanthropus platyops"
+      ]
+    },
+    {
+      "id": "lee-thorp-1989-swartkrans-baboon-isotopes",
+      "kind": "primary_research",
+      "title": "Isotopic evidence for dietary differences between two extinct baboon species from Swartkrans",
+      "authors": "Lee-Thorp, van der Merwe & Brain",
+      "year": 1989,
+      "doi": "10.1016/0047-2484(89)90044-7",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0047248484710505",
+      "supports": [
+        "Isotope evidence that a giant contemporary baboon (Theropithecus oswaldi) at Swartkrans was a committed grass-grazing specialist while Paranthropus robustus kept a mixed diet despite having comparable chewing hardware"
+      ]
+    },
+    {
+      "id": "science-advances-2026-liang-bua-taphonomy",
+      "kind": "primary_research",
+      "title": "Taphonomic analysis at Liang Bua reveals the behavioral and technological capabilities of Homo floresiensis",
+      "organization": "Science Advances",
+      "year": 2026,
+      "doi": "10.1126/sciadv.aeb7219",
+      "url": "https://www.science.org/doi/10.1126/sciadv.aeb7219",
+      "supports": [
+        "Komodo dragon tooth marks concentrated on the meatiest Stegodon bones at Liang Bua, with Homo floresiensis cut marks confined to lower-value scraps — evidence of scavenging rather than primary carcass access"
+      ],
+      "qualityNote": "Published July 3, 2026 — corroborated independently by CNN, National Geographic, Live Science, Sci.News and Gizmodo citing the same paper."
+    },
+    {
+      "id": "schoningen-homotherium-2015",
+      "kind": "primary_research",
+      "title": "The European saber-toothed cat (Homotherium latidens) found in the \"Spear Horizon\" at Schöningen (Germany)",
+      "authors": "Serangeli, Van Kolfschoten, Starkovich & Verheijen",
+      "year": 2015,
+      "url": "https://www.sciencedirect.com/science/article/pii/S0047248415002092",
+      "supports": [
+        "Bite/cut-mark sequencing shows hominins usually had primary carcass access over Homotherium at Schöningen, not the reverse; a saber-tooth humerus was reused as a stone-tool retoucher; the engineered spears may have doubled as defense against this rival predator"
+      ]
+    },
+    {
+      "id": "romandini-2018-neanderthal-bears",
+      "kind": "primary_research",
+      "title": "Bears and humans, a Neanderthal tale. Reconstructing uncommon behaviors from zooarchaeological evidence in southern Europe",
+      "authors": "Romandini, Terlato, Nannini, Tagliacozzo, Benazzi & Peresani",
+      "year": 2018,
+      "doi": "10.1016/j.jas.2017.12.004",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S030544031730184X",
+      "supports": [
+        "Cut marks on cave-bear and brown-bear bones at Rio Secco and Fumane caves (Italy) showing Neanderthals actively competed with bears for winter den shelter, including killing hibernating individuals"
       ]
     }
   ]

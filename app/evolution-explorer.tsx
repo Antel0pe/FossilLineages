@@ -67,7 +67,9 @@ export type Edge = {
   kind: "supported" | "candidate" | "context" | "split" | "gene-flow";
 };
 
-export type SiblingBullet = { id: string; bullet: string };
+export type AdditionalContext = { fact: string; sourceIds: string[] };
+
+export type SiblingBullet = { id: string; bullet: string; additionalContext?: AdditionalContext };
 
 export type Divergence = {
   fromId: string;
@@ -220,19 +222,30 @@ function DivergencePanel({
   divergence,
   ancestor,
   siblings,
+  sourcesById,
   onClose,
   onOpenSpecies,
 }: {
   divergence: Divergence;
   ancestor: Taxon;
-  siblings: { taxon: Taxon; bullet: string }[];
+  siblings: { taxon: Taxon; bullet: string; additionalContext: AdditionalContext | undefined }[];
+  sourcesById: Map<string, Source>;
   onClose: () => void;
   onOpenSpecies: (id: string) => void;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [tab, setTab] = useState<"changed" | "context">("changed");
   useEffect(() => {
+    setTab("changed");
     closeRef.current?.focus();
   }, [divergence.fromId]);
+
+  // Only siblings with a genuinely additive fact get a row here — this is expected to be
+  // situational (some branch points have none), matching how `pressures` already varies
+  // 1-2 entries per taxon without reading as broken. No padded "nothing found" placeholders.
+  const contextSiblings = siblings.filter(
+    (s): s is { taxon: Taxon; bullet: string; additionalContext: AdditionalContext } => Boolean(s.additionalContext)
+  );
 
   return (
     <div className={styles.divergenceBackdrop} onMouseDown={onClose}>
@@ -252,28 +265,79 @@ function DivergencePanel({
           <h3 id="divergence-title">{divergence.label}</h3>
         </header>
 
-        <article className={styles.ancestorBlock}>
-          <span className={styles.blockTag}>
-            Starting point &middot; <button type="button" className={styles.inlineTaxonLink} onClick={() => onOpenSpecies(ancestor.id)}>{ancestor.scientificName}</button>
-          </span>
-          <p>{divergence.ancestorBaseline}</p>
-        </article>
+        {contextSiblings.length > 0 && (
+          <div className={styles.panelTabs} role="tablist">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "changed"}
+              className={`${styles.panelTab} ${tab === "changed" ? styles.panelTabActive : ""}`}
+              onClick={() => setTab("changed")}
+            >
+              What changed
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={tab === "context"}
+              className={`${styles.panelTab} ${tab === "context" ? styles.panelTabActive : ""}`}
+              onClick={() => setTab("context")}
+            >
+              Additional context
+            </button>
+          </div>
+        )}
 
-        <ul className={styles.siblingBulletList}>
-          {siblings.map(({ taxon, bullet }) => (
-            <li key={taxon.id}>
-              <button type="button" className={styles.siblingBulletName} onClick={() => onOpenSpecies(taxon.id)}>
-                {taxon.scientificName}
-              </button>
-              <p>{bullet}</p>
-            </li>
-          ))}
-        </ul>
+        {tab === "changed" && (
+          <>
+            <article className={styles.ancestorBlock}>
+              <span className={styles.blockTag}>
+                Starting point &middot; <button type="button" className={styles.inlineTaxonLink} onClick={() => onOpenSpecies(ancestor.id)}>{ancestor.scientificName}</button>
+              </span>
+              <p>{divergence.ancestorBaseline}</p>
+            </article>
 
-        <article className={`${styles.block} ${styles.confidenceBlock}`}>
-          <span className={styles.blockTag}>How sure are we?</span>
-          <p>{divergence.confidenceNote}</p>
-        </article>
+            <ul className={styles.siblingBulletList}>
+              {siblings.map(({ taxon, bullet }) => (
+                <li key={taxon.id}>
+                  <button type="button" className={styles.siblingBulletName} onClick={() => onOpenSpecies(taxon.id)}>
+                    {taxon.scientificName}
+                  </button>
+                  <p>{bullet}</p>
+                </li>
+              ))}
+            </ul>
+
+            <article className={`${styles.block} ${styles.confidenceBlock}`}>
+              <span className={styles.blockTag}>How sure are we?</span>
+              <p>{divergence.confidenceNote}</p>
+            </article>
+          </>
+        )}
+
+        {tab === "context" && contextSiblings.length > 0 && (
+          <ul className={styles.additionalContextList}>
+            {contextSiblings.map(({ taxon, additionalContext }) => (
+              <li key={taxon.id}>
+                <button type="button" className={styles.siblingBulletName} onClick={() => onOpenSpecies(taxon.id)}>
+                  {taxon.scientificName}
+                </button>
+                <p>{additionalContext.fact}</p>
+                <div className={styles.additionalContextSources}>
+                  {additionalContext.sourceIds.map((id) => {
+                    const source = sourcesById.get(id);
+                    if (!source) return null;
+                    return (
+                      <a key={id} href={source.url} target="_blank" rel="noreferrer">
+                        {source.organization ?? source.authors ?? "Source"}{source.year ? ` · ${source.year}` : ""}
+                      </a>
+                    );
+                  })}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </div>
   );
@@ -576,9 +640,9 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
     const siblings = activeDivergence.siblingBullets
       .map((sb) => {
         const taxon = taxaById.get(sb.id);
-        return taxon ? { taxon, bullet: sb.bullet } : undefined;
+        return taxon ? { taxon, bullet: sb.bullet, additionalContext: sb.additionalContext } : undefined;
       })
-      .filter((s): s is { taxon: Taxon; bullet: string } => Boolean(s));
+      .filter((s): s is { taxon: Taxon; bullet: string; additionalContext: AdditionalContext | undefined } => Boolean(s));
     return { divergence: activeDivergence, ancestor, siblings };
   }, [activeDivergence, taxaById]);
 
@@ -708,6 +772,7 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
           divergence={activeDivergenceView.divergence}
           ancestor={activeDivergenceView.ancestor}
           siblings={activeDivergenceView.siblings}
+          sourcesById={sourcesById}
           onClose={() => setActiveDivergenceKey(null)}
           onOpenSpecies={openSpecies}
         />
