@@ -80,6 +80,15 @@ export type Divergence = {
   confidenceNote: string;
 };
 
+export type EvolutionPoint = {
+  fromId: string;
+  toId: string;
+  label: string;
+  ancestorBaseline: string;
+  whatChangedBullet: string;
+  confidenceNote: string;
+};
+
 export type Layout = {
   colSpacing: number;
   laneSpacing: number;
@@ -93,6 +102,7 @@ export type LineageDataset = {
   layout: Layout;
   intro?: { focus: string; honesty: string };
   divergences?: Divergence[];
+  evolutionPoints?: EvolutionPoint[];
 };
 
 type ExplorerProps = {
@@ -147,6 +157,65 @@ function formatRange(olderMa: number, youngerMa: number) {
   if (youngerMa === 0) return `${formatAge(olderMa)} → present`;
   if (Math.abs(olderMa - youngerMa) < 0.005) return `about ${formatAge(olderMa)}`;
   return `${formatAge(olderMa)} – ${formatAge(youngerMa)}`;
+}
+
+// --- Chronological nav pill layout -----------------------------------------------------
+// Pills are positioned by the taxon's real graph `col` (same mapping the era labels use), so
+// the branch-point row and the evolution-point row roughly line up on one shared timeline.
+// Widths are estimated from label length (no DOM measurement pass) with a generous gap, since
+// exact typographic width isn't needed — only "never overlaps," which the gap covers.
+const PILL_ROW_HEIGHT = 32;
+const PILL_ROW_GAP = 10;
+const PILL_GAP = 14;
+
+function estimatePillWidth(ageText: string, label: string) {
+  return Math.round(24 + ageText.length * 5.6 + 7 + label.length * 6.6);
+}
+
+type PillItem = { key: string; natural: number; width: number };
+
+// Sorts by natural (time-based) position and pushes any pill right just enough to clear the
+// one before it, so pills never overlap within a single row while staying in chronological order.
+function packRow(items: PillItem[]): Map<string, number> {
+  const sorted = [...items].sort((a, b) => a.natural - b.natural);
+  const lefts = new Map<string, number>();
+  let rightEdge = -Infinity;
+  for (const item of sorted) {
+    const left = Math.max(item.natural, rightEdge + PILL_GAP);
+    lefts.set(item.key, left);
+    rightEdge = left + item.width;
+  }
+  return lefts;
+}
+
+// Packs `items` against themselves, then nudges any that overlap an `above` pill's rendered
+// span further right, re-packing between passes so a nudge never creates a fresh overlap with
+// its own row neighbor. This is the mechanism behind "an evolution point never sits directly
+// under a branch point."
+function nudgeBelowRow(items: PillItem[], aboveLefts: Map<string, number>, aboveWidths: Map<string, number>): Map<string, number> {
+  let lefts = packRow(items);
+  const aboveSpans = [...aboveLefts.entries()].map(([key, left]) => ({ left, right: left + (aboveWidths.get(key) ?? 0) }));
+  for (let pass = 0; pass < 4; pass++) {
+    const ordered = [...items].sort((a, b) => (lefts.get(a.key) ?? 0) - (lefts.get(b.key) ?? 0));
+    const next = new Map<string, number>();
+    let rightEdge = -Infinity;
+    let changed = false;
+    for (const item of ordered) {
+      let left = Math.max(lefts.get(item.key) ?? item.natural, rightEdge + PILL_GAP);
+      for (const span of aboveSpans) {
+        const overlaps = left < span.right + PILL_GAP && left + item.width > span.left - PILL_GAP;
+        if (overlaps && span.right + PILL_GAP > left) {
+          left = span.right + PILL_GAP;
+          changed = true;
+        }
+      }
+      next.set(item.key, left);
+      rightEdge = left + item.width;
+    }
+    lefts = next;
+    if (!changed) break;
+  }
+  return lefts;
 }
 
 function figureHeight(heightMeters: number, scale: number, figureAreaHeight: number) {
@@ -338,6 +407,67 @@ function DivergencePanel({
             ))}
           </ul>
         )}
+      </section>
+    </div>
+  );
+}
+
+function EvolutionPointPanel({
+  point,
+  ancestor,
+  descendant,
+  onClose,
+  onOpenSpecies,
+}: {
+  point: EvolutionPoint;
+  ancestor: Taxon;
+  descendant: Taxon;
+  onClose: () => void;
+  onOpenSpecies: (id: string) => void;
+}) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    closeRef.current?.focus();
+  }, [point.fromId, point.toId]);
+
+  return (
+    <div className={styles.divergenceBackdrop} onMouseDown={onClose}>
+      <section
+        className={styles.divergencePanel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="evolution-point-title"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <button ref={closeRef} type="button" className={styles.closeButton} onClick={onClose} aria-label="Close evolution point">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+
+        <header className={styles.divergenceHeader}>
+          <span className={styles.modalEyebrow}>Evolution point &middot; no known branch</span>
+          <h3 id="evolution-point-title">{point.label}</h3>
+        </header>
+
+        <article className={styles.ancestorBlock}>
+          <span className={styles.blockTag}>
+            Starting point &middot; <button type="button" className={styles.inlineTaxonLink} onClick={() => onOpenSpecies(ancestor.id)}>{ancestor.scientificName}</button>
+          </span>
+          <p>{point.ancestorBaseline}</p>
+        </article>
+
+        <ul className={styles.siblingBulletList}>
+          <li>
+            <button type="button" className={styles.siblingBulletName} onClick={() => onOpenSpecies(descendant.id)}>
+              {descendant.scientificName}
+            </button>
+            <p>{point.whatChangedBullet}</p>
+          </li>
+        </ul>
+
+        <article className={`${styles.block} ${styles.confidenceBlock}`}>
+          <span className={styles.blockTag}>How sure are we this was a straight, unbranched line?</span>
+          <p>{point.confidenceNote}</p>
+        </article>
       </section>
     </div>
   );
@@ -557,6 +687,7 @@ function DetailModal({
 export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeDivergenceKey, setActiveDivergenceKey] = useState<string | null>(null);
+  const [activeEvolutionPointKey, setActiveEvolutionPointKey] = useState<string | null>(null);
   const treeViewportRef = useRef<HTMLDivElement>(null);
   const [viewportHeight, setViewportHeight] = useState(0);
 
@@ -627,7 +758,7 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
     const rows = (data.divergences ?? []).map((div) => {
       const key = `${div.fromId}-${div.siblingIds.join("-")}`;
       const splitAge = Math.max(...div.siblingIds.map((id) => taxaById.get(id)?.olderMa ?? 0));
-      return { key, label: div.label, splitAge, siblingCount: div.siblingIds.length };
+      return { key, fromId: div.fromId, label: div.label, splitAge, siblingCount: div.siblingIds.length };
     });
     return rows.sort((a, b) => b.splitAge - a.splitAge);
   }, [data.divergences, taxaById]);
@@ -646,25 +777,90 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
     return { divergence: activeDivergence, ancestor, siblings };
   }, [activeDivergence, taxaById]);
 
+  const evolutionPointByKey = useMemo(() => {
+    const map = new Map<string, EvolutionPoint>();
+    for (const ep of data.evolutionPoints ?? []) {
+      map.set(`${ep.fromId}-${ep.toId}`, ep);
+    }
+    return map;
+  }, [data.evolutionPoints]);
+
+  // Same chronological convention as chronoDivergences: sorted oldest-first by the point when
+  // the descendant taxon appears, so it lines up left-to-right the same way as the graph/other row.
+  const chronoEvolutionPoints = useMemo(() => {
+    const rows = (data.evolutionPoints ?? []).map((ep) => {
+      const key = `${ep.fromId}-${ep.toId}`;
+      const pointAge = taxaById.get(ep.toId)?.olderMa ?? 0;
+      return { key, fromId: ep.fromId, label: ep.label, pointAge };
+    });
+    return rows.sort((a, b) => b.pointAge - a.pointAge);
+  }, [data.evolutionPoints, taxaById]);
+
+  const activeEvolutionPoint = activeEvolutionPointKey ? evolutionPointByKey.get(activeEvolutionPointKey) : undefined;
+  const activeEvolutionPointView = useMemo(() => {
+    if (!activeEvolutionPoint) return undefined;
+    const ancestor = taxaById.get(activeEvolutionPoint.fromId);
+    const descendant = taxaById.get(activeEvolutionPoint.toId);
+    if (!ancestor || !descendant) return undefined;
+    return { point: activeEvolutionPoint, ancestor, descendant };
+  }, [activeEvolutionPoint, taxaById]);
+
+  // Positions both nav rows along the graph's own `col` timeline (same mapping eraLabels use),
+  // then collision-avoids: no overlap within a row, and no evolution-point pill overlapping a
+  // branch-point pill above it (see packRow/nudgeBelowRow).
+  const navPillLayout = useMemo(() => {
+    const colX = (id: string) => layout.padX + (taxaById.get(id)?.col ?? 0) * layout.colSpacing;
+
+    const branchItems: PillItem[] = chronoDivergences.map((row) => ({
+      key: row.key,
+      natural: colX(row.fromId),
+      width: estimatePillWidth(formatAge(row.splitAge), row.label),
+    }));
+    const branchLefts = packRow(branchItems);
+    const branchWidths = new Map(branchItems.map((i) => [i.key, i.width]));
+
+    const evoItems: PillItem[] = chronoEvolutionPoints.map((row) => ({
+      key: row.key,
+      natural: colX(row.fromId),
+      width: estimatePillWidth(formatAge(row.pointAge), row.label),
+    }));
+    const evoLefts = nudgeBelowRow(evoItems, branchLefts, branchWidths);
+    const evoWidths = new Map(evoItems.map((i) => [i.key, i.width]));
+
+    let trackWidth = 0;
+    for (const item of branchItems) trackWidth = Math.max(trackWidth, (branchLefts.get(item.key) ?? 0) + item.width);
+    for (const item of evoItems) trackWidth = Math.max(trackWidth, (evoLefts.get(item.key) ?? 0) + item.width);
+
+    return { branchLefts, branchWidths, evoLefts, evoWidths, trackWidth: trackWidth + layout.padX };
+  }, [chronoDivergences, chronoEvolutionPoints, taxaById, layout]);
+
   const openSpecies = (id: string) => {
     setActiveDivergenceKey(null);
+    setActiveEvolutionPointKey(null);
     setSelectedId(id);
   };
   const openDivergence = (key: string) => {
     setSelectedId(null);
+    setActiveEvolutionPointKey(null);
     setActiveDivergenceKey(key);
+  };
+  const openEvolutionPoint = (key: string) => {
+    setSelectedId(null);
+    setActiveDivergenceKey(null);
+    setActiveEvolutionPointKey(key);
   };
 
   const selected = selectedId ? taxaById.get(selectedId) : undefined;
 
   useEffect(() => {
-    if (!selectedId && !activeDivergenceKey) return;
+    if (!selectedId && !activeDivergenceKey && !activeEvolutionPointKey) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setSelectedId(null);
         setActiveDivergenceKey(null);
+        setActiveEvolutionPointKey(null);
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -672,7 +868,7 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selectedId, activeDivergenceKey]);
+  }, [selectedId, activeDivergenceKey, activeEvolutionPointKey]);
 
   const scrollTree = (direction: -1 | 1) => {
     treeViewportRef.current?.scrollBy({ left: direction * 620, behavior: "smooth" });
@@ -705,21 +901,47 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
         </div>
       </header>
 
-      <nav className={styles.branchNav} aria-label="Jump to a branch point">
-        <span className={styles.branchNavLabel}>Branch points</span>
-        <div className={styles.branchNavList}>
-          {chronoDivergences.map((row) => (
-            <button
-              type="button"
-              key={row.key}
-              className={styles.branchNavItem}
-              onClick={() => openDivergence(row.key)}
-              aria-label={`Compare strategies: ${row.label}`}
-            >
-              <span className={styles.branchNavAge}>{formatAge(row.splitAge)}</span>
-              {row.label}
-            </button>
-          ))}
+      <nav className={styles.pointsNav} aria-label="Jump to a branch point or evolution point">
+        <div className={styles.pointsNavLabels}>
+          <span className={styles.branchNavLabel}>Branch points</span>
+          <span className={styles.branchNavLabel}>Evolution points</span>
+        </div>
+        <div className={styles.pointsNavScroll}>
+          <div
+            className={styles.pointsNavTrack}
+            style={{ width: navPillLayout.trackWidth, height: PILL_ROW_HEIGHT * 2 + PILL_ROW_GAP }}
+          >
+            {chronoDivergences.map((row) => (
+              <button
+                type="button"
+                key={row.key}
+                className={styles.branchNavItem}
+                style={{ position: "absolute", left: navPillLayout.branchLefts.get(row.key) ?? 0, top: 0 }}
+                onClick={() => openDivergence(row.key)}
+                aria-label={`Compare strategies: ${row.label}`}
+              >
+                <span className={styles.branchNavAge}>{formatAge(row.splitAge)}</span>
+                {row.label}
+              </button>
+            ))}
+            {chronoEvolutionPoints.map((row) => (
+              <button
+                type="button"
+                key={row.key}
+                className={`${styles.branchNavItem} ${styles.evoNavItem}`}
+                style={{
+                  position: "absolute",
+                  left: navPillLayout.evoLefts.get(row.key) ?? 0,
+                  top: PILL_ROW_HEIGHT + PILL_ROW_GAP,
+                }}
+                onClick={() => openEvolutionPoint(row.key)}
+                aria-label={`See what changed with no known branch: ${row.label}`}
+              >
+                <span className={styles.branchNavAge}>{formatAge(row.pointAge)}</span>
+                {row.label}
+              </button>
+            ))}
+          </div>
         </div>
       </nav>
 
@@ -774,6 +996,17 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
           siblings={activeDivergenceView.siblings}
           sourcesById={sourcesById}
           onClose={() => setActiveDivergenceKey(null)}
+          onOpenSpecies={openSpecies}
+        />
+      )}
+
+      {activeEvolutionPointView && (
+        <EvolutionPointPanel
+          key={activeEvolutionPointKey}
+          point={activeEvolutionPointView.point}
+          ancestor={activeEvolutionPointView.ancestor}
+          descendant={activeEvolutionPointView.descendant}
+          onClose={() => setActiveEvolutionPointKey(null)}
           onOpenSpecies={openSpecies}
         />
       )}

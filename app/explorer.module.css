@@ -48,13 +48,20 @@
 .edge_split { stroke: var(--gold); stroke-dasharray: 6 6; stroke-width: 1.8; }
 .edge_gene_flow { stroke: var(--teal); stroke-dasharray: 2 7; stroke-width: 2; }
 
-/* Branch-point chronological nav */
-.branchNav { display: flex; flex: 0 0 auto; align-items: center; gap: 12px; padding: 9px clamp(16px, 3vw, 40px); border-bottom: 1px solid rgba(29, 42, 36, .12); background: rgba(250, 248, 242, .6); overflow-x: auto; }
-.branchNavLabel { flex: 0 0 auto; color: var(--muted); font: 9px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .1em; }
-.branchNavList { display: flex; flex: 1 1 auto; gap: 8px; }
-.branchNavItem { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 7px; padding: 6px 12px; color: var(--moss-dark); border: 1px solid rgba(154, 123, 58, .4); border-radius: 100px; background: rgba(255,255,255,.6); font-size: 12px; white-space: nowrap; cursor: pointer; transition: 150ms ease; }
+/* Branch-point + evolution-point chronological nav (two rows sharing one age-positioned,
+   horizontally-scrolling timeline so a pill in one row lines up roughly with its era in the
+   other, and never sits directly on top of a pill in the other row — see packRow/nudgeBelow
+   in evolution-explorer.tsx for the collision-avoidance that guarantees the latter). */
+.pointsNav { display: flex; flex: 0 0 auto; align-items: flex-start; gap: 12px; padding: 9px clamp(16px, 3vw, 40px); border-bottom: 1px solid rgba(29, 42, 36, .12); background: rgba(250, 248, 242, .6); }
+.pointsNavLabels { display: flex; flex: 0 0 auto; flex-direction: column; justify-content: center; gap: 8px; height: 74px; padding-top: 3px; }
+.branchNavLabel { color: var(--muted); font: 9px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .1em; }
+.pointsNavScroll { flex: 1 1 auto; min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-color: var(--clay) var(--paper-deep); scrollbar-width: thin; }
+.pointsNavTrack { position: relative; }
+.branchNavItem { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; color: var(--moss-dark); border: 1px solid rgba(154, 123, 58, .4); border-radius: 100px; background: rgba(255,255,255,.6); font-size: 12px; white-space: nowrap; cursor: pointer; transition: 150ms ease; }
 .branchNavItem:hover, .branchNavItem:focus-visible { color: var(--cream); border-color: var(--moss-dark); background: var(--moss-dark); outline: none; }
 .branchNavAge { color: var(--clay); font: 9px/1 var(--font-geist-mono), monospace; }
+.evoNavItem { border-color: rgba(64, 94, 77, .45); background: rgba(255,255,255,.4); }
+.evoNavItem:hover, .evoNavItem:focus-visible { border-color: var(--moss-dark); background: var(--moss-dark); }
 
 /* Divergence comparison panel */
 .divergenceBackdrop { position: fixed; z-index: 50; inset: 0; display: flex; justify-content: flex-end; background: rgba(17, 28, 23, .5); }

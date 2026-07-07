@@ -247,3 +247,21 @@ surfaced. Two corrections to the 2026-06-27 entry above:
   the timeline) — e.g. Paranthropus robustus/Australopithecus sediba added as a second,
   independent africanus-descended fork that echoes the afarensis-descended fork one region
   over. See `verification-criteria/2026-07-04-lineage-branching-and-comparison-panel.md`.
+
+## Evolution points (2026-07-06) — the branch-point pattern extended to non-branching change
+User confirmed the "branch points" interaction (nav pill → panel with baseline → what changed
+→ confidence) isn't specific to forks — plenty of real change happens on a straight,
+single-parent→single-child edge too (their example: Ardipithecus ramidus → Australopithecus
+anamensis), and they want the same depth-on-demand treatment for those. Added a second nav row,
+"Evolution points," directly under "Branch points," covering the (exhaustive, derived from the
+data, not curated) 4 edges where the ancestor has exactly one child: Ekembo→Nakalipithecus,
+A. kadabba→ramidus, ramidus→anamensis, H. habilis→erectus. Both rows position their pills by
+the taxon's real graph `col` (same mapping the era labels use) with a deterministic
+collision-avoidance pass, so an evolution-point pill never renders directly under a branch-point
+pill, and the combined two-row strip scrolls horizontally as one unit. See
+`verification-criteria/2026-07-06-evolution-points-second-row.md`.
+**Implication for future content additions**: this "no known branch ≠ no story" distinction is
+now a standing pattern — when adding a new taxon to the human spine, check whether the edge
+into it branches (→ branch-point panel candidate) or doesn't (→ evolution-point panel
+candidate); either way there's a baseline/change/confidence panel worth writing, not just a
+species card.

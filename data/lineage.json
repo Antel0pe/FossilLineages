@@ -1762,5 +1762,39 @@
       ],
       "confidenceNote": "All three descendant lineages are extremely well supported by both fossils and genomes. 'Middle Pleistocene Homo' itself is a deliberately broad placeholder for structured, regionally varied populations, not one uniform ancestor — the single-species label is a convenience, not a settled taxonomic fact."
     }
+  ],
+  "evolutionPoints": [
+    {
+      "fromId": "ekembo-nyanzae",
+      "toId": "nakalipithecus-nakayamai",
+      "label": "A generalist ape braces for leaner seasons",
+      "ancestorBaseline": "Ekembo was a small, tailless canopy ape that picked soft, sugary fruit carefully while moving through the trees on a flexible lower back, with no specialised chewing or feeding equipment in reserve.",
+      "whatChangedBullet": "Nakalipithecus kept Ekembo's arboreal, fruit-first habit as its day-to-day foraging style, but moved into a drier, tougher, more seasonal woodland than Ekembo's canopy and grew a much bigger body along with heavier, thick-enamelled molars as insurance for when fruit ran short — an early version of the fallback-feeding strategy later taken to an extreme by Paranthropus.",
+      "confidenceNote": "Both taxa are securely dated fossils and the trait shift itself (bigger body, tougher teeth, drier habitat) is well documented. But roughly 10 million years and no continuous fossil sequence separate them — Nakalipithecus is best read as a plausible stand-in for what an Ekembo-like lineage became, not a confirmed direct descendant, so an unsampled branch hidden in that gap can't be ruled out."
+    },
+    {
+      "fromId": "ardipithecus-kadabba",
+      "toId": "ardipithecus-ramidus",
+      "label": "Tentative signals become a real mosaic body",
+      "ancestorBaseline": "Kadabba is known only from sparse teeth and bones: canines just starting to lose their ape-like honing edge, and a single toe bone read as compatible with upright walking — suggestive, not conclusive.",
+      "whatChangedBullet": "Ramidus turned kadabba's tentative signals into a genuine mosaic body — a pelvis that could really walk upright, while still keeping a grasping, divergent big toe for climbing that no living ape has. It also pushed kadabba's already-reduced canine dimorphism much further, nearly erasing the male-female size gap entirely, hinting that lower male-male aggression was already underway alongside the anatomical change.",
+      "confidenceNote": "Ramidus itself is one of the best-documented early hominins. The direct line from kadabba is plausible — same genus, same region, sequential ages — but rests on very sparse kadabba material (teeth and one toe bone), so it's a reasonable inference from continuity rather than a proven parent-child fossil sequence."
+    },
+    {
+      "fromId": "ardipithecus-ramidus",
+      "toId": "australopithecus-anamensis",
+      "label": "The climbing trade-off gets abandoned",
+      "ancestorBaseline": "Ramidus walked upright on the ground but hadn't given anything up for it: a mosaic body with a still-grasping, divergent big toe for climbing, living as a woodland omnivore.",
+      "whatChangedBullet": "Anamensis gave up ramidus's climbing/walking compromise for full commitment: its leg bones show habitual upright walking without ramidus's climbing-optimised grasping toe. It also lived across a more open habitat mosaic — floodplain grassland and drier woodland alongside the river-forest ramidus preferred — while its jaws and teeth stayed just as large and primitive as ramidus's, showing the walking commitment arrived well before any dental change caught up.",
+      "confidenceNote": "Anamensis's own anatomy (the bipedal shin bone, the primitive jaw) is very well documented, and it's widely treated as ramidus's likely successor given matching geography and unbroken sequential ages. Still, no single fossil trail physically connects the two — it's an inference from continuity and proximity, and a currently unknown side branch between them can't be excluded."
+    },
+    {
+      "fromId": "homo-habilis",
+      "toId": "homo-erectus",
+      "label": "The last climbing anatomy is finally dropped",
+      "ancestorBaseline": "Habilis had a bigger brain and smaller face than any australopith, but its arms and hands still kept climbing-related features like curved finger bones, and it mostly scavenged rather than hunted.",
+      "whatChangedBullet": "Erectus dropped habilis's leftover climbing anatomy entirely — no more curved finger bones — finishing the shift to a fully ground-committed body: long legs, short arms, a narrow trunk built for covering serious daily distances. It also scaled habilis's brain-over-teeth bet much further, growing both a substantially bigger brain and a bigger body, and moved past habilis's scavenging pattern to controlled fire use and Acheulean handaxes built for processing carcasses.",
+      "confidenceNote": "Erectus's own body plan is exceptionally well documented, and habilis is its most plausible immediate predecessor by anatomy and unbroken timing. But the transition spans well under a million years with sparse fossils in between, and 'Homo erectus' is itself a broad grade covering many regional populations — treat this as the best-supported reading of a real but incompletely sampled transition, not one single confirmed lineage."
+    }
   ]
 }
