@@ -265,3 +265,73 @@ now a standing pattern — when adding a new taxon to the human spine, check whe
 into it branches (→ branch-point panel candidate) or doesn't (→ evolution-point panel
 candidate); either way there's a baseline/change/confidence panel worth writing, not just a
 species card.
+
+## Correction (2026-07-07) — the "stories are a 9/10" reading from 2026-06-23 is now in doubt
+User pushed back, unprompted, on the 2026-06-23 rating exercise: they're no longer sure the
+turning-point scenes (`app/story/*`) actually rated 9/10 because that format is the real hook,
+versus the rating being inflated simply because they were excited *while building* those scenes
+at the time. **Treat that rating as unconfirmed, not settled** — do not use it to justify further
+investment in the scene format (e.g. cross-linking scenes into the graph) without re-checking
+with the user first. The three-part framing itself (what forced a change / what changed / what
+result it had) still stands as his stated core interest; it's specifically the *scene format's*
+claim to being the best vehicle for that which is now in question.
+
+**Real bottleneck identified this session**: when asked what to work on next, the user said the
+actual constraint isn't a missing feature/format — it's that the existing branch/evolution-point
+panels (`data/lineage.json`'s `evolutionPoints` + divergence clusters) are limited by how much
+*specific, hard* causal/change evidence has been mined for each transition. His words: "if I had
+more info about what caused them to evolve and more specific changes... I would [add it] in a
+heartbeat, but it seems that is the bottleneck." **Implication**: the highest-leverage work going
+forward is a research/sourcing pass — mining real papers for hard, surprising, per-taxon evidence
+(isotopes, microwear, trackways, biomechanics, dated tool/cut-mark finds, paleoclimate proxies)
+not yet reflected in the existing bullets — rather than new UI/features on top of the current
+content. This is content-bottlenecked, not format-bottlenecked. Two verified examples found and
+proposed to the user this session (not yet built in): (1) Paranthropus boisei vs. robustus isotope
+divergence — despite near-identical "nutcracker" jaws, boisei's enamel carbon isotopes show a much
+higher C4/sedge diet than robustus (Cerling/Sponheimer et al., PNAS), directly complicating the
+existing boisei bullet's "bigger jaw as fallback insurance" framing; (2) Skinner et al. 2015
+(Science) trabecular bone evidence that Australopithecus africanus's hand already shows human-like
+forceful-grip bone loading, predating that species' known tool industry — complicates the existing
+habilis-as-first-toolmaker framing. Both are exactly the "genuinely new life-fact" the causal-depth-
+ceiling test (see memory) says adds value, as opposed to more narrative depth on an existing claim.
+
+## Correction round 2 (2026-07-07) — the "connected chain" prototype failed, and why
+Tested a prototype: string 4-5 existing evolution/branch-point taxa into one chronological
+sequence, each step's baseline→change bullet reused verbatim, ending in a stated outcome
+(persisted vs. went extinct). User's verdict: **rejected**. Two specific problems:
+1. **It read as narration, not explanation**: "it kinda just stated a species did this then b
+   species did that. but no causal effect maybe isn't there." Reusing true, sourced content and
+   merely sequencing it chronologically does not produce the causal "why" feeling — there was no
+   genuine reasoning connecting adjacent steps, just facts in order.
+2. **Sapiens-outcome bias**: the prototype implied "persisted → became us" as the good outcome
+   and "went extinct" as the bad one. User pushed back directly — humans are far from the only
+   successful branch (chimps, gorillas also persisted; most *other* hominin lineages didn't).
+   Any "how did this turn out" framing must be about persistence/extinction generally, never a
+   this-led-to-humanity teleology.
+
+**What actually worked, tried live on `ardipithecus-ramidus` → `australopithecus-anamensis`**:
+not narrating what each did in turn, but asking why they differed — "was there a ramidus
+descendant that stayed in the trees... maybe forests were patchy for ramidus and then anamensis
+they had fully disappeared?" That guess turned out close to already-true and already sitting in
+each taxon's own `pressures` field in `data/lineage.json` (ramidus: denser/patchy woodland
+rewarding both ground+tree life; anamensis: habitat opened further into grassland mosaic) — just
+never surfaced as an explicit **comparison** between the two. Comparative reasoning between two
+related taxa that faced different conditions, not chronological narration, is what produces the
+causal "why" feeling.
+
+**Distilled framework**: **What** (observed trait-level change, incl. anatomy) → **Why**
+(evolutionary pressure — the priority, and where more *comparative* depth is wanted) → **How**
+(genetic/anatomical mechanism — secondary). On depth: a more specific/mechanistic true cause beats
+a shallow one (e.g. climate-driven forest fragmentation vs. bare "could see predators better") —
+but only if true; a fabricated exciting story is explicitly worse than a plain true one to this
+user. Checked the existing `bipedalism` scene against this: it already opens on climate-driven
+canopy fragmentation (line ~21, "the climate has been drying") *and* uses predator-visibility as a
+secondary beat (line ~99) — so the deeper cause the user was reaching for is already present in
+that scene's setup, just not the most foregrounded line.
+
+**Implication for future content work**: before adding a chain/sequence view, or any new causal
+content, the higher-leverage move is auditing existing edges (branch points, evolution points,
+scenes) for cases where two related taxa's own `pressures`/`behavioralChange` text already
+contains an implicit comparison that isn't yet surfaced explicitly side-by-side. This is likely
+cheaper than new research (as the ramidus/anamensis case showed) and directly targets the
+comparative-causation hook rather than narrative sequencing.

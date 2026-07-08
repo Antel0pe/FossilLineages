@@ -129,7 +129,8 @@
       ],
       "sourceIds": [
         "kunimatsu-2007",
-        "almecija-2021"
+        "almecija-2021",
+        "werner-2025-east-african-uplift"
       ]
     },
     {
@@ -228,7 +229,8 @@
       },
       "fossilSites": [],
       "sourceIds": [
-        "almecija-2021"
+        "almecija-2021",
+        "prufer-2012-bonobo-genome"
       ]
     },
     {
@@ -464,7 +466,8 @@
       ],
       "sourceIds": [
         "si-ardipithecus-ramidus",
-        "white-2009"
+        "white-2009",
+        "cerling-2010-ardipithecus-habitat-dispute"
       ]
     },
     {
@@ -502,7 +505,7 @@
           "pressure": "Harder, grittier foods as habitats opened up."
         }
       ],
-      "certainty": "Strong species; close to the ancestry of later australopiths.",
+      "certainty": "Strong species; close to the ancestry of later australopiths. A 2019 skull (MRD) complicated the tidy hand-off story, though: it shows anamensis and afarensis actually coexisted for at least 100,000 years rather than one cleanly replacing the other, so 'anamensis became afarensis' is closer to a gradual, overlapping population split than a single line crossing a finish line.",
       "image": {
         "src": "/images/lineage/anamensis-bust.png",
         "local": true,
@@ -598,7 +601,8 @@
         }
       ],
       "sourceIds": [
-        "si-australopithecus-afarensis"
+        "si-australopithecus-afarensis",
+        "kappelman-2016-lucy-tree-fall"
       ]
     },
     {
@@ -725,7 +729,8 @@
       "sourceIds": [
         "dart-1925",
         "si-species-index",
-        "almecija-2021"
+        "almecija-2021",
+        "skinner-2015-africanus-hand-grip"
       ]
     },
     {
@@ -783,7 +788,8 @@
       ],
       "sourceIds": [
         "si-australopithecus-garhi",
-        "deheinzelin-1999"
+        "deheinzelin-1999",
+        "harmand-2015-lomekwi-tools"
       ]
     },
     {
@@ -899,7 +905,8 @@
       "sourceIds": [
         "si-homo-habilis",
         "spoor-2015",
-        "anton-2014"
+        "anton-2014",
+        "wood-collard-1999-changing-face-genus-homo"
       ]
     },
     {
@@ -956,7 +963,8 @@
       ],
       "sourceIds": [
         "si-homo-rudolfensis",
-        "leakey-1973"
+        "leakey-1973",
+        "leakey-2012-knm-er-62000"
       ]
     },
     {
@@ -1076,7 +1084,8 @@
       ],
       "sourceIds": [
         "si-australopithecus-sediba",
-        "berger-2010"
+        "berger-2010",
+        "carlson-2011-sediba-endocast"
       ]
     },
     {
@@ -1150,7 +1159,8 @@
       "sourceIds": [
         "si-homo-erectus",
         "anton-2014",
-        "rizal-2019"
+        "rizal-2019",
+        "lordkipanidze-2013-dmanisi-skull5"
       ]
     },
     {
@@ -1449,7 +1459,8 @@
       ],
       "sourceIds": [
         "meyer-2012",
-        "chen-2019"
+        "chen-2019",
+        "jacobs-2019-denisovan-papuan-ancestries"
       ]
     },
     {
@@ -1517,7 +1528,8 @@
       "sourceIds": [
         "si-homo-sapiens",
         "hublin-2017",
-        "vidal-2022"
+        "vidal-2022",
+        "neubauer-2018-brain-globularization"
       ]
     }
   ],
@@ -1660,8 +1672,22 @@
       "label": "The gorilla/chimp split",
       "ancestorBaseline": "Nakalipithecus was a generalist Miocene forest ape: a flexible diet of soft fruit day-to-day, with thick-enamelled teeth held in reserve for tougher food when fruit was scarce, living in dry, seasonal African woodland rather than lush rainforest.",
       "siblingBullets": [
-        {"id": "gorilla", "bullet": "Gorillas abandoned the ancestor's fruit-first flexibility and committed to bulk: a huge body and gut built to subsist on abundant leaves and stems even when fruit ran out, trading food quality for a supply that's never scarce."},
-        {"id": "chimpanzee", "bullet": "Chimpanzees instead kept the ancestor's flexible, fruit-centered foraging and built a social system around it — splitting into small, shifting parties to track patchy fruit trees, rather than gorillas' bet on always-available low-quality bulk food. Separately, they extended the ancestor's manual dexterity into real tool use — termite-fishing with stripped twigs, nut-cracking with stone hammers — something the bulk-feeding gorilla line never needed to develop."}
+        {
+          "id": "gorilla",
+          "bullet": "Gorillas abandoned the ancestor's fruit-first flexibility and committed to bulk: a huge body and gut built to subsist on abundant leaves and stems even when fruit ran out, trading food quality for a supply that's never scarce.",
+          "additionalContext": {
+            "fact": "The ~9 Ma split date shown on this timeline is a fossil-consistent estimate, not something genetics alone can pin down: genome-wide molecular-clock analysis finds mutation-rate variation wide enough that the gorilla split and the chimp/human split aren't cleanly resolved from DNA by themselves — the clean, separately-dated branches shown here lean on fossil calibration to do work the genomes alone can't.",
+            "sourceIds": ["scally-2012"]
+          }
+        },
+        {
+          "id": "chimpanzee",
+          "bullet": "Chimpanzees instead kept the ancestor's flexible, fruit-centered foraging and built a social system around it — splitting into small, shifting parties to track patchy fruit trees, rather than gorillas' bet on always-available low-quality bulk food. Separately, they extended the ancestor's manual dexterity into real tool use — termite-fishing with stripped twigs, nut-cracking with stone hammers — something the bulk-feeding gorilla line never needed to develop.",
+          "additionalContext": {
+            "fact": "The single 'chimpanzee' branch shown here isn't the end of the story: chimps and bonobos themselves split from each other roughly 1-2 million years ago when the Congo River divided their range, and bonobos evolved a starkly different, far less aggressive, female-led social system on the south bank — genomic and behavioral evidence that even a lineage 'kept' unchanged at this branch point kept right on changing afterward.",
+            "sourceIds": ["prufer-2012-bonobo-genome"]
+          }
+        }
       ],
       "confidenceNote": "The anatomical split itself (gorilla bulk-feeding vs. chimp fruit-flexibility) is well documented. That a Nakalipithecus-like population is the actual shared ancestor is not — it's a plausible contemporary stand-in, not a demonstrated parent population."
     },
@@ -1673,7 +1699,11 @@
       "siblingBullets": [
         {
           "id": "australopithecus-afarensis",
-          "bullet": "Afarensis kept anamensis's bipedal commitment and its wide dietary flexibility (isotopes show individuals ranging from forest-fed to open-ground-fed within one population), and added synchronized group walking (the Laetoli trail) — betting on behavioral flexibility rather than anatomical specialization."
+          "bullet": "Afarensis kept anamensis's bipedal commitment and its wide dietary flexibility (isotopes show individuals ranging from forest-fed to open-ground-fed within one population), and added synchronized group walking (the Laetoli trail) — betting on behavioral flexibility rather than anatomical specialization.",
+          "additionalContext": {
+            "fact": "A 2016 CT-scan study of Lucy's own skeleton found perimortem compression fractures — including a distinctive break pattern in her right humerus — consistent with a fatal fall from real height, most likely out of a tree. If correct, the individual held up as the icon of confident ground-walking still relied on trees enough to die falling from one (other researchers dispute whether the fractures happened before or after death).",
+            "sourceIds": ["kappelman-2016-lucy-tree-fall"]
+          }
         },
         {
           "id": "kenyanthropus-platyops",
@@ -1692,11 +1722,46 @@
       "label": "Afarensis's five strategies",
       "ancestorBaseline": "Afarensis was a small-brained, confidently bipedal generalist that still climbed well and fed opportunistically across forest and open ground — no specialized teeth, no tools, no enlarged brain yet.",
       "siblingBullets": [
-        {"id": "australopithecus-africanus", "bullet": "Africanus stayed closest to afarensis's plant-based generalism, committing further to ground walking while leaning almost entirely on gallery-forest plant foods (under 10% animal protein by isotope evidence) — refining the ancestral diet rather than replacing it. Separately, it carried a slightly larger, more rounded braincase than afarensis — a modest step toward a bigger brain that arrived before any of afarensis's other descendants shrank their teeth or picked up tools."},
-        {"id": "australopithecus-garhi", "bullet": "Garhi kept afarensis-sized chewing teeth — even larger — but shows up in the same rock layer as the oldest confirmed stone-tool butchery, adding meat-processing technology on top of the ancestral plant-heavy dentition instead of shrinking its teeth first like habilis did."},
-        {"id": "paranthropus-boisei", "bullet": "Boisei went the opposite direction from garhi: it enlarged its jaw and chewing muscles into an extreme mechanical fallback system, betting that bigger teeth alone — not tools — would carry it through lean seasons."},
-        {"id": "homo-habilis", "bullet": "Habilis bet against both africanus's plant-only path and boisei's bigger-jaws path: its teeth and face shrank while its brain grew, outsourcing food processing to stone tools instead of to anatomy."},
-        {"id": "homo-rudolfensis", "bullet": "Rudolfensis, living alongside habilis in the very same Turkana Basin, made the opposite early-Homo bet: a bigger brain than habilis's, but molars kept large and no confirmed tools in its layers — growing brain size without habilis's tooth-shrinking, tool-assisted trade-off."}
+        {
+          "id": "australopithecus-africanus",
+          "bullet": "Africanus stayed closest to afarensis's plant-based generalism, committing further to ground walking while leaning almost entirely on gallery-forest plant foods (under 10% animal protein by isotope evidence) — refining the ancestral diet rather than replacing it. Separately, it carried a slightly larger, more rounded braincase than afarensis — a modest step toward a bigger brain that arrived before any of afarensis's other descendants shrank their teeth or picked up tools.",
+          "additionalContext": {
+            "fact": "A 2015 study of the internal trabecular (spongy) bone in africanus's thumb and palm found a human-like loading pattern consistent with forceful, precision gripping — the kind associated with tool use — despite no confirmed stone-tool industry for this species. Internal bone structure responds to real mechanical loading during life, so this is physical evidence the hand may already have been doing tool-like work, with or without surviving tools to match it.",
+            "sourceIds": ["skinner-2015-africanus-hand-grip"]
+          }
+        },
+        {
+          "id": "australopithecus-garhi",
+          "bullet": "Garhi kept afarensis-sized chewing teeth — even larger — but shows up in the same rock layer as the oldest confirmed stone-tool butchery, adding meat-processing technology on top of the ancestral plant-heavy dentition instead of shrinking its teeth first like habilis did.",
+          "additionalContext": {
+            "fact": "The 'oldest confirmed butchery' framing above is about cut marks specifically, not toolmaking overall: stone tools from Lomekwi, dated to 3.3 million years ago, predate garhi's own butchered-bone layer by roughly 750,000 years and predate the entire genus Homo — stone-tool manufacture was already an old technology, made by an unknown non-Homo hominin, by the time garhi's population (or whoever left the Bouri cut marks) used it on carcasses.",
+            "sourceIds": ["harmand-2015-lomekwi-tools"]
+          }
+        },
+        {
+          "id": "paranthropus-boisei",
+          "bullet": "Boisei went the opposite direction from garhi: it enlarged its jaw and chewing muscles into an extreme mechanical fallback system, betting that bigger teeth alone — not tools — would carry it through lean seasons.",
+          "additionalContext": {
+            "fact": "Carbon-isotope analysis of boisei's own tooth enamel complicates the microwear-based 'soft food most days' reading elsewhere in this dataset: it shows a diet of over 75% C4 grasses/sedges — more than any other hominin studied, and far more than its near-identical 'nutcracker' cousin Paranthropus robustus. Two evidence types point in different directions for the same skull design: short-term microwear says soft food at time of death, but the longer-term isotope signal says heavy grass/sedge reliance was routine, not just emergency fallback.",
+            "sourceIds": ["cerling-2011"]
+          }
+        },
+        {
+          "id": "homo-habilis",
+          "bullet": "Habilis bet against both africanus's plant-only path and boisei's bigger-jaws path: its teeth and face shrank while its brain grew, outsourcing food processing to stone tools instead of to anatomy.",
+          "additionalContext": {
+            "fact": "Whether habilis represents a new bet by our own genus at all is itself disputed: an influential 1999 reassessment argued habilis's body proportions below the neck — short legs, long arms, small stature — are so Australopithecus-like that the species arguably shouldn't be classified in Homo at all, proposing 'Australopithecus habilis' instead. On that reading, the brain-over-teeth strategy described here belongs to a bigger-brained australopith, not yet a member of our own genus.",
+            "sourceIds": ["wood-collard-1999-changing-face-genus-homo"]
+          }
+        },
+        {
+          "id": "homo-rudolfensis",
+          "bullet": "Rudolfensis, living alongside habilis in the very same Turkana Basin, made the opposite early-Homo bet: a bigger brain than habilis's, but molars kept large and no confirmed tools in its layers — growing brain size without habilis's tooth-shrinking, tool-assisted trade-off.",
+          "additionalContext": {
+            "fact": "A 2012 discovery strengthened rudolfensis's case as a genuinely separate species rather than just a large habilis individual: a juvenile partial face (KNM-ER 62000) shares rudolfensis's distinctive flat, broad features at a smaller, immature size — since juveniles shouldn't already show adult-scale sexual variation, a young rudolfensis-shaped individual is harder to explain away as ordinary variation within habilis.",
+            "sourceIds": ["leakey-2012-knm-er-62000"]
+          }
+        }
       ],
       "confidenceNote": "The anatomical divergence between these five is well documented and dramatic. Whether all five truly share afarensis as their single most recent common ancestor, rather than an earlier unsampled population, is not settled — treat afarensis here as the best-supported common reference point, not a proven parent. Habilis and rudolfensis are the exception with firmer footing: both are directly dated to the same Turkana Basin window (roughly 2.0–1.5 Ma), so their contrast is between true contemporaries, not just two branches of a shared deep ancestor."
     },
@@ -1714,7 +1779,14 @@
             "sourceIds": ["lee-thorp-1989-swartkrans-baboon-isotopes"]
           }
         },
-        {"id": "australopithecus-sediba", "bullet": "Sediba instead shrank its teeth below africanus's and picked up a more Homo-like face and hands, wagering on a leaner, more processed diet and a body plan closer to the genus Homo, while still climbing regularly like its ancestor."}
+        {
+          "id": "australopithecus-sediba",
+          "bullet": "Sediba instead shrank its teeth below africanus's and picked up a more Homo-like face and hands, wagering on a leaner, more processed diet and a body plan closer to the genus Homo, while still climbing regularly like its ancestor.",
+          "additionalContext": {
+            "fact": "A 2011 synchrotron scan of sediba's braincase found early signs of frontal-lobe reorganization toward a more human-like pattern — despite the brain itself staying small. That's a specific, complicating order of events: in this population, the internal wiring of the brain apparently began shifting toward the human pattern before the brain got any bigger, not as a result of it.",
+            "sourceIds": ["carlson-2011-sediba-endocast"]
+          }
+        }
       ],
       "confidenceNote": "Both descendants' distinct anatomy is well documented. That both specifically descend from africanus, rather than an earlier common South African population, is a reasonable but not fully proven inference — the fossil sequence has real gaps."
     },
@@ -1749,7 +1821,14 @@
       "label": "The last three-way split",
       "ancestorBaseline": "Middle Pleistocene Homo already had brains near modern size in a heavy-browed, robust skeleton, sharing a behavioral toolkit of coordinated big-game hunting, fire use and simple shelters across Africa, Europe and western Asia.",
       "siblingBullets": [
-        {"id": "homo-sapiens", "bullet": "In Africa, the population that became sapiens kept the ancestral brain size but lightened the skeleton and rounded the braincase, dispersing widely instead of specializing for one climate."},
+        {
+          "id": "homo-sapiens",
+          "bullet": "In Africa, the population that became sapiens kept the ancestral brain size but lightened the skeleton and rounded the braincase, dispersing widely instead of specializing for one climate.",
+          "additionalContext": {
+            "fact": "Even 'anatomically modern' arrived in stages within our own species: a 2018 study of skull shape found sapiens crania only reached the fully rounded, globular braincase typical of living humans between about 100,000 and 35,000 years ago — meaning the brain's outward shape kept changing for over 200,000 years after the earliest Jebel Irhoud-era faces and brain sizes already looked modern.",
+            "sourceIds": ["neubauer-2018-brain-globularization"]
+          }
+        },
         {
           "id": "homo-neanderthalensis",
           "bullet": "In Ice-Age Europe and western Asia, the same ancestral stock instead grew stockier and more heat-conserving, leaning on near-total carnivory to fuel a body built to withstand cold rather than to travel far.",
@@ -1758,7 +1837,14 @@
             "sourceIds": ["romandini-2018-neanderthal-bears"]
           }
         },
-        {"id": "denisovans", "bullet": "Across Asia, from Siberia to the high Tibetan Plateau, a third population carried the ancestral toolkit into wildly different environments, including a documented genetic adaptation (the EPAS1 variant) for surviving low-oxygen altitude that neither Neanderthals nor early sapiens needed."}
+        {
+          "id": "denisovans",
+          "bullet": "Across Asia, from Siberia to the high Tibetan Plateau, a third population carried the ancestral toolkit into wildly different environments, including a documented genetic adaptation (the EPAS1 variant) for surviving low-oxygen altitude that neither Neanderthals nor early sapiens needed.",
+          "additionalContext": {
+            "fact": "The heaviest Denisovan genetic legacy today isn't near the Siberian or Tibetan fossil sites at all: modern Papuan and Melanesian populations carry the highest Denisovan ancestry of anyone alive (up to ~5% of their genome), from at least two deeply divergent Denisovan populations that had themselves been separated for 350,000+ years — implying an as-yet-unfound Denisovan population once lived somewhere in Southeast Asia/Wallacea, far from every known Denisovan fossil site.",
+            "sourceIds": ["jacobs-2019-denisovan-papuan-ancestries"]
+          }
+        }
       ],
       "confidenceNote": "All three descendant lineages are extremely well supported by both fossils and genomes. 'Middle Pleistocene Homo' itself is a deliberately broad placeholder for structured, regionally varied populations, not one uniform ancestor — the single-species label is a convenience, not a settled taxonomic fact."
     }
@@ -1770,7 +1856,7 @@
       "label": "A generalist ape braces for leaner seasons",
       "ancestorBaseline": "Ekembo was a small, tailless canopy ape that picked soft, sugary fruit carefully while moving through the trees on a flexible lower back, with no specialised chewing or feeding equipment in reserve.",
       "whatChangedBullet": "Nakalipithecus kept Ekembo's arboreal, fruit-first habit as its day-to-day foraging style, but moved into a drier, tougher, more seasonal woodland than Ekembo's canopy and grew a much bigger body along with heavier, thick-enamelled molars as insurance for when fruit ran short — an early version of the fallback-feeding strategy later taken to an extreme by Paranthropus.",
-      "confidenceNote": "Both taxa are securely dated fossils and the trait shift itself (bigger body, tougher teeth, drier habitat) is well documented. But roughly 10 million years and no continuous fossil sequence separate them — Nakalipithecus is best read as a plausible stand-in for what an Ekembo-like lineage became, not a confirmed direct descendant, so an unsampled branch hidden in that gap can't be ruled out."
+      "confidenceNote": "Both taxa are securely dated fossils and the trait shift itself (bigger body, tougher teeth, drier habitat) is well documented. But roughly 10 million years and no continuous fossil sequence separate them — Nakalipithecus is best read as a plausible stand-in for what an Ekembo-like lineage became, not a confirmed direct descendant, so an unsampled branch hidden in that gap can't be ruled out. That gap probably isn't just an accident of where people have dug: a 2025 climate-modelling study ties this same window to East African Rift uplift and falling CO2 converting much regional forest to grassland, and apes living in the wooded pockets that remained fossilize poorly in acidic forest soil — the fossil silence may itself be a faint trace of the same habitat squeeze this entry's 'thicker teeth as insurance' story describes."
     },
     {
       "fromId": "ardipithecus-kadabba",
@@ -1786,7 +1872,7 @@
       "label": "The climbing trade-off gets abandoned",
       "ancestorBaseline": "Ramidus walked upright on the ground but hadn't given anything up for it: a mosaic body with a still-grasping, divergent big toe for climbing, living as a woodland omnivore.",
       "whatChangedBullet": "Anamensis gave up ramidus's climbing/walking compromise for full commitment: its leg bones show habitual upright walking without ramidus's climbing-optimised grasping toe. It also lived across a more open habitat mosaic — floodplain grassland and drier woodland alongside the river-forest ramidus preferred — while its jaws and teeth stayed just as large and primitive as ramidus's, showing the walking commitment arrived well before any dental change caught up.",
-      "confidenceNote": "Anamensis's own anatomy (the bipedal shin bone, the primitive jaw) is very well documented, and it's widely treated as ramidus's likely successor given matching geography and unbroken sequential ages. Still, no single fossil trail physically connects the two — it's an inference from continuity and proximity, and a currently unknown side branch between them can't be excluded."
+      "confidenceNote": "Anamensis's own anatomy (the bipedal shin bone, the primitive jaw) is very well documented, and it's widely treated as ramidus's likely successor given matching geography and unbroken sequential ages. Still, no single fossil trail physically connects the two — it's an inference from continuity and proximity, and a currently unknown side branch between them can't be excluded. Even ramidus's own starting point is less settled than it sounds above: the describing team read Aramis as closed woodland, but a separate isotope re-analysis of the same soils argues the carbon signature fits predominantly open wooded grassland instead — the same fossils and sediments, two specialist teams, two different readings of how open Ardi's world really was."
     },
     {
       "fromId": "homo-habilis",
@@ -1794,7 +1880,7 @@
       "label": "The last climbing anatomy is finally dropped",
       "ancestorBaseline": "Habilis had a bigger brain and smaller face than any australopith, but its arms and hands still kept climbing-related features like curved finger bones, and it mostly scavenged rather than hunted.",
       "whatChangedBullet": "Erectus dropped habilis's leftover climbing anatomy entirely — no more curved finger bones — finishing the shift to a fully ground-committed body: long legs, short arms, a narrow trunk built for covering serious daily distances. It also scaled habilis's brain-over-teeth bet much further, growing both a substantially bigger brain and a bigger body, and moved past habilis's scavenging pattern to controlled fire use and Acheulean handaxes built for processing carcasses.",
-      "confidenceNote": "Erectus's own body plan is exceptionally well documented, and habilis is its most plausible immediate predecessor by anatomy and unbroken timing. But the transition spans well under a million years with sparse fossils in between, and 'Homo erectus' is itself a broad grade covering many regional populations — treat this as the best-supported reading of a real but incompletely sampled transition, not one single confirmed lineage."
+      "confidenceNote": "Erectus's own body plan is exceptionally well documented, and habilis is its most plausible immediate predecessor by anatomy and unbroken timing. But the transition spans well under a million years with sparse fossils in between, and 'Homo erectus' is itself a broad grade covering many regional populations — treat this as the best-supported reading of a real but incompletely sampled transition, not one single confirmed lineage. A 2013 skull from Dmanisi (Georgia) sharpens that caution further: at just 546 cc, its brain is barely bigger than habilis's, yet it was found alongside far larger-brained Dmanisi individuals as one population — leading its describers to argue habilis, rudolfensis and early erectus may be one variable, evolving lineage rather than three cleanly separate species, which would make 'habilis becomes erectus' less a single handoff than labels drawn across one continuously varying population."
     }
   ]
 }

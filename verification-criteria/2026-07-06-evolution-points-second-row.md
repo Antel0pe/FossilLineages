@@ -151,3 +151,37 @@ errors, no failed network requests after a full page reload. **PASS.**
   panel (verified via the `key={activeEvolutionPointKey}` remount + fresh DOM reads per click).
 
 All criteria PASS. No known gaps.
+
+## Follow-up (2026-07-06, same day): chronological order was actually broken
+
+User caught a real bug: pills weren't reliably left-to-right by age. Root cause — the original
+implementation packed the two rows independently (`packRow` per row) and then, for the
+evolution row only, nudged any pill that overlapped a branch pill *directly rightward* past it
+(`nudgeBelowRow`). That "push right to dodge a collision" step had no awareness of chronological
+order: it could (and did) shove an *older* evolution pill to the right of a *younger* branch
+pill purely to avoid a visual overlap, and the cascading re-pack made it worse — e.g. the 9.9 Ma
+evolution point ended up rendering to the right of the 9 Ma branch point, and the 4.2/1.9 Ma
+evolution points got dragged all the way past the 0.4 Ma branch point.
+
+Verified this by reading real rendered pill positions (`getBoundingClientRect`) sorted
+left-to-right against their displayed age text — the sequence was 9, 9.9, 4.5, 3.9, 3.3, 2.0,
+0.7, 0.4, **4.2, 1.9**: non-monotonic (increases twice), confirming the bug independent of any
+theory about the cause.
+
+**Fix:** replaced the per-row-pack-then-nudge approach with a single shared pack
+(`packTimeline`) across both rows' pills at once, sorted purely by each pill's natural `col`-based
+position. Cross-checked that `col` order and the displayed-age order agree for all 10 pills
+(they do, exactly) before relying on `col` as the sort key. Because every pill's left position is
+now set relative to the ONE pill immediately before it in this single true chronological
+sequence, no pill — branch or evolution — can ever end up positioned after a chronologically
+earlier one, and (as a corollary, not a separate mechanism) no two pills can ever overlap either.
+
+**Re-verified after the fix:**
+- Rendered order re-checked via the same `getBoundingClientRect` + displayed-age read: now
+  strictly monotonic, 9.9 → 9 → 4.5 → 4.2 → 3.9 → 3.3 → 2.0 → 1.9 → 0.7 → 0.4. **PASS.**
+- Pairwise overlap check across all 10 pills: 0 overlaps. **PASS.**
+- Re-ran the interaction regression: clicking a branch pill ("The gorilla/chimp split") and an
+  evolution pill ("The climbing trade-off gets abandoned") both still open their correct panel.
+  **PASS.**
+- `tsc --noEmit`: no new errors (same pre-existing unrelated `leaflet.markercluster` error).
+- No console errors after reload.

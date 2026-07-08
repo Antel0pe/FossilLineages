@@ -587,7 +587,8 @@
       "url": "https://doi.org/10.1038/nature10842",
       "supports": [
         "African ape relationships",
-        "gorilla lineage divergence estimates"
+        "gorilla lineage divergence estimates",
+        "Genome-wide molecular-clock analysis showing substitution-rate variation wide enough that gorilla and chimp/human split times aren't cleanly resolved from DNA alone, relying on fossil calibration"
       ]
     },
     {
@@ -852,6 +853,149 @@
       "url": "https://www.sciencedirect.com/science/article/abs/pii/S030544031730184X",
       "supports": [
         "Cut marks on cave-bear and brown-bear bones at Rio Secco and Fumane caves (Italy) showing Neanderthals actively competed with bears for winter den shelter, including killing hibernating individuals"
+      ]
+    },
+    {
+      "id": "werner-2025-east-african-uplift",
+      "kind": "primary_research",
+      "title": "East African uplift as a catalyst for Middle Miocene faunal transitions",
+      "authors": "Werner et al.",
+      "year": 2025,
+      "doi": "10.1126/sciadv.adx6569",
+      "url": "https://www.science.org/doi/10.1126/sciadv.adx6569",
+      "supports": [
+        "Climate modelling linking East African Rift uplift and falling CO2 to reduced forest cover and grassland expansion across the Middle-to-Late Miocene — a candidate explanation for the ~10-million-year African ape fossil gap between Ekembo and Nakalipithecus"
+      ]
+    },
+    {
+      "id": "cerling-2010-ardipithecus-habitat-dispute",
+      "kind": "primary_research",
+      "title": "Comment on the Paleoenvironment of Ardipithecus ramidus",
+      "authors": "Cerling et al.",
+      "year": 2010,
+      "doi": "10.1126/science.1185274",
+      "url": "https://www.science.org/doi/10.1126/science.1185274",
+      "supports": [
+        "A specialist rebuttal arguing Ardipithecus ramidus's Aramis habitat was predominantly open wooded grassland rather than closed woodland, based on soil-carbonate carbon isotopes — an active, unresolved dispute with the describing team's (White et al.) closed-woodland reading"
+      ]
+    },
+    {
+      "id": "lordkipanidze-2013-dmanisi-skull5",
+      "kind": "primary_research",
+      "title": "A complete skull from Dmanisi, Georgia, and the evolutionary biology of early Homo",
+      "authors": "Lordkipanidze et al.",
+      "year": 2013,
+      "url": "https://www.science.org/doi/10.1126/science.1238484",
+      "supports": [
+        "Dmanisi Skull 5 (546 cc braincase) found alongside much larger-brained individuals in one population, leading the describing team to argue Homo habilis, H. rudolfensis and early H. erectus may represent one variable, evolving lineage rather than separate species"
+      ]
+    },
+    {
+      "id": "prufer-2012-bonobo-genome",
+      "kind": "primary_research",
+      "title": "The bonobo genome compared with the chimpanzee and human genomes",
+      "authors": "Prüfer et al.",
+      "year": 2012,
+      "doi": "10.1038/nature11128",
+      "url": "https://doi.org/10.1038/nature11128",
+      "supports": [
+        "Genomic divergence dating chimpanzee/bonobo split to roughly 1-2 million years ago, coinciding with Congo River formation separating their ranges"
+      ]
+    },
+    {
+      "id": "kappelman-2016-lucy-tree-fall",
+      "kind": "primary_research",
+      "title": "Perimortem fractures in Lucy suggest mortality from fall out of tall tree",
+      "authors": "Kappelman et al.",
+      "year": 2016,
+      "doi": "10.1038/nature19332",
+      "url": "https://doi.org/10.1038/nature19332",
+      "supports": [
+        "CT-scan evidence of perimortem compression fractures in the Lucy (AL 288-1) skeleton consistent with a fatal fall from height, most likely a tree — contested by other researchers who argue the breaks are post-mortem"
+      ]
+    },
+    {
+      "id": "skinner-2015-africanus-hand-grip",
+      "kind": "primary_research",
+      "title": "Human-like hand use in Australopithecus africanus",
+      "authors": "Skinner, Stephens, Tsegai, Foote, Nguyen, Gross, Pahr, Hublin & Kivell",
+      "year": 2015,
+      "doi": "10.1126/science.aaa4224",
+      "url": "https://www.science.org/doi/10.1126/science.aaa4224",
+      "supports": [
+        "Trabecular (internal spongy) bone in africanus's thumb and palm shows a human-like loading pattern consistent with forceful, precision gripping, predating any confirmed stone-tool industry for this species"
+      ]
+    },
+    {
+      "id": "harmand-2015-lomekwi-tools",
+      "kind": "primary_research",
+      "title": "3.3-million-year-old stone tools from Lomekwi 3, West Turkana, Kenya",
+      "authors": "Harmand et al.",
+      "year": 2015,
+      "doi": "10.1038/nature14464",
+      "url": "https://doi.org/10.1038/nature14464",
+      "supports": [
+        "Stone tools dated to 3.3 Ma, roughly 750,000 years older than Australopithecus garhi's butchered-bone layer and predating the genus Homo entirely, made by an unidentified non-Homo hominin"
+      ]
+    },
+    {
+      "id": "wood-collard-1999-changing-face-genus-homo",
+      "kind": "primary_research",
+      "title": "The changing face of genus Homo",
+      "authors": "Wood & Collard",
+      "year": 1999,
+      "doi": "10.1002/(SICI)1520-6505(1999)8:6<195::AID-EVAN1>3.0.CO;2-2",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1520-6505(1999)8:6%3C195::AID-EVAN1%3E3.0.CO;2-2",
+      "supports": [
+        "Argument that Homo habilis's below-the-neck body proportions (short legs, long arms, small stature) are Australopithecus-like enough that the species arguably belongs in Australopithecus, not Homo"
+      ]
+    },
+    {
+      "id": "leakey-2012-knm-er-62000",
+      "kind": "primary_research",
+      "title": "New fossils from Koobi Fora in northern Kenya confirm taxonomic diversity in early Homo",
+      "authors": "Leakey, Spoor et al.",
+      "year": 2012,
+      "doi": "10.1038/nature11322",
+      "url": "https://doi.org/10.1038/nature11322",
+      "supports": [
+        "Juvenile partial face KNM-ER 62000, sharing rudolfensis's distinctive features at an immature size, supporting rudolfensis as a genuinely separate species from habilis rather than large-individual sexual variation"
+      ]
+    },
+    {
+      "id": "carlson-2011-sediba-endocast",
+      "kind": "primary_research",
+      "title": "The Endocast of MH1, Australopithecus sediba",
+      "authors": "Carlson et al.",
+      "year": 2011,
+      "doi": "10.1126/science.1203922",
+      "url": "https://www.science.org/doi/10.1126/science.1203922",
+      "supports": [
+        "Synchrotron scan of sediba's braincase showing early frontal-lobe reorganization toward a human-like pattern despite a still-small brain — reorganization preceding size increase"
+      ]
+    },
+    {
+      "id": "neubauer-2018-brain-globularization",
+      "kind": "primary_research",
+      "title": "The evolution of modern human brain shape",
+      "authors": "Neubauer, Hublin & Gunz",
+      "year": 2018,
+      "doi": "10.1126/sciadv.aao5961",
+      "url": "https://www.science.org/doi/10.1126/sciadv.aao5961",
+      "supports": [
+        "Homo sapiens braincases only reached the fully globular shape typical of living humans between ~100,000 and 35,000 years ago, well after early sapiens faces and brain size already looked modern"
+      ]
+    },
+    {
+      "id": "jacobs-2019-denisovan-papuan-ancestries",
+      "kind": "primary_research",
+      "title": "Multiple Deeply Divergent Denisovan Ancestries in Papuans",
+      "authors": "Jacobs et al.",
+      "year": 2019,
+      "doi": "10.1016/j.cell.2019.02.035",
+      "url": "https://doi.org/10.1016/j.cell.2019.02.035",
+      "supports": [
+        "Modern Papuan/Melanesian populations carry the highest Denisovan ancestry of any living group, from at least two Denisovan populations separated 350,000+ years, implying an unfound Denisovan population in Southeast Asia/Wallacea"
       ]
     }
   ]

@@ -160,10 +160,18 @@ function formatRange(olderMa: number, youngerMa: number) {
 }
 
 // --- Chronological nav pill layout -----------------------------------------------------
-// Pills are positioned by the taxon's real graph `col` (same mapping the era labels use), so
-// the branch-point row and the evolution-point row roughly line up on one shared timeline.
+// Pills are positioned by the taxon's real graph `col` (same mapping the era labels use).
+// Branch-point and evolution-point pills are packed into ONE shared left-to-right sequence
+// (not packed per-row and then nudged) so that a pill's horizontal position is strictly
+// governed by chronological order across BOTH rows at once — an older event, whichever row
+// it's in, can never end up to the right of a younger one. Packing each row independently and
+// then pushing overlaps sideways (an earlier approach here) could shove an older pill in one
+// row to the right of a younger pill in the other row purely to dodge a collision, which broke
+// the ordering guarantee; a single shared pack can't do that, since every pill's position is
+// decided relative to the ONE pill immediately before it in true chronological order, period.
 // Widths are estimated from label length (no DOM measurement pass) with a generous gap, since
-// exact typographic width isn't needed — only "never overlaps," which the gap covers.
+// exact typographic width isn't needed — only "never overlaps, never reorders," which the gap
+// and the shared-sequence pack together guarantee.
 const PILL_ROW_HEIGHT = 32;
 const PILL_ROW_GAP = 10;
 const PILL_GAP = 14;
@@ -175,8 +183,8 @@ function estimatePillWidth(ageText: string, label: string) {
 type PillItem = { key: string; natural: number; width: number };
 
 // Sorts by natural (time-based) position and pushes any pill right just enough to clear the
-// one before it, so pills never overlap within a single row while staying in chronological order.
-function packRow(items: PillItem[]): Map<string, number> {
+// one before it, so pills never overlap and never reorder relative to their natural sequence.
+function packTimeline(items: PillItem[]): Map<string, number> {
   const sorted = [...items].sort((a, b) => a.natural - b.natural);
   const lefts = new Map<string, number>();
   let rightEdge = -Infinity;
@@ -184,36 +192,6 @@ function packRow(items: PillItem[]): Map<string, number> {
     const left = Math.max(item.natural, rightEdge + PILL_GAP);
     lefts.set(item.key, left);
     rightEdge = left + item.width;
-  }
-  return lefts;
-}
-
-// Packs `items` against themselves, then nudges any that overlap an `above` pill's rendered
-// span further right, re-packing between passes so a nudge never creates a fresh overlap with
-// its own row neighbor. This is the mechanism behind "an evolution point never sits directly
-// under a branch point."
-function nudgeBelowRow(items: PillItem[], aboveLefts: Map<string, number>, aboveWidths: Map<string, number>): Map<string, number> {
-  let lefts = packRow(items);
-  const aboveSpans = [...aboveLefts.entries()].map(([key, left]) => ({ left, right: left + (aboveWidths.get(key) ?? 0) }));
-  for (let pass = 0; pass < 4; pass++) {
-    const ordered = [...items].sort((a, b) => (lefts.get(a.key) ?? 0) - (lefts.get(b.key) ?? 0));
-    const next = new Map<string, number>();
-    let rightEdge = -Infinity;
-    let changed = false;
-    for (const item of ordered) {
-      let left = Math.max(lefts.get(item.key) ?? item.natural, rightEdge + PILL_GAP);
-      for (const span of aboveSpans) {
-        const overlaps = left < span.right + PILL_GAP && left + item.width > span.left - PILL_GAP;
-        if (overlaps && span.right + PILL_GAP > left) {
-          left = span.right + PILL_GAP;
-          changed = true;
-        }
-      }
-      next.set(item.key, left);
-      rightEdge = left + item.width;
-    }
-    lefts = next;
-    if (!changed) break;
   }
   return lefts;
 }
@@ -805,33 +783,29 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
     return { point: activeEvolutionPoint, ancestor, descendant };
   }, [activeEvolutionPoint, taxaById]);
 
-  // Positions both nav rows along the graph's own `col` timeline (same mapping eraLabels use),
-  // then collision-avoids: no overlap within a row, and no evolution-point pill overlapping a
-  // branch-point pill above it (see packRow/nudgeBelowRow).
+  // Positions both nav rows along the graph's own `col` timeline (same mapping eraLabels use).
+  // Branch and evolution pills share ONE packed sequence (see packTimeline above) so their
+  // left-to-right order always matches true chronological order across both rows combined.
   const navPillLayout = useMemo(() => {
     const colX = (id: string) => layout.padX + (taxaById.get(id)?.col ?? 0) * layout.colSpacing;
 
     const branchItems: PillItem[] = chronoDivergences.map((row) => ({
-      key: row.key,
+      key: `branch:${row.key}`,
       natural: colX(row.fromId),
       width: estimatePillWidth(formatAge(row.splitAge), row.label),
     }));
-    const branchLefts = packRow(branchItems);
-    const branchWidths = new Map(branchItems.map((i) => [i.key, i.width]));
-
     const evoItems: PillItem[] = chronoEvolutionPoints.map((row) => ({
-      key: row.key,
+      key: `evo:${row.key}`,
       natural: colX(row.fromId),
       width: estimatePillWidth(formatAge(row.pointAge), row.label),
     }));
-    const evoLefts = nudgeBelowRow(evoItems, branchLefts, branchWidths);
-    const evoWidths = new Map(evoItems.map((i) => [i.key, i.width]));
+
+    const lefts = packTimeline([...branchItems, ...evoItems]);
 
     let trackWidth = 0;
-    for (const item of branchItems) trackWidth = Math.max(trackWidth, (branchLefts.get(item.key) ?? 0) + item.width);
-    for (const item of evoItems) trackWidth = Math.max(trackWidth, (evoLefts.get(item.key) ?? 0) + item.width);
+    for (const item of [...branchItems, ...evoItems]) trackWidth = Math.max(trackWidth, (lefts.get(item.key) ?? 0) + item.width);
 
-    return { branchLefts, branchWidths, evoLefts, evoWidths, trackWidth: trackWidth + layout.padX };
+    return { lefts, trackWidth: trackWidth + layout.padX };
   }, [chronoDivergences, chronoEvolutionPoints, taxaById, layout]);
 
   const openSpecies = (id: string) => {
@@ -916,7 +890,7 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
                 type="button"
                 key={row.key}
                 className={styles.branchNavItem}
-                style={{ position: "absolute", left: navPillLayout.branchLefts.get(row.key) ?? 0, top: 0 }}
+                style={{ position: "absolute", left: navPillLayout.lefts.get(`branch:${row.key}`) ?? 0, top: 0 }}
                 onClick={() => openDivergence(row.key)}
                 aria-label={`Compare strategies: ${row.label}`}
               >
@@ -931,7 +905,7 @@ export default function EvolutionExplorer({ data, sources }: ExplorerProps) {
                 className={`${styles.branchNavItem} ${styles.evoNavItem}`}
                 style={{
                   position: "absolute",
-                  left: navPillLayout.evoLefts.get(row.key) ?? 0,
+                  left: navPillLayout.lefts.get(`evo:${row.key}`) ?? 0,
                   top: PILL_ROW_HEIGHT + PILL_ROW_GAP,
                 }}
                 onClick={() => openEvolutionPoint(row.key)}
