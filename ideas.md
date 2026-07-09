@@ -32,3 +32,6 @@ data needs to be factual and supported by evidence. mostly focusing on direct sp
 - individual fossil forensic story
     - died by falling due to fractures or had some bone disease etc
 - additional context about why this change happened rather than some other, what changed in habitat/environment/ecology that gives additional context
+
+- potentially time to experiment with taking the structure on humans and expanding it to more species and lineages
+    - feel like im running into data bottlenecks focusing on just humans but the underlying idea and structure is good

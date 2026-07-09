@@ -975,6 +975,31 @@
       ]
     },
     {
+      "id": "henry-2012-sediba-diet",
+      "kind": "primary_research",
+      "title": "The diet of Australopithecus sediba",
+      "authors": "Henry et al.",
+      "year": 2012,
+      "doi": "10.1038/nature11185",
+      "url": "https://www.nature.com/articles/nature11185",
+      "supports": [
+        "Phytolith and carbon-isotope evidence that sediba ate an almost exclusively C3, bark/leaf/fruit-dominated diet unlike any other known hominin, contradicting a 'leaner, more processed diet' reading",
+        "Contemporary Paranthropus robustus in the same region kept the regionally typical mixed C3/C4 diet, making sediba's bark-heavy diet a real divergence between exact contemporaries in the same small area"
+      ]
+    },
+    {
+      "id": "towle-2016-sediba-biteforce",
+      "kind": "primary_research",
+      "title": "Mechanical evidence that Australopithecus sediba was limited in its ability to eat hard foods",
+      "authors": "Towle, Irish, De Groote et al.",
+      "year": 2016,
+      "doi": "10.1038/ncomms10596",
+      "url": "https://www.nature.com/articles/ncomms10596",
+      "supports": [
+        "Biomechanical modeling finding sediba's skull poorly built to generate high bite force, in tension with its molar microwear pattern which resembles a hard-object feeder — an unresolved conflict between two evidence types on the same specimen"
+      ]
+    },
+    {
       "id": "neubauer-2018-brain-globularization",
       "kind": "primary_research",
       "title": "The evolution of modern human brain shape",

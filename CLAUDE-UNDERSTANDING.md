@@ -335,3 +335,22 @@ scenes) for cases where two related taxa's own `pressures`/`behavioralChange` te
 contains an implicit comparison that isn't yet surfaced explicitly side-by-side. This is likely
 cheaper than new research (as the ramidus/anamensis case showed) and directly targets the
 comparative-causation hook rather than narrative sequencing.
+
+## Correction round 3 (2026-07-08) — round 2's flaw was causal oversimplification, not chain length
+User corrected a misreading of round 2 above: an assistant restated round 2's "read as narration,
+not explanation" problem as being about *longer taxa sequences* (more species strung together).
+User's direct correction: that's wrong — the actual flagged problem is **compressing a causal
+chain with far too much simplicity, e.g. "this species, millions of years ago, was directly
+causally responsible for this specific [downstream] thing."** That mono-causal, single-link
+compression is the failure mode, independent of how many taxa are in view — a two-taxon comparison
+can commit it just as easily as a five-taxon chain, and a longer sequence isn't automatically
+guilty of it either. Re-reading round 2's own worked examples through this corrected lens, the
+already-good, already-shipped content resists this exact oversimplification: the boisei/robustus
+isotope divergence (near-identical jaws, very different diets — Cerling/Sponheimer, see
+`verification-criteria/2026-07-07-evidence-mining-pass-evolution-points.md`) and the ramidus
+habitat dispute (Cerling vs. White's competing reads of the same soils) both refuse to collapse
+into "trait X → caused by pressure Y, done." **Standing rule going forward**: when writing any
+change→pressure claim, actively check whether it's being flattened into a single clean
+mono-causal line where the real evidence is messier/plural/contested — and if the evidence really
+does support one dominant cause, still carry the honesty/certainty framing the branch-point panels
+already require rather than stating it as flat unqualified fact.
