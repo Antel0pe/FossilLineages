@@ -1,0 +1,85 @@
+PANEL 4 — Evolution point: Pliohippus -> Dinohippus -> Equus
+Late Miocene into Pliocene (~13-4 Ma)
+
+BASELINE
+Pliohippus, the Equini-stem descendant from the Merychippus radiation (Panel 3), had already
+committed to hypsodont (high-crowned) grazing teeth and to a foot with a single enlarged
+central toe doing almost all the weight-bearing — but its side toes, while much reduced, had
+not yet disappeared into fully non-functional splints; early Pliohippus specimens still show
+small remnant bone nubbins from the second and fifth digits alongside the reduced third and
+fourth metapodials. Body mass among Equini-stem horses had already diversified substantially
+during the earlier Miocene radiation, from the small ~25-50 kg range that had held steady for
+most of horse evolution up to about 25 Ma, to a much wider 75-400 kg range achieved by roughly
+10 Ma [3].
+
+WHAT CHANGED + WHY — Dinohippus and Equus vs. the Pliohippus baseline
+
+What changed: over three successive early Pliocene strata, the side toes were lost as
+functional structures entirely — Dinohippus is recognized as the first true single-toed
+horse, with the second and fourth digits reduced to non-weight-bearing splint bones fused
+along the cannon bone rather than separate, semi-functional toes. Equus inherited and
+retained this fully solid one-toed foot (living Equus still carry the genes for side toes,
+occasionally expressed as rare atavistic extra toes, but the default plan is a single hoof).
+Cheek teeth also became more completely and durably hypsodont, and body size increased
+further into the range modern Equus occupies. Against the Pliohippus baseline's still-partly-
+articulated side toes, a fully solid, single-toed foot is a structurally different design, not
+just a more extreme version of the same one: recent biomechanical work argues the key change
+was not digit loss per se but an enhanced elastic "spring foot" at the fetlock, which stores
+and returns more energy per stride than a three-toed or incipiently-monodactyl foot can [17].
+Why: the specific advantage of that spring-foot design is locomotor efficiency over long,
+open, and increasingly arid terrain — greater elastic energy return favors an efficient,
+sustained trotting gait for covering long distances between patchy resources, as opposed to
+the shorter-range running-walk gait better suited to the more broken, wooded terrain that
+tridactyl hipparionines (Panel 5) continued to occupy over the same interval [17].
+
+WHY-OF-THE-WHY
+The claim that terrain was becoming more consistently open and arid over exactly this ~10-4 Ma
+window — the precondition the spring-foot/trotting-efficiency argument depends on — is backed
+by evidence completely independent of horse limb biomechanics: Great Plains paleosol carbonate
+isotopes show C4-grass biomass staying low and steady (roughly 12-34%) through most of the
+Miocene, then rising sharply between 6.4 and 4.0 Ma and reaching near-modern levels by about
+2.5 Ma [16] — a regional, soil-geochemistry-based confirmation, matching the same global C4
+expansion signal documented in fossil tooth enamel worldwide [15]. Separately, Great Plains
+paleosols also show truly open (more arid) grassland — as opposed to the earlier, more mixed
+sod grassland of the middle Miocene — does not clearly appear until the latest Miocene, around
+6 Ma [10][11]. Both independent lines (soil geochemistry and enamel isotopes) converge on the
+same late Miocene-into-Pliocene window as when the landscape actually became the kind of
+open, dry, long-distance terrain that a fully solid, spring-loaded one-toed foot pays off in —
+matching, rather than merely following, the timing of Dinohippus's and early Equus's foot and
+tooth changes.
+
+CONFIDENCE
+High on the sequence and structural facts (fossil strata directly document the stepwise loss
+of functional side toes; body size and crown-height trends are independently measured).
+Moderate on the specific causal mechanism: the "elastic energy storage/trotting efficiency"
+explanation for monodactyly is a genuinely current hypothesis in the primary literature, not
+long-settled consensus — its own authors present it as building on and revising older,
+simpler "single toe = faster running" explanations, so treat the precise functional story as
+the current best account rather than a closed question. The paleoclimate/vegetation timing
+match, by contrast, rests on multiple independent proxy types and is on firmer ground.
+
+CITATIONS
+3. MacFadden, B.J. (1986). "Fossil horses from 'Eohippus' (Hyracotherium) to Equus: scaling,
+   Cope's Law, and the evolution of body size." Paleobiology 12(4):355-369.
+   [Backs: baseline — body mass diversification timeline]
+10. Retallack, G.J. (1997). "Neogene expansion of the North American prairie." PALAIOS
+    12(4):380-390.
+    [Backs: why-of-the-why — paleosol staging showing fully open/arid grassland only from
+    ~6 Ma]
+11. Retallack, G.J. (2007). "Cenozoic paleoclimate on land in North America." Journal of
+    Geology 115(3):271-294.
+    [Backs: why-of-the-why — independent confirmation of the same late Miocene grassland-
+    opening timing]
+15. Cerling, T.E., Harris, J.M., MacFadden, B.J., Leakey, M.G., Quade, J., Eisenmann, V.,
+    Ehleringer, J.R. (1997). "Global vegetation change through the Miocene/Pliocene
+    boundary." Nature 389:153-158. DOI: 10.1038/38229
+    [Backs: why-of-the-why — global C4 expansion 8-6 Ma, tooth-enamel evidence]
+16. Fox, D.L., Koch, P.L. (2003). "Tertiary history of C4 biomass in the Great Plains, USA."
+    Geology 31(9):809-812. DOI: 10.1130/G19580.1
+    [Backs: why-of-the-why — independent Great Plains paleosol-carbonate proxy showing C4
+    biomass rising sharply 6.4-4.0 Ma, reaching modern levels by ~2.5 Ma]
+17. Janis, C.M., Bernor, R.L. (2019). "The Evolution of Equid Monodactyly: A Review Including
+    a New Hypothesis." Frontiers in Ecology and Evolution 7:119.
+    DOI: 10.3389/fevo.2019.00119
+    [Backs: what changed/why — spring-foot elastic energy storage hypothesis for monodactyly,
+    Pliohippus/Dinohippus/Equus timeline, contrast with hipparionine gait]

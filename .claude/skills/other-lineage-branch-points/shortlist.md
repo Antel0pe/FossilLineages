@@ -68,6 +68,49 @@ re-verify (real sources, real numbers) at build time, not a settled fact.
 - Caveat: smaller, less mainstream fossil literature than the top three — check evidence density
   before committing.
 
+## Data availability vs. the human/hominin baseline (verified 2026-07-08)
+
+Direct question asked: do these candidates actually have *better* fossil/environment/pressure
+data than the hominin lineage this project is already built on, or does that just sound true?
+Checked via web search rather than assumed. Two separate axes, because they don't rank the same:
+
+**Axis 1 — raw fossil abundance/completeness.** Horses and proboscideans are each independently
+described in the literature with the literal superlative "most complete"/"most comprehensive"
+fossil record of any lineage — thousands of complete Eocene horse skeletons from a single basin
+(Wind River, Wyoming), 50+ proboscidean genera/185+ species across 55+ My. Canids are rated by
+their leading specialists (Wang & Tedford) as "the strongest of their kind among known carnivoran
+groups." Camelids have a solid, well-attested North American record (same favorable badlands
+depositional setting as horses/canids) but no equivalent "most complete" superlative found for
+them specifically — likely the weakest of the four, though still ahead of hominins. **Hominins,
+for direct contrast**: at Toros-Menalla, Sahelanthropus is 10 fossils out of 5,450 total mammal
+specimens at that site (~0.2% of the fauna), teeth-dominated, and described in the literature as
+"discontinuous and incomplete especially around origination points."
+
+**Axis 2 — directness of the environment/pressure proxy tying cause to change.** Whales rank
+highest here despite lower raw specimen counts than horses/elephants/canids: oxygen isotopes in
+tooth enamel track the freshwater→marine transition stage by stage and individual by individual
+(Pakicetus = freshwater signature → Ambulocetus = mixed/estuarine → Rodhocetus = no longer needed
+freshwater at all) — about as direct and hard to dispute as habitat-shift evidence gets. Horses'
+C3→C4 grass isotope transition is a close second, same proxy type. This is a notably more direct
+line of evidence than most hominin habitat reconstruction, which leans on paleosols/pollen/faunal
+assemblages and where specialists can and do dispute the same site's evidence (see the
+ramidus woodland-vs-grassland dispute already in `notes.md`).
+
+**Net read**: all five candidates beat the hominin baseline on both axes to some degree. Horses
+and proboscideans are the safest bet if raw evidentiary density is the priority; whales are the
+pick if the priority is the single most direct, hardest-to-dispute cause→change proxy for one
+specific transition.
+
+Sources checked this pass: [Evolution of the horse](https://en.wikipedia.org/wiki/Evolution_of_the_horse),
+[Fossil Horses (MacFadden)](https://books.google.com/books/about/Fossil_Horses.html?id=K1upTamSEW0C),
+[Hominin fossil inventory](https://www.sciencedirect.com/science/article/abs/pii/S0047248424001234),
+[The hominin fossil record: taxa, grades and clades (PMC)](https://pmc.ncbi.nlm.nih.gov/articles/PMC2409102/),
+[The evolution of whales (Berkeley)](https://evolution.berkeley.edu/what-are-evograms/the-evolution-of-whales/),
+[A new Eocene archaeocete... time of origin of whales (PMC)](https://pmc.ncbi.nlm.nih.gov/articles/PMC28065/),
+[Dogs: Their Fossil Relatives and Evolutionary History (Wang & Tedford)](https://cup.columbia.edu/book/dogs/9780231135290/),
+[Proboscidea - Wikipedia](https://en.wikipedia.org/wiki/Proboscidea),
+[Camelidae - Wikipedia](https://en.wikipedia.org/wiki/Camelidae).
+
 ## Not shortlisted, and why
 - **Ammonites / other shelled marine invertebrates**: fossil record is excellent but soft-tissue
   behavior/habitat evidence is thin — the "why" would lean more on inference than the hard,

@@ -14,6 +14,13 @@ type LabItem = {
 
 const items: LabItem[] = [
   {
+    href: "/lab/horses",
+    kicker: "Equidae · ~55 million years ago → today",
+    title: "Five branch and evolution points in the horse family tree",
+    hook: "Isotopes and mesowear track a browsing forest animal becoming a one-toed grassland grazer — and the three-toed cousins who radiated across three continents before going extinct anyway. Click along the timeline for the baseline, what changed, why, and how sure we really are.",
+    mode: "explorable",
+  },
+  {
     href: "/lab/chicxulub",
     kicker: "Chicxulub crater, Yucatán · ~66 million years ago",
     title: "Six kinds of evidence for one asteroid, and why each thing it caused happened",

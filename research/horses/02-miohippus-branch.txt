@@ -1,0 +1,88 @@
+PANEL 2 — Branch point: Miohippus -> Anchitheriinae (e.g. Anchitherium) vs. Equinae stem
+(e.g. Parahippus)
+Late Eocene/early Oligocene into early Miocene (~32-24 Ma)
+
+BASELINE
+Miohippus, descendant of the Mesohippus lineage, was still a three-toed woodland browser
+with low-crowned (brachydont) cheek teeth. It lived across a North American interior where
+continued post-Eocene-Oligocene cooling and drying had opened Mesohippus's patchy woodland
+further still: in places closed forest persisted, but in the Great Plains interior specifically,
+paleosol evidence shows the first true open, grass-containing ground cover — desert-like
+"bunch" grassland by the late Oligocene (~33 Ma), then a more continuous "sod" grassland by
+the earliest Miocene (~19 Ma) — appearing for the first time [10]. By the early Miocene,
+Miohippus-grade horses stood at a real fork: stay a browser in the woodland/forest-margin
+habitat that still existed, or begin exploiting the newly-available grassy ground cover.
+
+WHAT CHANGED + WHY — Anchitheriinae (e.g. Anchitherium) vs. the Miohippus baseline, and vs.
+its Parahippus-lineage sibling
+
+What changed: essentially nothing about the tooth or foot plan — Anchitherium kept
+Miohippus's three-toed foot and low-crowned, brachydont teeth relatively unchanged [9].
+What it did do that Miohippus itself had not: hugely expand its geographic range, dispersing
+out of North America across the Bering land bridge into Asia and Europe by around 18-19 Ma,
+during a phase of lowered sea level, eventually reaching as far as the eastern Mediterranean
+and beyond. Direct fossil-community evidence from a well-studied German site (Sandelzhausen,
+Miocene) independently describes Anchitherium there as a "dirty browser" — a brachydont
+animal still eating leaves and shrubby browse mixed with some ground-level material, embedded
+in a community of other browsing large mammals, not a grassland grazer [9]. Against its
+Parahippus-lineage sibling (below), which was beginning to raise its tooth crown height in
+North America over this same interval, Anchitherium's teeth stayed flatly unchanged.
+Why: wherever Anchitherium went — across the Great Plains margins it started from, and into
+the Eurasian woodlands it dispersed into — a browsing niche on trees and shrubs remained
+available and exploitable throughout the early-to-middle Miocene; it did not need to solve
+the grit/grass problem because it was not living inside the specific North American interior
+habitat where that problem was intensifying.
+
+What changed: Parahippus, the lineage that continues toward Equinae, evolved mesodont teeth —
+a real, measurable increase in crown height above the Miohippus/Anchitherium baseline, though
+still short of full hypsodonty [6]. Against Anchitherium's unchanged brachydont teeth, this
+gave Parahippus the ability to keep grinding a diet containing more of the newly-available,
+grit- and phytolith-laden grassy ground cover without wearing its teeth down as fast as an
+unmodified low-crowned tooth would. Why: in the North American Great Plains interior
+specifically — not everywhere Miohippus-grade horses lived — grasses were becoming a
+significant, regionally new component of ground cover; a lineage that could tolerate the
+added abrasiveness of that ground cover, even partially, could exploit a food source largely
+closed to a pure browser stuck with a Anchitherium-style tooth.
+
+WHY-OF-THE-WHY
+The claim that "grassy ground cover became newly available in the North American interior
+specifically, at just this time" does not rest on tooth evidence alone — it is independently
+confirmed by paleosol (fossil soil) geochemistry from the Great Plains itself, which stages
+the vegetation change directly from the rocks: late Oligocene desert bunch grassland, then
+early Miocene (~19 Ma) sod grassland, arriving in the same place and same window Parahippus
+appears [10][11]. That the alternative, browsing-only path stayed viable is likewise
+independently confirmed not by teeth but by fossil-community reconstruction at actual
+Eurasian sites Anchitherium reached — the Sandelzhausen assemblage shows it living alongside
+other browsers in a still-wooded community, a direct paleoecological snapshot rather than an
+inference from its unchanged dentition [9].
+
+CONFIDENCE
+Moderate-to-high on the core browse-vs-graze contrast itself, which is well supported by
+independent paleosol and paleocommunity evidence on both sides. Lower on the precise
+phylogenetic detail: the exact branching pattern among early Miocene equids, and how cleanly
+Miohippus itself sits at a single branch point versus being one node in a messier, still
+incompletely resolved early equid tree, is acknowledged in the primary equid systematics
+literature as less settled than the later (Merychippus-onward) part of the tree [8].
+
+CITATIONS
+6. Florida Museum of Natural History. "Parahippus." Fossil Horses in Cyberspace gallery.
+   https://www.floridamuseum.ufl.edu/fossil-horses/gallery/parahippus/
+   [Backs: what changed — Parahippus mesodont tooth description]
+8. MacFadden, B.J. (1998). "Equidae." In Janis, C.M., Scott, K.M., Jacobs, L.L. (eds.),
+   Evolution of Tertiary Mammals of North America, Volume 1: Terrestrial Carnivores,
+   Ungulates, and Ungulatelike Mammals. Cambridge University Press, pp. 537-559.
+   [Backs: baseline taxonomy/classification of Miohippus and Anchitheriinae; confidence line
+   on resolution of early equid phylogeny]
+9. Kaiser, T.M. (2009). "Anchitherium aurelianense (Equidae, Mammalia): a brachydont 'dirty
+   browser' in the community of herbivorous large mammals from Sandelzhausen (Miocene,
+   Germany)." Paläontologische Zeitschrift 83:131-140. DOI: 10.1007/s12542-009-0002-z
+   [Backs: what changed/why-of-the-why — direct Eurasian fossil-community evidence that
+   Anchitherium remained a browser in a wooded community after dispersal]
+10. Retallack, G.J. (1997). "Neogene expansion of the North American prairie." PALAIOS
+    12(4):380-390.
+    [Backs: why-of-the-why — paleosol staging of Great Plains grassland opening, late
+    Oligocene bunch grassland to early Miocene sod grassland]
+11. Retallack, G.J. (2007). "Cenozoic paleoclimate on land in North America." Journal of
+    Geology 115(3):271-294.
+    [Backs: why-of-the-why — independent paleosol/paleoclimate record of the same Great
+    Plains grassland-opening sequence]

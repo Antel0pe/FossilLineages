@@ -1,0 +1,112 @@
+SOURCES REGISTRY — Horse (Equidae) lineage panels
+Deduplicated list of every citation used across 01-05. Numbering matches the numbering used
+inside each panel file (a given source keeps the same number everywhere it appears).
+
+1. Zachos, J.C., Pagani, M., Sloan, L., Thomas, E., Billups, K. (2001). "Trends, Rhythms, and
+   Aberrations in Global Climate 65 Ma to Present." Science 292(5517):686-693.
+   DOI: 10.1126/science.1059412
+   Used in: Panel 1 (why-of-the-why — global benthic oxygen-isotope record of the
+   Eocene-Oligocene cooling transition).
+
+2. Zanazzi, A., Kohn, M.J., MacFadden, B.J., Terry, D.O. (2007). "Large temperature drop
+   across the Eocene-Oligocene transition in central North America." Nature 445:639-642.
+   DOI: 10.1038/nature05551
+   Used in: Panel 1 (why-of-the-why — independent terrestrial isotope proxy for the same
+   transition, from the specific region horses lived in).
+
+3. MacFadden, B.J. (1986). "Fossil horses from 'Eohippus' (Hyracotherium) to Equus: scaling,
+   Cope's Law, and the evolution of body size." Paleobiology 12(4):355-369.
+   Used in: Panel 1 (baseline — body size stasis through ~25 Ma), Panel 4 (baseline — body
+   mass diversification by ~10 Ma).
+
+4. MacFadden, B.J. (1988). "Fossil horses from 'Eohippus' (Hyracotherium) to Equus, 2: rates
+   of dental evolution revisited." Biological Journal of the Linnean Society 35(1):37-48.
+   DOI: 10.1111/j.1095-8312.1988.tb00457.x
+   Used in: Panel 1 (what changed — dental evolution rates/crown height data).
+
+5. Florida Museum of Natural History. "Mesohippus." Fossil Horses in Cyberspace gallery.
+   https://www.floridamuseum.ufl.edu/fossil-horses/gallery/mesohippus/
+   Used in: Panel 1 (what changed — toe count, leg proportions, premolar molarization).
+
+6. Florida Museum of Natural History. "Parahippus." Fossil Horses in Cyberspace gallery.
+   https://www.floridamuseum.ufl.edu/fossil-horses/gallery/parahippus/
+   Used in: Panel 2 (what changed — mesodont tooth description).
+
+7. Florida Museum of Natural History. "Merychippus." Fossil Horses in Cyberspace gallery.
+   https://www.floridamuseum.ufl.edu/fossil-horses/gallery/merychippus/
+   Used in: Panel 3 (baseline — Merychippus tooth/foot description).
+
+8. MacFadden, B.J. (1998). "Equidae." In Janis, C.M., Scott, K.M., Jacobs, L.L. (eds.),
+   Evolution of Tertiary Mammals of North America, Volume 1: Terrestrial Carnivores,
+   Ungulates, and Ungulatelike Mammals. Cambridge University Press, pp. 537-559.
+   Used in: Panel 2 (baseline taxonomy of Miohippus/Anchitheriinae; confidence line on
+   resolution of early equid phylogeny).
+
+9. Kaiser, T.M. (2009). "Anchitherium aurelianense (Equidae, Mammalia): a brachydont 'dirty
+   browser' in the community of herbivorous large mammals from Sandelzhausen (Miocene,
+   Germany)." Paläontologische Zeitschrift 83:131-140. DOI: 10.1007/s12542-009-0002-z
+   Used in: Panel 2 (what changed/why-of-the-why — direct Eurasian fossil-community evidence
+   Anchitherium stayed a browser after dispersal).
+
+10. Retallack, G.J. (1997). "Neogene expansion of the North American prairie." PALAIOS
+    12(4):380-390.
+    Used in: Panel 2 (why-of-the-why — paleosol staging of Great Plains grassland opening),
+    Panel 4 (why-of-the-why — fully open/arid grassland only from ~6 Ma).
+
+11. Retallack, G.J. (2007). "Cenozoic paleoclimate on land in North America." Journal of
+    Geology 115(3):271-294.
+    Used in: Panel 2 (why-of-the-why, corroborating source), Panel 4 (why-of-the-why,
+    corroborating source).
+
+12. MacFadden, B.J., Hulbert, R.C. (1988). "Explosive speciation at the base of the adaptive
+    radiation of Miocene grazing horses." Nature 336:466-468.
+    https://www.nature.com/articles/336466a0
+    Used in: Panel 3 (baseline — radiation rate, species counts, diversity plateau).
+
+13. Mihlbachler, M.C., Rivals, F., Solounias, N., Semprebon, G.M. (2011). "Dietary Change and
+    Evolution of Horses in North America." Science 331(6021):1178-1181.
+    DOI: 10.1126/science.1196166
+    Used in: Panel 3 (why-of-the-why — mesowear across the full horse fossil record).
+
+14. Jardine, P.E., Janis, C.M., Sahney, S., Benton, M.J. (2012). "Grit not grass: Concordant
+    patterns of early origin of hypsodonty in Great Plains ungulates and Glires."
+    Palaeogeography, Palaeoclimatology, Palaeoecology 365:1-10.
+    DOI: 10.1016/j.palaeo.2012.09.001
+    Used in: Panel 3 (why-of-the-why — grit vs. grass phytoliths as hypsodonty driver).
+
+15. Cerling, T.E., Harris, J.M., MacFadden, B.J., Leakey, M.G., Quade, J., Eisenmann, V.,
+    Ehleringer, J.R. (1997). "Global vegetation change through the Miocene/Pliocene
+    boundary." Nature 389:153-158. DOI: 10.1038/38229
+    Used in: Panel 3 (why-of-the-why — global C4 grass expansion dated 8-6 Ma, postdating
+    initial hypsodonty), Panel 4 (why-of-the-why — same C4 expansion signal in the later
+    monodactyly/aridification window).
+
+16. Fox, D.L., Koch, P.L. (2003). "Tertiary history of C4 biomass in the Great Plains, USA."
+    Geology 31(9):809-812. DOI: 10.1130/G19580.1
+    Used in: Panel 4 (why-of-the-why — regional Great Plains paleosol-carbonate C4 biomass
+    record, rising sharply 6.4-4.0 Ma).
+
+17. Janis, C.M., Bernor, R.L. (2019). "The Evolution of Equid Monodactyly: A Review Including
+    a New Hypothesis." Frontiers in Ecology and Evolution 7:119.
+    DOI: 10.3389/fevo.2019.00119
+    Used in: Panel 4 (what changed/why — spring-foot elastic energy storage hypothesis for
+    monodactyly).
+
+18. Bernor, R.L., Kaya, F., Kaakinen, A., Saarinen, J., Fortelius, M. (2021). "Old World
+    hipparion evolution, biogeography, climatology and ecology." Earth-Science Reviews
+    221:103784. DOI: 10.1016/j.earscirev.2021.103784
+    Used in: Panel 3 (what changed/why — hipparionine dispersal and Old World diversity),
+    Panel 5 (baseline/what changed/terminal fact — dispersal, diversity, diet flexibility,
+    peak diversity and decline timing).
+
+19. Parker, A.K., McHorse, B.K., Pierce, S.E. (2018). "Niche modeling reveals lack of
+    broad-scale habitat partitioning in extinct horses of North America." Palaeogeography,
+    Palaeoclimatology, Palaeoecology 511:103-118.
+    https://www.sciencedirect.com/science/article/abs/pii/S0031018218301111
+    Used in: Panel 5 (why-of-the-why — niche-modeling evidence complicating the trait-to-
+    habitat competition narrative).
+
+20. MacFadden, B.J. (2005). "Fossil Horses--Evidence for Evolution." Science
+    307(5716):1728-1730. DOI: 10.1126/science.1105458
+    General overview source consulted for cross-checking numbers/timeline across all panels;
+    not directly quoted as a specific claim citation in any panel above.

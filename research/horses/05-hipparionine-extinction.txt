@@ -1,0 +1,84 @@
+PANEL 5 — Dead end: the hipparionine horses (Hipparionini)
+Radiated from Merychippus ~17-11 Ma; last lineages extinct by early-mid Pleistocene (~1 Ma)
+
+This panel is not a foil for Equus. Hipparionines ran for roughly 16 million years, radiated
+across three continents into more species and genera than the entire Equini/Equus lineage
+ever produced at one time, and their eventual extinction has its own, only partly resolved,
+causal story — it is not simply "the group that lost to the horse we still have."
+
+BASELINE
+Hipparionini split from the Merychippus radiation as a three-toed lineage with hypsodont but
+diet-flexible teeth (Panel 3). Starting around 11 Ma, one branch (early Cormohipparion)
+dispersed out of North America across Beringia into Eurasia — the "Hipparion Datum," a major
+faunal turnover event recognized across Old World mammal communities — and from there
+radiated further into Africa [18].
+
+WHAT CHANGED (over their run) + TERMINAL FACT
+What changed: in the Old World, hipparionines diversified explosively — more than 60 species
+across roughly 10 recognized genera by the late Miocene, occupying a wide range of habitats
+from wooded to open, with body size and paleodiet varying genus by genus; some later Old
+World hipparionines (e.g. Hippotherium) are isotopically documented as flexible, opportunistic
+mixed feeders rather than committed grazers, and Old World hipparionines in general increased
+body size and crown height further through the Pliocene, though less dramatically than their
+New World counterparts [18]. Against the single-toed, narrower-diet Equini/Equus lineage
+occupying North America and (later) the Old World over the same span, hipparionines kept a
+three-toed foot and a broader dietary envelope across their entire run — a genuinely
+different long-term strategy, not a failed attempt at the Equus strategy.
+Terminal fact: diversity peaked around 7.6-6.8 Ma, then declined sharply — by the end of the
+Miocene (~6.8-5.3 Ma) numerous Old World hipparionine lineages went extinct, and by the
+earliest Pleistocene (~2.6 Ma) only three genera (Proboscidipparion, Plesiohipparion,
+Cremohipparion) persisted anywhere in Eurasia; the last hipparionines anywhere disappear by
+roughly the early-to-mid Pleistocene, while in North America the group had already been
+supplanted earlier by monodactyl equines during the late Miocene-Pliocene turnover described
+in Panel 4 [18].
+
+WHY
+Two concrete pressures are both documented, and specialists weigh them differently rather than
+agreeing on one dominant cause. (1) Direct competitive pressure: around 2.6 Ma, "stenonine"
+Equus — a monodactyl, more committed grazer descended from the North American Dinohippus/early
+Equus lineage of Panel 4 — dispersed into Eurasia and Africa, arriving in the same regions and
+same general habitats the last surviving hipparionines still occupied; their overlap in time
+and place is well documented. (2) Independent climate/habitat pressure: across the same late
+Miocene-Pliocene interval, temperatures cooled and climates became drier and more seasonal
+across Eurasia, squeezing the wooded and mixed habitats that hipparionines' more generalist
+foot and diet were suited to. Neither pressure is fabricated — both are attested in the same
+body of literature — but which one actually did the work of driving each regional extinction
+event, and in what proportion, is not settled.
+
+WHY-OF-THE-WHY
+A genuinely separate evidence stream complicates the tidy "single-toed grazers out-competed
+three-toed generalists in open grassland" version of this story: a 2018 niche-modeling study
+of North American fossil horses — using occurrence and trait data independent of both the
+Old World fossil record and any dietary-isotope argument — found low niche overlap between
+horse genera grouped by exactly the traits (body size, crown height, toe number) this
+narrative assumes map cleanly onto habitat, and concluded that grassland habitat occupancy
+cannot reliably be inferred from those derived traits alone [19]. That does not disprove
+competition or climate as extinction drivers, but it is a direct, hard-evidence challenge to
+treating "three toes = wooded generalist, one toe = open-grassland specialist, therefore the
+specialist displaced the generalist" as a settled mechanism rather than a plausible but
+under-tested inference.
+
+CONFIDENCE
+The fact and rough timing of extinction (diversity peak ~7.6-6.8 Ma, stepwise decline through
+the Mio-Pliocene boundary, last lineages gone by the early-mid Pleistocene) is well
+established. The cause is genuinely live specialist territory, not settled science: the same
+literature that documents Equus's arrival in Eurasia at 2.6 Ma and cooling/drying climate over
+this interval does not cleanly partition how much each contributed, and independent niche-
+modeling work specifically challenges the intuitive trait-to-habitat mapping the
+competition-driven version of the story leans on. Treat "climate vs. competition" here the
+same way this project already treats other contested extinction-attribution cases: both are
+real, documented pressures; their relative weight is an open question, not a settled ranking.
+
+CITATIONS
+18. Bernor, R.L., Kaya, F., Kaakinen, A., Saarinen, J., Fortelius, M. (2021). "Old World
+    hipparion evolution, biogeography, climatology and ecology." Earth-Science Reviews
+    221:103784. DOI: 10.1016/j.earscirev.2021.103784
+    [Backs: baseline/what changed/terminal fact — hipparionine dispersal (Hipparion Datum),
+    Old World diversity (60+ species/10 genera), diet flexibility, diversity peak and decline
+    timing, surviving genera into the Pleistocene]
+19. Parker, A.K., McHorse, B.K., Pierce, S.E. (2018). "Niche modeling reveals lack of
+    broad-scale habitat partitioning in extinct horses of North America." Palaeogeography,
+    Palaeoclimatology, Palaeoecology 511:103-118.
+    https://www.sciencedirect.com/science/article/abs/pii/S0031018218301111
+    [Backs: why-of-the-why — independent niche-modeling evidence complicating the trait-to-
+    habitat mapping the competition narrative assumes]

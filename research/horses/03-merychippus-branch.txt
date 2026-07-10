@@ -1,0 +1,104 @@
+PANEL 3 — Branch point: Merychippus -> Hipparionini (e.g. Hipparion and kin) vs. Equini
+stem (e.g. Pliohippus and kin)
+Mid-Miocene (~17-15 Ma radiation; branch resolves by ~15-11 Ma)
+
+BASELINE
+Merychippus, descended from the Parahippus (mesodont) lineage, was the first horse with
+fully hypsodont (high-crowned) cheek teeth, capped with a durable cementum layer that gave a
+long-lasting grinding surface [7]. It still kept three toes on each foot, but the side toes
+were reduced and weight increasingly rode on the enlarged central toe, on a foot built for
+faster, sustained travel over open ground. Merychippus is a genuinely explosive radiation
+point in horse evolution: at least 19 new species arose by branching (cladogenesis) in North
+America in a roughly 15-18 Ma window, and horse species diversity then plateaued at around
+16 contemporaneous grazing-adapted species that persisted until roughly 6 Ma [12]. Out of
+this radiation, phylogenetic analyses treat Merychippus as a paraphyletic stem — not a single
+clean species handing off to one descendant, but a diversifying population from which two
+major later tribes emerge: the three-toed Hipparionini and the one-toed Equini.
+
+WHAT CHANGED + WHY — Hipparionini vs. the Merychippus baseline, and vs. its Equini sibling
+
+What changed: Hipparionines kept the three-toed foot plan and, while further raising crown
+height over the Merychippus baseline, did so on a track that stayed compatible with a mixed,
+more flexible diet — later Old World hipparionines (e.g. Hippotherium) are isotopically
+documented as opportunistic mixed feeders, ranging from browsing to grazing rather than
+committing fully to open-grassland grazing. Against its Equini sibling (below), which
+progressively lost the side toes entirely, Hipparionini retained the extra toes and a more
+generalist diet across a huge range of habitats. Why: this flexibility let hipparionines
+colonize an unusually wide range of environments — they are the group that disperses out of
+North America across Beringia into Eurasia and Africa starting around 11 Ma, radiating into
+over 60 species across roughly 10 genera on those continents — something a foot and diet
+committed to one specific open-grassland lifestyle would have made harder to pull off across
+such varied Old World terrain [18].
+
+What changed: the Equini stem (Pliohippus and kin) pushed hypsodonty further than
+Hipparionini and began true reduction toward a single functional toe, with the side toes
+progressively shrinking toward non-weight-bearing splints — the beginning of full
+monodactyly, not yet complete in Pliohippus itself (see Panel 4). Against Hipparionini's
+retained three-toed, mixed-diet strategy, Equini committed to a narrower, more specialized
+open-grassland grazing lifestyle. Why: a foot built around one enlarged, stiffened toe is a
+better long-distance travel design on hard, open, arid ground than a three-toed foot — the
+committed grazing/committed monodactyly package only pays off if the animal is actually
+living somewhere consistently open and hard-surfaced, which the Equini lineage
+increasingly was.
+
+WHY-OF-THE-WHY (the isotope/mesowear evidence, and where it complicates the clean story)
+This is the equid analog to the hominin boisei/robustus isotope story: fossil tooth enamel
+carbon isotopes and dental mesowear across 6,500+ fossil horses (222 populations, 70+
+species, the full 55.5-million-year North American record) show that mesowear trends track
+global cooling and vegetation change well overall — but also that most individual horse
+populations had highly variable amounts of dietary abrasion, meaning the pressure for
+ever-higher crowns was not a constant, one-directional squeeze the whole time; crown height
+and actual measured wear only correlate loosely, population by population [13]. On top of
+that, a genuinely separate evidence stream complicates the "grass made teeth taller" story
+directly: paleosol and phytolith records show that the classic global marker of grass
+committing to C4 photosynthesis — the isotopically-documented worldwide C4 biomass
+expansion — did not happen until 8-6 Ma [15], a full 7-10 million years after Merychippus's
+initial hypsodonty at ~15-17 Ma. The grasses Merychippus and early Hipparionini/Equini were
+actually grinding on were C3 grasses, not C4 ones. And a further complication: a comparative
+study of hypsodonty origins across multiple unrelated Great Plains lineages (both ungulates
+and rodents/lagomorphs) found that the timing of tooth-crown increases across these groups is
+better explained by ingested grit — soil and, in some intervals, volcanic ash — than by grass
+phytoliths specifically, since hypsodonty in some lineages preceded the spread of grasslands
+themselves [14]. None of this erases the grass/grit/open-habitat pressure as the driver — it
+just means the honest picture is plural: cooling-linked vegetation opening, non-constant wear
+pressure, and abrasive grit (not a clean single "grass appeared, teeth got tall" story) all
+contributed, and the C4 signal specifically belongs to a later chapter (Panel 4), not this one.
+
+CONFIDENCE
+High that a real branch with two different foot/diet strategies happened at this point, and
+high that isotopes/mesowear are a genuinely independent, hard-evidence check on the dental
+story rather than a restatement of it. Moderate on the precise causal weighting between grass
+phytoliths, ingested grit, and general habitat opening as the driver of hypsodonty specifically
+in this 15-17 Ma window — the "grit not grass" finding is a real, published complication to
+the textbook grass-diet story, not a settled replacement for it, and specialists differ on how
+much weight each factor deserves in this particular interval.
+
+CITATIONS
+7. Florida Museum of Natural History. "Merychippus." Fossil Horses in Cyberspace gallery.
+   https://www.floridamuseum.ufl.edu/fossil-horses/gallery/merychippus/
+   [Backs: baseline — Merychippus tooth/foot description]
+12. MacFadden, B.J., Hulbert, R.C. (1988). "Explosive speciation at the base of the adaptive
+    radiation of Miocene grazing horses." Nature 336:466-468.
+    https://www.nature.com/articles/336466a0
+    [Backs: baseline — radiation rate, species counts, diversity plateau]
+13. Mihlbachler, M.C., Rivals, F., Solounias, N., Semprebon, G.M. (2011). "Dietary Change and
+    Evolution of Horses in North America." Science 331(6021):1178-1181.
+    DOI: 10.1126/science.1196166
+    [Backs: why-of-the-why — mesowear across the full horse fossil record; crown height vs.
+    actual measured abrasion only loosely correlated]
+14. Jardine, P.E., Janis, C.M., Sahney, S., Benton, M.J. (2012). "Grit not grass: Concordant
+    patterns of early origin of hypsodonty in Great Plains ungulates and Glires."
+    Palaeogeography, Palaeoclimatology, Palaeoecology 365:1-10.
+    DOI: 10.1016/j.palaeo.2012.09.001
+    [Backs: why-of-the-why — hypsodonty timing across multiple lineages better explained by
+    ingested grit than grass phytoliths alone, a genuine complication to the grazing story]
+15. Cerling, T.E., Harris, J.M., MacFadden, B.J., Leakey, M.G., Quade, J., Eisenmann, V.,
+    Ehleringer, J.R. (1997). "Global vegetation change through the Miocene/Pliocene
+    boundary." Nature 389:153-158. DOI: 10.1038/38229
+    [Backs: why-of-the-why — global C4 grass expansion dated to 8-6 Ma, showing it postdates
+    Merychippus's initial hypsodonty by several million years]
+18. Bernor, R.L., Kaya, F., Kaakinen, A., Saarinen, J., Fortelius, M. (2021). "Old World
+    hipparion evolution, biogeography, climatology and ecology." Earth-Science Reviews
+    221:103784. DOI: 10.1016/j.earscirev.2021.103784
+    [Backs: what changed/why — hipparionine dispersal into Eurasia/Africa from ~11 Ma,
+    resulting diversity (60+ species, ~10 genera), mixed-feeding diet evidence]

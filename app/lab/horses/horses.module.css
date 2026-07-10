@@ -1,0 +1,263 @@
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 64px 24px 120px;
+}
+
+.back {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  font-size: 0.85rem;
+  color: var(--foreground);
+  opacity: 0.6;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
+.intro {
+  margin-bottom: 40px;
+}
+
+.kicker {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0 0 12px;
+}
+
+.title {
+  font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  line-height: 1.15;
+  margin: 0 0 16px;
+  font-weight: 650;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin: 0;
+  max-width: 680px;
+}
+
+/* --- Timeline: a plain horizontal row, in chronological order, nothing fancy --- */
+
+.timeline {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 28px 4px 20px;
+  margin-bottom: 32px;
+}
+
+.timelineLine {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 42px;
+  height: 2px;
+  background: rgba(29, 42, 36, 0.14);
+}
+
+.marker {
+  position: relative;
+  flex: 0 0 auto;
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-align: left;
+  background: rgba(29, 42, 36, 0.03);
+  border: 1px solid rgba(29, 42, 36, 0.14);
+  border-top: 3px solid var(--marker-accent, rgba(29, 42, 36, 0.4));
+  border-radius: 10px;
+  padding: 14px 12px 12px;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: 140ms ease;
+}
+
+.marker:hover {
+  border-color: rgba(29, 42, 36, 0.32);
+  transform: translateY(-2px);
+}
+
+.markerActive {
+  background: rgba(29, 42, 36, 0.07);
+  border-color: var(--marker-accent, rgba(29, 42, 36, 0.5));
+}
+
+.markerDot {
+  position: absolute;
+  top: -25px;
+  left: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--marker-accent, rgba(29, 42, 36, 0.5));
+}
+
+.markerDate {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  opacity: 0.65;
+}
+
+.markerTitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.accentEvolution {
+  --marker-accent: #3d6b8a;
+}
+
+.accentBranch {
+  --marker-accent: #a9782b;
+}
+
+.accentDeadend {
+  --marker-accent: #914040;
+}
+
+/* --- Side panel: the selected point's research text --- */
+
+.layout {
+  display: block;
+}
+
+.sidePanel {
+  border: 1px solid rgba(29, 42, 36, 0.16);
+  border-left: 4px solid var(--marker-accent, rgba(29, 42, 36, 0.4));
+  border-radius: 14px;
+  padding: 28px 28px 20px;
+  background: rgba(29, 42, 36, 0.02);
+}
+
+.panelHeader {
+  margin-bottom: 20px;
+}
+
+.panelEyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--marker-accent, inherit);
+  margin-bottom: 8px;
+}
+
+.panelTitle {
+  font-size: 1.5rem;
+  font-weight: 650;
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+
+.panelDate {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.block {
+  margin-bottom: 22px;
+}
+
+.block p {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 0.98rem;
+}
+
+.blockTag {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 8px;
+}
+
+.changeList {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.changeList li {
+  border-left: 2px solid rgba(29, 42, 36, 0.14);
+  padding-left: 14px;
+}
+
+.changeSubject {
+  display: block;
+  font-weight: 650;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.changeList p {
+  margin: 0;
+  line-height: 1.65;
+  font-size: 0.98rem;
+}
+
+.confidenceBlock {
+  background: rgba(29, 42, 36, 0.04);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.sourceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sourceList li {
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.sourceList a {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.sourceList a:hover {
+  opacity: 1;
+}
+
+.sourceList span {
+  opacity: 0.75;
+}
+
+@media (max-width: 640px) {
+  .marker {
+    width: 150px;
+  }
+
+  .sidePanel {
+    padding: 22px 18px 16px;
+  }
+}

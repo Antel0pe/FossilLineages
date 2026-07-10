@@ -1,0 +1,80 @@
+PANEL 1 — Evolution point: Hyracotherium ("Eohippus") -> Mesohippus
+Early Eocene (~55 Ma) -> late Eocene/early Oligocene (~34 Ma)
+
+BASELINE
+Hyracotherium ("Eohippus"), early Eocene North America: a small (roughly dog-sized),
+short-legged forest browser with four functional toes on the front feet and three on the
+hind feet, all cushioned by fleshy pads like a modern dog rather than a hoof. Its cheek
+teeth were low-crowned (brachydont) with simple, rounded cusps and its premolars were still
+triangular, pulping-type teeth — built to break down soft leaves and fruit inside a
+continuous, warm, wet, closed-canopy forest. This body plan changed very little for the
+first ~20+ million years of horse evolution: body mass stayed in a narrow, small range
+(roughly 25-50 kg) across the whole Eocene into the early Oligocene [3].
+
+WHAT CHANGED + WHY — Mesohippus vs. the Hyracotherium baseline
+
+Toes and legs: Mesohippus lost the fourth front toe, becoming three-toed on both front and
+hind feet, with the middle (third) digit doing most of the weight-bearing, and it had
+proportionally longer legs and stood taller at the shoulder than Hyracotherium [5]. Against
+Hyracotherium's splayed, four-toed, pad-cushioned forefoot — suited to soft, uneven forest
+litter — Mesohippus's narrower, longer-legged foot let it move faster and more efficiently
+over firmer, more open ground, something Hyracotherium's foot was not built for. Why: as
+closed Eocene forest gave way to patchier woodland with more open ground between stands
+(see why-of-the-why below), an animal that could cross that open ground quickly — to reach
+the next patch of cover, or to outrun a predator across it — had a real locomotor advantage
+that a pure forest-floor browser's foot did not confer.
+
+Teeth: Mesohippus's premolars became molariform — squared off with grinding surfaces, like
+its molars — rather than the simple triangular pulping premolars of Hyracotherium [4][5].
+Crown height stayed low (brachydont) in both animals; this was a change in tooth shape and
+grinding capacity, not yet a shift to high-crowned grazing teeth. Against Hyracotherium's
+pulping-only dentition, Mesohippus's molariform premolars let it grind a tougher, more
+fibrous mix of browse — not a wholesale switch to grass, but a diet less restricted to the
+softest available plant parts. Why: as forest interior contracted, the easiest, softest
+browse Hyracotherium specialized on became less reliably available; a dentition that could
+also process tougher leaves and stems widened what a Mesohippus-grade animal could still eat
+when the softest food was scarce.
+
+WHY-OF-THE-WHY
+Both changes trace to the same deeper event, documented by two independent evidence streams:
+(1) the global benthic-foraminiferal oxygen-isotope record shows the Eocene-Oligocene
+transition (~34 Ma) as the single largest cooling step of the entire Cenozoic, marking the
+first major build-up of a permanent Antarctic ice sheet [1]; (2) independently, a
+terrestrial-specific proxy — oxygen isotopes in fossil tooth enamel and other proxies from
+central North America, the exact region these horses lived in — shows a large (~8°C) drop in
+mean annual temperature and increased seasonality across the same interval, confirming the
+cooling was not just a marine/global signal but a real, regional, on-the-ground shift in the
+habitat horses actually occupied [2]. Cooler, drier, more seasonal conditions are the
+documented mechanism by which closed Eocene forest fragmented into more open Oligocene
+woodland — the precondition both the toe and tooth changes above respond to.
+
+CONFIDENCE
+High. This is one of the best-sampled transitions in the whole vertebrate fossil record
+(dense, continuous North American basin sequences spanning the boundary), and the climatic
+driver is confirmed by two independent proxy types (marine benthic isotopes and terrestrial
+enamel isotopes) rather than resting on inference from anatomy alone. One caution: popular
+accounts sometimes describe Mesohippus as already "eating grass" — the evidence instead
+supports a tougher-browse diet within a still-brachydont, non-grazing dentition; true
+grass-adapted high-crowned teeth do not appear until Merychippus, ~20 million years later
+(see Panel 3).
+
+CITATIONS
+1. Zachos, J.C., Pagani, M., Sloan, L., Thomas, E., Billups, K. (2001). "Trends, Rhythms,
+   and Aberrations in Global Climate 65 Ma to Present." Science 292(5517):686-693.
+   DOI: 10.1126/science.1059412
+   [Backs: why-of-the-why — global marine cooling record for the Eocene-Oligocene transition]
+2. Zanazzi, A., Kohn, M.J., MacFadden, B.J., Terry, D.O. (2007). "Large temperature drop
+   across the Eocene-Oligocene transition in central North America." Nature 445:639-642.
+   DOI: 10.1038/nature05551
+   [Backs: why-of-the-why — independent terrestrial isotope proxy from the actual region
+   horses lived in, showing a large regional temperature drop]
+3. MacFadden, B.J. (1986). "Fossil horses from 'Eohippus' (Hyracotherium) to Equus: scaling,
+   Cope's Law, and the evolution of body size." Paleobiology 12(4):355-369.
+   [Backs: baseline — body mass staying small/static through this interval]
+4. MacFadden, B.J. (1988). "Fossil horses from 'Eohippus' (Hyracotherium) to Equus, 2: rates
+   of dental evolution revisited." Biological Journal of the Linnean Society 35(1):37-48.
+   DOI: 10.1111/j.1095-8312.1988.tb00457.x
+   [Backs: what changed — dental evolution rates, brachydont crown-height data]
+5. Florida Museum of Natural History. "Mesohippus." Fossil Horses in Cyberspace gallery.
+   https://www.floridamuseum.ufl.edu/fossil-horses/gallery/mesohippus/
+   [Backs: what changed — toe count, leg proportions, premolar molarization description]
