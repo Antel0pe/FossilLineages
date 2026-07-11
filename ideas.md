@@ -35,3 +35,7 @@ data needs to be factual and supported by evidence. mostly focusing on direct sp
 
 - potentially time to experiment with taking the structure on humans and expanding it to more species and lineages
     - feel like im running into data bottlenecks focusing on just humans but the underlying idea and structure is good
+
+fundamental issue of evolution is verifiability and testing truth is hard. theres no way to test it like physics - maybe theres something to be made here
+
+- right now everything is species-first - here's an animal, here's what changed, and the global conditions/pressures are kind of tacked on as the explanation after the fact. what if instead you lead with the global conditions (climate cooling, grass spreading, CO2 dropping, land bridge closing, whatever) and THEN show the species changing as a downstream result. feels like it might make the causal chain clearer/more honest instead of me writing "why" as an afterthought bolted onto a species card. 

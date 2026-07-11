@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { PANELS, SOURCES, TREE, type HorsePanel, type TreeNode } from "./data";
+import { PANELS, SOURCES, ROOTS, type HorsePanel, type TreeNode } from "./data";
 import styles from "./horses.module.css";
 
 const KIND_ACCENT: Record<HorsePanel["kind"], string> = {
@@ -34,7 +34,7 @@ export default function HorsesLab() {
 
       <div className={styles.layout}>
         <nav className={styles.treeWrap} aria-label="Horse lineage branching tree">
-          <TreeList node={TREE} activeId={activeId} onSelect={setActiveId} />
+          <TreeList roots={ROOTS} activeId={activeId} onSelect={setActiveId} />
         </nav>
 
         <SidePanel panel={active} />
@@ -44,17 +44,19 @@ export default function HorsesLab() {
 }
 
 function TreeList({
-  node,
+  roots,
   activeId,
   onSelect,
 }: {
-  node: TreeNode;
+  roots: TreeNode[];
   activeId: string;
   onSelect: (id: string) => void;
 }) {
   return (
     <ul className={styles.treeList}>
-      <TreeItem node={node} activeId={activeId} onSelect={onSelect} />
+      {roots.map((root) => (
+        <TreeItem key={root.id} node={root} activeId={activeId} onSelect={onSelect} />
+      ))}
     </ul>
   );
 }

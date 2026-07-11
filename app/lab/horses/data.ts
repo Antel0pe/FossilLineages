@@ -201,9 +201,48 @@ export const SOURCES: Record<number, HorseCitation> = {
     text: "Florida Museum of Natural History. \"Archaeohippus.\" Fossil Horses in Cyberspace gallery.",
     url: "https://www.floridamuseum.ufl.edu/fossil-horses/gallery/archaeohippus/",
   },
+  36: {
+    n: 36,
+    text: "Famoso (2017). \"Statistical analysis of dental variation in the Oligocene equid Miohippus (Mammalia, Perissodactyla) of Oregon.\" Journal of Paleontology 91(5):1060-1068.",
+    url: "https://doi.org/10.1017/jpa.2017.42",
+  },
+  37: {
+    n: 37,
+    text: "Secord et al. (2012). \"Evolution of the Earliest Horses Driven by Climate Change in the Paleocene-Eocene Thermal Maximum.\" Science 335(6071):959-962.",
+    url: "https://doi.org/10.1126/science.1213859",
+  },
+  38: {
+    n: 38,
+    text: "D'Ambrosia, Clyde, Fricke, Gingerich & Abels (2017). \"Repetitive mammalian dwarfing during ancient greenhouse warming events.\" Science Advances 3(3):e1601430.",
+    url: "https://doi.org/10.1126/sciadv.1601430",
+  },
 };
 
 export const PANELS: HorsePanel[] = [
+  {
+    id: "sifrhippus-petm",
+    kind: "deadend",
+    kindLabel: "Dead end · the first climate shock",
+    title: "Sifrhippus shrinks",
+    dateRange: "~55.5–55 Ma",
+    baseline:
+      "Sifrhippus, one of the very first horses, appeared in North American forests already small — about 12 lbs, roughly a large housecat's weight — right as a burst of extreme global warming (the PETM) began.",
+    changes: [
+      {
+        subject: "Shrinking as the planet heated up",
+        text: "Over the next 130,000 years, as temperatures kept rising, Sifrhippus kept shrinking too — losing about 30% of its body size, down to roughly 8.5 lbs. Smaller bodies shed heat more efficiently, so in a hotter world, being smaller paid off directly.",
+      },
+      {
+        subject: "Growing back as it cooled",
+        text: "When the warming spike ended and temperatures dropped back down, Sifrhippus partially grew back too — gaining roughly 76% of the size it had lost. Its body size was tracking the temperature itself, almost in real time.",
+      },
+    ],
+    whyOfWhy:
+      "This isn't a one-off. A later, independent study found the same horse lineage (by then evolved into Arenahippus) shrank again during a second, smaller ancient warming spike about a million years later — and shrank proportionally less, matching that event's smaller temperature rise. The same response, scaled to the same cause, showing up twice.",
+    confidence:
+      "High — body size and temperature were both measured from teeth in the same rock sequence, giving a tight, dated correlation, and the pattern repeats in a second, independent warming event with a proportionally smaller effect.",
+    citationNs: [37, 38],
+  },
   {
     id: "hyracotherium-mesohippus",
     kind: "evolution",
@@ -215,7 +254,7 @@ export const PANELS: HorsePanel[] = [
     changes: [
       {
         subject: "Fewer toes, tougher teeth",
-        text: "Mesohippus had longer legs, one fewer toe, and teeth that could grind coarser plants. As forests thinned into patchier woodland, being able to run across open gaps — and eat tougher food when the good stuff ran out — started to pay off.",
+        text: "It took a few intermediate steps to get there — Orohippus, then Epihippus, each a bit better at grinding tougher plants than the last. By the time Mesohippus shows up, it had longer legs, one fewer toe, and teeth that could grind coarser plants than any of them. As forests thinned into patchier woodland, being able to run across open gaps — and eat tougher food when the good stuff ran out — started to pay off.",
       },
     ],
     whyOfWhy:
@@ -226,23 +265,27 @@ export const PANELS: HorsePanel[] = [
   },
   {
     id: "mesohippus-miohippus",
-    kind: "evolution",
-    kindLabel: "Straight line, no branch",
-    title: "Mesohippus → Miohippus",
-    dateRange: "~36–32 Ma",
+    kind: "branch",
+    kindLabel: "Branch point",
+    title: "Mesohippus branches",
+    dateRange: "~36–31 Ma",
     baseline:
-      "Mesohippus was small — about 50-75 lbs — and had stayed that size for millions of years.",
+      "Mesohippus was small — about 50-75 lbs — living across a patchy, cooling North American woodland.",
     changes: [
       {
-        subject: "A new, bigger population splits off",
-        text: "Miohippus wasn't a slow transformation — a separate, larger population (about 120 lbs) split off and lived right alongside Mesohippus for roughly 4 million years; their fossils turn up together in the same rock layers. In the same increasingly patchy, open terrain, being bigger likely meant fewer predators could take you down, and you could go further between food patches.",
+        subject: "Miohippus — bigger, and it kept going",
+        text: "A separate, larger population (about 120 lbs) split off and lived right alongside Mesohippus for roughly 4 million years — their fossils turn up together in the same rock layers. Miohippus went on to found the next big radiation of horses (the browsing and grazing lines still to come).",
+      },
+      {
+        subject: "Mesohippus itself — held on, then died out",
+        text: "The smaller line didn't get replaced right away — it kept living alongside its bigger cousin for millions of years before finally disappearing from the fossil record around 31 million years ago, while Miohippus carried on.",
       },
     ],
     whyOfWhy:
-      "This isn't a case of missing fossils papering over a gap — the same pattern (long stability, then a population splitting off) shows up across several other horse species in these same rock layers at the same time, which is what tells scientists this was a real branching event.",
+      "Two honest gaps here, worth naming rather than papering over. First: why Miohippus specifically got bigger, and why the two lived side by side for so long instead of one replacing the other, isn't actually pinned down anywhere in the literature — there's no dedicated study tying the size difference to a tested cause for this specific split. Second, and bigger: two separate studies re-examined the actual bones used to tell these two apart and found the traits \"highly variable\" and not reliably distinguishing one from the other — meaning \"Mesohippus vs. Miohippus\" may not even be two clean genera to begin with, more like two ends of one variable population.",
     confidence:
-      "High that this was a genuine branch — solid enough that it undersells the story to call it \"few transitional fossils.\" Lower on exactly why body size jumped — a reasonable read, not a pinned-down mechanism.",
-    citationNs: [27, 28, 8],
+      "The coexistence itself — both genera's fossils turning up together for millions of years, then Mesohippus disappearing while Miohippus continues — is solidly documented. Everything past that is shakier: no study ties the size difference to a specific cause, and more recent work questions whether the two were ever reliably separate genera at all.",
+    citationNs: [27, 28, 36],
   },
   {
     id: "miohippus-branch",
@@ -251,15 +294,19 @@ export const PANELS: HorsePanel[] = [
     title: "Miohippus branches",
     dateRange: "~32–24 Ma",
     baseline:
-      "Grass started spreading across North America's interior for the first time. Miohippus, still a forest browser, effectively faced a choice: stick with the shrinking forest, or eat the new grassy ground cover.",
+      "Grass started spreading across North America's interior for the first time. Miohippus, still a forest browser, split into three different bets on what to do about it.",
     changes: [
       {
         subject: "Anchitheriinae — stayed browsers",
-        text: "This line barely changed at all. It just spread out, wandering as far as Europe and Asia, browsing on leaves wherever it went — there was still forest to eat almost everywhere it settled.",
+        text: "This line barely changed at all. It just spread out, wandering as far as Europe and Asia, browsing on leaves wherever it went — there was still forest to eat almost everywhere it settled. (It ran successfully for 20+ million years before finally going extinct — its own story, further down the tree.)",
       },
       {
-        subject: "Equinae stem — started grazing",
-        text: "This line grew taller teeth suited to a grittier, grassier diet — letting it eat food the still-forest-adapted browsers couldn't touch.",
+        subject: "Archaeohippus — went small instead",
+        text: "A third line did neither of the above: it shrank, down to roughly dog-sized, while everyone else stayed the same size or grew. Its own story, further down the tree.",
+      },
+      {
+        subject: "Parahippus — started grazing",
+        text: "The line that leads to every horse alive today grew taller teeth suited to a grittier, grassier diet — letting it eat food the still-forest-adapted browsers couldn't touch.",
       },
     ],
     whyOfWhy:
@@ -430,16 +477,31 @@ export const PANELS: HorsePanel[] = [
   },
 ];
 
-export const TREE: TreeNode = {
-  id: "hyracotherium",
-  label: "Hyracotherium → Mesohippus",
-  panelId: "hyracotherium-mesohippus",
-  children: [
+export const ROOTS: TreeNode[] = [
+  {
+    id: "sifrhippus",
+    label: "Sifrhippus shrinks",
+    panelId: "sifrhippus-petm",
+    status: "extinct",
+    statusNote: "a sibling of Hyracotherium's own basal stock, not its ancestor",
+  },
+  {
+    id: "hyracotherium",
+    label: "Hyracotherium → Mesohippus",
+    panelId: "hyracotherium-mesohippus",
+    children: [
     {
       id: "mesohippus-miohippus",
-      label: "Mesohippus → Miohippus",
+      label: "Mesohippus branches",
       panelId: "mesohippus-miohippus",
       children: [
+        {
+          id: "mesohippus-proper",
+          label: "Mesohippus (itself)",
+          panelId: "mesohippus-miohippus",
+          status: "extinct",
+          statusNote: "died out ~31 Ma, Miohippus carried on",
+        },
         {
           id: "miohippus",
           label: "Miohippus branches",
@@ -531,4 +593,6 @@ export const TREE: TreeNode = {
       ],
     },
   ],
-};
+  },
+];
+

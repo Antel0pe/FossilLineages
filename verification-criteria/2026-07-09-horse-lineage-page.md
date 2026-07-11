@@ -319,3 +319,70 @@ Hippidion / crown Equus). Full nesting depth is now 8 levels
 
 All revision-2 criteria PASS. No known gaps remaining as of this pass. Visual screenshot still
 unavailable (tool-level timeout) — verified via DOM/geometry/content reads instead.
+
+---
+
+## Revision 3 (2026-07-10) — user caught a real causal-honesty bug, plus a content omission
+
+User asked a sharp, specific question about the `mesohippus-miohippus` panel: if bigger body
+size was selected for in Miohippus because of predator evasion / travel efficiency, why didn't
+Mesohippus (living in the same place, same time, same rock layers) also get bigger, or go
+extinct? The two coexisting for ~4 million years without one replacing the other contradicts a
+clean "same pressure, different outcome" story. Separately, the user caught that the
+`miohippus-branch` panel's own text only named 2 siblings (Anchitheriinae, Equinae stem) even
+though the tree by then had 3 (Anchitheriinae, Archaeohippus, Merychippus-bound Equinae stem) —
+an oversight from adding Archaeohippus to the tree without updating the parent panel's prose.
+
+### Investigation
+Ran a focused research agent to check the actual literature rather than patch the panel with
+another plausible-sounding guess. Findings, confirmed against Prothero & Shubin (1989), MacFadden
+(1986, 1992), and Famoso (2017):
+- No primary source ties the Miohippus/Mesohippus size difference to a tested predation or
+  travel-efficiency mechanism — the original panel's "why" was an unsupported generic inference
+  presented as if it were a specific finding. This was a real violation of the project's own
+  "don't flatten a causal chain" rule.
+- Mesohippus did genuinely go extinct (~31 Ma) while Miohippus continued — a real terminal fact
+  the original "straight line" framing had erased entirely by treating this as ancestor→
+  descendant rather than ancestor→(two outcomes).
+- Bigger complication found: two independent studies (an unpublished 2010 MS thesis, corroborated
+  by Famoso 2017, peer-reviewed) re-examined the diagnostic traits used to separate the two
+  genera and found them "highly variable" and unreliable — meaning the clean two-genus framing
+  may itself not hold up.
+
+### Fix
+- Restructured `mesohippus-miohippus` from an `evolution` (straight-line) panel into a `branch`
+  panel with two honest outcomes: Miohippus (continues) and Mesohippus itself (persists ~4 My,
+  then goes extinct ~31 Ma). Tree updated to match: a new `mesohippus-proper` leaf (status
+  extinct) sits alongside `miohippus` as siblings under `mesohippus-miohippus`.
+- Rewrote the why-of-the-why to state plainly that (a) the size-difference cause isn't pinned
+  down in the literature, and (b) the genus boundary itself is contested by more recent
+  re-study — both honest gaps, not resolved into a false clean story. Added citation 36
+  (Famoso 2017, verified real title via direct DOI fetch before citing — the research agent
+  hadn't supplied an exact title, so it was checked rather than guessed).
+- Fixed `miohippus-branch`'s baseline (now states a 3-way split, not a binary choice) and
+  `changes` array (added the missing Archaeohippus block, with a pointer to its own deeper
+  panel, matching how Anchitheriinae/Hipparionini are handled).
+
+### Also this session: appended a new idea to `ideas.md`
+User raised, unprompted, a structural idea for a future rebuild: flip the framing from
+species-first (pressures explained after the fact) to conditions-first (establish the global
+pressures of a period, then show species responding) — on the theory that this would force
+actually establishing what pressures existed before assigning them to a species, rather than
+picking a pressure that conveniently explains an already-known trait. Appended verbatim in the
+user's own voice/style to `ideas.md` (not built, not scoped — a parked idea per this project's
+existing `ideas.md` convention).
+
+### Verification results (2026-07-10, revision 3)
+1. `mesohippus-miohippus` panel: confirmed via DOM read — `kind: branch`, 2 change blocks
+   ("Miohippus — bigger, and it kept going" / "Mesohippus itself — held on, then died out"),
+   why-of-the-why explicitly states both honest gaps. PASS.
+2. Tree: confirmed via `nav button` text dump — "Mesohippus (itself)extinctdied out ~31 Ma..."
+   now renders as its own leaf beside "Miohippus branches". PASS.
+3. `miohippus-branch` panel: confirmed 3 change-block subjects render ("Anchitheriinae — stayed
+   browsers", "Archaeohippus — went small instead", "Equinae stem — started grazing"). PASS.
+4. Citation 36 title verified via direct `WebFetch` against the DOI redirect target (Cambridge
+   Core) before use — not taken on the research agent's word. PASS.
+5. No console errors; `tsc --noEmit` shows only the same pre-existing unrelated
+   `leaflet.markercluster` error; `bun run lint` clean for horses files. PASS.
+
+All revision-3 criteria PASS.
