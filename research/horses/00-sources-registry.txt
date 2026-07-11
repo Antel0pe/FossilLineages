@@ -110,3 +110,64 @@ inside each panel file (a given source keeps the same number everywhere it appea
     307(5716):1728-1730. DOI: 10.1126/science.1105458
     General overview source consulted for cross-checking numbers/timeline across all panels;
     not directly quoted as a specific claim citation in any panel above.
+
+27. Prothero, D.R., Shubin, N. (1989). "The evolution of Oligocene horses." In Prothero, D.R.,
+    Schoch, R.M. (eds.), The Evolution of Perissodactyls. Oxford University Press, pp. 142-175.
+    Used in: Panel 6 (what changed/why-of-the-why — cladogenetic origin of Miohippus from
+    Mesohippus, ~4 Myr stratigraphic overlap at shared sites, body size/facial fossa
+    differences, repeated stasis-then-branching pattern across other contemporaneous equid
+    lineages).
+
+28. MacFadden, B.J. (1992). Fossil Horses: Systematics, Paleobiology, and Evolution of the
+    Family Equidae. Cambridge University Press.
+    Used in: Panel 6 (what changed — general reference for Mesohippus/Miohippus body size and
+    morphological comparison).
+
+29. Janis, C.M., Damuth, J., Theodor, J.M. (2000). "Miocene ungulates and terrestrial primary
+    productivity: Where have all the browsers gone?" Proceedings of the National Academy of
+    Sciences 97(14):7899-7904. DOI: 10.1073/pnas.97.14.7899
+    Used in: Panel 7 (why/why-of-the-why — 37-locality quantitative decline in browser species
+    richness ~19-10 Ma, proposed CO2/primary-productivity mechanism, explicit finding that the
+    decline was not a one-for-one replacement by grazers).
+
+30. Janis, C.M., Damuth, J., Theodor, J.M. (2002). "The origins and evolution of the North
+    American grassland biome: the story from the hoofed mammals." Palaeogeography,
+    Palaeoclimatology, Palaeoecology 177(1-2):183-198. DOI: 10.1016/S0031-0182(01)00359-5
+    Used in: Panel 7 (baseline/terminal fact — Hypohippus and Megahippus persisting through
+    the Clarendonian chronofauna and going extinct at its close).
+
+31. Heintzman, P.D., Zazula, G.D., MacPhee, R.D.E., Scott, E., Cahill, J.A., McHorse, B.K.,
+    Kapp, J.D., Stiller, M., Wooller, M.J., Orlando, L., Southon, J., Froese, D.G., Shapiro, B.
+    (2017). "A new genus of horse from Pleistocene North America." eLife 6:e29944.
+    DOI: 10.7554/eLife.29944
+    Used in: Panel 8 (what changed/why/terminal fact — Haringtonhippus phylogenetic placement,
+    divergence dates, 178 mitochondrial diagnostic differences, morphology, extinction dates;
+    why-of-the-why — pattern of ancient DNA overturning skeleton-based equid classification).
+
+32. Der Sarkissian, C., Vilstrup, J.T., Schubert, M., Seguin-Orlando, A., Eme, D., Weinstock,
+    J., Alberdi, M.T., Martin, F., Lopez, P.M., Prado, J.L., Prieto, A., Douady, C.J.,
+    Stafford, T.W. Jr., Willerslev, E., Orlando, L. (2015). "Mitochondrial genomes reveal the
+    extinct Hippidion as an outgroup to all living equids." Biology Letters 11(3):20141058.
+    DOI: 10.1098/rsbl.2014.1058
+    Used in: Panel 8 (what changed/why — Hippidion's corrected phylogenetic placement as an
+    outgroup to all living equids, divergence dating 5.6-7.7 Ma, superseding earlier
+    morphology-based placement).
+
+33. Orlando, L., Eisenmann, V., Reynier, F., Sondaar, P., Hänni, C. (2003). "Morphological
+    convergence in Hippidion and Equus (Amerhippus) South American equids elucidated by
+    ancient DNA analysis." Journal of Molecular Evolution 57(6):642-652.
+    DOI: 10.1007/s00239-003-0005-4
+    Used in: Panel 8 (baseline/why — historical Pliohippus-based classification of Hippidion
+    on tooth-shape grounds, and morphological convergence misleading skeleton-based
+    classification).
+
+34. O'Sullivan, J.A. (2003). "A new species of Archaeohippus (Mammalia, Equidae) from the
+    Arikareean of central Florida." Journal of Vertebrate Paleontology 23(4):877-885.
+    DOI: 10.1671/2369-12
+    Used in: Panel 9 (what changed — documented dwarfing across multiple Archaeohippus
+    species/sites, oldest and smallest known member of the genus).
+
+35. Florida Museum of Natural History. "Archaeohippus." Fossil Horses in Cyberspace gallery.
+    https://www.floridamuseum.ufl.edu/fossil-horses/gallery/archaeohippus/
+    Used in: Panel 9 (what changed — body size, ~21-13 Ma time range, tooth-crown-height
+    evidence for forest/woodland browsing habitat).

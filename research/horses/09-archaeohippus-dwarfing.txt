@@ -1,0 +1,59 @@
+PANEL 9 — Branch point (third sibling): Miohippus -> Archaeohippus dwarfing
+~21-13 Ma — a third sibling alongside Panel 2's Anchitheriinae and Equinae-stem branches
+
+BASELINE
+Panel 2 established Miohippus (roughly 50-120 lbs) splitting into a browsing sibling
+(Anchitheriinae, stayed the same size and spread across two continents) and a grazing-stem
+sibling (Equinae stem, grew taller teeth for a grittier diet). Almost every other lineage on
+this page after this point trends toward bigger bodies over time.
+
+WHAT CHANGED + WHY
+What changed: Archaeohippus, appearing around 21 Ma and persisting to about 13 Ma, went the
+opposite direction from both of its Miohippus-descended siblings: instead of staying the same
+size (Anchitheriinae) or trending toward the general size-up pattern most of the family
+followed, its body shrank to roughly the size of a collie dog — a real, sustained size
+reduction documented across multiple named species and localities, not a single small
+individual [34][35]. Tooth crown height stayed low, like the Anchitheriinae sibling, marking
+Archaeohippus as a browser rather than a grazer [35].
+Why: against its bigger-bodied grazing cousins spreading onto the newly open ground nearby,
+going smaller — not bigger — let Archaeohippus specialize on a food supply (soft leaves in
+dense forest/woodland understory) that a larger body's size and metabolic needs made a poor
+fit for, opening a niche that its own larger relatives, Miohippus included, could not use as
+efficiently.
+
+WHY-OF-THE-WHY
+The most detailed dedicated study of this lineage's dwarfing (O'Sullivan's work on
+Archaeohippus, including a chapter specifically titled "Dwarfing and the Gulf Coastal Plain")
+links the size reduction to a specific region — the well-preserved Archaeohippus fossils
+central to this story come from Florida/Gulf Coastal Plain sites, a part of the continent that
+plausibly retained wetter, more forested conditions for longer than the Great Plains interior
+undergoing the grassland transition described in Panel 2. That would make Archaeohippus's
+dwarfing a story tied to a specific surviving pocket of forest habitat, not a continent-wide
+trend — but the full text of that source was not accessible beyond its chapter titles and
+summary, so this geographic link should be read as the author's own apparent thesis, not
+independently verified here.
+
+CONFIDENCE
+High on the fact of dwarfing itself: real, sustained, documented across multiple species and
+sites, running against the size-up trend the rest of the family followed over the same
+interval [3][34]. Lower than the other panels on this page on the specific why: the
+forest-understory/resource-partitioning explanation is the standard, reasonable reading of the
+tooth and body-size evidence, but the two most specific dedicated sources on Archaeohippus's
+dwarfing (O'Sullivan's dissertation work and a related body-size-evolution chapter) were only
+reachable as abstracts/summaries in this research pass, not full text — flag this as the
+weakest-sourced why-of-the-why among the panels researched here, not a settled mechanism.
+
+CITATIONS
+3. MacFadden, B.J. (1986). "Fossil horses from 'Eohippus' (Hyracotherium) to Equus: scaling,
+   Cope's Law, and the evolution of body size." Paleobiology 12(4):355-369.
+   [Backs: confidence — Archaeohippus as a documented dwarfing exception to the broader
+   size-increase trend across horse evolution]
+34. O'Sullivan, J.A. (2003). "A new species of Archaeohippus (Mammalia, Equidae) from the
+    Arikareean of central Florida." Journal of Vertebrate Paleontology 23(4):877-885.
+    DOI: 10.1671/2369-12
+    [Backs: what changed — documented dwarfing across multiple Archaeohippus species/sites,
+    oldest and smallest known member of the genus]
+35. Florida Museum of Natural History. "Archaeohippus." Fossil Horses in Cyberspace gallery.
+    https://www.floridamuseum.ufl.edu/fossil-horses/gallery/archaeohippus/
+    [Backs: what changed — body size (collie-dog-sized), ~21-13 Ma time range, tooth-crown-
+    height evidence for forest/woodland browsing habitat]

@@ -1,0 +1,101 @@
+PANEL 8 — Branch point: early Equus/Dinohippus lineage -> crown Equus vs. Haringtonhippus
+(New World stilt-legged horse) vs. Hippidion (South American horse)
+~7-4 Ma North American split; Hippidion reaches South America ~2.7-2.5 Ma; both non-crown
+branches extinct by the end of the last Ice Age
+
+This replaces an older, now-superseded textbook story. For decades Hippidion was classified as
+a descendant of Pliohippus specifically, on the strength of a similarly-shaped tooth (an oval
+protocone) [33]. Ancient DNA has since overturned that.
+
+BASELINE
+Panel 4 established that by ~4-6 Ma, the one-toed grazing Equus lineage (through Dinohippus)
+was established in North America — the continent the whole horse family evolved on. What
+wasn't visible from bones alone is that this same general population, over roughly the next
+2-3 million years, split into three lineages rather than one.
+
+WHAT CHANGED + WHY — Haringtonhippus (New World stilt-legged horse) vs. crown Equus
+What changed: one branch kept a stouter, Equus-like build and became the ancestor of every
+living horse, zebra, and ass (already covered in the Equus-branches panel). A separate branch
+— genetically distinct enough that ancient-DNA researchers gave it its own new genus,
+Haringtonhippus, in 2017 — had slender, stilt-like lower leg bones and narrower hooves,
+unlike stouter Equus [31]. For over a century its fossils (originally named as Equus species,
+E. francisci and E. calobatus) were simply filed as odd, slim-legged species of Equus, because
+skeletally it looks like a slender Equus. Its mitochondrial genome carries 178 diagnostic
+differences from Equus, including four insertions — different enough that it wasn't an
+unusual Equus species but a wholly separate genus that had been quietly coexisting alongside
+true Equus across Ice Age North America the entire time, without merging into the Equus gene
+pool [31].
+Why: a slender, long-limbed build shows up independently in Old World asses/hemiones facing
+similar terrain — the standard functional reading of that shape is efficient, low-cost travel
+across wide, resource-sparse, arid ground, as against the stockier build suited to Equus's
+grazing lifestyle.
+Terminal fact: Haringtonhippus persisted through the whole Ice Age and died out only at its
+very end — radiocarbon-dated to as late as ~14,400 years ago in the Yukon/Alaska region and
+~13,100 years ago in Nevada — in the same general end-Pleistocene window as most of North
+America's other Ice Age megafauna [31].
+
+WHAT CHANGED + WHY — Hippidion (South American horse)
+What changed: a related lineage dispersed south once the Isthmus of Panama closed the water
+gap around 2.7-3 Ma, and there developed the classic Hippidion build: short, heavy leg bones —
+read as an adaptation for stability on the sloped, uneven ground of the Andean margin, rather
+than for fast travel across flat, sparse terrain like its North American stilt-legged
+relative. Against Haringtonhippus's long, slender legs, Hippidion's short, stout legs are the
+opposite locomotor trade-off — stability over efficiency — for a genuinely different kind of
+terrain.
+Why it was misclassified: Hippidion's teeth resemble Pliohippus's, and its stout legs were
+read as a shared, inherited trait from Pliohippus [33]. Complete ancient mitochondrial genomes
+overturned this: Hippidion actually sits as an outgroup to every living Equus lineage,
+branching off from within the Equus side of the family tree entirely, around 5.6-7.7 million
+years ago — well after Pliohippus and the Equus lineage had already parted ways — not
+descended from Pliohippus at all [32]. Genome-scale data further places Hippidion's branch-off
+point slightly earlier than, and separate from, Haringtonhippus's own split from Equus: it is
+Haringtonhippus's more distant cousin, not its direct sister, and both are more closely
+related to living Equus than either is to Pliohippus [31].
+
+WHY-OF-THE-WHY
+Why did skeleton-based classification get both of these lineages wrong, in the same direction,
+for decades? This isn't a one-off case of missing data — it's a documented, repeating pattern
+in equid paleontology: superficially similar traits (a particular tooth shape, a particular
+limb proportion) evolve convergently more than once across unrelated horse lineages facing
+similar mechanical demands, and equid ancient-DNA work has now overturned skeleton-based
+classification for multiple, separate parts of the horse family tree using this same
+technique — not just Hippidion's relationship to Pliohippus, but Haringtonhippus's own status
+as a distinct genus rather than an odd Equus species [31][33]. The tooth and limb shapes
+weren't wrong observations; they just weren't the reliable signal of ancestry they were once
+assumed to be.
+
+CONFIDENCE
+High on the corrected phylogeny itself: Hippidion as an outgroup to the Haringtonhippus+Equus
+clade, and Haringtonhippus as a genuinely separate genus more closely related to Equus than
+Hippidion is, is now the consistent finding across independent ancient-DNA studies (Der
+Sarkissian et al. 2015 on mitochondrial genomes; Heintzman et al. 2017 on mitochondrial and
+nuclear genomes) — this supersedes the older, Pliohippus-based morphological classification.
+Moderate on the specific terrain explanation for why each lineage's limbs went the direction
+they did: the stilt-legged/short-legged functional readings are the standard, plausible
+inference from limb proportions and Old World parallels, but no dedicated biomechanical or
+paleoclimate study was found pinning either build to a tested mechanism specific to this
+exact split — treat that part as reasonable inference, not settled fact.
+
+CITATIONS
+31. Heintzman, P.D., Zazula, G.D., MacPhee, R.D.E., Scott, E., Cahill, J.A., McHorse, B.K.,
+    Kapp, J.D., Stiller, M., Wooller, M.J., Orlando, L., Southon, J., Froese, D.G., Shapiro, B.
+    (2017). "A new genus of horse from Pleistocene North America." eLife 6:e29944.
+    DOI: 10.7554/eLife.29944
+    [Backs: what changed/why/terminal fact — Haringtonhippus phylogenetic placement,
+    divergence dates, 178 mitochondrial diagnostic differences, morphology, extinction dates;
+    why-of-the-why — pattern of ancient DNA overturning skeleton-based equid classification]
+32. Der Sarkissian, C., Vilstrup, J.T., Schubert, M., Seguin-Orlando, A., Eme, D., Weinstock,
+    J., Alberdi, M.T., Martin, F., Lopez, P.M., Prado, J.L., Prieto, A., Douady, C.J.,
+    Stafford, T.W. Jr., Willerslev, E., Orlando, L. (2015). "Mitochondrial genomes reveal the
+    extinct Hippidion as an outgroup to all living equids." Biology Letters 11(3):20141058.
+    DOI: 10.1098/rsbl.2014.1058
+    [Backs: what changed/why — Hippidion's corrected phylogenetic placement as an outgroup to
+    all living equids, divergence dating 5.6-7.7 Ma, superseding earlier morphology-based
+    placement]
+33. Orlando, L., Eisenmann, V., Reynier, F., Sondaar, P., Hänni, C. (2003). "Morphological
+    convergence in Hippidion and Equus (Amerhippus) South American equids elucidated by
+    ancient DNA analysis." Journal of Molecular Evolution 57(6):642-652.
+    DOI: 10.1007/s00239-003-0005-4
+    [Backs: baseline/why — historical Pliohippus-based classification of Hippidion on tooth
+    shape (oval protocone) grounds, and the broader concept of morphological convergence
+    misleading skeleton-based equid classification]

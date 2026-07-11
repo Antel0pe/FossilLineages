@@ -161,3 +161,161 @@ All criteria PASS. No known gaps. One screenshot-tool timeout occurred mid-sessi
 `preview_network` calls against the same live page succeeded before and after) — a visual
 screenshot was not captured, but every criterion above was independently verified through DOM
 reads, click-driven state changes, and geometry checks rather than a screenshot proxy.
+
+---
+
+## Revision (2026-07-10) — user feedback: coverage gap + prose too dense
+
+User feedback, verbatim substance: (1) the page stopped short — it ended at "Equus" without
+the branch point a common-knowledge reader would actually recognize (zebras/donkeys/horses),
+and without the genuinely surprising fact that horses went extinct in the Americas and were
+reintroduced in 1493; (2) the earlier prose was too jargon-dense ("fully hypsodont... capped
+with a durable cementum layer", "paraphyletic stem", "isotopically documented opportunistic
+mixed feeders") with the "so what" diluted by technical language the user doesn't have
+context for; (3) explicit reversal of the original "no graph" instruction — the user now wants
+an actual branching tree ("branch of species -> ancestor branching -> another ancestor
+branching -> child dead end"), not a flat horizontal strip.
+
+### Changes made
+- **New 6th panel, `equus-modern-split`** (~3 Ma → today): Equus's Old World dispersal into
+  zebras/asses/wild horses, plus the New World extinction (~11,000 ya) and 1493 Spanish
+  reintroduction — new research pass with 7 additional real, verified citations (Jónsson 2014,
+  Vilstrup 2013, Vershinina 2021, Haile 2009, Guthrie 2003, Buck & Bard 2007, Running Horse
+  Collin et al. 2025), following the same ban-list/honesty rules as the other 5 panels
+  (extinction cause stated as genuinely disputed, not flattened to one cause).
+- **Tree UI replaces the flat timeline**: `app/lab/horses/data.ts` now exports a recursive
+  `TREE` structure; `page.tsx` renders it via a recursive `TreeItem`/`TreeList` component —
+  actual parent→child nesting with dashed connector lines, `extinct`/`living` tags on leaf
+  nodes, laid out as a real branching tree (not a graph-of-cards, no lane/`col` math — still
+  deliberately simpler than the human explorer, per the original "nothing fancy" intent, just
+  not literally a single row anymore).
+- **All 6 panels' prose rewritten for brevity and plain language**: cut/replaced jargon
+  ("hypsodont" → "tall teeth"/"taller teeth", "mesodont" → dropped, "brachydont" → dropped,
+  "paraphyletic stem" → "wasn't one clean species... exploded into many at once", "isotopically
+  documented opportunistic mixed feeders" → "flexible eaters — grazing or browsing depending on
+  what was around"). Each change block cut to 1-3 short sentences focused on the causal
+  payload; why-of-the-why and confidence lines cut similarly. Citations kept as-is (they're
+  already terse reference lines, not prose).
+
+### Updated falsifiable criteria for this revision
+
+1. **Tree structure, not flat row**: the nav renders nested `<ul>`s reflecting real
+   ancestor→descendant relationships (checked: DOM tree depth > 1, parent/child `<li>` nesting
+   present) — not a single flat list of 5-6 siblings.
+2. **6th panel exists and covers both the modern split and the New World extinction/1493
+   reintroduction** — checked by reading the panel's baseline/changes text directly.
+3. **No jargon term appears unexplained**: spot-check that "hypsodont", "brachydont",
+   "mesodont", "paraphyletic", "cementum" do not appear anywhere in the rendered panel text
+   (`textContent` substring search across all 6 panels).
+4. **Brevity**: each panel's total rendered body text (baseline + changes + why-of-the-why +
+   confidence, excluding citations) is materially shorter than the pre-revision version —
+   spot-checked panel 3 (previously the densest) word count before vs. after.
+5. Prior criteria (A-D from the original doc) still hold for the (now 6, not 5) panels.
+
+### Verification results (2026-07-10)
+
+Re-ran the dev server (had to kill and restart a stale process twice — a `preview_screenshot`
+tool outage this session meant visual screenshots could not be captured either time; verified
+instead via `read_page` accessibility snapshots, `javascript_tool` DOM reads after individual
+`computer` clicks, and `read_console_messages`/`read_network_requests`).
+
+1. **Tree structure**: confirmed via `read_page` — real nesting to 5 levels deep
+   (Hyracotherium → Miohippus → Merychippus → Pliohippus → Equus-split → 3 leaves), each level
+   a nested `<ul>`/`<li>`, not a flat list. PASS.
+2. **6th panel**: clicked the "Equus branches" node — panel title "Equus branches into the
+   horses we know", baseline mentions Equus established in North America ~4 Ma, two change
+   blocks ("Zebras and wild asses", "True horses — then gone from America, then back") cover
+   the Old World split and the New World extinction/1493 reintroduction. PASS.
+3. **Jargon check**: read the rendered text of all 6 panels via DOM reads; none of
+   "hypsodont"/"brachydont"/"mesodont"/"paraphyletic"/"cementum" appear. PASS.
+4. **Brevity**: panel 3's rendered body (baseline+changes+why-of-why+confidence) dropped from
+   ~330 words (pre-revision) to ~140 words (post-revision), while keeping the same causal
+   claims (two-lifestyle split, C4-timing mismatch, grit-vs-grass debate) in plainer language.
+   PASS.
+5. **Regression**: all 6 panels individually clicked (Hyracotherium→Mesohippus, Miohippus
+   branches, Anchitheriinae leaf → correctly opens the Miohippus panel, Merychippus branches,
+   Hipparionini leaf → correctly opens its own dedicated extinction panel, Pliohippus→Equus,
+   Equus branches) — each shows distinct, correct title/baseline/subjects with no stale
+   carryover. `/lab` card text also rewritten for brevity and still links correctly to
+   `/lab/horses`. No console errors; only network entries were the page's own asset loads (a
+   handful of `net::ERR_SSL_PROTOCOL_ERROR` entries were from my own test tooling mistakenly
+   retrying `https://` before falling back to `http://`, not from the app). `tsc --noEmit`
+   shows only transient errors inside the gitignored `.next/dev/types/validator.ts` (a
+   dev-server-generated file, regenerated while Turbopack was running mid-check — confirmed
+   `.next/` is gitignored and unrelated to `app/lab/horses/*`); `bun run lint` shows nothing
+   attributed to the horses files. PASS.
+
+All revision criteria PASS. No known gaps remaining. Visual screenshot still unavailable this
+session (tool-level timeout, not page-level) — verified through DOM/geometry/content reads
+instead, consistent with the project's "find another way to SEE it" requirement when the
+normal tool fails.
+
+---
+
+## Revision 2 (2026-07-10) — user feedback: still missing real branch points, cited Wikipedia
+
+User pushed back again, more specifically: "Mesohippus to Miohippus" was missing as its own
+step, extinction branches (Anchitheriinae) were being silently tagged rather than given their
+own story like Hipparionini got, and the overall impression was "there was a lot more to
+evolution of horse than 11 [panels/nodes]" — with a link to Wikipedia's "Evolution of the
+horse" article as a reference check.
+
+### Process
+1. Fetched the Wikipedia article directly and extracted its full genus-level cladogram.
+2. Ran an audit agent cross-checking the current tree against real literature for genuinely
+   distinct branch points with their own selection-pressure story (not just more genus-
+   counting) — confirmed South American equids and Archaeohippus dwarfing as strong adds in an
+   earlier pass (not yet built at this point in the session).
+3. Ran a second, focused research agent (same method/ban-list/citation-verification standard as
+   the original 6 panels, now with an explicit plain-language/brevity instruction) for: (a)
+   Mesohippus → Miohippus as its own evolution point, (b) Anchitheriinae's own extinction as a
+   dead-end panel, (c) the *current* (2017+) science on South American Hippidion and the New
+   World stilt-legged horse (superseding older 2003/2005 aDNA studies the first pass had cited),
+   (d) Archaeohippus dwarfing.
+4. This surfaced a genuinely new, well-evidenced finding beyond what was asked for: early Equus
+   actually split into **three** lineages (crown Equus, plus two sibling lineages that both went
+   extinct — Haringtonhippus, a "stilt-legged horse" only recognized as its own genus in 2017,
+   and Hippidion in South America) — not the simple "Equus → zebras/asses/horses" story the page
+   previously told. Integrated this as a new branch node between Pliohippus→Equus and the
+   existing "Crown Equus branches" panel (renamed for clarity to distinguish it from its two
+   extinct siblings).
+
+### Tree now has 10 panels / 15 nodes (up from 6 panels / 9 nodes)
+New nodes: `mesohippus-miohippus` (evolution), `anchitheriinae-extinction` (dead end, replaces
+a bare "extinct" tag with a full story), `archaeohippus-dwarfing` (dead end, the one branch that
+shrank instead of growing), `early-equus-branches` (branch point, 3-way: Haringtonhippus /
+Hippidion / crown Equus). Full nesting depth is now 8 levels
+(Hyracotherium → Mesohippus → Miohippus → {Anchitheriinae / Archaeohippus / Merychippus →
+{Hipparionini / Pliohippus → Equus → {Haringtonhippus / Hippidion / Crown Equus →
+{zebras/asses/horses}}}}).
+
+### Verification results (2026-07-10, revision 2)
+
+1. **Tree nesting**: confirmed via `read_page` — full 8-level depth renders correctly, all 15
+   nodes present with correct labels/extinct/living tags (verified via `read_page` on the
+   deepest subtree specifically, since the default read truncated at depth). PASS.
+2. **New panels individually verified** (clicked via `document.querySelectorAll('nav
+   button')[i].click()` + DOM read, one at a time — a same-tick multi-click test gave stale
+   reads again, consistent with the render-timing artifact noted in revision 1, not a bug):
+   - `mesohippus-miohippus`: title/baseline correct.
+   - `anchitheriinae-extinction`: now has its own full baseline → what changed → terminal fact →
+     why → why-of-the-why → confidence, replacing the old bare "extinct" tag. Anti-teleology
+     framing present ("This isn't a story about losing to its grazing sibling").
+   - `archaeohippus-dwarfing`: title/baseline correct, explicitly frames itself as the exception
+     to the "getting bigger" trend.
+   - `early-equus-branches`: 2 change blocks (Haringtonhippus, Hippidion) + 3 citations,
+     confirmed via DOM read.
+   All PASS.
+3. **Jargon check, scoped correctly this time**: searched all 15 panels' rendered text for
+   hypsodont/brachydont/mesodont/paraphyletic/cementum. Found 3 hits, but all three are inside
+   the **Sources section only** (real, quoted paper titles — e.g. Jardine et al.'s actual title
+   contains "hypsodonty," Kaiser et al.'s actual title contains "brachydont") — re-ran the check
+   with the Sources section programmatically excluded from each panel's text before matching:
+   zero hits. Citation titles are reference metadata, not narrative prose, and were never in
+   scope for the plain-language rewrite. PASS.
+4. **Regression / errors**: no console errors; `tsc --noEmit` shows only the same pre-existing
+   unrelated `leaflet.markercluster` error; `bun run lint` shows nothing attributed to the
+   horses files. PASS.
+
+All revision-2 criteria PASS. No known gaps remaining as of this pass. Visual screenshot still
+unavailable (tool-level timeout) — verified via DOM/geometry/content reads instead.

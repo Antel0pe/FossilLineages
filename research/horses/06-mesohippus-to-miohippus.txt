@@ -1,0 +1,68 @@
+PANEL 6 — Straight line: Mesohippus -> Miohippus
+Late Eocene into early Oligocene (~36-32 Ma) — sits between Panel 1 (Hyracotherium ->
+Mesohippus) and Panel 2 (Miohippus branches)
+
+BASELINE
+Mesohippus (Panel 1) was a small, three-toed woodland browser — roughly 50-75 lbs — with a
+shallow facial fossa (a hollow pit on the face), living across a patchy North American
+woodland that continued cooling and drying through the late Eocene into the early Oligocene.
+It held this basic size and shape with little change for several million years.
+
+WHAT CHANGED + WHY
+What changed: Miohippus did not gradually grow out of Mesohippus one generation at a time.
+A Miohippus population split off from Mesohippus as a separate lineage and then ran alongside
+it for roughly four million years — multiple species of both genera are found together in the
+same rock layers at the same sites (e.g. Lusk, Wyoming), which is direct physical evidence of
+a branching event, not a data gap papered over by "few transitional fossils" [27]. The
+Miohippus population was distinctly larger-bodied than Mesohippus — on the order of 120 lbs
+against Mesohippus's 50-75 lbs — and had a noticeably bigger, deeper facial fossa [27][28].
+Against the Mesohippus baseline, which had held roughly the same small size for millions of
+years beforehand, this was a fast, discrete step up in body size tied to a new, separate
+population, not a slow drift.
+Why: A genuine size jump of this kind, in a herbivore living through the same continuing
+cooling/opening-woodland trend already driving Panel 1's changes, plausibly worked the same
+way it does in living ungulates moving into patchier, more open ground: a bigger body is
+harder for most local predators to bring down, and it can go longer between food patches when
+the good browse is more scattered. This is the standard ecological reading of the size jump,
+not a dedicated finding pinned to this specific transition — see Confidence below.
+
+WHY-OF-THE-WHY
+The "abrupt, cladogenetic, coexisting" pattern is not unique to this one pair of genera. The
+same statistical/morphometric revision that established it (Prothero & Shubin's restudy of the
+White River Oligocene sequence) found the same shape of pattern — long stasis within a species,
+punctuated by branching events, rather than one line smoothly morphing into the next —
+repeated across several other contemporaneous equid lineages in the same beds [27]. That
+independent, broader pattern across multiple lineages is what gives paleontologists confidence
+this is a real branching event and not just a gap in an otherwise gradual, poorly-sampled
+transformation — the opposite of how the popular "few transitional fossils" phrasing can read.
+
+CONFIDENCE
+High on the fact and shape of the transition itself: cladogenetic origin, ~4-million-year
+stratigraphic overlap, and the size/facial-fossa differences are all directly documented, and
+Wikipedia's soft "relatively abrupt... few transitional fossils" phrasing actually understates
+how solid this finding is — it's a positive, well-evidenced branching pattern, not an
+evidence gap. Moderate on exactly why body size specifically jumped: the
+patchier-terrain/predator-evasion explanation is the standard ecological inference for this
+kind of ungulate size increase, but unlike several later panels on this page (which lean on a
+dedicated dietary or isotopic study), no single study pins the size increase itself to one
+tested mechanism — treat that half of the "why" as a reasonable inference, not a settled
+finding. The precise fine-grained phylogenetic detail of the broader early equid tree is
+separately acknowledged in the systematics literature as less resolved than later parts of the
+tree [8].
+
+CITATIONS
+27. Prothero, D.R., Shubin, N. (1989). "The evolution of Oligocene horses." In Prothero, D.R.,
+    Schoch, R.M. (eds.), The Evolution of Perissodactyls. Oxford University Press, pp. 142-175.
+    [Backs: what changed/why-of-the-why — cladogenetic (branching) origin of Miohippus from
+    Mesohippus, ~4 Myr stratigraphic overlap at shared sites, body size and facial fossa
+    differences, and the broader repeated stasis-then-branching pattern across other
+    contemporaneous equid lineages in the same beds]
+28. MacFadden, B.J. (1992). Fossil Horses: Systematics, Paleobiology, and Evolution of the
+    Family Equidae. Cambridge University Press.
+    [Backs: what changed — general reference for Mesohippus/Miohippus body size and
+    morphological comparison]
+8. MacFadden, B.J. (1998). "Equidae." In Janis, C.M., Scott, K.M., Jacobs, L.L. (eds.),
+   Evolution of Tertiary Mammals of North America, Volume 1. Cambridge University Press,
+   pp. 537-559.
+   [Backs: confidence line — acknowledgment that early equid phylogenetic detail is less
+   resolved than later parts of the tree]

@@ -16,8 +16,8 @@ const items: LabItem[] = [
   {
     href: "/lab/horses",
     kicker: "Equidae · ~55 million years ago → today",
-    title: "Five branch and evolution points in the horse family tree",
-    hook: "Isotopes and mesowear track a browsing forest animal becoming a one-toed grassland grazer — and the three-toed cousins who radiated across three continents before going extinct anyway. Click along the timeline for the baseline, what changed, why, and how sure we really are.",
+    title: "How horses actually branched",
+    hook: "A dog-sized forest browser splits into one-toed grazers and three-toed generalists that spread across three continents and then died out anyway. Also: horses evolved entirely in North America, went extinct there 11,000 years ago, and were only brought back by Spanish ships in 1493. Click through the actual branching tree.",
     mode: "explorable",
   },
   {

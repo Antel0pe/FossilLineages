@@ -1,0 +1,80 @@
+PANEL 7 — Dead end: Anchitheriinae's own extinction (Anchitherium, Sinohippus, Hypohippus,
+Megahippus)
+Split from Miohippus ~32-24 Ma (Panel 2); last lineages extinct by the end of the Miocene
+(~9-8.8 Ma)
+
+This panel is not a foil for the Equinae-stem sibling. Anchitheriinae ran as a genuinely
+successful browsing lineage for roughly 20+ million years across two continents before it
+ended — its extinction has its own, only partly resolved, causal story.
+
+BASELINE
+Panel 2 established the split: Miohippus's Anchitheriinae descendants kept the ancestral
+three-toed foot and low-crowned, browsing teeth essentially unchanged, while its Equinae-stem
+sibling began raising tooth crown height to handle a grittier, grassier diet. Anchitherium
+itself dispersed out of North America across Asia and Europe by ~18-19 Ma, and in both
+regions gave rise to larger-bodied descendants that kept the same browsing body plan:
+Hypohippus and Megahippus in North America, Sinohippus in Eurasia.
+
+WHAT CHANGED + TERMINAL FACT
+What changed: essentially nothing about the core body plan changed further. Hypohippus and
+Megahippus grew pony- to draft-horse-sized bodies but kept the low-crowned teeth and
+closed-habitat-suited limb proportions of their Anchitherium ancestors, and direct fossil
+evidence from a Eurasian site (Sandelzhausen, Germany) shows Anchitherium living there
+alongside other browsers in a still-wooded community, not adapting toward any grassland diet
+[9]. Against their Equinae-stem/hipparionine cousins — who kept adjusting tooth height and
+eventually built fully grassland-ready teeth and feet (Panels 2-4) — the anchitheriines never
+changed their basic strategy across their entire run.
+Terminal fact: Hypohippus and Megahippus persisted through the whole "Clarendonian
+chronofauna" interval of relative ecosystem stability and went extinct only at its close, in
+the late Miocene [30]. Old World Anchitherium/Sinohippus lineages disappear on a similar
+general timescale. By the end of the Miocene, no anchitheriine lineage on either continent
+remained.
+
+WHY
+An independent, quantitative fossil-record study across 37 North American Great Plains
+localities found that browsing-ungulate species richness (a category anchitheriine horses
+were a major, classic part of) didn't collapse in one event — it declined steadily and
+continuously from a peak around 19 Ma down to modern-comparable low levels by roughly 10 Ma
+[29]. That is a long-term habitat/resource squeeze playing out over millions of years, not a
+sudden displacement — the last anchitheriines died out only once that long decline had nearly
+run its full course.
+
+WHY-OF-THE-WHY
+The same study's own proposed driver for the browse decline is a genuinely separate evidence
+stream from the grassland-paleosol story already used in Panel 2: it points to falling
+atmospheric CO2 through the Miocene reducing C3 (leafy-plant) primary productivity, using a
+modern rainfall/productivity-to-diversity correlation in African savannas as its comparative
+baseline, rather than direct grass-cover mapping [29]. That same paper also directly
+complicates the tidy "grazers out-competed browsers" story that anchitheriine extinction is
+often casually explained by: it explicitly found the decline in browser richness was not a
+one-for-one replacement by grazing horses, meaning the data does not support direct
+competitive exclusion as the clean mechanism it's often assumed to be.
+
+CONFIDENCE
+The timing (steady browser decline ~19-10 Ma; final anchitheriine genera extinct at the close
+of the Clarendonian, late Miocene) is well established from direct fossil-locality data. The
+cause is only partly resolved: the leading quantitative study points to a CO2/productivity-
+driven browse scarcity and explicitly argues against simple grazer competition as the
+mechanism — but that study is about browsing ungulates broadly, not a dedicated study isolating
+anchitheriine horses specifically from the other browsers that declined alongside them. Treat
+"habitat/productivity squeeze vs. direct competition" here as a real, still-open weighting
+question, not a settled ranking — the same honesty this project applies to the Hipparionini
+extinction (Panel 5).
+
+CITATIONS
+9. Kaiser, T.M. (2009). "Anchitherium aurelianense (Equidae, Mammalia): a brachydont 'dirty
+   browser' in the community of herbivorous large mammals from Sandelzhausen (Miocene,
+   Germany)." Paläontologische Zeitschrift 83:131-140. DOI: 10.1007/s12542-009-0002-z
+   [Backs: baseline/what changed — direct Eurasian fossil-community evidence Anchitherium
+   stayed a browser in a wooded community]
+29. Janis, C.M., Damuth, J., Theodor, J.M. (2000). "Miocene ungulates and terrestrial primary
+    productivity: Where have all the browsers gone?" Proceedings of the National Academy of
+    Sciences 97(14):7899-7904. DOI: 10.1073/pnas.97.14.7899
+    [Backs: why/why-of-the-why — 37-locality quantitative decline in browser species
+    richness ~19-10 Ma, proposed CO2/primary-productivity mechanism, and the explicit finding
+    that decline was not a one-for-one replacement by grazers]
+30. Janis, C.M., Damuth, J., Theodor, J.M. (2002). "The origins and evolution of the North
+    American grassland biome: the story from the hoofed mammals." Palaeogeography,
+    Palaeoclimatology, Palaeoecology 177(1-2):183-198. DOI: 10.1016/S0031-0182(01)00359-5
+    [Backs: baseline/terminal fact — Hypohippus and Megahippus persisting through the
+    Clarendonian chronofauna and going extinct at its close]
