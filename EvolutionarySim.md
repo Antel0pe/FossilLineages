@@ -15,3 +15,12 @@ Questions
     - Maybe out of scope and resulting in too much complexity or maybe the key problem to solve to not make this boring and every outcome expected
     - Maybe novelty/unexpectedness of outcomes is something I should optimize for to maintain personal interest. If all outcomes are expected, likely to churn off this soon. 
 3. How to avoid threshold tuning mess common to simulation stuff. 
+
+
+Types of Situations that are surprising
+- Basic level something unexpected happening
+    - Alternative solution than what I expected
+- a significant change life squirrel becoming a gliding squirrel or mammal evolving into whale
+- details of evolution for example a prey might evolve to be faster either by developing hooves or longer legs
+    - some notion of tradeoff must exist for this i think
+    

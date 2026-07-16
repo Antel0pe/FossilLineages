@@ -6,6 +6,16 @@ illustrates human (and surrounding-lineage) evolution to show **that** change ha
 **what** changed, and **why** it may have changed — with the change itself as the primary
 subject, grounded in best-guess, reasonably scientific reasoning.
 
+# Curiosity signal log
+This project's direction is being discovered empirically, from how the user actually
+reacts across many conversations, not decided once. **Whenever the user reacts to an
+idea (liked/disliked/bored/excited), floats a tentative direction, corrects a framing,
+or is thinking out loud about what to work on next, use
+`.claude/skills/log-curiosity-signal/SKILL.md`** to append a dated entry to
+`.claude/skills/log-curiosity-signal/CURIOSITY-SIGNAL-LOG.md`. Read that log at the start of any
+exploratory/curiosity-driven conversation before proposing directions. A single logged
+entry is evidence, not a confirmed preference — see the skill for the full method.
+
 # Verification-driven implementation
 The user is the **judgment provider**; you are the **implementor**. Each time the user asks
 you to implement something:

@@ -51,3 +51,7 @@ excitingly ambitious versions of this
 - map of factors we know and unknown factors
     -  help predict where there are more factors than we understand?
 
+- using blender models to show evolution of body structure
+    - the model itself changes to show evolution and fitness is determined based on this for example for surface area to volume for heat retention
+- for development of eye do something where multiple animals are developing them but with different selection pressures for example at different depths of ocean such that some animals will develop varying stages of eyes and be interesting
+- simulate majority of evolutionary tree starting from single celled organisms or something basic
