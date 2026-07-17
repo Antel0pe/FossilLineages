@@ -97,3 +97,32 @@ instead of confirming expectations every run.
   from the original `EvolutionarySim.md` framing — worth tracking whether this stays a
   someday/bigger-scope idea or gets revisited once smaller composable systems
   (thermal body shape, eye development, predator-prey coevolution) are actually built.
+
+## 2026-07-16
+
+Context: user returned to the eye-evolution idea with a concrete implementation plan —
+start from a flat light-sensitive patch and evolve the *curvature* using the optics math
+from Nilsson & Pelger 1994 ("A pessimistic estimate of the time required for an eye to
+evolve"); asked specifically for the equation relating visual quality to curvature and
+other parameters.
+
+- **[idea]** Committed to a concrete substrate for the eye sim: physical optics as the
+  fitness function. Morphology (curvature/invagination, aperture, lens) → single scalar
+  spatial resolution R = 1/Δρ, where Δρ = √((A/f)² + (λ/A)²). Hill-climb 1% mutations
+  accepting anything that lowers Δρ.
+- **[meta, resolves-tension]** This choice quietly *resolves* the 2026-07-15 tension
+  ("[idea, tension]" entries) between "want emergent surprise" and "eye is a
+  predetermined outcome". Using a real physics fitness landscape (light resolution) is
+  NOT the same as the rejected "authored staged unlocks" — the patch→cup→pinhole→lens
+  sequence is *not* hardcoded; it falls out of hill-climbing a physically-grounded
+  landscape (the geometric-blur vs diffraction trade-off literally forces the pinhole
+  wall, which forces the lens). Claude's read (a guess): this is likely why the optics
+  framing feels right to the user where the staged-unlock version felt dead — the
+  stages are discovered by the search, not written by the designer. Watch whether the
+  user confirms this distinction matters to them.
+- **[watch]** Open question carried from 2026-07-15 still unresolved and now testable:
+  will a single population under one pressure just re-derive the fish-eye optimum every
+  run (boring, expected), or does the multi-population / varying-pressure idea (different
+  ocean depths etc.) actually produce a spread of stopping points? The N&P landscape is
+  smooth and convergent by construction, so surprise may have to come from the pressure
+  variation, not the optics.

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eye evolution — the resolution trade-off (Nilsson & Pelger)</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --line:#2b333d; --ink:#e6edf3; --muted:#9aa7b4;
+    --geom:#ff8f5e;   /* geometric blur A/f  */
+    --diff:#5eb3ff;   /* diffraction blur λ/A */
+    --lens:#7ee787;   /* lens quality        */
+    --hot:#ff5e7e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1120px;margin:0 auto;padding:22px 18px 60px}
+  h1{font-size:22px;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 18px;font-size:14px}
+  .grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  svg,canvas{display:block;width:100%;height:auto;border-radius:8px}
+  .readout{display:flex;align-items:baseline;gap:10px;margin:2px 0 6px}
+  .big{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums}
+  .stage{font-size:14px;color:var(--muted)}
+  .bar{height:10px;border-radius:6px;background:#0b0e12;overflow:hidden;border:1px solid var(--line)}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--hot),var(--lens))}
+  .formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;background:#0b0e12;
+    border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:10px 0;line-height:1.9}
+  .tG{color:var(--geom)} .tD{color:var(--diff)} .tL{color:var(--lens)}
+  .ctrls{display:grid;gap:14px;margin-top:6px}
+  .ctrl label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+  .ctrl label b{font-weight:700}
+  .ctrl .note{color:var(--muted);font-size:12px}
+  input[type=range]{width:100%;accent-color:var(--ink)}
+  .ctrl.g input{accent-color:var(--geom)} .ctrl.d input{accent-color:var(--diff)} .ctrl.l input{accent-color:var(--lens)}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  button{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);
+    background:#1f2733;color:var(--ink);cursor:pointer}
+  button:hover{border-color:#3d4855}
+  button.primary{background:var(--lens);color:#08110a;border-color:var(--lens);font-weight:700}
+  .gen{color:var(--muted);font-size:13px;align-self:center}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  .cap{color:var(--muted);font-size:12.5px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Eye evolution: the one trade-off that builds an eye</h1>
+  <p class="sub">Drag the sliders, or hit <b>Auto-evolve</b> and watch a blind flat patch hill-climb into a lens eye —
+  one 1%-better step at a time (Nilsson &amp; Pelger, 1994).</p>
+
+  <div class="formula">
+    Δρ &nbsp;=&nbsp; √(&nbsp;<span class="tG">(A / f)</span><span class="tL">·(1 − lens)</span><sup>2</sup>
+    &nbsp;+&nbsp; <span class="tD">(λ / A)</span><sup>2</sup>&nbsp;)
+    &nbsp;&nbsp;→&nbsp;&nbsp; sharpness = 1 / Δρ<br>
+    <span class="tG">geometric blur = <b id="fG">–</b></span> &nbsp;·&nbsp;
+    <span class="tD">diffraction blur = <b id="fD">–</b></span> &nbsp;·&nbsp;
+    <span class="tL">lens effective = <b id="fL">–</b></span>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: eye diagram + controls -->
+    <div class="panel">
+      <h2>The eye (cross-section)</h2>
+      <svg id="eye" viewBox="0 0 380 300" aria-label="eye cross section"></svg>
+      <div class="legend">
+        <span><i style="background:var(--hot)"></i>blur spot on retina</span>
+        <span><i style="background:var(--lens)"></i>lens</span>
+        <span><i style="background:#6b7684"></i>pigment cup</span>
+      </div>
+
+      <div class="ctrls">
+        <div class="ctrl d">
+          <label><span>Aperture width <b>A</b> (the hole)</span><b id="vA"></b></label>
+          <input id="sA" type="range" min="-2.3" max="0.30" step="0.001">
+          <div class="note">Small hole → sharp geometry but more diffraction. Big hole → more light, blurrier.</div>
+        </div>
+        <div class="ctrl g">
+          <label><span>Cup depth <b>f</b> (curvature)</span><b id="vF"></b></label>
+          <input id="sF" type="range" min="-1.3" max="0.70" step="0.001">
+          <div class="note">Curving the flat patch into a deeper cup is what creates depth. Deeper = sharper.</div>
+        </div>
+        <div class="ctrl l">
+          <label><span>Lens quality <b>gene</b></span><b id="vL"></b></label>
+          <input id="sL" type="range" min="0" max="1" step="0.001">
+          <div class="note" id="lensNote"></div>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="primary" id="evolve">▶ Auto-evolve</button>
+        <button id="reset">Reset to flat patch</button>
+        <span class="gen" id="gen">generation 0</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: readout + curve + vision -->
+    <div class="panel">
+      <h2>How well it sees</h2>
+      <div class="readout"><span class="big" id="acuity">–</span><span class="stage" id="stage"></span></div>
+      <div class="bar"><i id="sharpBar"></i></div>
+
+      <h2 style="margin-top:18px">Trade-off: blur vs. aperture (at current depth &amp; lens)</h2>
+      <canvas id="curve" width="620" height="200"></canvas>
+      <div class="cap" id="curveCap"></div>
+
+      <h2 style="margin-top:18px">What the animal sees</h2>
+      <canvas id="vision" width="620" height="240"></canvas>
+      <div class="cap">Two prey + a looming predator, blurred by the current Δρ. When Δρ is large, the two prey merge into one smear.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const LAMBDA = 0.0005;            // wavelength of light, mm
+const A_MIN=0.005, A_MAX=2.0;     // aperture bounds, mm
+const F_MIN=0.05,  F_MAX=5.0;     // depth bounds, mm
+// lens needs a focal plane to aim at: it only works once the cup has depth.
+const F_LENS_ON=0.15, F_LENS_FULL=0.7;
+
+const state = { A:1.5, f:0.08, L:0.0 };   // start: wide open, flat, no lens = nearly blind
+
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const lensGate = f => clamp((f-F_LENS_ON)/(F_LENS_FULL-F_LENS_ON),0,1); // 0 on a flat patch, 1 once deep
+function effLens(s){ return s.L * lensGate(s.f); }
+
+function terms(s){
+  const geom = (s.A/s.f) * (1-effLens(s));
+  const diff = LAMBDA/s.A;
+  const dr   = Math.sqrt(geom*geom + diff*diff);   // radians
+  return {geom, diff, dr};
+}
+const toDeg = r => r*180/Math.PI;
+
+// ---- element refs ----
+const $=id=>document.getElementById(id);
+const sA=$("sA"), sF=$("sF"), sL=$("sL");
+
+// sliders A and f are logarithmic (min/max are log10 of the value)
+function stateToSliders(){
+  sA.value = Math.log10(state.A);
+  sF.value = Math.log10(state.f);
+  sL.value = state.L;
+}
+function slidersToState(){
+  state.A = clamp(Math.pow(10, +sA.value), A_MIN, A_MAX);
+  state.f = clamp(Math.pow(10, +sF.value), F_MIN, F_MAX);
+  state.L = clamp(+sL.value,0,1);
+}
+
+function stageName(s){
+  const g=lensGate(s.f), el=effLens(s);
+  if(s.f < 0.12) return "Flat patch — senses light, no image";
+  if(el > 0.55)  return "Lens eye — bright and sharp";
+  if(s.A < 0.06) return "Pinhole — sharp but starved of light";
+  if(g>0)        return "Cup + forming lens";
+  return "Open cup — crude sense of direction";
+}
+
+// ---------- render: numbers ----------
+function renderNumbers(){
+  const t=terms(state);
+  const drDeg=toDeg(t.dr);
+  $("acuity").textContent = drDeg>=170 ? "Δρ ≥170° (blind)"
+        : drDeg<0.1 ? "Δρ "+drDeg.toFixed(3)+"°" : "Δρ "+drDeg.toFixed(2)+"°";
+  $("stage").textContent = stageName(state);
+  // sharpness bar: log scale between ~40° (blind) and ~0.03° (great)
+  const s = clamp((Math.log10(40)-Math.log10(drDeg))/(Math.log10(40)-Math.log10(0.03)),0,1);
+  $("sharpBar").style.width = (s*100).toFixed(1)+"%";
+  $("fG").textContent = toDeg(t.geom).toFixed(2)+"°";
+  $("fD").textContent = toDeg(t.diff).toFixed(3)+"°";
+  const el=effLens(state);
+  $("fL").textContent = (el*100).toFixed(0)+"%";
+  $("vA").textContent = state.A.toFixed(3)+" mm";
+  $("vF").textContent = state.f.toFixed(2)+" mm";
+  const gate=lensGate(state.f);
+  $("vL").textContent = (state.L*100).toFixed(0)+"%";
+  $("lensNote").innerHTML = gate<1
+    ? `Needs depth to focus onto: only <b>${(gate*100).toFixed(0)}%</b> effective at this cup depth. A lens on a flat patch does nothing.`
+    : `Fully effective — the cup is deep enough to give the lens a focal plane.`;
+}
+
+// ---------- render: eye cross-section (SVG) ----------
+function renderEye(){
+  const t=terms(state), el=effLens(state);
+  const W=380,H=300, cy=H/2;
+  const apX=70;                                   // aperture plane (front)
+  const fpx = 40 + (state.f/F_MAX)*250;           // depth in px
+  const retX= apX+fpx;
+  const aHalf = clamp((state.A/A_MAX)*95, 1.5, 95);// aperture half-height px
+  const spotHalf = aHalf*(1-el);                  // geometric blur spot half-height
+
+  const wallTop=18, wallBot=H-18;
+  const parts=[];
+  parts.push(`<rect x="0" y="0" width="${W}" height="${H}" fill="#0b0e12"/>`);
+  // incoming light hint
+  parts.push(`<text x="8" y="16" fill="#5b6673" font-size="11">distant point of light →</text>`);
+  for(const dy of [-aHalf*0.6,0,aHalf*0.6]){
+    parts.push(`<line x1="6" y1="${cy+dy}" x2="${apX}" y2="${cy+dy}" stroke="#3a444f" stroke-width="1"/>`);
+  }
+  // pigment cup: two walls from aperture edges curving back to retina
+  const cupTop = `M ${apX} ${wallTop} L ${apX} ${cy-aHalf} Q ${apX+fpx*0.5} ${cy-aHalf*0.4} ${retX} ${cy-aHalf*0.15}`;
+  const cupBot = `M ${apX} ${wallBot} L ${apX} ${cy+aHalf} Q ${apX+fpx*0.5} ${cy+aHalf*0.4} ${retX} ${cy+aHalf*0.15}`;
+  parts.push(`<path d="${cupTop}" stroke="#6b7684" stroke-width="8" fill="none" stroke-linecap="round"/>`);
+  parts.push(`<path d="${cupBot}" stroke="#6b7684" stroke-width="8" fill="none" stroke-linecap="round"/>`);
+  // retina (photoreceptor arc at the back)
+  parts.push(`<path d="M ${retX} ${cy-aHalf*0.15} Q ${retX+22} ${cy} ${retX} ${cy+aHalf*0.15}"
+     stroke="#8895a3" stroke-width="3" fill="none"/>`);
+  // rays: from the two aperture edges to the blur spot on the retina
+  const rays=[[cy-aHalf, cy-spotHalf],[cy+aHalf, cy+spotHalf]];
+  for(const [y0,y1] of rays){
+    parts.push(`<line x1="${apX}" y1="${y0}" x2="${retX}" y2="${y1}" stroke="#e8b93f" stroke-width="1.4" opacity="0.9"/>`);
+    parts.push(`<line x1="6" y1="${y0}" x2="${apX}" y2="${y0}" stroke="#e8b93f" stroke-width="1.4" opacity="0.5"/>`);
+  }
+  // lens in the aperture (opacity ∝ effective lens)
+  if(el>0.02){
+    parts.push(`<ellipse cx="${apX}" cy="${cy}" rx="9" ry="${aHalf}" fill="#7ee787" opacity="${0.15+0.6*el}"/>`);
+    parts.push(`<ellipse cx="${apX}" cy="${cy}" rx="9" ry="${aHalf}" fill="none" stroke="#7ee787" stroke-width="1.2" opacity="0.9"/>`);
+  }
+  // blur spot highlight
+  parts.push(`<line x1="${retX}" y1="${cy-spotHalf}" x2="${retX}" y2="${cy+spotHalf}" stroke="#ff5e7e" stroke-width="4" stroke-linecap="round"/>`);
+  // labels
+  parts.push(`<line x1="${apX}" y1="${cy+aHalf+10}" x2="${apX}" y2="${cy-aHalf-10}" stroke="#5eb3ff" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>`);
+  parts.push(`<text x="${apX}" y="${H-4}" fill="#5eb3ff" font-size="11" text-anchor="middle">A</text>`);
+  parts.push(`<line x1="${apX}" y1="${H-24}" x2="${retX}" y2="${H-24}" stroke="#ff8f5e" stroke-width="1" opacity="0.7"/>`);
+  parts.push(`<text x="${(apX+retX)/2}" y="${H-28}" fill="#ff8f5e" font-size="11" text-anchor="middle">f (depth)</text>`);
+  parts.push(`<text x="${retX+6}" y="${cy-spotHalf-4}" fill="#ff5e7e" font-size="11">blur</text>`);
+  $("eye").innerHTML = parts.join("");
+}
+
+// ---------- render: trade-off curve ----------
+function renderCurve(){
+  const c=$("curve"), x=c.getContext("2d"), W=c.width,H=c.height;
+  x.clearRect(0,0,W,H);
+  const padL=44,padB=26,padT=10,padR=10;
+  const X=a=> padL + (Math.log10(a)-Math.log10(A_MIN))/(Math.log10(A_MAX)-Math.log10(A_MIN))*(W-padL-padR);
+  // y axis in degrees, log
+  const yMin=0.02, yMax=60;
+  const Y=d=> padT + (Math.log10(d)-Math.log10(yMin))/(Math.log10(yMax)-Math.log10(yMin))*(H-padT-padB);
+  // grid
+  x.strokeStyle="#232b34"; x.fillStyle="#6b7684"; x.font="10px sans-serif";
+  for(const d of [0.1,1,10]){ const yy=Y(d); x.beginPath();x.moveTo(padL,yy);x.lineTo(W-padR,yy);x.stroke(); x.fillText(d+"°",6,yy+3);}
+  for(const a of [0.01,0.1,1]){ const xx=X(a); x.beginPath();x.moveTo(xx,padT);x.lineTo(xx,H-padB);x.stroke(); x.fillText(a+"mm",xx-10,H-8);}
+  // curve of Δρ vs A at current f,L
+  x.lineWidth=2; x.strokeStyle="#e6edf3"; x.beginPath();
+  let first=true;
+  for(let i=0;i<=160;i++){
+    const a=Math.pow(10, Math.log10(A_MIN)+ i/160*(Math.log10(A_MAX)-Math.log10(A_MIN)));
+    const s={A:a,f:state.f,L:state.L};
+    const d=clamp(toDeg(terms(s).dr),yMin,yMax);
+    const px=X(a),py=Y(d);
+    if(first){x.moveTo(px,py);first=false;} else x.lineTo(px,py);
+  }
+  x.stroke();
+  // optimum aperture A* = sqrt(λ f)  (pinhole, lens off)
+  const aOpt=Math.sqrt(LAMBDA*state.f);
+  if(aOpt>=A_MIN&&aOpt<=A_MAX){
+    x.strokeStyle="#5eb3ff"; x.setLineDash([4,4]); x.beginPath();x.moveTo(X(aOpt),padT);x.lineTo(X(aOpt),H-padB);x.stroke();x.setLineDash([]);
+  }
+  // current point
+  const cd=clamp(toDeg(terms(state).dr),yMin,yMax);
+  x.fillStyle="#ff5e7e"; x.beginPath();x.arc(X(state.A),Y(cd),5,0,7);x.fill();
+  $("curveCap").innerHTML = `Blue line = the pinhole's best aperture A* = √(λf) = <b>${(aOpt).toFixed(3)} mm</b> here.
+    A lens lets you sit far to the right of it (big, bright aperture) without the blur penalty.`;
+}
+
+// ---------- render: simulated vision ----------
+const vis=$("vision"), vx=vis.getContext("2d");
+const scene=document.createElement("canvas"); scene.width=vis.width; scene.height=vis.height;
+function drawScene(){
+  const g=scene.getContext("2d"), W=scene.width,H=scene.height;
+  const sky=g.createLinearGradient(0,0,0,H); sky.addColorStop(0,"#123b57");sky.addColorStop(1,"#1d5a6e");
+  g.fillStyle=sky; g.fillRect(0,0,W,H);
+  g.fillStyle="#f4e6a1"; g.beginPath();g.arc(W*0.82,H*0.24,26,0,7);g.fill();      // sun/light
+  g.fillStyle="#0c2733"; g.fillRect(0,H*0.72,W,H*0.28);                            // seabed
+  // looming predator (dark shark-ish triangle)
+  g.fillStyle="#04141b"; g.beginPath();
+  g.moveTo(W*0.30,H*0.30); g.lineTo(W*0.56,H*0.46); g.lineTo(W*0.30,H*0.60);
+  g.lineTo(W*0.36,H*0.45); g.closePath(); g.fill();
+  // two prey dots, close together (the resolution test)
+  g.fillStyle="#cfe8ff";
+  g.beginPath();g.arc(W*0.70,H*0.62,7,0,7);g.fill();
+  g.beginPath();g.arc(W*0.76,H*0.62,7,0,7);g.fill();
+}
+function renderVision(){
+  const drDeg=toDeg(terms(state).dr);
+  const FOV=42, pxPerDeg=vis.width/FOV;
+  const blurPx=clamp(drDeg*pxPerDeg*0.55,0,70);
+  vx.clearRect(0,0,vis.width,vis.height);
+  vx.filter = blurPx>0.3 ? `blur(${blurPx.toFixed(1)}px)` : "none";
+  vx.drawImage(scene,0,0);
+  vx.filter="none";
+}
+
+// ---------- master render ----------
+function render(){ renderNumbers(); renderEye(); renderCurve(); renderVision(); }
+
+// ---------- interaction ----------
+[sA,sF,sL].forEach(el=>el.addEventListener("input",()=>{stopEvolve();slidersToState();render();}));
+$("reset").addEventListener("click",()=>{stopEvolve();state.A=1.5;state.f=0.08;state.L=0;gen=0;$("gen").textContent="generation 0";stateToSliders();render();});
+
+// ---------- auto-evolve (hill-climb, 1%-ish steps) ----------
+let timer=null, gen=0;
+function step(){
+  const cur=terms(state).dr;
+  let best={...state}, bestDr=cur;
+  for(let k=0;k<4;k++){                                  // try a few random neighbours
+    const cand={
+      A:clamp(state.A*(1+(Math.random()*2-1)*0.03),A_MIN,A_MAX),
+      f:clamp(state.f*(1+(Math.random()*2-1)*0.03),F_MIN,F_MAX),
+      L:clamp(state.L+(Math.random()*2-1)*0.025,0,1),
+    };
+    const d=terms(cand).dr;
+    if(d<bestDr){bestDr=d;best=cand;}
+  }
+  if(bestDr<cur*0.99999){ state.A=best.A;state.f=best.f;state.L=best.L; }
+  gen++; $("gen").textContent="generation "+gen;
+  stateToSliders(); render();
+}
+function startEvolve(){ if(timer)return; $("evolve").textContent="⏸ Pause"; timer=setInterval(step,55); }
+function stopEvolve(){ if(!timer)return; clearInterval(timer);timer=null; $("evolve").textContent="▶ Auto-evolve"; }
+$("evolve").addEventListener("click",()=> timer?stopEvolve():startEvolve());
+
+// ---------- init ----------
+drawScene(); stateToSliders(); render();
+</script>
+</body>
+</html>
