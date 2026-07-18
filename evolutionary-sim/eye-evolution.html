@@ -50,6 +50,10 @@
 </head>
 <body>
 <div class="wrap">
+  <nav style="display:flex;gap:8px;margin-bottom:16px">
+    <a href="eye-evolution.html" style="font-size:13px;padding:7px 14px;border-radius:8px;border:1px solid #3d4855;color:#e6edf3;text-decoration:none;background:#1f2733;font-weight:600">Eye optics explainer</a>
+    <a href="eye-evolution-sim.html" style="font-size:13px;padding:7px 14px;border-radius:8px;border:1px solid #2b333d;color:#9aa7b4;text-decoration:none;background:#131820">Evolution sim</a>
+  </nav>
   <h1>Eye evolution: the one trade-off that builds an eye</h1>
   <p class="sub">Drag the sliders, or hit <b>Auto-evolve</b> and watch a blind flat patch hill-climb into a lens eye —
   one 1%-better step at a time (Nilsson &amp; Pelger, 1994).</p>
@@ -327,7 +331,7 @@ function startEvolve(){ if(timer)return; $("evolve").textContent="⏸ Pause"; ti
 function stopEvolve(){ if(!timer)return; clearInterval(timer);timer=null; $("evolve").textContent="▶ Auto-evolve"; }
 $("evolve").addEventListener("click",()=> timer?stopEvolve():startEvolve());
 
-// ---------- init ----------
+// ---------- init (reopened in preview) ----------
 drawScene(); stateToSliders(); render();
 </script>
 </body>

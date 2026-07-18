@@ -126,3 +126,33 @@ other parameters.
   ocean depths etc.) actually produce a spread of stopping points? The N&P landscape is
   smooth and convergent by construction, so surprise may have to come from the pressure
   variation, not the optics.
+
+## 2026-07-17
+
+Context: building the predator-selection layer on the eye sim. User articulated a strong,
+general design value and corrected a mechanism explanation.
+
+- **[correction]** Rejected the "Link 3" claim that a flat patch can't sense direction and
+  needs a cup to know which way to flee. User's objection was correct: direction isn't a
+  separate mechanism — it collapses into the same Δρ (a flat patch is ~one hemisphere-wide
+  pixel; a cup shades receptors into several pixels). Dropped the separate direction factor.
+  Lesson: user catches over-engineered mechanism and prefers fewer independent moving parts.
+- **[idea, value — HIGH SIGNAL]** Stated a core design principle for the whole sim project,
+  in their own words: they do NOT want their own parameter choices (costs, initial values) to
+  determine the outcome — "i want the resulting actions to be basically the same regardless
+  if my values were different." Reasoned unprompted that this rules out thresholds with
+  radically different behavior (correctly intuiting bifurcation-sensitivity). Standing
+  acceptance criterion, not a one-off: **minimize researcher degrees of freedom; the
+  physics/ecology should drive, the modeller's arbitrary knobs should be inert; prefer
+  structurally-stable, single-attractor systems with no tuned thresholds.** Sharpens the older
+  "don't engineer a specific outcome / want emergent surprise" thread (2026-07-15) into a
+  testable robustness requirement.
+- **[meta]** Endorsed making robustness a *measured, displayed* property (sweep the arbitrary
+  knobs, show the outcome barely moves) rather than an asserted one — good fit with the repo's
+  verification-driven ethos.
+- **[finding, uncertain]** The predator-only eye model turned out to be single-attractor
+  (every setting → a lens eye); cost is confirmed inert, but β (predator demand) is also inert
+  on eye *type* — it only moves survival/aperture. So genuine eye-*type* divergence still needs
+  the deferred light-level / ocean-depth pressure. Reinforces the standing hypothesis that
+  surprise/divergence has to come from environmental variation, not a single smooth landscape.
+  Watch whether the user adds the light lever next specifically to get divergent outcomes.

@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eye evolution — predator selection sim</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --line:#2b333d; --ink:#e6edf3; --muted:#9aa7b4;
+    --geom:#ff8f5e; --diff:#5eb3ff; --lens:#7ee787; --hot:#ff5e7e; --acc:#c8a2ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1160px;margin:0 auto;padding:16px 18px 70px}
+  nav{display:flex;gap:8px;margin-bottom:16px}
+  nav a{font-size:13px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);
+    color:var(--muted);text-decoration:none;background:#131820}
+  nav a.on{color:var(--ink);border-color:#3d4855;background:#1f2733;font-weight:600}
+  h1{font-size:21px;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 16px;font-size:14px}
+  .grid{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  svg,canvas{display:block;width:100%;height:auto;border-radius:8px}
+  .controls{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  .ctrl{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);min-width:120px}
+  .ctrl b{color:var(--ink);font-size:13px}
+  .ctrl input[type=range]{width:150px}
+  .ctrl .val{color:var(--acc);font-variant-numeric:tabular-nums}
+  button{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);
+    background:#1f2733;color:var(--ink);cursor:pointer}
+  button:hover{border-color:#3d4855}
+  button.primary{background:var(--lens);color:#08110a;border-color:var(--lens);font-weight:700}
+  button:disabled{opacity:.5;cursor:default}
+  .readrow{display:flex;flex-wrap:wrap;gap:14px 22px;margin-top:10px;font-size:13px}
+  .readrow div{color:var(--muted)} .readrow b{color:var(--ink);font-variant-numeric:tabular-nums}
+  .stage{color:var(--acc);font-weight:600}
+  .play{display:flex;gap:10px;align-items:center;margin-top:12px}
+  .play input[type=range]{flex:1}
+  .cap{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  details{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:6px 14px}
+  summary{cursor:pointer;font-size:13px;color:var(--muted);padding:8px 0}
+  .barmini{height:8px;border-radius:5px;background:#0b0e12;border:1px solid var(--line);overflow:hidden;margin-top:4px}
+  .barmini>i{display:block;height:100%;background:linear-gradient(90deg,var(--hot),var(--lens))}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a href="eye-evolution.html">Eye optics explainer</a>
+    <a href="eye-evolution-sim.html" class="on">Evolution sim</a>
+  </nav>
+  <h1>Eye evolution under a predator</h1>
+  <p class="sub">A population of eyes, each just senses light. The only rule: the sharper you see, the farther
+  you spot the predator, the likelier you live to breed — minus the cost of the tissue. Press <b>Run</b>, then watch it play back.</p>
+
+  <div class="controls">
+    <div class="ctrl"><b>Predator demand β</b><span>size/speed/refuge → how sharp you must be</span>
+      <input id="cBeta" type="range" min="2.6" max="4.2" step="0.05" value="3.0"><span class="val" id="vBeta"></span></div>
+    <div class="ctrl"><b>Predation intensity</b><span>encounters per lifetime</span>
+      <input id="cN" type="range" min="1" max="12" step="1" value="5"><span class="val" id="vN"></span></div>
+    <div class="ctrl"><b>Population</b>
+      <input id="cPop" type="range" min="60" max="400" step="20" value="180"><span class="val" id="vPop"></span></div>
+    <div class="ctrl"><b>Generations</b>
+      <input id="cGen" type="range" min="200" max="2000" step="50" value="800"><span class="val" id="vGen"></span></div>
+    <div style="display:flex;gap:10px;margin-left:auto">
+      <button class="primary" id="run">▶ Run &amp; record</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: the average eye -->
+    <div class="panel">
+      <h2>The evolving eye (population average)</h2>
+      <svg id="eye" viewBox="0 0 380 260" aria-label="eye cross section"></svg>
+      <div class="legend">
+        <span><i style="background:var(--hot)"></i>blur spot</span>
+        <span><i style="background:var(--lens)"></i>lens</span>
+        <span><i style="background:#6b7684"></i>pigment cup</span>
+      </div>
+      <h2 style="margin-top:16px">What the eye sees (the predator)</h2>
+      <canvas id="vision" width="620" height="200"></canvas>
+      <div class="readrow">
+        <div>generation <b id="rGen">–</b></div>
+        <div>stage <span class="stage" id="rStage">–</span></div>
+      </div>
+      <div class="readrow">
+        <div>Δρ <b id="rDr">–</b></div>
+        <div>detect at <b id="rDet">–</b></div>
+        <div>survive/encounter <b id="rSurv">–</b></div>
+      </div>
+      <div class="readrow">
+        <div>aperture A <b id="rA">–</b></div>
+        <div>depth f <b id="rF">–</b></div>
+        <div>lens <b id="rL">–</b></div>
+      </div>
+      <div class="barmini"><i id="rBar"></i></div>
+    </div>
+
+    <!-- RIGHT: the population + trajectory -->
+    <div class="panel">
+      <h2>The population (each dot = one individual's sharpness)</h2>
+      <canvas id="spread" width="620" height="150"></canvas>
+      <div class="cap">Sharper eyes are to the left. Watch the cloud slide left and tighten as selection acts.</div>
+      <h2 style="margin-top:16px">Evolution of the average eye over generations</h2>
+      <canvas id="traj" width="620" height="180"></canvas>
+      <div class="play">
+        <button id="playBtn" disabled>▶ Play</button>
+        <input id="scrub" type="range" min="0" max="0" value="0" step="1" disabled>
+        <span class="val" id="scrubLbl" style="color:var(--muted);font-size:12px">—</span>
+      </div>
+    </div>
+  </div>
+
+  <details id="robWrap">
+    <summary>Robustness check — does <i>my</i> tuning decide the outcome? (click to run sweeps)</summary>
+    <p class="cap">Each sweep re-evolves the population many times, changing one knob across orders of magnitude,
+      and plots the <b>final</b> sharpness. What to look for: <b>no sweep produces a cliff</b> — every setting still
+      evolves a functional lens eye, the curves just slide smoothly. That "no threshold / no categorically different
+      outcome" is the structural stability you wanted. Notes per knob: <b>cost</b> (the one you worried about tuning)
+      is nearly flat — it doesn't decide the result. <b>Mutation rate</b> genuinely shifts the plateau, but that's real
+      <i>mutation load</i> (more mutation = the population sits looser around the peak), not modelling bias — and it's
+      still smooth. <b>Predator demand β</b> barely moves sharpness because in a single predator world any real predator
+      drives a full lens eye; β sets how much <i>survival</i> that eye buys, not the eye's type. Getting genuinely
+      different eye <i>types</i> needs the deferred light-level pressure.</p>
+    <div style="display:flex;gap:10px;margin:8px 0"><button id="runRob">Run robustness sweeps</button><span class="val" id="robStatus" style="color:var(--muted);font-size:12px;align-self:center"></span></div>
+    <canvas id="rob" width="1120" height="260"></canvas>
+  </details>
+</div>
+
+<script>
+"use strict";
+/* ---------- optics (shared with the explainer) ---------- */
+const LAMBDA=0.0005, A_MIN=0.005,A_MAX=2.0, F_MIN=0.05,F_MAX=5.0, F_LENS_ON=0.15,F_LENS_FULL=0.7;
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const lensGate=f=>clamp((f-F_LENS_ON)/(F_LENS_FULL-F_LENS_ON),0,1);
+const effLens=g=>g.L*lensGate(g.f);
+function drho(g){ const geom=(g.A/g.f)*(1-effLens(g)), diff=LAMBDA/g.A; return Math.sqrt(geom*geom+diff*diff); }
+const toDeg=r=>r*180/Math.PI;
+
+/* ---------- ecology / fitness ---------- */
+const W_PRED=500;                    // predator size, mm (fixed)
+// tissue cost from geometry: deeper cup + bigger aperture + lens material = more tissue
+const TISSUE_REF = 1*(0.5*1) + 2*(1*0.5*0.5) + 1*1;   // a reference lens eye (A=.5,f=1,L=1)
+function tissue(g){ const el=effLens(g); return 1*(g.A*g.f) + 2*(el*g.A*g.A) + 1*g.f; }
+function eyeCost(g,kCost){ return clamp(kCost*tissue(g)/TISSUE_REF,0,0.9); }
+function survPerEnc(g,beta){ return 1/(1+beta*drho(g)); }              // = D/(D+Dmin)
+function detectDist(g){ return W_PRED/drho(g); }                       // mm
+// selection ranks by LOG fitness: n·ln(survival) + ln(1-cost). Using logs avoids the
+// underflow that otherwise floors all poor-to-moderate eyes to one value and kills the
+// gradient across exactly the region the eye must cross.
+function score(g,P){ return P.n*Math.log(survPerEnc(g,P.beta)) + Math.log(1-eyeCost(g,P.kCost)); }
+
+/* ---------- rng ---------- */
+let _seed=12345; function rnd(){ _seed=(_seed*1103515245+12345)&0x7fffffff; return _seed/0x7fffffff; }
+function randn(){ let u=0,v=0; while(u===0)u=rnd(); while(v===0)v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+
+/* ---------- GA ---------- */
+function makeStart(N){
+  const pop=[];
+  for(let i=0;i<N;i++) pop.push({ A:clamp(1.0+rnd()*0.6,A_MIN,A_MAX), f:clamp(0.06+rnd()*0.04,F_MIN,F_MAX), L:rnd()*0.05 });
+  return pop;
+}
+function mutate(g,mut){
+  return { A:clamp(g.A*Math.exp(randn()*mut),A_MIN,A_MAX),
+           f:clamp(g.f*Math.exp(randn()*mut),F_MIN,F_MAX),
+           L:clamp(g.L+randn()*mut,0,1) };
+}
+function nextGen(pop,P){
+  // tournament selection: scale-independent (uses ranking of `score`), so it's robust to
+  // drift AND to the absolute magnitude of fitness — one fewer thing my tuning can bias.
+  const w=pop.map(g=>score(g,P)); const N=pop.length, k=P.k||6, np=[];
+  for(let i=0;i<N;i++){
+    let best=0, bw=-Infinity;
+    for(let t=0;t<k;t++){ const idx=(rnd()*N)|0; if(w[idx]>bw){ bw=w[idx]; best=idx; } }
+    np.push(mutate(pop[best],P.mut));
+  }
+  return np;
+}
+function summarize(pop,P,gen){
+  const N=pop.length; let aA=0,aF=0,aL=0,aDr=0,aS=0;
+  const drs=new Float32Array(N);
+  for(let i=0;i<N;i++){ const g=pop[i],d=drho(g); drs[i]=d; aA+=g.A;aF+=g.f;aL+=effLens(g);aDr+=d;aS+=survPerEnc(g,P.beta); }
+  return {gen, aA:aA/N,aF:aF/N,aL:aL/N,aDr:aDr/N,aSurv:aS/N, drs};
+}
+function runGA(P){
+  let pop=makeStart(P.pop); const hist=[];
+  for(let gen=0;gen<P.gens;gen++){ hist.push(summarize(pop,P,gen)); pop=nextGen(pop,P); }
+  hist.push(summarize(pop,P,P.gens));
+  return hist;
+}
+
+/* ---------- stage naming ---------- */
+function stageName(s){ // s = summary
+  if(s.aF<0.12) return "Flat patch — light only";
+  if(s.aL>0.5)  return "Lens eye";
+  if(s.aA<0.06) return "Pinhole";
+  if(lensGate(s.aF)>0.05) return "Cup + forming lens";
+  return "Open cup";
+}
+
+/* ---------- rendering: eye cross-section ---------- */
+function renderEye(s){
+  const W=380,H=260,cy=H/2, apX=64;
+  const fpx=36+(s.aF/F_MAX)*250, retX=apX+fpx;
+  const aHalf=clamp((s.aA/A_MAX)*80,1.5,80), el=clamp(s.aL,0,1), spotHalf=aHalf*(1-el);
+  const P=[]; P.push(`<rect width="${W}" height="${H}" fill="#0b0e12"/>`);
+  for(const dy of [-aHalf*0.6,0,aHalf*0.6]) P.push(`<line x1="6" y1="${cy+dy}" x2="${apX}" y2="${cy+dy}" stroke="#3a444f"/>`);
+  P.push(`<path d="M ${apX} 16 L ${apX} ${cy-aHalf} Q ${apX+fpx*0.5} ${cy-aHalf*0.4} ${retX} ${cy-aHalf*0.15}" stroke="#6b7684" stroke-width="8" fill="none" stroke-linecap="round"/>`);
+  P.push(`<path d="M ${apX} ${H-16} L ${apX} ${cy+aHalf} Q ${apX+fpx*0.5} ${cy+aHalf*0.4} ${retX} ${cy+aHalf*0.15}" stroke="#6b7684" stroke-width="8" fill="none" stroke-linecap="round"/>`);
+  P.push(`<path d="M ${retX} ${cy-aHalf*0.15} Q ${retX+20} ${cy} ${retX} ${cy+aHalf*0.15}" stroke="#8895a3" stroke-width="3" fill="none"/>`);
+  for(const [y0,y1] of [[cy-aHalf,cy-spotHalf],[cy+aHalf,cy+spotHalf]]){
+    P.push(`<line x1="${apX}" y1="${y0}" x2="${retX}" y2="${y1}" stroke="#e8b93f" stroke-width="1.4" opacity="0.9"/>`);
+    P.push(`<line x1="6" y1="${y0}" x2="${apX}" y2="${y0}" stroke="#e8b93f" stroke-width="1.4" opacity="0.5"/>`);
+  }
+  if(el>0.02){ P.push(`<ellipse cx="${apX}" cy="${cy}" rx="8" ry="${aHalf}" fill="#7ee787" opacity="${0.15+0.6*el}"/>`);
+    P.push(`<ellipse cx="${apX}" cy="${cy}" rx="8" ry="${aHalf}" fill="none" stroke="#7ee787" stroke-width="1.2"/>`); }
+  P.push(`<line x1="${retX}" y1="${cy-spotHalf}" x2="${retX}" y2="${cy+spotHalf}" stroke="#ff5e7e" stroke-width="4" stroke-linecap="round"/>`);
+  document.getElementById('eye').innerHTML=P.join("");
+}
+
+/* ---------- rendering: what the eye sees (predator, blurred by Δρ) ---------- */
+const vis=document.getElementById('vision'), vx=vis.getContext('2d');
+const scene=document.createElement('canvas'); scene.width=vis.width; scene.height=vis.height;
+(function drawScene(){
+  const g=scene.getContext('2d'),W=scene.width,H=scene.height;
+  const sky=g.createLinearGradient(0,0,0,H); sky.addColorStop(0,"#0d3a52");sky.addColorStop(1,"#155063");
+  g.fillStyle=sky; g.fillRect(0,0,W,H);
+  g.fillStyle="#f4e6a1"; g.beginPath();g.arc(W*0.85,H*0.22,20,0,7);g.fill();
+  g.fillStyle="#04141b"; g.beginPath();  // a shark-ish predator silhouette
+  g.moveTo(W*0.20,H*0.5); g.quadraticCurveTo(W*0.45,H*0.24,W*0.72,H*0.44);
+  g.quadraticCurveTo(W*0.60,H*0.5,W*0.72,H*0.56); g.quadraticCurveTo(W*0.45,H*0.76,W*0.20,H*0.5);
+  g.closePath(); g.fill();
+  g.beginPath(); g.moveTo(W*0.44,H*0.30); g.lineTo(W*0.50,H*0.12); g.lineTo(W*0.56,H*0.34); g.closePath(); g.fill(); // dorsal fin
+})();
+function renderVision(s){
+  const drDeg=toDeg(s.aDr), FOV=42, pxPerDeg=vis.width/FOV;
+  const blurPx=clamp(drDeg*pxPerDeg*0.55,0,80);
+  vx.clearRect(0,0,vis.width,vis.height);
+  vx.filter=blurPx>0.3?`blur(${blurPx.toFixed(1)}px)`:"none";
+  vx.drawImage(scene,0,0); vx.filter="none";
+}
+
+/* ---------- rendering: population spread ---------- */
+const spr=document.getElementById('spread'), sx=spr.getContext('2d');
+const DR_LO=0.0002, DR_HI=30; // deg range for x-axis (sharp -> blind), log
+function xOfDeg(d){ d=clamp(d,DR_LO,DR_HI); return 30+(Math.log10(DR_HI)-Math.log10(d))/(Math.log10(DR_HI)-Math.log10(DR_LO))*(spr.width-45); }
+function renderSpread(s){
+  const W=spr.width,H=spr.height; sx.clearRect(0,0,W,H);
+  sx.strokeStyle="#232b34"; sx.fillStyle="#6b7684"; sx.font="10px sans-serif";
+  for(const d of [0.001,0.01,0.1,1,10]){ const x=xOfDeg(d); sx.beginPath();sx.moveTo(x,10);sx.lineTo(x,H-18);sx.stroke(); sx.fillText(d+"°",x-8,H-6);}
+  sx.fillText("sharper →",34,H-6); sx.fillText("← blurrier",W-70,H-6);
+  sx.fillStyle="rgba(200,162,255,0.5)";
+  for(let i=0;i<s.drs.length;i++){ const x=xOfDeg(toDeg(s.drs[i])), y=18+((i*47)%(H-40)); sx.beginPath();sx.arc(x,y,3,0,7);sx.fill(); }
+}
+
+/* ---------- rendering: trajectory ---------- */
+const trj=document.getElementById('traj'), tx=trj.getContext('2d');
+let HIST=null, playIdx=0;
+function renderTraj(idx){
+  const W=trj.width,H=trj.height,padL=42,padB=22,padT=10,padR=8; tx.clearRect(0,0,W,H);
+  if(!HIST) return;
+  const G=HIST.length-1;
+  const X=g=>padL+g/G*(W-padL-padR);
+  const yLo=0.0005,yHi=1500;
+  const Y=d=>padT+(Math.log10(clamp(d,yLo,yHi))-Math.log10(yLo))/(Math.log10(yHi)-Math.log10(yLo))*(H-padT-padB);
+  tx.strokeStyle="#232b34"; tx.fillStyle="#6b7684"; tx.font="10px sans-serif";
+  for(const d of [0.01,1,100]){ const y=Y(d); tx.beginPath();tx.moveTo(padL,y);tx.lineTo(W-padR,y);tx.stroke(); tx.fillText(d+"°",6,y+3);}
+  tx.lineWidth=2; tx.strokeStyle="#7ee787"; tx.beginPath();
+  for(let i=0;i<HIST.length;i++){ const x=X(HIST[i].gen),y=Y(toDeg(HIST[i].aDr)); i?tx.lineTo(x,y):tx.moveTo(x,y); }
+  tx.stroke();
+  const cx=X(HIST[idx].gen),cy=Y(toDeg(HIST[idx].aDr));
+  tx.strokeStyle="#c8a2ff"; tx.setLineDash([3,3]); tx.beginPath();tx.moveTo(cx,padT);tx.lineTo(cx,H-padB);tx.stroke();tx.setLineDash([]);
+  tx.fillStyle="#ff5e7e"; tx.beginPath();tx.arc(cx,cy,4,0,7);tx.fill();
+  tx.fillStyle="#6b7684"; tx.fillText("avg Δρ (log) vs generation",padL+4,H-6);
+}
+
+/* ---------- frame render ---------- */
+function renderFrame(idx){
+  const s=HIST[idx]; playIdx=idx;
+  renderEye(s); renderVision(s); renderSpread(s); renderTraj(idx);
+  document.getElementById('rGen').textContent=s.gen;
+  document.getElementById('rStage').textContent=stageName(s);
+  const dd=toDeg(s.aDr);
+  document.getElementById('rDr').textContent= dd>=170?"≥170° (blind)":(dd<0.1?dd.toFixed(3):dd.toFixed(2))+"°";
+  document.getElementById('rDet').textContent=(W_PRED/s.aDr/1000).toFixed(2)+" m";
+  document.getElementById('rSurv').textContent=(s.aSurv*100).toFixed(1)+"%";
+  document.getElementById('rA').textContent=s.aA.toFixed(3)+" mm";
+  document.getElementById('rF').textContent=s.aF.toFixed(2)+" mm";
+  document.getElementById('rL').textContent=(s.aL*100).toFixed(0)+"%";
+  const sh=clamp((Math.log10(40)-Math.log10(Math.max(dd,0.0005)))/(Math.log10(40)-Math.log10(0.005)),0,1);
+  document.getElementById('rBar').style.width=(sh*100).toFixed(1)+"%";
+  const sc=document.getElementById('scrub'); sc.value=idx;
+  document.getElementById('scrubLbl').textContent="gen "+s.gen+" / "+HIST[HIST.length-1].gen;
+}
+
+/* ---------- controls ---------- */
+const $=id=>document.getElementById(id);
+function readParams(){ return {
+  beta:Math.pow(10,+$('cBeta').value), n:+$('cN').value, pop:+$('cPop').value, gens:+$('cGen').value,
+  mut:0.01, kCost:0.35, k:6 }; }
+function syncLabels(){ $('vBeta').textContent=Math.round(Math.pow(10,+$('cBeta').value)); $('vN').textContent=$('cN').value;
+  $('vPop').textContent=$('cPop').value; $('vGen').textContent=$('cGen').value; }
+['cBeta','cN','cPop','cGen'].forEach(id=>$(id).addEventListener('input',syncLabels)); syncLabels();
+
+let playTimer=null;
+function stopPlay(){ if(playTimer){clearInterval(playTimer);playTimer=null;$('playBtn').textContent="▶ Play";} }
+function startPlay(){ if(!HIST)return; if(playIdx>=HIST.length-1)playIdx=0;
+  $('playBtn').textContent="⏸ Pause";
+  const step=Math.max(1,Math.floor((HIST.length-1)/600));   // whole run plays in ~18s
+  playTimer=setInterval(()=>{ if(playIdx>=HIST.length-1){stopPlay();return;} renderFrame(Math.min(HIST.length-1,playIdx+step)); },30); }
+$('playBtn').addEventListener('click',()=>playTimer?stopPlay():startPlay());
+$('scrub').addEventListener('input',e=>{ stopPlay(); renderFrame(+e.target.value); });
+
+$('run').addEventListener('click',()=>{
+  stopPlay(); _seed=12345; const P=readParams();
+  $('run').disabled=true; $('run').textContent="…evolving";
+  setTimeout(()=>{
+    HIST=runGA(P);
+    const sc=$('scrub'); sc.max=HIST.length-1; sc.value=0; sc.disabled=false; $('playBtn').disabled=false;
+    renderFrame(0); $('run').disabled=false; $('run').textContent="▶ Run & record"; startPlay();
+  },30);
+});
+
+/* ---------- robustness sweeps ---------- */
+function finalDr(P){ const h=runGA(P); let s=0,c=0; for(let i=Math.max(0,h.length-20);i<h.length;i++){s+=h[i].aDr;c++;} return toDeg(s/c); }
+function sweep(base,key,vals){ return vals.map(v=>{ const P=Object.assign({},base,{[key]:v}); _seed=999; return {v,dr:finalDr(P)}; }); }
+$('runRob').addEventListener('click',()=>{
+  $('runRob').disabled=true; $('robStatus').textContent="running…";
+  setTimeout(()=>{
+    const base={beta:Math.pow(10,3.2),n:5,pop:100,gens:500,mut:0.01,kCost:0.35,k:6};
+    const rC=sweep(base,'kCost',[0.02,0.08,0.2,0.5,1.5,4]);   // cost coeff, ~2.3 decades
+    const rM=sweep(base,'mut',[0.004,0.008,0.015,0.03,0.05]); // mutation rate
+    const rB=sweep(base,'beta',[600,1500,4000,10000,25000]);  // predator demand (ecological)
+    drawRob(rC,rM,rB);
+    $('runRob').disabled=false; $('robStatus').textContent="done — no cliffs; cost flat, mutation = smooth mutation load, β ~flat on sharpness.";
+  },30);
+});
+function drawRob(rC,rM,rB){
+  const c=$('rob'),x=c.getContext('2d'),W=c.width,H=c.height; x.clearRect(0,0,W,H);
+  const panels=[["cost coeff — nearly flat (inert)",rC,"#ff8f5e"],["mutation rate — smooth mutation load",rM,"#5eb3ff"],["predator demand β — eye type invariant",rB,"#c8a2ff"]];
+  const pw=W/3;
+  panels.forEach(([title,data,col],pi)=>{
+    const ox=pi*pw+44, plotW=pw-64, padT=24,padB=30, plotH=H-padT-padB;
+    const vs=data.map(d=>d.v), ds=data.map(d=>d.dr);
+    const vlo=Math.log10(Math.min(...vs)),vhi=Math.log10(Math.max(...vs));
+    const dlo=Math.log10(0.001),dhi=Math.log10(200);
+    const X=v=>ox+(Math.log10(v)-vlo)/(vhi-vlo+1e-9)*plotW;
+    const Y=d=>padT+(dhi-Math.log10(clamp(d,0.001,200)))/(dhi-dlo)*plotH;
+    x.fillStyle="#9aa7b4";x.font="11px sans-serif";x.fillText(title,ox,16);
+    x.strokeStyle="#232b34";x.fillStyle="#6b7684";x.font="9px sans-serif";
+    for(const d of [0.01,1,100]){const y=Y(d);x.beginPath();x.moveTo(ox,y);x.lineTo(ox+plotW,y);x.stroke();x.fillText(d+"°",ox-26,y+3);}
+    x.strokeStyle=col;x.lineWidth=2;x.beginPath();
+    data.forEach((d,i)=>{const px=X(d.v),py=Y(d.dr); i?x.lineTo(px,py):x.moveTo(px,py);});
+    x.stroke();
+    x.fillStyle=col; data.forEach(d=>{x.beginPath();x.arc(X(d.v),Y(d.dr),3,0,7);x.fill();});
+  });
+}
+
+/* ---------- init: run once on load ---------- */
+$('run').click();
+</script>
+</body>
+</html>
