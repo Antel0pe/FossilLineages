@@ -55,3 +55,23 @@ excitingly ambitious versions of this
     - the model itself changes to show evolution and fitness is determined based on this for example for surface area to volume for heat retention
 - for development of eye do something where multiple animals are developing them but with different selection pressures for example at different depths of ocean such that some animals will develop varying stages of eyes and be interesting
 - simulate majority of evolutionary tree starting from single celled organisms or something basic
+- calorie requirements and energy being related. for example 10%? of energy passes through each level of food chain. so sun gives some energy, grass translates it into 10% energy, cow gets 10% of energy. animals can evolve to exploit energy sources. can evolve to do it more efficiently too. 
+- for evolving body shape, constraints need to be in place about motion, gravity
+
+- SOURCES OF INFORMATION as an emergent design principle for the big sim. The world should
+  contain latent channels of information — light (vision), pressure waves (hearing), diffusing
+  chemicals (smell/pheromones) — that exist as a *side effect of things happening*, NOT as
+  things I explicitly designate as "senses." Key constraint I care about: I must NOT hand-label
+  "this is a source of information" or "pheromone = mating opportunity," because then the only
+  reason a capability failed to evolve is that I forgot to designate it. Instead: things happen
+  (an organism moves → makes a pressure wave; a receptive female's metabolism → emits a
+  compound), and it is *possible but not guaranteed* for a lineage to evolve a sensor that reads
+  that channel and a behavior that exploits it. I want to be surprised — e.g. a male evolving to
+  detect a female's pheromone and seek her out — WITHOUT having encoded "detect pheromone,"
+  "pheromone means mating," or even "seek mate." Caveat I already see: for a channel to be
+  evolvable-into, the sim still has to actually generate the signal (sound has to be emitted for
+  hearing to have anything to detect), so "acknowledging the channel exists" is unavoidable even
+  if its *meaning* is never authored. The hard open problem underneath this is behavior/learning:
+  the sensor→action mapping is where emergence lives, and I don't yet know how to encode that
+  (this is the neuroevolution / evolvable-brain problem). Companion principle: emergent behavior
+  over encoded rules — never write "prey flees predator"; the flee response should be discovered.

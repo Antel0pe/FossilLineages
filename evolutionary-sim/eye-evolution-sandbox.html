@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eye evolution — predator/prey sandbox</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --line:#2b333d; --ink:#e6edf3; --muted:#9aa7b4;
+    --prey:#5eb3ff; --pred:#ff5e7e; --food:#7ee787; --acc:#c8a2ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1160px;margin:0 auto;padding:16px 18px 70px}
+  nav{display:flex;gap:8px;margin-bottom:16px}
+  nav a{font-size:13px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);
+    color:var(--muted);text-decoration:none;background:#131820}
+  nav a.on{color:var(--ink);border-color:#3d4855;background:#1f2733;font-weight:600}
+  h1{font-size:21px;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 16px;font-size:14px;max-width:820px}
+  .grid{display:grid;gap:14px;grid-template-columns:1.5fr 1fr}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  canvas{display:block;width:100%;height:auto;border-radius:8px;background:#0b0e12}
+  .controls{display:flex;flex-wrap:wrap;gap:14px 16px;align-items:flex-end;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  .ctrl{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);min-width:118px}
+  .ctrl b{color:var(--ink);font-size:13px}
+  .ctrl input[type=range]{width:150px;accent-color:var(--acc)}
+  .ctrl .val{color:var(--acc);font-variant-numeric:tabular-nums}
+  label.tog{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);cursor:pointer}
+  button{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);
+    background:#1f2733;color:var(--ink);cursor:pointer}
+  button:hover{border-color:#3d4855}
+  button.primary{background:var(--food);color:#08110a;border-color:var(--food);font-weight:700}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:4px}
+  .stat{background:#0b0e12;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+  .stat .k{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+  .stat .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:1px}
+  .cap{color:var(--muted);font-size:12.5px;margin-top:8px}
+  details{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:6px 14px}
+  summary{cursor:pointer;font-size:13px;color:var(--muted);padding:8px 0}
+  details p{color:var(--muted);font-size:13px}
+  code{background:#0b0e12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a href="eye-evolution.html">Eye optics explainer</a>
+    <a href="eye-evolution-sim.html">Evolution sim</a>
+    <a href="eye-evolution-sandbox.html" class="on">Predator/prey sandbox</a>
+  </nav>
+  <h1>Eyes evolving in a world, not on a fitness curve</h1>
+  <p class="sub">No survival formula is written down here. Prey and predators both start
+    <b>blind</b> (a flat light/dark patch), move around a 2D world, and breed by eating —
+    prey eat <span style="color:var(--food)">food</span>, predators eat
+    <span style="color:var(--prey)">prey</span>. The only thing an eye does is let you
+    <b>detect things farther away</b> (<code>range = width / Δρ</code>). Whether that's worth
+    the metabolic cost is decided by the chase and the forage, not by me. Watch both eyes
+    sharpen — and watch the <b>arms race</b> between them.</p>
+
+  <div class="controls">
+    <div class="ctrl"><b>Starting prey</b>
+      <input id="cPrey" type="range" min="40" max="220" step="10" value="120"><span class="val" id="vPrey"></span></div>
+    <div class="ctrl"><b>Starting predators</b>
+      <input id="cPred" type="range" min="0" max="30" step="1" value="10"><span class="val" id="vPred"></span></div>
+    <div class="ctrl"><b>Solar influx</b><span>plant energy / sec (food)</span>
+      <input id="cFood" type="range" min="10" max="120" step="5" value="30"><span class="val" id="vFood"></span></div>
+    <div class="ctrl"><b>Mutation</b>
+      <input id="cMut" type="range" min="0.005" max="0.06" step="0.005" value="0.03"><span class="val" id="vMut"></span></div>
+    <div class="ctrl"><b>Sim speed</b>
+      <input id="cSpeed" type="range" min="1" max="6" step="1" value="2"><span class="val" id="vSpeed"></span></div>
+    <label class="tog"><input type="checkbox" id="cControl"> Control: predators OFF (isolate food pressure)</label>
+    <label class="tog"><input type="checkbox" id="cPredSighted"> Predators start SIGHTED (prey evolve past the patch → cup)</label>
+    <div style="display:flex;gap:10px;margin-left:auto">
+      <button class="primary" id="play">⏸ Pause</button>
+      <button id="reset">↻ Reset</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>The world</h2>
+      <canvas id="world" width="720" height="460"></canvas>
+      <div class="legend">
+        <span><i style="background:var(--prey)"></i>prey (evolving eye)</span>
+        <span><i style="background:var(--pred)"></i>predator (evolving eye)</span>
+        <span><i style="background:var(--food)"></i>food</span>
+        <span style="color:var(--muted)">faint ring = one agent's detection range</span>
+      </div>
+      <p class="cap">Dots leave short trails so you can see who's fleeing and who's chasing.
+        A thin ring is drawn around one sample prey and one sample predator showing how far
+        their current eye lets them see.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Read-outs</h2>
+      <div class="stats">
+        <div class="stat"><div class="k">time</div><div class="v" id="rTime">0s</div></div>
+        <div class="stat"><div class="k">generation (mean)</div><div class="v" id="rGen">0</div></div>
+        <div class="stat"><div class="k">prey alive</div><div class="v" style="color:var(--prey)" id="rNPrey">–</div></div>
+        <div class="stat"><div class="k">predators alive</div><div class="v" style="color:var(--pred)" id="rNPred">–</div></div>
+        <div class="stat"><div class="k">prey mean Δρ</div><div class="v" style="color:var(--prey)" id="rDrPrey">–</div></div>
+        <div class="stat"><div class="k">predator mean Δρ</div><div class="v" style="color:var(--pred)" id="rDrPred">–</div></div>
+        <div class="stat"><div class="k">prey sight range</div><div class="v" style="color:var(--prey)" id="rSightPrey">–</div></div>
+        <div class="stat"><div class="k">captures / min</div><div class="v" id="rCap">–</div></div>
+        <div class="stat" style="grid-column:1/3"><div class="k">prey eye stage (evolved)</div><div class="v" style="color:var(--prey)" id="rStage">–</div></div>
+        <div class="stat" style="grid-column:1/3"><div class="k">energy pyramid — food : prey : predators</div><div class="v" style="font-size:15px" id="rPyr">–</div></div>
+      </div>
+
+      <h2 style="margin-top:18px">The arms race — mean eye blur Δρ over time</h2>
+      <canvas id="traj" width="620" height="200"></canvas>
+      <p class="cap">Lower = sharper eye. Both lines should fall as eyes evolve; the predator
+        line chasing the prey line down (or vice-versa) is the arms race. Flat/high = blind.</p>
+    </div>
+  </div>
+
+  <details>
+    <summary>What is and isn't authored here (read me)</summary>
+    <p><b>Authored (the substrate):</b> the optics equation <code>Δρ=√((A/f·(1−lens))²+(λ/A)²)</code>
+      shared with the other two tabs; the fact that a bigger/deeper/lensed eye costs more energy per
+      tick (tissue term); fixed movement speeds; and the hard-coded behaviors — prey flee the nearest
+      <i>visible</i> predator, else head to the nearest <i>visible</i> food, else wander; predators
+      pursue the nearest <i>visible</i> prey. Evolvable brains that would let behavior itself emerge
+      are a later step.</p>
+    <p><b>NOT authored (it emerges):</b> who survives, who breeds, whether an eye is "worth it," and how
+      sharp each side's eye becomes. There is <b>no survival-probability curve</b>. A prey lives because
+      it happened to spot a predator far enough away to slip out of its sight before contact, and breeds
+      because it ate enough food; a predator breeds because it caught enough prey. Sharper predator eye →
+      larger detection range → fewer prey escape → pressure on prey to detect earlier → arms race. The
+      only reason eyes don't max out instantly is that the tissue costs energy that must be paid back by
+      eating.</p>
+    <p><b>The control toggle</b> turns predators off. Prey should then sharpen their eyes <i>only</i> as
+      much as finding food rewards — a weaker, different pull than predation. If eyes sharpened the same
+      with predators off, the predation story would be a lie; the toggle is there to falsify it.</p>
+  </details>
+</div>
+
+<script>
+"use strict";
+/* ================= optics (shared with the other two tabs) ================= */
+const LAMBDA=0.0005, A_MIN=0.005,A_MAX=2.0, F_MIN=0.05,F_MAX=5.0, F_LENS_ON=0.15,F_LENS_FULL=0.7;
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const lensGate=f=>clamp((f-F_LENS_ON)/(F_LENS_FULL-F_LENS_ON),0,1);
+const effLens=g=>g.L*lensGate(g.f);
+function drho(g){ const geom=(g.A/g.f)*(1-effLens(g)), diff=LAMBDA/g.A; return Math.sqrt(geom*geom+diff*diff); }
+// tissue cost of an eye (same shape as the fitness-sim tab) -> per-tick energy upkeep
+const TISSUE_REF = 1*(0.5*1) + 2*(1*0.5*0.5) + 1*1;
+function tissue(g){ const el=effLens(g); return (1*(g.A*g.f) + 2*(el*g.A*g.A) + 1*g.f)/TISSUE_REF; }
+
+/* ================= rng (seeded, so Reset is reproducible) ================= */
+let _seed=987654321;
+function rnd(){ _seed=(_seed*1103515245+12345)&0x7fffffff; return _seed/0x7fffffff; }
+function randn(){ let u=0,v=0; while(u===0)u=rnd(); while(v===0)v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+
+/* ================= genome ================= */
+// both start near-blind: tiny flat patch, no lens
+function blindGenome(){ return { A:clamp(0.9+rnd()*0.5,A_MIN,A_MAX), f:clamp(0.06+rnd()*0.03,F_MIN,F_MAX), L:rnd()*0.03 }; }
+function mutate(g,mut){
+  return { A:clamp(g.A*Math.exp(randn()*mut),A_MIN,A_MAX),
+           f:clamp(g.f*Math.exp(randn()*mut),F_MIN,F_MAX),
+           L:clamp(g.L+randn()*mut,0,1) };
+}
+
+/* ================= world constants =================
+   Length unit = arena pixels. "Width" of a target is its apparent size for the
+   detection law range = W_target / Δρ_observer  (Δρ in radians; W chosen so ranges
+   land in a sane pixel band). These are substrate constants, not per-agent fitness. */
+const WORLD={ w:720, h:460 };
+// acuity: 0 (blind flat patch) .. 1 (sharp lens eye), log-uniform in Δρ so EVERY 1%-sharper
+// step widens sight a little — the Nilsson & Pelger gradient, made spatial. No hard floor, so
+// a blind eye truly sees ~nothing (must bump into things), and sharpening always pays a little.
+// A plain hyperbola sight=W/Δρ instead crams all the payoff into the last 1% and leaves a dead
+// valley the population can't cross — the mistake this replaces.
+const DR_BLIND=15, DR_SHARP=0.02, _LB=Math.log(DR_BLIND), _LS=Math.log(DR_SHARP);
+function acuity(g){ return clamp((_LB-Math.log(drho(g)))/(_LB-_LS),0,1); }
+const R_SEE_PRED=430, R_SEE_PREY=360, R_SEE_FOOD=300;  // detection radius at full acuity (px)
+function sightRange(g,maxR){ return acuity(g)*maxR; }
+
+let PREY_SPEED=1.28, PRED_SPEED=1.5;         // predator a touch faster -> needs a head start to fail
+const PREY_R=4, PRED_R=5.5, FOOD_R=3;
+const CATCH_DIST=3;                           // tight contact radius
+let LUCKY_GRAB=0.12;                           // chance a NON-tracking predator converts a contact
+let PRED_MEMORY=26;                            // ticks a predator keeps chasing after losing sight
+
+// energy economy (drives breeding & death; NO survival curve anywhere)
+const PREY_E0=55, PREY_BREED=100, PREY_BIRTH_COST=52, PREY_MAX=200;
+const PRED_E0=140, PRED_BREED=260, PRED_BIRTH_COST=120, PRED_MAX=30;
+const FOOD_ENERGY=34, PREY_ENERGY=100;
+const BASE_METAB=0.05, EYE_METAB=0.0;        // per-tick: base + eye upkeep*tissue.
+                                             // EYE_METAB=0 -> a sharper eye is PURE benefit (no
+                                             // trade-off), so vision ratchets toward max acuity.
+                                             // Kept as a knob so the robustness suite can sweep it.
+const FOOD_MAX=150;                           // lower food cap -> sparser prey -> predators must SEE
+
+/* ================= state ================= */
+let prey=[], preds=[], food=[];
+let tick=0, captures=0, capWindow=[], births=0, running=true;
+let foodAccum=0;
+// cumulative energy FLOW per trophic level (Lindeman): sun->plants->herbivores->carnivores.
+// Flow (production passed up), NOT standing stock — standing stock can invert.
+let eSolar=0, ePreyIn=0, ePredIn=0;
+const HIST=[]; // {t, drPrey, drPred}
+let sampePreyRef=null, samplePredRef=null;
+
+function spawnPrey(g,x,y){ return { g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1), e:PREY_E0, born:tick, trail:[] }; }
+function spawnPred(g,x,y){ return { g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1), e:PRED_E0, born:tick, target:null, chase:0, trail:[] }; }
+function rx(){ return rnd()*WORLD.w; } function ry(){ return rnd()*WORLD.h; }
+
+function reset(){
+  _seed=987654321; tick=0; captures=0; capWindow=[]; births=0; foodAccum=0; HIST.length=0;
+  eSolar=0; ePreyIn=0; ePredIn=0;
+  prey=[]; preds=[]; food=[];
+  const nPrey=+$('cPrey').value, nPred=predatorsOn()?+$('cPred').value:0;
+  const predSighted=$('cPredSighted').checked;
+  for(let i=0;i<nPrey;i++) prey.push(spawnPrey(blindGenome(),rx(),ry()));   // prey ALWAYS start blind
+  for(let i=0;i<nPred;i++){
+    // default: predators also start blind (fully symmetric emergence -> eyes reach an improved
+    // flat patch). Scenario toggle: predators start with a working eye, so prey face a real visual
+    // threat and evolve past the patch INTO A CUP. Prey evolution is emergent either way.
+    const g = predSighted ? {A:0.35+rnd()*0.1, f:1.0+rnd()*0.3, L:0.9+rnd()*0.1} : blindGenome();
+    preds.push(spawnPred(g,rx(),ry()));
+  }
+  for(let i=0;i<FOOD_MAX*0.5;i++) food.push({x:rx(),y:ry()});
+  sampePreyRef=null; samplePredRef=null;
+}
+
+/* ================= geometry helpers (toroidal wrap) ================= */
+function wrap(a){ if(a.x<0)a.x+=WORLD.w; else if(a.x>=WORLD.w)a.x-=WORLD.w;
+                  if(a.y<0)a.y+=WORLD.h; else if(a.y>=WORLD.h)a.y-=WORLD.h; }
+function dwrap(dx,W){ if(dx>W/2)dx-=W; else if(dx<-W/2)dx+=W; return dx; }
+// nearest of arr to (px,py) within range; returns {o,dx,dy,d2} or null
+function nearest(px,py,arr,range){
+  let best=null,bd=range*range;
+  for(let i=0;i<arr.length;i++){ const o=arr[i];
+    let dx=dwrap(o.x-px,WORLD.w), dy=dwrap(o.y-py,WORLD.h); const d2=dx*dx+dy*dy;
+    if(d2<bd){ bd=d2; best={o,dx,dy,d2}; } }
+  return best;
+}
+function norm(dx,dy){ const m=Math.hypot(dx,dy)||1; return [dx/m,dy/m]; }
+
+/* ================= one simulation tick ================= */
+function step(){
+  tick++;
+  const mut=+$('cMut').value;
+  // --- food spawn to cap ---
+  foodAccum += (+$('cFood').value)/60;
+  while(foodAccum>=1 && food.length<FOOD_MAX){ food.push({x:rx(),y:ry()}); foodAccum-=1; eSolar+=FOOD_ENERGY; }
+
+  // --- prey behavior + energy ---
+  const newPrey=[];
+  for(const p of prey){
+    const predSight=sightRange(p.g,R_SEE_PRED), foodSight=sightRange(p.g,R_SEE_FOOD);
+    let ax=0,ay=0;
+    const threat = preds.length? nearest(p.x,p.y,preds,predSight):null;
+    if(threat){ const [nx,ny]=norm(threat.dx,threat.dy); ax=-nx; ay=-ny; }       // flee (away)
+    else { const f=nearest(p.x,p.y,food,foodSight);
+      if(f){ const [nx,ny]=norm(f.dx,f.dy); ax=nx; ay=ny; }                        // forage (toward)
+      else { ax=p.vx; ay=p.vy; if(rnd()<0.05){ax+=randn()*0.6;ay+=randn()*0.6;} } }// wander
+    const [dx,dy]=norm(ax,ay); p.vx=dx; p.vy=dy;
+    p.x+=dx*PREY_SPEED; p.y+=dy*PREY_SPEED; wrap(p);
+    // eat food on contact
+    const fe=nearest(p.x,p.y,food,FOOD_R+PREY_R);
+    if(fe){ food.splice(food.indexOf(fe.o),1); p.e+=FOOD_ENERGY; ePreyIn+=FOOD_ENERGY; }
+    // metabolism (base + eye upkeep)
+    p.e -= BASE_METAB + EYE_METAB*tissue(p.g);
+    // breed
+    if(p.e>=PREY_BREED && prey.length+newPrey.length<PREY_MAX){
+      p.e-=PREY_BIRTH_COST; const cg=mutate(p.g,mut);
+      newPrey.push(spawnPrey(cg,p.x+randn()*3,p.y+randn()*3)); births++;
+    }
+    if(p.e>0) newPrey.push(p);   // else starves (dropped)
+    trailPush(p);
+  }
+  prey=newPrey;
+
+  // --- predator behavior + energy + capture ---
+  const newPreds=[];
+  for(const pr of preds){
+    const preySight=sightRange(pr.g,R_SEE_PREY);
+    let seen=nearest(pr.x,pr.y,prey,preySight);
+    if(seen){ pr.target=seen.o; pr.chase=PRED_MEMORY; }
+    else if(pr.chase>0){ pr.chase--; // keep heading toward last-known target if it still exists
+      if(pr.target && pr.target.e>0){ let dx=dwrap(pr.target.x-pr.x,WORLD.w), dy=dwrap(pr.target.y-pr.y,WORLD.h); seen={o:pr.target,dx,dy}; }
+      else pr.chase=0; }
+    let ax,ay;
+    if(seen){ const [nx,ny]=norm(seen.dx,seen.dy); ax=nx; ay=ny; }                 // pursue
+    else { ax=pr.vx; ay=pr.vy; if(rnd()<0.05){ax+=randn()*0.6;ay+=randn()*0.6;} }  // wander
+    const [dx,dy]=norm(ax,ay); pr.vx=dx; pr.vy=dy;
+    pr.x+=dx*PRED_SPEED; pr.y+=dy*PRED_SPEED; wrap(pr);
+    // capture nearest prey in contact range. A capture almost always requires the predator to be
+    // actively TRACKING the prey (it saw it, `seen`); a blind/wandering predator only lands the odd
+    // lucky grab (LUCKY_GRAB). This is what makes hunting vision-driven regardless of prey density,
+    // while still letting a fully-blind starting population bootstrap instead of instantly starving.
+    const hit=nearest(pr.x,pr.y,prey,CATCH_DIST+PRED_R);
+    if(hit && (seen || rnd()<LUCKY_GRAB)){ const idx=prey.indexOf(hit.o);
+      if(idx>=0){ prey.splice(idx,1); pr.e+=PREY_ENERGY; ePredIn+=PREY_ENERGY; captures++; capWindow.push(tick); pr.target=null; pr.chase=0; } }
+    pr.e -= BASE_METAB + EYE_METAB*tissue(pr.g);
+    if(pr.e>=PRED_BREED && preds.length+newPreds.length<PRED_MAX){
+      pr.e-=PRED_BIRTH_COST; const cg=mutate(pr.g,mut);
+      newPreds.push(spawnPred(cg,pr.x+randn()*3,pr.y+randn()*3)); births++;
+    }
+    if(pr.e>0) newPreds.push(pr);
+    trailPush(pr);
+  }
+  preds=newPreds;
+
+  // captures/min window
+  const cutoff=tick-3600; while(capWindow.length && capWindow[0]<cutoff) capWindow.shift();
+
+  // history sample (every ~0.25s of sim time)
+  if(tick%15===0){ HIST.push({ t:tick/60, drPrey:meanDr(prey), drPred:meanDr(preds) }); if(HIST.length>2400)HIST.shift(); }
+
+  // pick stable sample refs for the sight rings
+  if((!sampePreyRef||sampePreyRef.e<=0)&&prey.length) sampePreyRef=prey[(prey.length/2)|0];
+  if((!samplePredRef||samplePredRef.e<=0)&&preds.length) samplePredRef=preds[(preds.length/2)|0];
+}
+function trailPush(a){ a.trail.push(a.x,a.y); if(a.trail.length>10)a.trail.splice(0,2); }
+function meanDr(arr){ if(!arr.length)return null; let s=0; for(const a of arr)s+=a.dr; return s/arr.length; }
+function meanGen(){ if(!prey.length&&!preds.length)return 0; let s=0,n=0;
+  for(const a of prey){s+=a.g.gen||0;} // gen not tracked per-genome; approximate by births/pop
+  return Math.round(births/Math.max(1,(+$('cPrey').value))); }
+
+/* ================= rendering ================= */
+const wc=$('world'), wx=wc.getContext('2d');
+function draw(){
+  wx.fillStyle="#0b0e12"; wx.fillRect(0,0,WORLD.w,WORLD.h);
+  // food
+  wx.fillStyle="#7ee787";
+  for(const f of food){ wx.beginPath(); wx.arc(f.x,f.y,FOOD_R,0,7); wx.fill(); }
+  // sight rings (sample agents)
+  if(sampePreyRef&&sampePreyRef.e>0){ ring(sampePreyRef,sightRange(sampePreyRef.g,R_SEE_PRED),"rgba(94,179,255,0.25)"); }
+  if(samplePredRef&&samplePredRef.e>0){ ring(samplePredRef,sightRange(samplePredRef.g,R_SEE_PREY),"rgba(255,94,126,0.22)"); }
+  // trails + dots
+  drawAgents(prey,"#5eb3ff",PREY_R);
+  drawAgents(preds,"#ff5e7e",PRED_R);
+}
+function ring(a,r,col){ wx.strokeStyle=col; wx.lineWidth=1; wx.beginPath(); wx.arc(a.x,a.y,r,0,7); wx.stroke(); }
+function drawAgents(arr,col,rad){
+  wx.strokeStyle=col; wx.globalAlpha=0.25; wx.lineWidth=1.5;
+  for(const a of arr){ if(a.trail.length>=4){ wx.beginPath(); wx.moveTo(a.trail[0],a.trail[1]);
+    for(let i=2;i<a.trail.length;i+=2) wx.lineTo(a.trail[i],a.trail[i+1]); wx.stroke(); } }
+  wx.globalAlpha=1; wx.fillStyle=col;
+  for(const a of arr){ wx.beginPath(); wx.arc(a.x,a.y,rad,0,7); wx.fill(); }
+}
+const toDeg=r=>r*180/Math.PI;
+function fmtDr(d){ if(d==null)return "–"; const g=toDeg(d); return g>=100?"≥100°":(g<0.1?g.toFixed(3):g.toFixed(2))+"°"; }
+
+/* trajectory */
+const tc=$('traj'), tx=tc.getContext('2d');
+function drawTraj(){
+  const W=tc.width,H=tc.height,padL=6,padR=6,padT=8,padB=16; tx.clearRect(0,0,W,H);
+  // blind ≈ 850°, sharp ≈ 1°. Map so sharper (small Δρ) is LOWER on the canvas.
+  const DEG_HI=1000, DEG_LO=0.5, lHi=Math.log10(DEG_HI), lLo=Math.log10(DEG_LO);
+  const Y=rad=>padT+(lHi-Math.log10(clamp(toDeg(rad),DEG_LO,DEG_HI)))/(lHi-lLo)*(H-padT-padB); // radians in; sharper = lower
+  tx.strokeStyle="#232b34"; tx.fillStyle="#6b7684"; tx.font="10px sans-serif";
+  for(const d of [1,10,100,1000]){ const y=Y(d*Math.PI/180); tx.beginPath();tx.moveTo(padL,y);tx.lineTo(W-padR,y);tx.stroke(); tx.fillText(d+"°",padL+2,y-2);}
+  if(HIST.length<2)return;
+  const tMax=HIST[HIST.length-1].t||1;
+  const X=t=>padL+(t/tMax)*(W-padL-padR);
+  const line=(key,col)=>{ tx.strokeStyle=col; tx.lineWidth=2; tx.beginPath(); let started=false;
+    for(const h of HIST){ if(h[key]==null)continue; const x=X(h.t),y=Y(h[key]); started?tx.lineTo(x,y):tx.moveTo(x,y); started=true; } tx.stroke(); };
+  line('drPred',"#ff5e7e"); line('drPrey',"#5eb3ff");
+  tx.fillStyle="#6b7684"; tx.fillText("← sharper (down) · time →",padL+2,H-3);
+}
+
+/* ================= HUD ================= */
+function meanGeneVal(arr,k){ if(!arr.length)return 0; let s=0; for(const a of arr)s+=a.g[k]; return s/arr.length; }
+function preyStage(){ if(!prey.length) return "–";
+  const f=meanGeneVal(prey,'f'), A=meanGeneVal(prey,'A'), L=meanGeneVal(prey,'L');
+  if(f<0.12) return "flat patch";        // the blind starting morphology
+  if(L>0.5)  return "lens eye";
+  if(A<0.06) return "pinhole";
+  if(lensGate(f)>0.05) return "cup + forming lens";
+  return "open cup";                     // past the patch
+}
+// energy FLOW captured at each level, normalised to solar influx = 100 (Lindeman pyramid).
+// Expect a downward staircase: plants capture the sun, herbivores get a slice, carnivores less.
+function energyPyramid(){
+  if(eSolar<4000) return "warming up…";   // let flow accumulate before showing a ratio
+  return "100 : "+Math.round(ePreyIn/eSolar*100)+" : "+Math.round(ePredIn/eSolar*100);
+}
+function hud(){
+  $('rTime').textContent=(tick/60).toFixed(0)+"s";
+  $('rGen').textContent=meanGen();
+  $('rNPrey').textContent=prey.length;
+  $('rNPred').textContent=preds.length;
+  $('rDrPrey').textContent=fmtDr(meanDr(prey));
+  $('rDrPred').textContent=fmtDr(meanDr(preds));
+  const sp=prey.length?sightRange(prey[(prey.length/2)|0].g,R_SEE_PRED):null;
+  $('rSightPrey').textContent= sp?Math.round(sp)+" px":"–";
+  $('rCap').textContent=(capWindow.length).toString();
+  $('rStage').textContent=preyStage();
+  $('rPyr').textContent=energyPyramid();
+}
+
+/* ================= loop ================= */
+function frame(){
+  if(running){ const steps=+$('cSpeed').value; for(let s=0;s<steps;s++) step(); }
+  draw(); drawTraj(); hud();
+  requestAnimationFrame(frame);
+}
+
+/* ================= controls ================= */
+function $(id){ return document.getElementById(id); }
+function predatorsOn(){ return !$('cControl').checked; }
+function syncLabels(){
+  $('vPrey').textContent=$('cPrey').value; $('vPred').textContent=$('cPred').value;
+  $('vFood').textContent=$('cFood').value; $('vMut').textContent=(+$('cMut').value).toFixed(3);
+  $('vSpeed').textContent=$('cSpeed').value+"×";
+}
+['cPrey','cPred','cFood','cMut','cSpeed'].forEach(id=>$(id).addEventListener('input',syncLabels));
+$('cControl').addEventListener('change',reset);
+$('cPredSighted').addEventListener('change',reset);
+['cPrey','cPred'].forEach(id=>$(id).addEventListener('change',reset));
+$('play').addEventListener('click',()=>{ running=!running; $('play').textContent=running?"⏸ Pause":"▶ Play"; });
+$('reset').addEventListener('click',()=>{ reset(); running=true; $('play').textContent="⏸ Pause"; });
+
+syncLabels(); reset(); frame();
+</script>
+</body>
+</html>
