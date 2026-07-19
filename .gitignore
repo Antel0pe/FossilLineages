@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# pre-commit disclosure gate: one-shot token, never committed
+.claude/.disclosure-ok

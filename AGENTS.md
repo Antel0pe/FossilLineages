@@ -57,6 +57,17 @@ freelance a different structure without checking with the user first.
 - **Surface the per-item ledger to the user when reporting done**, so a 5-second human scan
   can catch what self-grading missed.
 
+# Pre-commit disclosure (mandatory before every commit)
+The user cannot review every line, so they require visibility into the **decisions** behind
+the work before it lands. **Before running ANY `git commit`, follow
+`.claude/skills/pre-commit-disclosure/SKILL.md`**: post a four-section disclosure — (1) choices
+you are not confident in, (2) decisions you made autonomously, (3) places you changed what the
+user asked for, (4) anything you are not proud of — and WAIT for the user's response before
+committing. This applies whether the user asked you to commit or you were about to on your own.
+A `PreToolUse` hook (`.claude/hooks/pre-commit-disclosure-gate.sh`) enforces this: it blocks
+`git commit` until you create the one-shot token `.claude/.disclosure-ok` (do that only after
+the disclosure has been posted and seen).
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 

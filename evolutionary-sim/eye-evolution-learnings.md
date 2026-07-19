@@ -1,0 +1,5 @@
+- if prey/food is so dense that even just randomly walking around is enough to find food, there isnt evolutionary pressure to evolve better eyes?
+    - possible solution might be trophic level modelling but doesnt appear to fully solve this
+- in order to isolate eye evolution i help predator/prey speed constant but this might make it so seeing each other from further out negates the advantage that eyes could give it?
+- notice that prey can often get caught not because the original predator catches it but while being chased by another it gets caught by another who happened to run into it --- basis of cooperation between predators?
+- predator always locking onto nearest prey means that predator gets distracted on a chase and unable to really chase a prey

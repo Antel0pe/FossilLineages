@@ -75,3 +75,7 @@ excitingly ambitious versions of this
   the sensor→action mapping is where emergence lives, and I don't yet know how to encode that
   (this is the neuroevolution / evolvable-brain problem). Companion principle: emergent behavior
   over encoded rules — never write "prey flees predator"; the flee response should be discovered.
+
+- how did early bacteria learn to swim towards food and away from toxins? what was the environment like to be able to model markers of toxins? were there like hotspots and then small bits of it floated away from the source? how were they able to swim towards food and detect food?
+
+- claude when doing experiments often suggests we do multiple things to fix an issue whereas i prefer having a single experiment to understand its impact and prefer to have one really good solution rather than throw multiple things and have it fixed by multiple things.

@@ -243,3 +243,97 @@ survival, and I built it.
   *visible complexity climb* to a lens? This is the still-unresolved "is 'surprise in outcome' the
   same interest as 'fascination with stepwise complexity buildup'?" fork from 2026-07-15. His
   reaction to this plateau is the datapoint — do not pre-judge which way he'll go.
+
+## 2026-07-19
+
+Context: after wiring real energy-flow physics (sun→1%→plants, 10%/level) into the predator/prey
+sandbox, user stepped back and diagnosed *why the eyes aren't evolving well* — thinking out loud
+about which environmental conditions force acute vision, and hitting the same-speed pursuit paradox.
+
+- **[correction / resolves the 2026-07-18 "watch" fork — HIGH SIGNAL]** Directly answered the open
+  question from 2026-07-18 (lines 237–245): he is **NOT** satisfied by emergent-but-undramatic. Stated
+  plainly: "I want to really have the eye evolve well and explore the instances where it's not." So the
+  goal is a visible, strong blind→good-eye climb, PLUS the ability to see which regimes fail to produce
+  it. This tilts the still-open 2026-07-15 fork ("surprise-in-outcome" vs "fascination with stepwise
+  complexity buildup") toward the **complexity-buildup** interest being real and primary — he wants to
+  watch the organ actually get good. Not yet fully confirmed as a settled ranking, but the strongest
+  datapoint so far on that fork.
+- **[tension — flagged by user himself, HIGH SIGNAL]** Self-aware that "really have the eye evolve well"
+  sits against his own standing "don't engineer a specific outcome / minimize researcher DoF" principle
+  (2026-07-17). Framed it as an accepted *specific case*: "we are going a little bit against other things
+  I've said... but this is a specific case." Reframed the acceptable version: don't hardcode the eye
+  getting good — instead find the **environmental selection conditions** that make good eyes emergent.
+  I.e. author the *world*, not the *outcome*. Watch whether this holds or whether he later feels the
+  regime-hunting is itself too much outcome-steering.
+- **[insight — user, correct]** Independently identified two reasons vision confers little advantage in
+  the current build: (1) **food/predator density too high** → you can "make do with just bumping into
+  them," so detection range is wasted (correct; and the uncapped rich plants we just built make foraging
+  pressure *worse*); (2) **predator density high** → prey is always near some predator, so seeing one
+  doesn't help much. Both are facets of a single principle Claude named back: *vision is selected in
+  proportion to how sparse and how decisive encounters are.*
+- **[insight — user, the crux]** Hit the equal-speed pursuit paradox unprompted: if pred and prey are
+  the same speed, earlier detection just freezes the gap → neither wins → "how do predators catch prey at
+  all?" Correct: at equal speed a detected prey is never caught, so predators only eat prey that FAIL to
+  detect them, which makes vision a step-function (be minimally not-blind) rather than a smooth gradient —
+  exactly the mediocre-eye plateau observed. (Note: the *code* actually has pred faster, 1.5 vs 1.28, not
+  equal — he misremembered; Claude corrected. A faster pred has the opposite failure: catches regardless
+  of prey vision → also little gradient. The strong-vision regime is the middle: chase winnable-but-not-
+  guaranteed, needing an escape mechanism like stamina/burst where a head start converts to safety.)
+- **[watch]** Live design direction now: turn the sandbox into a *regime explorer* — dial density + speed-
+  ratio + escape mechanism and watch mean Δρ (already plotted) to find where blind→good-eye actually
+  happens vs where it stalls. Not yet greenlit a specific build; Claude proposed levers and is awaiting
+  his pick. Watch which lever he reaches for first (sparsity vs stamina/burst vs cost) — reveals whether
+  he reads the problem as ecological (density) or kinematic (the chase).
+
+- **[finding — empirical, from the rebuilt sandbox]** Built the stripped "who-sees-whom-first" model
+  (no food; prey breed on timer & die only to predation; predators run a starvation clock; unified
+  detection-range slider; predator 20% faster; 20 prey / 5 predators). Mechanics verified. **Result:
+  eyes did NOT evolve** — the sparse world creates a *bootstrap valley*: a near-blind eye sees a few px
+  but agents are ~90px apart, so the first increments of vision confer ~zero advantage → no gradient →
+  drift (one seed drifted *blinder*). A parameter sweep exposed a **knife-edge**: bigger max-sight lets
+  PREY bootstrap but then predators starve out; sighted predators annihilate all prey → total
+  extinction. So the sparsity the user (correctly) wanted for *decisive* vision simultaneously kills the
+  *bootstrap* of vision. This empirically demonstrates the exact "[insight]" the user raised on
+  2026-07-15 unprompted — that the first step (getting any vision at all) is the hardest leap and can't
+  start from true zero, needing a pre-existing proximity/other sense to repurpose. The sim didn't fail
+  so much as *reproduce the real bootstrapping problem*. Open design fork now in front of the user.
+
+### 2026-07-19 (later, same day) — hunting for the right real-world example to model
+
+Context: after Claude surveyed real predator strategies (ambush, burst, coursing, interception,
+non-visual sensing), user thought out loud about which single example to base the sandbox on to
+isolate the variables that make detection/eyes matter.
+
+- **[correction — good reasoning]** Talked himself out of **cheetah** as the model, with two correct
+  objections: (1) cheetah predation depends on **stalking + camouflage** to close distance, and the
+  sandbox has *no concept of stalking* and no way to do it; (2) it's fundamentally a **speed-vs-
+  endurance/maneuver biomechanics tradeoff, NOT a detection arms race** — "it's not necessarily that
+  prey were able to detect them earlier." So cheetah models the wrong variable for *eye* evolution.
+  Also derived that burst-speed + long cooldown fails in the sandbox: with no stalking the predator is
+  always far out when its speed comes off cooldown, so the speed never gets to matter.
+- **[meta / tension — consistent with standing dislike of authored knobs]** Considered simulating
+  stalking as "a stalking period where getting closer raises detection chance, and eyes lower it," but
+  flagged his own discomfort: with **no learned mechanism**, predators can't actually get *good* at
+  stalking — it'd just be an authored probability knob. He's uneasy that this doesn't "make sense."
+  Reinforces the 2026-07-17 HIGH-signal principle (minimize researcher degrees of freedom; don't let
+  arbitrary knobs drive the outcome).
+- **[idea, uncertain]** Floated three alternative examples, none committed: (a) an **earlier bacterial
+  predation** case "where detection actually mattered," (b) **savannah a bit further back** in evolution
+  while eyes were still developing, (c) **owls**. Explicitly searching for an example that isolates the
+  variables cleanly.
+- **[insight — correct]** Noted that by the time animals were on land they "had pretty good eyes
+  already" — correctly intuiting that the eye-origin moment is far earlier (marine) than any savannah/
+  land scenario, so savannah is too late to capture eyes *evolving*.
+- **[idea]** Wants to **remove food** and drop **density way down** to isolate the predation-vision
+  channel from foraging. (Directly follows the density principle from earlier today.)
+- **[Claude's recommendation, not yet user-endorsed — WATCH]** Claude argued the isolating example is
+  the **Cambrian visual predation arms race** (Andrew Parker's "Light Switch" hypothesis; Anomalocaris
+  vs trilobites): marine/2D like the sandbox, agents slow, no cover so detection *range* is the whole
+  game, and it's the genuine floor where spatial vision first decided predation. Argued *against*
+  bacteria (wrong scale — single cells sense by **chemotaxis**; light-sensing there is phototaxis for
+  finding light, not detecting prey — spatial vision needs body size) and *against* savannah/owls as the
+  primary (owls = a low-light/sound regime, better kept as the future *contrast* case for where eyes
+  DON'T evolve). Also proposed a learning-free, stalking-free chase mechanic: **"whoever detects the
+  other first wins the encounter," predator marginally faster to convert its head-start into a catch.**
+  Watch whether the user adopts Cambrian, and whether "who-sees-whom-first" feels honest to him or like
+  another authored knob.
