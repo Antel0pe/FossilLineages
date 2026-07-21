@@ -63,7 +63,7 @@
   </nav>
   <h1>Eyes evolving in a world, not on a fitness curve</h1>
   <p class="sub">No survival formula is written down here, and there is <b>no food and no energy
-    score</b>. Prey and predators both start <b>blind</b> and move around a 2D sea. The only thing an
+    score</b>. Prey and predators start with whatever eye you dial in (blind by default) and move around a 2D sea. The only thing an
     eye does is let you <b>detect things farther away</b> (a better eye sees farther). Prey simply
     <b>breed on a timer</b> as long as they stay alive; a predator must <b>catch prey to reset its
     starvation clock</b> or it dies. Everything reduces to <b>who sees whom first</b>: a predator that
@@ -80,6 +80,10 @@
       <input id="cSight" type="range" min="40" max="250" step="10" value="100"><span class="val" id="vSight"></span></div>
     <div class="ctrl"><b>Baseline sight</b><span>flat-patch light sense (set 0 = truly blind)</span>
       <input id="cBase" type="range" min="0" max="80" step="5" value="40"><span class="val" id="vBase"></span></div>
+    <div class="ctrl"><b>Prey starting eye</b><span>where prey begin · 0 = blind patch, 100 = perfect eye</span>
+      <input id="cPreyEye" type="range" min="0" max="100" step="5" value="0"><span class="val" id="vPreyEye"></span></div>
+    <div class="ctrl"><b>Predator starting eye</b><span>where predators begin · 0 = blind patch, 100 = perfect eye</span>
+      <input id="cPredEye" type="range" min="0" max="100" step="5" value="0"><span class="val" id="vPredEye"></span></div>
     <div class="ctrl"><b>Prey breed interval</b>
       <input id="cBreed" type="range" min="2" max="15" step="1" value="6"><span class="val" id="vBreed"></span></div>
     <div class="ctrl"><b>Predator starve time</b>
@@ -87,9 +91,8 @@
     <div class="ctrl"><b>Mutation</b>
       <input id="cMut" type="range" min="0.005" max="0.06" step="0.005" value="0.03"><span class="val" id="vMut"></span></div>
     <div class="ctrl"><b>Sim speed</b>
-      <input id="cSpeed" type="range" min="1" max="6" step="1" value="2"><span class="val" id="vSpeed"></span></div>
+      <input id="cSpeed" type="range" min="1" max="25" step="1" value="2"><span class="val" id="vSpeed"></span></div>
     <label class="tog"><input type="checkbox" id="cControl"> Control: predators OFF (no predator = no pressure → eyes should NOT sharpen)</label>
-    <label class="tog"><input type="checkbox" id="cPredSighted"> Predators start SIGHTED (prey face a real visual threat from tick 0)</label>
     <div style="display:flex;gap:10px;margin-left:auto">
       <button class="primary" id="play">⏸ Pause</button>
       <button id="reset">↻ Reset</button>
@@ -186,6 +189,18 @@ function randn(){ let u=0,v=0; while(u===0)u=rnd(); while(v===0)v=rnd(); return 
 /* ================= genome ================= */
 // both start near-blind: tiny flat patch, no lens
 function blindGenome(){ return { A:clamp(0.9+rnd()*0.5,A_MIN,A_MAX), f:clamp(0.06+rnd()*0.03,F_MIN,F_MAX), L:rnd()*0.03 }; }
+// a 1-parameter eye "quality" family: s=0 is a blind flat patch, s=1 a sharp lens eye. drho falls
+// (acuity rises) monotonically with s, so we can bisect it to hit a target acuity.
+function eyeFamily(s){ return { A:clamp(1.0-0.6*s,A_MIN,A_MAX), f:clamp(0.07+1.08*s,F_MIN,F_MAX), L:clamp(1.15*s,0,0.98) }; }
+// build a predator starting genome whose acuity ≈ target (0..1), then add a little individual variation
+function sightedGenome(target){
+  let lo=0,hi=1;
+  for(let i=0;i<26;i++){ const s=(lo+hi)/2; if(acuity(eyeFamily(s))<target) lo=s; else hi=s; }
+  const g=eyeFamily((lo+hi)/2);
+  return { A:clamp(g.A*(1+(rnd()*2-1)*0.05),A_MIN,A_MAX),
+           f:clamp(g.f*(1+(rnd()*2-1)*0.05),F_MIN,F_MAX),
+           L:clamp(g.L,0,0.99) };
+}
 function mutate(g,mut){
   return { A:clamp(g.A*Math.exp(randn()*mut),A_MIN,A_MAX),
            f:clamp(g.f*Math.exp(randn()*mut),F_MIN,F_MAX),
@@ -233,14 +248,11 @@ function reset(){
   _seed=987654321; tick=0; captures=0; capWindow=[]; births=0; HIST.length=0;
   prey=[]; preds=[]; ARCHIVE=[]; nextAgentId=1;
   const nPrey=+$('cPrey').value, nPred=predatorsOn()?+$('cPred').value:0;
-  const predSighted=$('cPredSighted').checked;
-  for(let i=0;i<nPrey;i++){ const p=spawnPrey(blindGenome(),rx(),ry());   // prey ALWAYS start blind
-    p.breedT=Math.round(rnd()*breedTicks()); prey.push(p); }               // desync the breed timers
-  for(let i=0;i<nPred;i++){
-    // default: predators also start blind (symmetric emergence). Toggle: they start with a working
-    // eye, so prey face a real visual threat and must evolve past the patch to survive.
-    const g = predSighted ? {A:0.35+rnd()*0.1, f:1.0+rnd()*0.3, L:0.9+rnd()*0.1} : blindGenome();
-    preds.push(spawnPred(g,rx(),ry()));
+  const preyEye=(+$('cPreyEye').value)/100, predEye=(+$('cPredEye').value)/100;  // each side's starting acuity
+  for(let i=0;i<nPrey;i++){ const p=spawnPrey(sightedGenome(preyEye),rx(),ry()); // prey start where their slider says
+    p.breedT=Math.round(rnd()*breedTicks()); prey.push(p); }                      // desync the breed timers
+  for(let i=0;i<nPred;i++){                                                        // predators start where their slider says
+    preds.push(spawnPred(sightedGenome(predEye),rx(),ry()));
   }
 }
 
@@ -334,9 +346,9 @@ const wc=$('world'), wx=wc.getContext('2d');
 function draw(){
   MAX_SIGHT=+$('cSight').value; BASE_SIGHT=Math.min(+$('cBase').value, MAX_SIGHT);
   wx.fillStyle="#0b0e12"; wx.fillRect(0,0,WORLD.w,WORLD.h);
-  // detection rings for EVERY agent — translucent grey so they read on the black world
-  for(const p of prey){ const r=sightRange(p.g); if(r>2) ring(p,r,"rgba(200,206,214,0.34)"); }
-  for(const pr of preds){ const r=sightRange(pr.g); if(r>2) ring(pr,r,"rgba(200,206,214,0.34)"); }
+  // detection rings for EVERY agent — bright faint yellow so they read clearly on the black world
+  for(const p of prey){ const r=sightRange(p.g); if(r>2) ring(p,r,"rgba(255,232,120,0.9)"); }
+  for(const pr of preds){ const r=sightRange(pr.g); if(r>2) ring(pr,r,"rgba(255,232,120,0.9)"); }
   // trails + dots
   drawAgents(prey,"#5eb3ff",PREY_R);
   drawAgents(preds,"#ff5e7e",PRED_R);
@@ -345,7 +357,7 @@ function draw(){
   for(const p of prey)  bar(p.x, p.y-PREY_R-6, clamp(1-p.breedT/bT,0,1), "#7ee787");   // fills toward birth
   for(const pr of preds) bar(pr.x, pr.y-PRED_R-6, clamp(pr.starveT/sT,0,1), "#ffb24d"); // drains toward death
 }
-function ring(a,r,col){ wx.strokeStyle=col; wx.lineWidth=1; wx.beginPath(); wx.arc(a.x,a.y,r,0,7); wx.stroke(); }
+function ring(a,r,col){ wx.strokeStyle=col; wx.lineWidth=1.4; wx.beginPath(); wx.arc(a.x,a.y,r,0,7); wx.stroke(); }
 function bar(x,y,frac,col){ const W=10,H=2; wx.fillStyle="rgba(255,255,255,0.16)"; wx.fillRect(x-W/2,y,W,H);
   wx.fillStyle=col; wx.fillRect(x-W/2,y,W*frac,H); }
 function drawAgents(arr,col,rad){
@@ -442,13 +454,18 @@ function predatorsOn(){ return !$('cControl').checked; }
 function syncLabels(){
   $('vPrey').textContent=$('cPrey').value; $('vPred').textContent=$('cPred').value;
   $('vSight').textContent=$('cSight').value+" px"; $('vBase').textContent=$('cBase').value+" px";
+  { const base=Math.min(+$('cBase').value,+$('cSight').value), span=(+$('cSight').value)-base,
+      px=q=>Math.round(base+(q/100)*span);
+    const qP=+$('cPreyEye').value, qD=+$('cPredEye').value;
+    $('vPreyEye').textContent=qP+"% (~"+px(qP)+" px)";
+    $('vPredEye').textContent=qD+"% (~"+px(qD)+" px)"; }
   $('vBreed').textContent=$('cBreed').value+" s";
   $('vStarve').textContent=$('cStarve').value+" s"; $('vMut').textContent=(+$('cMut').value).toFixed(3);
   $('vSpeed').textContent=$('cSpeed').value+"×";
 }
-['cPrey','cPred','cSight','cBase','cBreed','cStarve','cMut','cSpeed'].forEach(id=>$(id).addEventListener('input',syncLabels));
+['cPrey','cPred','cSight','cBase','cPreyEye','cPredEye','cBreed','cStarve','cMut','cSpeed'].forEach(id=>$(id).addEventListener('input',syncLabels));
+['cPreyEye','cPredEye'].forEach(id=>$(id).addEventListener('change',reset));
 $('cControl').addEventListener('change',reset);
-$('cPredSighted').addEventListener('change',reset);
 ['cPrey','cPred'].forEach(id=>$(id).addEventListener('change',reset));
 $('play').addEventListener('click',()=>{ running=!running; $('play').textContent=running?"⏸ Pause":"▶ Play"; });
 $('reset').addEventListener('click',()=>{ reset(); running=true; $('play').textContent="⏸ Pause"; });
