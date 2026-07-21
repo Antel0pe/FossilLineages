@@ -18,7 +18,7 @@
   `app/evolution-explorer.tsx` + `app/explorer.module.css`. Old `data/human-lineage.json` is now
   unused.
 
-  ## North star
+## North star
   Illustrate the **evolutionary history of humans (and the surrounding lineages)** in an
   interesting, scientifically grounded way. The site exists to answer three questions for a
   visitor, in order of emphasis:
@@ -354,3 +354,11 @@ change→pressure claim, actively check whether it's being flattened into a sing
 mono-causal line where the real evidence is messier/plural/contested — and if the evidence really
 does support one dominant cause, still carry the honesty/certainty framing the branch-point panels
 already require rather than stating it as flat unqualified fact.
+
+## 2026-07-20 — Simulation direction: measure selection before adding mechanisms
+
+For the eye sandbox, the user wants every added system to earn its place. Food, movement costs,
+stamina, hiding, and a staged morphology-to-behaviour mapping are not presumed justified merely
+because they could increase eye selection. The immediate direction is diagnostic: visualize each
+individual's birth optical resolution against lifespan and reproductive/hunting outcome, so the
+simulation can show whether earlier detection is actually associated with differential survival.

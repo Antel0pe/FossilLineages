@@ -42,6 +42,12 @@
   .stat .k{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
   .stat .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:1px}
   .cap{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .diagnostics{margin-top:14px}
+  .diag-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  @media(max-width:700px){.diag-grid{grid-template-columns:1fr}}
+  .diag-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .diag-card h3{font-size:13px;margin:0 0 4px;color:var(--ink)}
+  .diag-card canvas{width:100%;height:auto;background:#0b0e12}
   details{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:6px 14px}
   summary{cursor:pointer;font-size:13px;color:var(--muted);padding:8px 0}
   details p{color:var(--muted);font-size:13px}
@@ -127,6 +133,21 @@
     </div>
   </div>
 
+  <section class="diagnostics">
+    <div class="panel">
+      <h2>Does a sharper eye actually leave more descendants?</h2>
+      <p class="cap">Every dot is one animal, positioned by the optical blur it was born with. Filled
+        dots have died; hollow dots are still alive, so their lifetimes are only lower bounds. The pale
+        line is the mean of ended animals within each resolution band—not a fitted fitness curve.</p>
+      <div class="diag-grid">
+        <div class="diag-card"><h3>Prey survival</h3><canvas id="diagPreyLife" width="500" height="250"></canvas></div>
+        <div class="diag-card"><h3>Prey reproduction</h3><canvas id="diagPreyOffspring" width="500" height="250"></canvas></div>
+        <div class="diag-card"><h3>Predator survival</h3><canvas id="diagPredLife" width="500" height="250"></canvas></div>
+        <div class="diag-card"><h3>Predator hunting</h3><canvas id="diagPredCatches" width="500" height="250"></canvas></div>
+      </div>
+    </div>
+  </section>
+
   <details>
     <summary>What is and isn't authored here (read me)</summary>
     <p><b>Authored (the substrate):</b> the optics equation <code>Δρ=√((A/f·(1−lens))²+(λ/A)²)</code>
@@ -195,21 +216,22 @@ const PRED_BREED_CATCHES=2;                    // catches a predator needs to sp
 
 /* ================= state ================= */
 let prey=[], preds=[];
+let ARCHIVE=[], nextAgentId=1;
 let tick=0, captures=0, capWindow=[], births=0, running=true;
 const HIST=[]; // {t, drPrey, drPred}
 
 function breedTicks(){ return Math.max(1,Math.round((+$('cBreed').value)*TICKS_PER_SEC)); }
 function starveTicks(){ return Math.max(1,Math.round((+$('cStarve').value)*TICKS_PER_SEC)); }
 
-function spawnPrey(g,x,y){ return { g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
-  breedT:breedTicks(), born:tick, trail:[] }; }
-function spawnPred(g,x,y){ return { g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
-  starveT:starveTicks(), fed:0, born:tick, target:null, chase:0, trail:[] }; }
+function spawnPrey(g,x,y){ const a={ id:nextAgentId++, kind:'prey', g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
+  breedT:breedTicks(), born:tick, offspring:0, catches:0, deathTick:null, trail:[] }; ARCHIVE.push(a); return a; }
+function spawnPred(g,x,y){ const a={ id:nextAgentId++, kind:'pred', g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
+  starveT:starveTicks(), fed:0, born:tick, offspring:0, catches:0, deathTick:null, target:null, chase:0, trail:[] }; ARCHIVE.push(a); return a; }
 function rx(){ return rnd()*WORLD.w; } function ry(){ return rnd()*WORLD.h; }
 
 function reset(){
   _seed=987654321; tick=0; captures=0; capWindow=[]; births=0; HIST.length=0;
-  prey=[]; preds=[];
+  prey=[]; preds=[]; ARCHIVE=[]; nextAgentId=1;
   const nPrey=+$('cPrey').value, nPred=predatorsOn()?+$('cPred').value:0;
   const predSighted=$('cPredSighted').checked;
   for(let i=0;i<nPrey;i++){ const p=spawnPrey(blindGenome(),rx(),ry());   // prey ALWAYS start blind
@@ -256,7 +278,7 @@ function step(){
     p.breedT--;
     if(p.breedT<=0){
       if(prey.length+newPrey.length<PREY_MAX){
-        newPrey.push(spawnPrey(mutate(p.g,mut),p.x+randn()*3,p.y+randn()*3)); births++;
+        newPrey.push(spawnPrey(mutate(p.g,mut),p.x+randn()*3,p.y+randn()*3)); p.offspring++; births++;
         p.breedT=bT;
       } else p.breedT=0;  // ready and waiting for a free slot (survivors fill openings)
     }
@@ -283,14 +305,16 @@ function step(){
     // wanderer only lands the odd lucky grab — that's the bootstrap that keeps a blind start alive.
     const hit=nearest(pr.x,pr.y,prey,CATCH_DIST+PRED_R);
     if(hit && (seen || rnd()<LUCKY_GRAB)){ const idx=prey.indexOf(hit.o);
-      if(idx>=0){ prey.splice(idx,1); captures++; capWindow.push(tick);
+      if(idx>=0){ const victim=prey[idx]; victim.deathTick=tick; prey.splice(idx,1); captures++; capWindow.push(tick);
         pr.starveT=sT; pr.fed++; pr.target=null; pr.chase=0;
         if(pr.fed>=PRED_BREED_CATCHES && preds.length+newPreds.length<PRED_MAX){
-          newPreds.push(spawnPred(mutate(pr.g,mut),pr.x+randn()*3,pr.y+randn()*3)); births++; pr.fed=0;
+          newPreds.push(spawnPred(mutate(pr.g,mut),pr.x+randn()*3,pr.y+randn()*3)); pr.offspring++; births++; pr.fed=0;
         }
+        pr.catches++;
       } }
     pr.starveT--;
     if(pr.starveT>0) newPreds.push(pr);   // else starves out (dropped)
+    else pr.deathTick=tick;
     trailPush(pr);
   }
   preds=newPreds;
@@ -351,6 +375,36 @@ function drawTraj(){
   tx.fillStyle="#6b7684"; tx.fillText("← sharper (down) · time →",padL+2,H-3);
 }
 
+/* ================= selection diagnostics ================= */
+const DIAG_BLUR_LO=0.5, DIAG_BLUR_HI=1500;
+function ageSeconds(a){ return ((a.deathTick==null?tick:a.deathTick)-a.born)/TICKS_PER_SEC; }
+function drawDiag(id, kind, yValue, yLabel, colour){
+  const c=$(id), ctx=c.getContext('2d'), W=c.width,H=c.height, L=43,R=9,T=20,B=31;
+  ctx.fillStyle='#0b0e12'; ctx.fillRect(0,0,W,H);
+  const items=ARCHIVE.filter(a=>a.kind===kind), ended=items.filter(a=>a.deathTick!=null);
+  const maxY=Math.max(1,...items.map(yValue)), yTop=maxY*1.12;
+  const X=a=>L+(Math.log(DIAG_BLUR_HI)-Math.log(clamp(toDeg(a.dr),DIAG_BLUR_LO,DIAG_BLUR_HI)))/(Math.log(DIAG_BLUR_HI)-Math.log(DIAG_BLUR_LO))*(W-L-R);
+  const Y=v=>T+(1-clamp(v/yTop,0,1))*(H-T-B);
+  ctx.strokeStyle='#232b34';ctx.lineWidth=1;ctx.fillStyle='#6b7684';ctx.font='10px sans-serif';
+  for(let i=0;i<=3;i++){ const v=yTop*i/3,y=Y(v);ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(W-R,y);ctx.stroke();ctx.fillText(v<10?v.toFixed(1):Math.round(v),3,y+3); }
+  for(const d of [1,10,100,1000]){ const x=L+(Math.log(DIAG_BLUR_HI)-Math.log(d))/(Math.log(DIAG_BLUR_HI)-Math.log(DIAG_BLUR_LO))*(W-L-R);ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,H-B);ctx.stroke();ctx.fillText(d+'°',x-8,H-18); }
+  // A five-bin terminal-outcome line makes the possible selection gradient visible without inventing a fit.
+  const bins=5, means=[]; for(let b=0;b<bins;b++){ const lo=Math.log(DIAG_BLUR_LO)+(Math.log(DIAG_BLUR_HI)-Math.log(DIAG_BLUR_LO))*b/bins;
+    const hi=Math.log(DIAG_BLUR_LO)+(Math.log(DIAG_BLUR_HI)-Math.log(DIAG_BLUR_LO))*(b+1)/bins;
+    const values=ended.filter(a=>{const v=Math.log(clamp(toDeg(a.dr),DIAG_BLUR_LO,DIAG_BLUR_HI));return v>=lo&&(b===bins-1?v<=hi:v<hi);}).map(yValue);
+    if(values.length) means.push({d:Math.exp((lo+hi)/2),v:values.reduce((s,x)=>s+x,0)/values.length}); }
+  if(means.length>1){ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1.5;ctx.beginPath();means.forEach((m,i)=>{const x=L+(Math.log(DIAG_BLUR_HI)-Math.log(m.d))/(Math.log(DIAG_BLUR_HI)-Math.log(DIAG_BLUR_LO))*(W-L-R),y=Y(m.v);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();}
+  for(const a of items){ const x=X(a),y=Y(yValue(a));ctx.lineWidth=1.3; if(a.deathTick==null){ctx.strokeStyle=colour;ctx.globalAlpha=.58;ctx.beginPath();ctx.arc(x,y,3.3,0,7);ctx.stroke();}else{ctx.fillStyle=colour;ctx.globalAlpha=.78;ctx.beginPath();ctx.arc(x,y,2.7,0,7);ctx.fill();} }
+  ctx.globalAlpha=1;ctx.fillStyle='#b9c2cd';ctx.font='10px sans-serif';ctx.fillText(yLabel,3,11);ctx.fillText('blurrier  ←  birth optical blur Δρ  →  sharper',L,H-4);
+  ctx.fillStyle='#6b7684';ctx.fillText(`${ended.length} ended · ${items.length-ended.length} alive (hollow)`,W-176,11);
+}
+function drawDiagnostics(){
+  drawDiag('diagPreyLife','prey',ageSeconds,'lifetime (s)','#5eb3ff');
+  drawDiag('diagPreyOffspring','prey',a=>a.offspring,'offspring','#5eb3ff');
+  drawDiag('diagPredLife','pred',ageSeconds,'lifetime (s)','#ff5e7e');
+  drawDiag('diagPredCatches','pred',a=>a.catches,'prey caught','#ff5e7e');
+}
+
 /* ================= HUD ================= */
 function meanGeneVal(arr,k){ if(!arr.length)return 0; let s=0; for(const a of arr)s+=a.g[k]; return s/arr.length; }
 function preyStage(){ if(!prey.length) return "–";
@@ -378,7 +432,7 @@ function hud(){
 /* ================= loop ================= */
 function frame(){
   if(running){ const steps=+$('cSpeed').value; for(let s=0;s<steps;s++) step(); }
-  draw(); drawTraj(); hud();
+  draw(); drawTraj(); drawDiagnostics(); hud();
   requestAnimationFrame(frame);
 }
 

@@ -337,26 +337,3 @@ isolate the variables that make detection/eyes matter.
   other first wins the encounter," predator marginally faster to convert its head-start into a catch.**
   Watch whether the user adopts Cambrian, and whether "who-sees-whom-first" feels honest to him or like
   another authored knob.
-
-## 2026-07-20
-
-Context: inspecting the stripped predator/prey eye sandbox after the user asked why its selected eye
-appears to plateau around a modest range, and how to preserve a simple system while finding conditions
-that produce a terrific eye.
-
-- **[correction / idea]** User now suspects that dense food and frequent predator encounters may make
-  vision population-level weak, and asks whether omitting food and mating removes necessary selection
-  pressures. He frames the goal as a deliberate tension: retain a simple model, but make its world force
-  and somewhat mirror the evolution of a good eye. This extends the 2026-07-19 regime-explorer direction;
-  it is not a request to insert a predetermined eye-fitness curve.
-
-- **[correction / tension]** Rejected proposed food, movement-budget, and escape-geometry additions as
-  unearned; specifically notes that sprint-and-tire escape fails without hiding or stalking. Also rejects
-  coding a morphology-to-behaviour ladder (patch/cup/pinhole/lens) because it would pre-author the desired
-  outcome. The preferred target remains minimal-biased physics, such as optical resolution, and finding
-  the fundamental missing selective relation in the present model rather than adding pressures that merely
-  make any trait reproduce more often.
-
-- **[liked / idea]** Positively chose a diagnostic instead of a new mechanism: a scatter plot of prey-eye
-  resolution against how long each prey survived, with analogous plots for the other outcomes. This is
-  evidence of the preference for making the selection gradient inspectable before changing the world.
