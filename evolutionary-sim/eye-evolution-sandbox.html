@@ -93,10 +93,12 @@
     <div class="ctrl"><b>Sim speed</b>
       <input id="cSpeed" type="range" min="1" max="25" step="1" value="2"><span class="val" id="vSpeed"></span></div>
     <label class="tog"><input type="checkbox" id="cControl"> Control: predators OFF (no predator = no pressure → eyes should NOT sharpen)</label>
-    <div style="display:flex;gap:10px;margin-left:auto">
+    <div style="display:flex;gap:10px;margin-left:auto;align-items:center">
+      <button id="dumpLog" title="Dump parameters, per-generation ledger, selection stats and the full agent archive into evolutionary-sim/logs/">⤓ Log run</button>
       <button class="primary" id="play">⏸ Pause</button>
       <button id="reset">↻ Reset</button>
     </div>
+    <div id="logNote" style="flex-basis:100%;font-size:12px;color:var(--muted);margin-top:-4px"></div>
   </div>
 
   <div class="grid">
@@ -233,26 +235,57 @@ const PRED_BREED_CATCHES=2;                    // catches a predator needs to sp
 let prey=[], preds=[];
 let ARCHIVE=[], nextAgentId=1;
 let tick=0, captures=0, capWindow=[], births=0, running=true;
-const HIST=[]; // {t, drPrey, drPred}
+const HIST=[]; // rich per-sample snapshot, see sampleHist()
+
+/* --- diagnostic counters (everything the log needs; zeroed in reset()) --- */
+const CNT={
+  capTracked:0, capLucky:0,        // capture WITH a visual lock vs a blind bump
+  predStarved:0, preyCaught:0,
+  preyFleeTicks:0, preyWanderTicks:0,
+  predPursueTicks:0, predMemoryTicks:0, predWanderTicks:0,
+  predTicksWithPreyVisible:0, predTicks:0,
+  preyTicksWithPredVisible:0, preyTicks:0,
+  preyVisibleSum:0,                // Σ (# prey inside a predator's ring) → mean occupancy
+  birthsPrey:0, birthsPred:0,
+};
+let CAPTURES_LOG=[];   // one row per capture: the actual selective events
+let MUT_LOG={prey:[], pred:[]};  // child.acuity − parent.acuity, isolates mutational bias from selection
+let PARAMS_AT_RESET=null, RESET_WALLCLOCK=null;
 
 function breedTicks(){ return Math.max(1,Math.round((+$('cBreed').value)*TICKS_PER_SEC)); }
 function starveTicks(){ return Math.max(1,Math.round((+$('cStarve').value)*TICKS_PER_SEC)); }
 
-function spawnPrey(g,x,y){ const a={ id:nextAgentId++, kind:'prey', g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
-  breedT:breedTicks(), born:tick, offspring:0, catches:0, deathTick:null, trail:[] }; ARCHIVE.push(a); return a; }
-function spawnPred(g,x,y){ const a={ id:nextAgentId++, kind:'pred', g, dr:drho(g), x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
-  starveT:starveTicks(), fed:0, born:tick, offspring:0, catches:0, deathTick:null, target:null, chase:0, trail:[] }; ARCHIVE.push(a); return a; }
+// gen = lineage depth (0 = founder). parentId lets the log reconstruct the whole tree.
+function spawnPrey(g,x,y,gen,parentId){ const a={ id:nextAgentId++, kind:'prey', g, dr:drho(g), acu:acuity(g),
+  gen:gen|0, parentId:parentId??null, x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
+  breedT:breedTicks(), born:tick, offspring:0, catches:0, deathTick:null, death:null,
+  fleeTicks:0, wanderTicks:0, detections:0, trail:[] }; ARCHIVE.push(a); return a; }
+function spawnPred(g,x,y,gen,parentId){ const a={ id:nextAgentId++, kind:'pred', g, dr:drho(g), acu:acuity(g),
+  gen:gen|0, parentId:parentId??null, x,y, vx:(rnd()*2-1), vy:(rnd()*2-1),
+  starveT:starveTicks(), fed:0, born:tick, offspring:0, catches:0, deathTick:null, death:null,
+  pursueTicks:0, memoryTicks:0, wanderTicks:0, detections:0, luckyCatches:0, trail:[] }; ARCHIVE.push(a); return a; }
 function rx(){ return rnd()*WORLD.w; } function ry(){ return rnd()*WORLD.h; }
 
+function readSliders(){
+  return { startPrey:+$('cPrey').value, startPred:+$('cPred').value,
+    bestEyeRangePx:+$('cSight').value, baselineSightPx:+$('cBase').value,
+    preyStartEyePct:+$('cPreyEye').value, predStartEyePct:+$('cPredEye').value,
+    preyBreedIntervalSec:+$('cBreed').value, predStarveSec:+$('cStarve').value,
+    mutationSigma:+$('cMut').value, simSpeedStepsPerFrame:+$('cSpeed').value,
+    predatorsOff:$('cControl').checked };
+}
 function reset(){
   _seed=987654321; tick=0; captures=0; capWindow=[]; births=0; HIST.length=0;
   prey=[]; preds=[]; ARCHIVE=[]; nextAgentId=1;
+  for(const k in CNT) CNT[k]=0;
+  CAPTURES_LOG=[]; MUT_LOG={prey:[],pred:[]};
+  PARAMS_AT_RESET=readSliders(); RESET_WALLCLOCK=new Date().toISOString();
   const nPrey=+$('cPrey').value, nPred=predatorsOn()?+$('cPred').value:0;
   const preyEye=(+$('cPreyEye').value)/100, predEye=(+$('cPredEye').value)/100;  // each side's starting acuity
-  for(let i=0;i<nPrey;i++){ const p=spawnPrey(sightedGenome(preyEye),rx(),ry()); // prey start where their slider says
+  for(let i=0;i<nPrey;i++){ const p=spawnPrey(sightedGenome(preyEye),rx(),ry(),0,null); // prey start where their slider says
     p.breedT=Math.round(rnd()*breedTicks()); prey.push(p); }                      // desync the breed timers
   for(let i=0;i<nPred;i++){                                                        // predators start where their slider says
-    preds.push(spawnPred(sightedGenome(predEye),rx(),ry()));
+    preds.push(spawnPred(sightedGenome(predEye),rx(),ry(),0,null));
   }
 }
 
@@ -282,15 +315,20 @@ function step(){
     const predSight=sightRange(p.g);
     let ax,ay;
     const threat = preds.length? nearest(p.x,p.y,preds,predSight):null;
-    if(threat){ const [nx,ny]=norm(threat.dx,threat.dy); ax=-nx; ay=-ny; }              // flee
-    else { ax=p.vx; ay=p.vy; if(rnd()<0.05){ax+=randn()*0.6;ay+=randn()*0.6;} }         // wander
+    CNT.preyTicks++;
+    if(threat){ const [nx,ny]=norm(threat.dx,threat.dy); ax=-nx; ay=-ny;                // flee
+      p.fleeTicks++; p.detections++; CNT.preyFleeTicks++; CNT.preyTicksWithPredVisible++; }
+    else { ax=p.vx; ay=p.vy; if(rnd()<0.05){ax+=randn()*0.6;ay+=randn()*0.6;}           // wander
+      p.wanderTicks++; CNT.preyWanderTicks++; }
     const [dx,dy]=norm(ax,ay); p.vx=dx; p.vy=dy;
     p.x+=dx*PREY_SPEED; p.y+=dy*PREY_SPEED; wrap(p);
     // breed on timer (asexual, mutated copy) when a slot is free
     p.breedT--;
     if(p.breedT<=0){
       if(prey.length+newPrey.length<PREY_MAX){
-        newPrey.push(spawnPrey(mutate(p.g,mut),p.x+randn()*3,p.y+randn()*3)); p.offspring++; births++;
+        const kid=spawnPrey(mutate(p.g,mut),p.x+randn()*3,p.y+randn()*3,p.gen+1,p.id);
+        MUT_LOG.prey.push(kid.acu-p.acu);            // mutational bias, measured not assumed
+        newPrey.push(kid); p.offspring++; births++; CNT.birthsPrey++;
         p.breedT=bT;
       } else p.breedT=0;  // ready and waiting for a free slot (survivors fill openings)
     }
@@ -304,29 +342,49 @@ function step(){
   for(const pr of preds){
     const preySight=sightRange(pr.g);
     let seen=nearest(pr.x,pr.y,prey,preySight);
-    if(seen){ pr.target=seen.o; pr.chase=PRED_MEMORY; }
+    const directSight=!!seen;
+    // occupancy: how crowded is this predator's detection ring? If it's ~always >0, a wider ring
+    // buys nothing and the fitness gradient on acuity is flat — this is the saturation check.
+    CNT.predTicks++;
+    const nVisible=countWithin(pr.x,pr.y,prey,preySight);
+    CNT.preyVisibleSum+=nVisible; if(nVisible>0) CNT.predTicksWithPreyVisible++;
+    if(seen){ pr.target=seen.o; pr.chase=PRED_MEMORY; pr.detections++; }
     else if(pr.chase>0){ pr.chase--;
       if(pr.target && prey.indexOf(pr.target)>=0){ let dx=dwrap(pr.target.x-pr.x,WORLD.w), dy=dwrap(pr.target.y-pr.y,WORLD.h); seen={o:pr.target,dx,dy}; }
       else pr.chase=0; }
     let ax,ay;
-    if(seen){ const [nx,ny]=norm(seen.dx,seen.dy); ax=nx; ay=ny; }                       // pursue
-    else { ax=pr.vx; ay=pr.vy; if(rnd()<0.05){ax+=randn()*0.6;ay+=randn()*0.6;} }        // wander
+    if(seen){ const [nx,ny]=norm(seen.dx,seen.dy); ax=nx; ay=ny;                         // pursue
+      if(directSight){ pr.pursueTicks++; CNT.predPursueTicks++; }
+      else { pr.memoryTicks++; CNT.predMemoryTicks++; } }
+    else { ax=pr.vx; ay=pr.vy; if(rnd()<0.05){ax+=randn()*0.6;ay+=randn()*0.6;}          // wander
+      pr.wanderTicks++; CNT.predWanderTicks++; }
     const [dx,dy]=norm(ax,ay); pr.vx=dx; pr.vy=dy;
     pr.x+=dx*PRED_SPEED; pr.y+=dy*PRED_SPEED; wrap(pr);
     // capture in contact range. Almost always requires actively TRACKING the prey (`seen`); a blind
     // wanderer only lands the odd lucky grab — that's the bootstrap that keeps a blind start alive.
     const hit=nearest(pr.x,pr.y,prey,CATCH_DIST+PRED_R);
+    const tracking=!!seen;
     if(hit && (seen || rnd()<LUCKY_GRAB)){ const idx=prey.indexOf(hit.o);
-      if(idx>=0){ const victim=prey[idx]; victim.deathTick=tick; prey.splice(idx,1); captures++; capWindow.push(tick);
+      if(idx>=0){ const victim=prey[idx]; victim.deathTick=tick; victim.death=tracking?'caught-tracked':'caught-lucky';
+        prey.splice(idx,1); captures++; capWindow.push(tick); CNT.preyCaught++;
+        if(tracking) CNT.capTracked++; else { CNT.capLucky++; pr.luckyCatches++; }
+        // one row per selective event: who ate whom, and with what eye
+        if(CAPTURES_LOG.length<20000) CAPTURES_LOG.push({ t:+(tick/TICKS_PER_SEC).toFixed(2),
+          mode: tracking?(directSight?'sight':'memory'):'lucky',
+          predAcu:+pr.acu.toFixed(4), preyAcu:+victim.acu.toFixed(4),
+          predSight:Math.round(sightRange(pr.g)), preySight:Math.round(sightRange(victim.g)),
+          preyAgeSec:+((tick-victim.born)/TICKS_PER_SEC).toFixed(1), preyOffspring:victim.offspring });
         pr.starveT=sT; pr.fed++; pr.target=null; pr.chase=0;
         if(pr.fed>=PRED_BREED_CATCHES && preds.length+newPreds.length<PRED_MAX){
-          newPreds.push(spawnPred(mutate(pr.g,mut),pr.x+randn()*3,pr.y+randn()*3)); pr.offspring++; births++; pr.fed=0;
+          const kid=spawnPred(mutate(pr.g,mut),pr.x+randn()*3,pr.y+randn()*3,pr.gen+1,pr.id);
+          MUT_LOG.pred.push(kid.acu-pr.acu);
+          newPreds.push(kid); pr.offspring++; births++; CNT.birthsPred++; pr.fed=0;
         }
         pr.catches++;
       } }
     pr.starveT--;
     if(pr.starveT>0) newPreds.push(pr);   // else starves out (dropped)
-    else pr.deathTick=tick;
+    else { pr.deathTick=tick; pr.death='starved'; CNT.predStarved++; }
     trailPush(pr);
   }
   preds=newPreds;
@@ -334,8 +392,26 @@ function step(){
   // captures/min window
   const cutoff=tick-3600; while(capWindow.length && capWindow[0]<cutoff) capWindow.shift();
   // history sample (~every 0.25s of sim time)
-  if(tick%15===0){ HIST.push({ t:tick/60, drPrey:meanDr(prey), drPred:meanDr(preds) }); if(HIST.length>2400)HIST.shift(); }
+  if(tick%15===0){ sampleHist(); if(HIST.length>2400)HIST.shift(); }
 }
+function sampleHist(){
+  const sp=stat(prey.map(a=>a.acu)), sd=stat(preds.map(a=>a.acu));
+  HIST.push({ t:tick/60, tick,
+    nPrey:prey.length, nPred:preds.length,
+    drPrey:meanDr(prey), drPred:meanDr(preds),
+    acuPrey:sp.mean, acuPreySd:sp.sd, acuPreyMin:sp.min, acuPreyMax:sp.max,
+    acuPred:sd.mean, acuPredSd:sd.sd, acuPredMin:sd.min, acuPredMax:sd.max,
+    sightPrey:meanSight(prey), sightPred:meanSight(preds),
+    A_prey:meanGeneVal(prey,'A'), f_prey:meanGeneVal(prey,'f'), L_prey:meanGeneVal(prey,'L'),
+    A_pred:meanGeneVal(preds,'A'), f_pred:meanGeneVal(preds,'f'), L_pred:meanGeneVal(preds,'L'),
+    genPrey:mean(prey.map(a=>a.gen)), genPred:mean(preds.map(a=>a.gen)),
+    capturesCum:captures, capTracked:CNT.capTracked, capLucky:CNT.capLucky,
+    birthsCum:births });
+}
+function countWithin(px,py,arr,range){ let n=0,r2=range*range;
+  for(let i=0;i<arr.length;i++){ const dx=dwrap(arr[i].x-px,WORLD.w), dy=dwrap(arr[i].y-py,WORLD.h);
+    if(dx*dx+dy*dy<r2) n++; }
+  return n; }
 function trailPush(a){ a.trail.push(a.x,a.y); if(a.trail.length>10)a.trail.splice(0,2); }
 function meanDr(arr){ if(!arr.length)return null; let s=0; for(const a of arr)s+=a.dr; return s/arr.length; }
 function meanSight(arr){ if(!arr.length)return null; let s=0; for(const a of arr)s+=sightRange(a.g); return s/arr.length; }
@@ -448,6 +524,279 @@ function frame(){
   requestAnimationFrame(frame);
 }
 
+/* ======================================================================== *
+ *  DIAGNOSTIC LOG
+ *  Dumps everything needed to answer one question: is acuity under selection,
+ *  and if not, which link in the chain is broken? Nothing here changes the sim.
+ * ======================================================================== */
+function mean(a){ return a.length? a.reduce((s,x)=>s+x,0)/a.length : null; }
+function stat(a){ if(!a.length) return {n:0,mean:null,sd:null,min:null,max:null,median:null};
+  const s=[...a].sort((x,y)=>x-y), m=mean(a);
+  const v=a.reduce((t,x)=>t+(x-m)*(x-m),0)/a.length;
+  return {n:a.length, mean:m, sd:Math.sqrt(v), min:s[0], max:s[s.length-1],
+          median:s.length%2?s[(s.length-1)/2]:(s[s.length/2-1]+s[s.length/2])/2}; }
+function cov(x,y){ if(x.length<2) return null; const mx=mean(x),my=mean(y);
+  return x.reduce((t,_,i)=>t+(x[i]-mx)*(y[i]-my),0)/x.length; }
+function corr(x,y){ if(x.length<3) return null; const c=cov(x,y);
+  const sx=stat(x).sd, sy=stat(y).sd; return (sx&&sy)? c/(sx*sy) : null; }
+function slope(x,y){ if(x.length<3) return null; const vx=stat(x).sd**2; return vx? cov(x,y)/vx : null; }
+const f3=x=>x==null||!isFinite(x)?"–":(+x).toFixed(3);
+const f4=x=>x==null||!isFinite(x)?"–":(+x).toFixed(4);
+const f2=x=>x==null||!isFinite(x)?"–":(+x).toFixed(2);
+const pct=x=>x==null||!isFinite(x)?"–":(100*x).toFixed(1)+"%";
+const degOf=a=>toDeg(a.dr);
+
+// Price-equation decomposition on acuity, over individuals with a COMPLETE life history.
+function selectionBlock(kind){
+  const items=ARCHIVE.filter(a=>a.kind===kind);
+  const ended=items.filter(a=>a.deathTick!=null);
+  const z=ended.map(a=>a.acu), w=ended.map(a=>a.offspring), life=ended.map(a=>ageSeconds(a));
+  const wbar=mean(w), zbar=mean(z);
+  const covwz=(ended.length>1)?cov(w,z):null;
+  const wvar=(ended.length>1)?stat(w).sd**2:null;
+  const mutd=MUT_LOG[kind]||[];
+  return {
+    nTotal:items.length, nEnded:ended.length, nAlive:items.length-ended.length,
+    zbar, zsd:stat(z).sd, wbar, wvar,
+    // Δz̄ per generation predicted by selection alone
+    priceDelta: (covwz!=null&&wbar)? covwz/wbar : null,
+    // selection differential: (offspring-weighted mean acuity) − (mean acuity)
+    S: (wbar&&ended.length)? (ended.reduce((t,a)=>t+a.acu*a.offspring,0)/(wbar*ended.length))-zbar : null,
+    // opportunity for selection: with I≈0 nothing can be selected regardless of correlation
+    I: (wbar&&wvar!=null)? wvar/(wbar*wbar) : null,
+    corrAcuLife:corr(z,life), slopeAcuLife:slope(z,life),
+    corrAcuOffspring:corr(z,w), slopeAcuOffspring:slope(z,w),
+    mutBias:mean(mutd), mutSd:stat(mutd).sd, nBirths:mutd.length,
+  };
+}
+function generationLedger(kind){
+  const items=ARCHIVE.filter(a=>a.kind===kind);
+  const byGen=new Map();
+  for(const a of items){ if(!byGen.has(a.gen)) byGen.set(a.gen,[]); byGen.get(a.gen).push(a); }
+  return [...byGen.keys()].sort((a,b)=>a-b).map(g=>{
+    const all=byGen.get(g), ended=all.filter(a=>a.deathTick!=null);
+    const z=all.map(a=>a.acu);
+    const ez=ended.map(a=>a.acu), ew=ended.map(a=>a.offspring);
+    return { gen:g, nBorn:all.length, nEnded:ended.length,
+      acuMean:mean(z), acuSd:stat(z).sd, drhoDeg:mean(all.map(degOf)),
+      lifeMean:mean(ended.map(a=>ageSeconds(a))), offspringMean:mean(ew),
+      priceDelta:(ended.length>1&&mean(ew))? cov(ew,ez)/mean(ew) : null };
+  });
+}
+// Is the detection ring saturated? If a wider ring doesn't raise the odds of having
+// something to chase, there is no fitness gradient for acuity to climb.
+function saturationCurve(){
+  const rho=prey.length/(WORLD.w*WORLD.h);
+  return [0,0.25,0.5,0.75,1].map(q=>{ const r=BASE_SIGHT+q*(MAX_SIGHT-BASE_SIGHT);
+    const lam=rho*Math.PI*r*r; return {acuity:q, sightPx:Math.round(r), expectedPreyInRing:lam, pAtLeastOne:1-Math.exp(-lam)}; });
+}
+
+function csv(rows,cols){ return [cols.join(","), ...rows.map(r=>cols.map(c=>{
+  const v=r[c]; return v==null?"":(typeof v==="number"?(Number.isInteger(v)?v:+v.toFixed(5)):String(v)); }).join(","))].join("\n"); }
+function mdTable(header,rows){ return ["| "+header.join(" | ")+" |","|"+header.map(()=>"---").join("|")+"|",
+  ...rows.map(r=>"| "+r.join(" | ")+" |")].join("\n"); }
+
+function buildLogFiles(){
+  const now=new Date();
+  const p=n=>String(n).padStart(2,"0");
+  const stamp=`${now.getFullYear()}${p(now.getMonth()+1)}${p(now.getDate())}-${p(now.getHours())}${p(now.getMinutes())}${p(now.getSeconds())}`;
+  const nowParams=readSliders(), startParams=PARAMS_AT_RESET||nowParams;
+  const changed=Object.keys(nowParams).filter(k=>nowParams[k]!==startParams[k]);
+  const selPrey=selectionBlock('prey'), selPred=selectionBlock('pred');
+  const genPrey=generationLedger('prey'), genPred=generationLedger('pred');
+  const first=HIST[0], last=HIST[HIST.length-1];
+  const sat=saturationCurve();
+  const simSec=tick/TICKS_PER_SEC;
+
+  /* ---------- auto-verdict: state the diagnosis instead of making it be read out of tables ---------- */
+  const V=[];
+  const say=(ok,txt)=>V.push(`- ${ok===null?"·":ok?"OK ":"!! "} ${txt}`);
+  // Measure the trend across GENERATIONS from the full archive, not across the HIST window —
+  // HIST is capped at 2400 samples and silently drops early history on long runs.
+  const genTrend=led=>{ if(led.length<2) return null;
+    return {from:led[0].acuMean, to:led[led.length-1].acuMean, d:led[led.length-1].acuMean-led[0].acuMean,
+            g0:led[0].gen, gN:led[led.length-1].gen}; };
+  const tPrey=genTrend(genPrey), tPred=genTrend(genPred);
+  const dPrey=tPrey?.d, dPred=tPred?.d;
+  say(dPrey!=null&&dPrey>0.01, `prey acuity gen${tPrey?.g0}→gen${tPrey?.gN}: ${f4(tPrey?.from)} → ${f4(tPrey?.to)} (Δ ${dPrey==null?"–":(dPrey>=0?"+":"")+f4(dPrey)})`);
+  say(dPred!=null&&dPred>0.01, `predator acuity gen${tPred?.g0}→gen${tPred?.gN}: ${f4(tPred?.from)} → ${f4(tPred?.to)} (Δ ${dPred==null?"–":(dPred>=0?"+":"")+f4(dPred)})`);
+  if(HIST.length>=2400) V.push(`- !!  HIST is at its ${HIST.length}-sample cap: the timeseries CSV covers only t=${f2(first?.t)}s..${f2(last?.t)}s, not the whole run. Generation tables below ARE complete.`);
+  say(selPrey.I!=null&&selPrey.I>0.05, `prey opportunity for selection I=${f3(selPrey.I)} (var in offspring / mean²; ~0 means nothing to select on)`);
+  say(selPred.I!=null&&selPred.I>0.05, `predator opportunity for selection I=${f3(selPred.I)}`);
+  say(selPrey.priceDelta!=null&&Math.abs(selPrey.priceDelta)>0.002, `prey Price term Cov(w,acuity)/w̄ = ${f4(selPrey.priceDelta)} per generation (this IS the selection response on acuity)`);
+  say(selPred.priceDelta!=null&&Math.abs(selPred.priceDelta)>0.002, `predator Price term Cov(w,acuity)/w̄ = ${f4(selPred.priceDelta)} per generation`);
+  const luckyFrac=captures? CNT.capLucky/captures : null;
+  say(luckyFrac!=null&&luckyFrac<0.25, `${pct(luckyFrac)} of ${captures} captures were blind lucky grabs (vision-independent kills dilute selection on the predator eye)`);
+  const fleeFrac=CNT.preyTicks? CNT.preyFleeTicks/CNT.preyTicks : null;
+  say(fleeFrac!=null&&fleeFrac>0.02, `prey spent ${pct(fleeFrac)} of ticks fleeing (if ~0, the prey eye is never used and cannot be selected)`);
+  const visFrac=CNT.predTicks? CNT.predTicksWithPreyVisible/CNT.predTicks : null;
+  say(visFrac!=null&&visFrac<0.9, `predators had ≥1 prey visible on ${pct(visFrac)} of ticks (near 100% = ring saturated, wider ring buys nothing)`);
+  say(selPrey.mutBias!=null&&Math.abs(selPrey.mutBias)<Math.abs(selPrey.priceDelta??1e9), `prey mutational bias E[child−parent acuity] = ${f4(selPrey.mutBias)} over ${selPrey.nBirths} births (if this dominates the Price term, the trend is mutation, not selection)`);
+  say(selPred.mutBias!=null&&Math.abs(selPred.mutBias)<Math.abs(selPred.priceDelta??1e9), `predator mutational bias E[child−parent acuity] = ${f4(selPred.mutBias)} over ${selPred.nBirths} births`);
+  say(selPrey.zsd!=null&&selPrey.zsd>0.01, `standing variation in prey acuity sd=${f4(selPrey.zsd)} (no variance ⇒ no selection possible)`);
+  say(selPred.zsd!=null&&selPred.zsd>0.01, `standing variation in predator acuity sd=${f4(selPred.zsd)}`);
+  const satGain=sat[4].pAtLeastOne-sat[0].pAtLeastOne;
+  say(satGain>0.25, `going blind→perfect eye changes P(prey in ring) from ${pct(sat[0].pAtLeastOne)} to ${pct(sat[4].pAtLeastOne)} (Δ ${pct(satGain)}); a small Δ means the payoff for a perfect eye is tiny`);
+  if(startParams.predatorsOff) V.push("- ·  CONTROL RUN: predators are OFF, so prey acuity SHOULD drift, not improve.");
+  if(changed.length) V.push(`- !!  parameters changed mid-run without a reset: ${changed.join(", ")} — the early history does not match the current settings.`);
+
+  const kv=o=>mdTable(["param","value"],Object.entries(o).map(([k,v])=>[k,String(v)]));
+
+  /* ---------- summary.md ---------- */
+  const md=`# Eye-evolution sandbox — diagnostic log
+
+generated \`${now.toISOString()}\` · run started \`${RESET_WALLCLOCK}\`
+sim time **${f2(simSec)} s** (${tick} ticks) · rng seed \`987654321\` (Reset is reproducible)
+
+## 0. Verdict (auto-computed)
+
+${V.join("\n")}
+
+## 1. Parameters at reset
+${kv(startParams)}
+
+${changed.length?`### Changed since reset (run is NOT clean)\n${mdTable(["param","at reset","now"],changed.map(k=>[k,String(startParams[k]),String(nowParams[k])]))}\n`:"_No parameter was touched after reset — run is clean._\n"}
+## 2. Hard-coded constants (the authored substrate)
+${kv({LAMBDA,A_MIN,A_MAX,F_MIN,F_MAX,F_LENS_ON,F_LENS_FULL,DR_BLIND,DR_SHARP,
+  "world":`${WORLD.w}×${WORLD.h} px (toroidal)`,PREY_SPEED,PRED_SPEED,PREY_R,PRED_R,CATCH_DIST,
+  LUCKY_GRAB,PRED_MEMORY,TICKS_PER_SEC,PREY_MAX,PRED_MAX,PRED_BREED_CATCHES,
+  MAX_SIGHT,BASE_SIGHT,
+  "breedTicks":breedTicks(),"starveTicks":starveTicks(),
+  "drho":"sqrt((A/f·(1−lens))² + (λ/A)²)",
+  "acuity":"(ln DR_BLIND − ln Δρ)/(ln DR_BLIND − ln DR_SHARP), clamped 0..1",
+  "sightRange":"BASE_SIGHT + acuity·(MAX_SIGHT − BASE_SIGHT)"})}
+
+## 3. Current population
+${mdTable(["","prey","predator"],[
+  ["alive",prey.length,preds.length],
+  ["mean acuity",f4(mean(prey.map(a=>a.acu))),f4(mean(preds.map(a=>a.acu)))],
+  ["sd acuity",f4(stat(prey.map(a=>a.acu)).sd),f4(stat(preds.map(a=>a.acu)).sd)],
+  ["min / max acuity",`${f3(stat(prey.map(a=>a.acu)).min)} / ${f3(stat(prey.map(a=>a.acu)).max)}`,`${f3(stat(preds.map(a=>a.acu)).min)} / ${f3(stat(preds.map(a=>a.acu)).max)}`],
+  ["mean Δρ (deg)",f3(mean(prey.map(degOf))),f3(mean(preds.map(degOf)))],
+  ["mean sight (px)",f2(meanSight(prey)),f2(meanSight(preds))],
+  ["mean gene A",f4(meanGeneVal(prey,'A')),f4(meanGeneVal(preds,'A'))],
+  ["mean gene f",f4(meanGeneVal(prey,'f')),f4(meanGeneVal(preds,'f'))],
+  ["mean gene L (lens)",f4(meanGeneVal(prey,'L')),f4(meanGeneVal(preds,'L'))],
+  ["mean lineage depth",f2(mean(prey.map(a=>a.gen))),f2(mean(preds.map(a=>a.gen)))],
+  ["morphology label",preyStage(),"–"],
+])}
+
+## 4. Selection analysis — is acuity actually being selected?
+
+Computed over individuals with a **complete life history** (dead ones only; the living have
+truncated fitness). \`w\` = lifetime offspring, \`z\` = acuity at birth.
+
+${mdTable(["metric","prey","predator","how to read it"],[
+  ["n ended / n alive",`${selPrey.nEnded} / ${selPrey.nAlive}`,`${selPred.nEnded} / ${selPred.nAlive}`,"small n ⇒ everything below is noise"],
+  ["mean acuity z̄",f4(selPrey.zbar),f4(selPred.zbar),""],
+  ["sd acuity",f4(selPrey.zsd),f4(selPred.zsd),"0 ⇒ no variance ⇒ selection impossible"],
+  ["mean fitness w̄",f3(selPrey.wbar),f3(selPred.wbar),"offspring per completed life"],
+  ["var(w)",f3(selPrey.wvar),f3(selPred.wvar),""],
+  ["**Price Cov(w,z)/w̄**",f4(selPrey.priceDelta),f4(selPred.priceDelta),"**predicted Δ acuity per generation from selection alone**"],
+  ["selection differential S",f4(selPrey.S),f4(selPred.S),"offspring-weighted mean acuity − mean acuity"],
+  ["opportunity I = var(w)/w̄²",f3(selPrey.I),f3(selPred.I),"ceiling on any selection; ~0 ⇒ nothing to select on"],
+  ["corr(acuity, lifetime)",f3(selPrey.corrAcuLife),f3(selPred.corrAcuLife),""],
+  ["slope(lifetime ~ acuity)",f2(selPrey.slopeAcuLife),f2(selPred.slopeAcuLife),"seconds of life per unit acuity"],
+  ["corr(acuity, offspring)",f3(selPrey.corrAcuOffspring),f3(selPred.corrAcuOffspring),""],
+  ["slope(offspring ~ acuity)",f2(selPrey.slopeAcuOffspring),f2(selPred.slopeAcuOffspring),""],
+  ["**mutational bias** E[child−parent]",f4(selPrey.mutBias),f4(selPred.mutBias),"**drift/bias from mutate(); compare against the Price term**"],
+  ["sd of mutation step",f4(selPrey.mutSd),f4(selPred.mutSd),"per-birth acuity jitter"],
+  ["births measured",selPrey.nBirths,selPred.nBirths,""],
+])}
+
+## 5. Per-generation ledger — prey
+${genPrey.length?mdTable(["gen","born","ended","mean acuity","sd","mean Δρ°","mean life s","mean offspring","Cov(w,z)/w̄"],
+  genPrey.map(g=>[g.gen,g.nBorn,g.nEnded,f4(g.acuMean),f4(g.acuSd),f3(g.drhoDeg),f2(g.lifeMean),f2(g.offspringMean),f4(g.priceDelta)])):"_none_"}
+
+## 6. Per-generation ledger — predator
+${genPred.length?mdTable(["gen","born","ended","mean acuity","sd","mean Δρ°","mean life s","mean offspring","Cov(w,z)/w̄"],
+  genPred.map(g=>[g.gen,g.nBorn,g.nEnded,f4(g.acuMean),f4(g.acuSd),f3(g.drhoDeg),f2(g.lifeMean),f2(g.offspringMean),f4(g.priceDelta)])):"_none_"}
+
+## 7. Where deaths come from (is vision even in the causal path?)
+${mdTable(["counter","value","fraction"],[
+  ["captures total",captures,""],
+  ["…with a visual lock (sight or memory)",CNT.capTracked,pct(captures?CNT.capTracked/captures:null)],
+  ["…blind lucky grabs",CNT.capLucky,pct(captures?CNT.capLucky/captures:null)],
+  ["predators starved",CNT.predStarved,""],
+  ["prey births",CNT.birthsPrey,""],
+  ["predator births",CNT.birthsPred,""],
+])}
+
+## 8. Behaviour time budget (is the eye ever used?)
+${mdTable(["side","state","ticks","fraction"],[
+  ["prey","fleeing (predator visible)",CNT.preyFleeTicks,pct(CNT.preyTicks?CNT.preyFleeTicks/CNT.preyTicks:null)],
+  ["prey","wandering (blind)",CNT.preyWanderTicks,pct(CNT.preyTicks?CNT.preyWanderTicks/CNT.preyTicks:null)],
+  ["predator","pursuing (prey in sight)",CNT.predPursueTicks,pct(CNT.predTicks?CNT.predPursueTicks/CNT.predTicks:null)],
+  ["predator","chasing from memory",CNT.predMemoryTicks,pct(CNT.predTicks?CNT.predMemoryTicks/CNT.predTicks:null)],
+  ["predator","wandering (blind)",CNT.predWanderTicks,pct(CNT.predTicks?CNT.predWanderTicks/CNT.predTicks:null)],
+])}
+
+mean prey inside a predator's detection ring: **${f3(CNT.predTicks?CNT.preyVisibleSum/CNT.predTicks:null)}** ·
+ticks with ≥1 prey visible: **${pct(CNT.predTicks?CNT.predTicksWithPreyVisible/CNT.predTicks:null)}** ·
+ticks with a predator visible to a prey: **${pct(CNT.preyTicks?CNT.preyTicksWithPredVisible/CNT.preyTicks:null)}**
+
+## 9. Detection saturation — how much does a better eye actually buy?
+At the *current* prey density (${prey.length} prey in ${WORLD.w}×${WORLD.h} px):
+${mdTable(["acuity","sight px","expected prey in ring λ","P(≥1 visible) = 1−e^−λ"],
+  sat.map(s=>[s.acuity,s.sightPx,f3(s.expectedPreyInRing),pct(s.pAtLeastOne)]))}
+
+If the last column is already high at acuity 0, the eye is solving an already-solved problem
+and the fitness gradient is flat — that is the Holling-saturation failure mode.
+
+## 10. Files in this dump
+- \`${stamp}-summary.md\` — this file
+- \`${stamp}-agents.csv\` — every agent ever born (${ARCHIVE.length} rows): genome, acuity, lineage, fitness, behaviour tallies
+- \`${stamp}-timeseries.csv\` — ${HIST.length} samples (every 15 ticks): populations, acuity mean/sd/min/max, mean genes, cumulative captures
+- \`${stamp}-captures.csv\` — ${CAPTURES_LOG.length} capture events: mode (sight/memory/lucky), both eyes, victim age & offspring
+`;
+
+  const agentsCsv=csv(ARCHIVE.map(a=>({ id:a.id, kind:a.kind, gen:a.gen, parentId:a.parentId,
+    bornTick:a.born, deathTick:a.deathTick, alive:a.deathTick==null?1:0, lifetimeSec:ageSeconds(a),
+    death:a.death||"", A:a.g.A, f:a.g.f, L:a.g.L, effLens:effLens(a.g),
+    drhoRad:a.dr, drhoDeg:toDeg(a.dr), acuity:a.acu, sightPxNow:sightRange(a.g),
+    offspring:a.offspring, catches:a.catches, luckyCatches:a.luckyCatches??"",
+    detections:a.detections, fleeTicks:a.fleeTicks??"", pursueTicks:a.pursueTicks??"",
+    memoryTicks:a.memoryTicks??"", wanderTicks:a.wanderTicks })),
+    ["id","kind","gen","parentId","bornTick","deathTick","alive","lifetimeSec","death","A","f","L","effLens",
+     "drhoRad","drhoDeg","acuity","sightPxNow","offspring","catches","luckyCatches","detections",
+     "fleeTicks","pursueTicks","memoryTicks","wanderTicks"]);
+
+  const tsCsv=csv(HIST,["t","tick","nPrey","nPred","drPrey","drPred","acuPrey","acuPreySd","acuPreyMin","acuPreyMax",
+    "acuPred","acuPredSd","acuPredMin","acuPredMax","sightPrey","sightPred",
+    "A_prey","f_prey","L_prey","A_pred","f_pred","L_pred","genPrey","genPred",
+    "capturesCum","capTracked","capLucky","birthsCum"]);
+
+  const capCsv=csv(CAPTURES_LOG,["t","mode","predAcu","preyAcu","predSight","preySight","preyAgeSec","preyOffspring"]);
+
+  return [
+    {name:`${stamp}-summary.md`,     content:md},
+    {name:`${stamp}-agents.csv`,     content:agentsCsv},
+    {name:`${stamp}-timeseries.csv`, content:tsCsv},
+    {name:`${stamp}-captures.csv`,   content:capCsv},
+  ];
+}
+
+async function writeLog(){
+  const btn=$('dumpLog'), was=btn.textContent;
+  const files=buildLogFiles();
+  btn.disabled=true; btn.textContent="⏳ writing…";
+  try{
+    const res=await fetch(`${location.protocol==='file:'?'http://localhost:8787':''}/log`,
+      {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files})});
+    if(!res.ok) throw new Error(res.status);
+    const j=await res.json();
+    btn.textContent=`✓ ${j.written.length} files → logs/`;
+    $('logNote').textContent=`wrote ${j.written.join(", ")} into ${j.dir}`;
+  }catch(e){
+    // no server: fall back to downloads so a file:// session still produces a log
+    for(const f of files){ const url=URL.createObjectURL(new Blob([f.content],{type:'text/plain'}));
+      const a=document.createElement('a'); a.href=url; a.download=f.name; a.click(); URL.revokeObjectURL(url); }
+    btn.textContent="✓ downloaded";
+    $('logNote').textContent="log-server not running (bun run sim) — files went to your Downloads folder instead of evolutionary-sim/logs/";
+  }
+  setTimeout(()=>{btn.disabled=false; btn.textContent=was;},2600);
+}
+
 /* ================= controls ================= */
 function $(id){ return document.getElementById(id); }
 function predatorsOn(){ return !$('cControl').checked; }
@@ -469,6 +818,7 @@ $('cControl').addEventListener('change',reset);
 ['cPrey','cPred'].forEach(id=>$(id).addEventListener('change',reset));
 $('play').addEventListener('click',()=>{ running=!running; $('play').textContent=running?"⏸ Pause":"▶ Play"; });
 $('reset').addEventListener('click',()=>{ reset(); running=true; $('play').textContent="⏸ Pause"; });
+$('dumpLog').addEventListener('click',writeLog);
 
 syncLabels(); reset(); frame();
 </script>
