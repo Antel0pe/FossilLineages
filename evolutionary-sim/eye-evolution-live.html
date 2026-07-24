@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eye evolution — live (physics core)</title>
+<style>
+  :root{ --bg:#0e1116; --panel:#161b22; --line:#2b333d; --ink:#e6edf3; --muted:#9aa7b4;
+    --prey:#5eb3ff; --pred:#ff5e7e; --food:#7ee787; --acc:#c8a2ff; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1200px;margin:0 auto;padding:16px 18px 70px}
+  h1{font-size:21px;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 14px;font-size:14px;max-width:900px}
+  .sub code{background:#0b0e12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+  .controls{display:flex;flex-wrap:wrap;gap:14px 16px;align-items:flex-end;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  .ctrl{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);min-width:120px}
+  .ctrl b{color:var(--ink);font-size:13px}
+  .ctrl input[type=range]{width:150px;accent-color:var(--acc)}
+  .ctrl .val{color:var(--acc);font-variant-numeric:tabular-nums}
+  label.tog{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);cursor:pointer}
+  button{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);
+    background:#1f2733;color:var(--ink);cursor:pointer}
+  button:hover{border-color:#3d4855}
+  button.primary{background:var(--food);color:#08110a;border-color:var(--food);font-weight:700}
+  .grid{display:grid;gap:14px;grid-template-columns:1.6fr 1fr}
+  @media(max-width:940px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  canvas{display:block;width:100%;height:auto;border-radius:8px;background:#0b0e12}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:4px}
+  .stat{background:#0b0e12;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+  .stat .k{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+  .stat .v{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:1px}
+  .cap{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .err{background:#2a1416;border:1px solid #ff5e7e;color:#ffd7de;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13px;display:none}
+  code{background:#0b0e12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Eyes evolving — the physics core, live</h1>
+  <p class="sub">This page runs the <b>exact same</b> <code>core/sim.mjs</code> the headless experiments use — one
+    <code>step()</code> per tick, drawn to the canvas. Nothing here rewards a sharp eye. Δρ (acceptance angle) is
+    derived from the aperture/depth/lens genome; detection is <code>p = S/(1+S)</code> with <code>S = (θ/Δρ)²·e^(−d/atten)</code>.
+    Watch the mean-Δρ line fall as foraging and predation select for eyes on their own. Turn mutation up to see it in your lifetime.</p>
+
+  <div id="err" class="err"></div>
+
+  <div class="controls">
+    <div class="ctrl"><b>Speed</b><span>ticks per frame</span>
+      <input id="cSpeed" type="range" min="1" max="400" step="1" value="120"><span class="val" id="vSpeed"></span></div>
+    <div class="ctrl"><b>Mutation σ</b><span>step size on the eye axis</span>
+      <input id="cMut" type="range" min="0.01" max="0.30" step="0.01" value="0.15"><span class="val" id="vMut"></span></div>
+    <div class="ctrl"><b>Water clarity</b><span>attenuation length (px)</span>
+      <input id="cAtten" type="range" min="40" max="1200" step="10" value="250"><span class="val" id="vAtten"></span></div>
+    <div class="ctrl"><b>Starting predators</b>
+      <input id="cPred" type="range" min="0" max="60" step="2" value="16"><span class="val" id="vPred"></span></div>
+    <label class="tog"><input type="checkbox" id="cRings" checked> show detection rings (sharpest of each)</label>
+    <div style="display:flex;gap:10px;margin-left:auto">
+      <button class="primary" id="play">⏸ Pause</button>
+      <button id="reset">↻ Reset</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>The sea (3000×2000, toroidal)</h2>
+      <canvas id="world" width="900" height="600"></canvas>
+      <div class="legend">
+        <span><i style="background:var(--prey)"></i>prey</span>
+        <span><i style="background:var(--pred)"></i>predator</span>
+        <span><i style="background:var(--food)"></i>food (patchy, regrows)</span>
+        <span style="color:var(--muted)">brighter dot = sharper eye · ring = its own detection reach</span>
+      </div>
+      <p class="cap">Each animal is shaded by eye sharpness (dim = flat patch, bright = real eye). The ring on the
+        sharpest prey/predator is the distance at which it resolves its target with p≈½ — a blind animal's ring is
+        almost nothing; a lensed eye's spills off-screen.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Read-outs</h2>
+      <div class="stats">
+        <div class="stat"><div class="k">tick</div><div class="v" id="rTick">0</div></div>
+        <div class="stat"><div class="k">prey generation</div><div class="v" id="rGen">0</div></div>
+        <div class="stat"><div class="k">prey alive</div><div class="v" style="color:var(--prey)" id="rNPrey">–</div></div>
+        <div class="stat"><div class="k">predators alive</div><div class="v" style="color:var(--pred)" id="rNPred">–</div></div>
+        <div class="stat"><div class="k">prey mean Δρ</div><div class="v" style="color:var(--prey)" id="rDrPrey">–</div></div>
+        <div class="stat"><div class="k">pred mean Δρ</div><div class="v" style="color:var(--pred)" id="rDrPred">–</div></div>
+        <div class="stat"><div class="k">prey eye class</div><div class="v" style="color:var(--prey);font-size:14px" id="rClPrey">–</div></div>
+        <div class="stat"><div class="k">pred eye class</div><div class="v" style="color:var(--pred);font-size:14px" id="rClPred">–</div></div>
+      </div>
+
+      <h2 style="margin-top:18px">The climb — mean Δρ over time (log)</h2>
+      <canvas id="traj" width="620" height="230"></canvas>
+      <p class="cap">Lower = sharper. Dashed lines mark Nilsson's class boundaries (100° I|II, 20° II|III, 2° III|IV).
+        A line falling through them is a lineage evolving from a light-sensitive patch toward a real eye.</p>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { createSim, degOf, sharpness, nilssonClass } from './core/sim.mjs';
+
+const $ = id => document.getElementById(id);
+const errBox = $('err');
+window.addEventListener('error', e => showErr(e.message));
+function showErr(m){ errBox.style.display='block';
+  errBox.innerHTML = `<b>Something went wrong:</b> ${m}<br><br>This page imports an ES module, so it must be served over http — open it via <code>bun run sim</code> then visit <code>http://localhost:8787/eye-evolution-live.html</code>, not as a <code>file://</code> path.`; }
+
+const wc = $('world'), wx = wc.getContext('2d');
+const tc = $('traj'), tx = tc.getContext('2d');
+
+let sim, running = true, hist = [];
+const HIST_EVERY = 300;
+
+function opts(){
+  return {
+    ticks: 1e9,                       // run until the user stops it
+    mut: +$('cMut').value,
+    atten: +$('cAtten').value,
+    nPred0: +$('cPred').value,
+    predatorsOn: +$('cPred').value > 0,
+    predCap: 400, preyCap: 1200,
+    seed: 1,
+    histEvery: 100000,                // this page keeps its own history; keep the core's cheap
+  };
+}
+function reset(){
+  sim = createSim(opts());
+  hist = [];
+  running = true; $('play').textContent = '⏸ Pause';
+  window.__sim = sim;   // debug handle (harmless): lets a driver poke the live sim
+}
+
+// live-tunable knobs write straight into the running sim's P (no reset needed)
+function syncLive(){
+  if(!sim) return;
+  sim.P.mut = +$('cMut').value;
+  sim.P.atten = +$('cAtten').value;
+}
+
+/* ---------------- rendering ---------------- */
+// eye sharpness z ranges ~0 (blind) .. ~11 (class IV). Every dot stays FULLY opaque so
+// the blind starting state is clearly visible; sharpness is shown by brightening toward
+// white (a blind patch is its plain colour, a real eye glows almost white).
+function shade(base, z){
+  const t = Math.max(0, Math.min(1, z / 9));
+  const r = Math.round(base[0] + (255 - base[0]) * t);
+  const g = Math.round(base[1] + (255 - base[1]) * t);
+  const b = Math.round(base[2] + (255 - base[2]) * t);
+  return `rgb(${r},${g},${b})`;
+}
+const PREY_RGB = [94,179,255], PRED_RGB = [255,94,126];
+
+function draw(){
+  const s = sim.snapshot();
+  const W = sim.P.worldW, H = sim.P.worldH;
+  const sx = wc.width / W, sy = wc.height / H;
+  wx.fillStyle = '#0b0e12'; wx.fillRect(0,0,wc.width,wc.height);
+
+  // food — kept dim/small so the animals read clearly against it
+  wx.fillStyle = 'rgba(110,200,120,0.4)';
+  for(const f of s.food){ wx.fillRect(f.x*sx-0.5, f.y*sy-0.5, 1.2, 1.2); }
+
+  // detection rings for the sharpest of each side (payoff of a better eye, made visible)
+  if($('cRings').checked){
+    ringFor(sharpest(s.prey), sim.P.predR*2, 'rgba(255,232,120,0.6)', sx, sy); // prey resolving a predator
+    ringFor(sharpest(s.preds), sim.P.preyR*2, 'rgba(255,232,120,0.6)', sx, sy); // predator resolving prey
+  }
+
+  // agents, shaded by eye sharpness. Prey get a thin dark outline so pale (blind) dots
+  // still stand off the black background; predators are larger.
+  for(const p of s.prey){ wx.fillStyle = shade(PREY_RGB, p.z); dot(p.x*sx, p.y*sy, 3.2); }
+  for(const pr of s.preds){ wx.fillStyle = shade(PRED_RGB, pr.z);
+    dot(pr.x*sx, pr.y*sy, 5); wx.strokeStyle='rgba(0,0,0,0.5)'; wx.lineWidth=1; wx.stroke(); }
+}
+function dot(x,y,r){ wx.beginPath(); wx.arc(x,y,r,0,7); wx.fill(); }
+function sharpest(arr){ let b=null; for(const a of arr) if(!b||a.dr<b.dr) b=a; return b; }
+function ringFor(a, targetDiam, col, sx, sy){
+  if(!a) return;
+  const r = targetDiam / a.dr;                 // distance where p(resolve)=0.5: θ=Δρ
+  wx.strokeStyle = col; wx.lineWidth = 1.2;
+  wx.beginPath(); wx.ellipse(a.x*sx, a.y*sy, r*sx, r*sy, 0, 0, 7); wx.stroke();
+}
+
+/* ---------------- trajectory plot ---------------- */
+function meanDr(arr){ if(!arr.length) return null; let s=0; for(const a of arr) s+=a.dr; return s/arr.length; }
+function pushHist(){
+  const s = sim.snapshot();
+  hist.push({ tick: sim.tick, prey: meanDr(s.prey), pred: meanDr(s.preds) });
+  if(hist.length > 4000) hist.shift();
+}
+function drawTraj(){
+  const W=tc.width,H=tc.height,padL=6,padR=6,padT=8,padB=16; tx.clearRect(0,0,W,H);
+  const HI=180, LO=0.5, lHi=Math.log10(HI), lLo=Math.log10(LO);
+  const Y = deg => padT + (lHi-Math.log10(Math.max(LO,Math.min(HI,deg))))/(lHi-lLo)*(H-padT-padB);
+  tx.strokeStyle='#232b34'; tx.fillStyle='#6b7684'; tx.font='10px sans-serif'; tx.setLineDash([]);
+  for(const [d,lab] of [[100,'100° I|II'],[20,'20° II|III'],[2,'2° III|IV']]){
+    const y=Y(d); tx.setLineDash([3,3]); tx.beginPath(); tx.moveTo(padL,y); tx.lineTo(W-padR,y); tx.stroke();
+    tx.fillText(lab, padL+2, y-2);
+  }
+  tx.setLineDash([]);
+  if(hist.length<2) return;
+  const tMax = hist[hist.length-1].tick || 1;
+  const X = t => padL + (t/tMax)*(W-padL-padR);
+  const line = (key,col) => { tx.strokeStyle=col; tx.lineWidth=2; tx.beginPath(); let started=false;
+    for(const h of hist){ if(h[key]==null) continue; const x=X(h.tick), y=Y(degOf(h[key]));
+      started?tx.lineTo(x,y):tx.moveTo(x,y); started=true; } tx.stroke(); };
+  line('pred', getComputedStyle(document.body).getPropertyValue('--pred') || '#ff5e7e');
+  line('prey', getComputedStyle(document.body).getPropertyValue('--prey') || '#5eb3ff');
+  tx.fillStyle='#6b7684'; tx.fillText('← sharper (down) · time →', padL+2, H-3);
+}
+
+/* ---------------- HUD ---------------- */
+function fmtDr(d){ if(d==null) return '–'; const g=degOf(d); return g>=100?g.toFixed(0)+'°':g.toFixed(2)+'°'; }
+function hud(){
+  const s = sim.snapshot();
+  $('rTick').textContent = sim.tick.toLocaleString();
+  const pdr = meanDr(s.prey), ddr = meanDr(s.preds);
+  $('rNPrey').textContent = s.prey.length;
+  $('rNPred').textContent = s.preds.length;
+  $('rDrPrey').textContent = fmtDr(pdr);
+  $('rDrPred').textContent = fmtDr(ddr);
+  $('rClPrey').textContent = pdr!=null ? nilssonClass(pdr) : '–';
+  $('rClPred').textContent = ddr!=null ? nilssonClass(ddr) : '–';
+  const gen = s.prey.length ? Math.round(s.prey.reduce((t,a)=>t+a.gen,0)/s.prey.length) : 0;
+  $('rGen').textContent = gen;
+}
+
+/* ---------------- loop ---------------- */
+function frame(){
+  try{
+    if(running && sim){
+      const steps = +$('cSpeed').value;
+      for(let i=0;i<steps;i++){
+        if(!sim.step()){ running=false; $('play').textContent='▶ extinct — Reset'; break; }
+        if(sim.tick % HIST_EVERY === 0) pushHist();
+      }
+    }
+    if(sim){ draw(); drawTraj(); hud(); }
+  }catch(e){ showErr(e.message); running=false; return; }
+  requestAnimationFrame(frame);
+}
+
+/* ---------------- controls ---------------- */
+function syncLabels(){
+  $('vSpeed').textContent = $('cSpeed').value+'×';
+  $('vMut').textContent = (+$('cMut').value).toFixed(2);
+  $('vAtten').textContent = $('cAtten').value+' px';
+  $('vPred').textContent = $('cPred').value;
+}
+['cSpeed','cMut','cAtten','cPred'].forEach(id => $(id).addEventListener('input', syncLabels));
+['cMut','cAtten'].forEach(id => $(id).addEventListener('input', syncLive));
+['cPred'].forEach(id => $(id).addEventListener('change', reset));   // pred count needs a fresh world
+$('play').addEventListener('click', () => { running=!running;
+  $('play').textContent = running?'⏸ Pause':'▶ Play'; });
+$('reset').addEventListener('click', () => { reset(); });
+
+syncLabels(); reset(); frame();
+</script>
+</body>
+</html>

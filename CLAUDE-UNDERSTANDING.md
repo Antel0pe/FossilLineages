@@ -362,3 +362,97 @@ stamina, hiding, and a staged morphology-to-behaviour mapping are not presumed j
 because they could increase eye selection. The immediate direction is diagnostic: visualize each
 individual's birth optical resolution against lifespan and reproductive/hunting outcome, so the
 simulation can show whether earlier detection is actually associated with differential survival.
+
+## 2026-07-22 — Eye sim rebuilt on physics; the environment is the deliverable
+
+User's brief: move the eye sim toward *real* evolution from light-sensitive patch to real eye,
+with **simple, truthful equations**, and explicitly **"the majority of effort should go to
+engineering the environment such that the eye gets selected for"** — not to engineering functions
+that make selection obvious. They also flagged, correctly, that mapping acuity straight onto a
+"detection range" is probably not true to nature.
+
+**What replaced it.** Detection is now physics, not a slider:
+- `Δρ = min(π, √((2·atan(A/2f)·(1−lens))² + (λ/A)²))` — the old `A/f` was a small-angle
+  approximation used at ~7 rad, so 100% of agents in earlier runs had physically impossible
+  eyes (Δρ of 312°–499°). `2·atan(A/2f)` is a real angle and saturates at π.
+- `S = (θ/Δρ)²·exp(−d/atten)`, `p = S/(1+S)` where `θ = targetDiameter/d`. There is no sight
+  range. Detection is graded, so every reduction in Δρ pays at every distance — no threshold,
+  no flat valley. p = ½ exactly when θ = Δρ.
+- A visually resolved bearing carries error ±Δρ. Contact senses do not. This is Nilsson I→II
+  falling out of the optics instead of being coded as a stage.
+
+**Environmental facts that had to be added for any of it to matter** (each is a real feature of
+the world, none references the eye):
+- Resources are **patchy** and regrow. A 3px particle is invisible until you touch it; a 190px
+  drift of them is a big target a crude eye can steer toward. Two scales of the same act of seeing.
+- **Visual size ≠ reach**: a predator is big (visible far) but catches only at mouth range.
+- **Short-range non-visual senses** (`preyTouch`/`predTouch`). Chemo- and mechanoreception are why
+  a blind animal can make a living at all; they never improve with Δρ, so everything the eye is
+  worth is the distance beyond them. Without this, blind worlds are uninhabitable and the
+  experiment is rigged.
+- **Water clarity** (`atten`, Beer–Lambert) is an environmental knob, not an eye property — the
+  sweepable Cambrian variable.
+
+**Method rule established.** Whether an eye improved in one run confounds selection with whether
+mutation could reach the better morph. The honest instrument is an **invasion test**: seed two
+fixed genomes one step apart, mutation OFF, measure the shift in birth share. That is the
+selection coefficient at that point on the axis; sweeping it maps the gradient the environment
+actually provides. `evolutionary-sim/gradient.mjs`. Balance searches (`balance.mjs`) score only
+persistence and generation turnover, never eye quality, so they cannot bias what they set up.
+
+## 2026-07-23 — Result: the eye climbs all four Nilsson classes; behaviour rules are the weak point
+
+Under the physics rebuild above, a prey lineage starting as a flat patch (Δρ 162.6°) evolved
+monotonically to Δρ 1.78° — Nilsson class I → II (gen 20) → III (gen 36) → IV (gen 80) — with no
+rule anywhere rewarding acuity. Evolved morphology: deep stopped-down lensed pit (A 0.104,
+f 3.596, L 0.379). See `verification-criteria/2026-07-22-eye-physics-and-environment.md`.
+
+**Two findings that matter more than the headline:**
+
+1. **The climb is mutation-step-limited, not gradient-limited.** At σ=0.03 the eye does not move
+   (164°→165°); at σ=0.25 it crosses all four classes. Monotone in σ. This is the expected shape
+   given Nilsson & Pelger's ~364,000 generations at 1%-per-step — that many generations is not
+   simulable, so step size is the honest computational dial. It does not bias direction (mutation
+   is symmetric in log space), only traversal speed.
+
+2. **Behaviour rules dominate the selection gradient — more than the optics do.** Measuring the
+   same world with three defensible behaviour rules (flee-or-forage / blended avoidance / blended
+   + bounded turn rate) FLIPS the sign of selection at individual points on the eye axis. E.g. the
+   86°→58° rung reads 0.574, 0.716, then 0.085. This is hidden authorship: hand-written behaviour
+   is doing most of the work that "the environment" is being credited with. **Next step is to
+   evolve the behaviour weights rather than author them**, so an animal is never forced to act on
+   information it cannot actually use.
+
+**Open**: predators never climbed (155–169°) — they get 7–16 generations to the prey's 83–161 and
+sit pinned at their population cap, so predator evolution is generation-starved, not
+gradient-starved. The prey climb is therefore foraging-driven, not an arms race. The prey
+population also collapses at the sharp end (421→6), so the class IV endpoint is not a stable
+equilibrium. The glut-food falsifier config exists but has not been run.
+
+## 2026-07-23 — The two-sided arms race is in genuine tension with coexistence (negative result)
+
+User observed predators were visually everywhere and evolving no eyes, and asked whether lowering
+the cap (e.g. to 200) would help, then "try what you think." Findings, all measured:
+
+- **Predator cap is NOT the lever.** Cap 200 alone: predGen stays 7, predΔρ ~154° (blind),
+  predStarved 0. Lowering the cap just pins fewer predators; they still don't die, so no turnover.
+- **The real bottleneck is predator generation TIME**: ~7000 ticks/gen vs prey ~675. Predators are
+  long-lived and slow-breeding (must accumulate several catches). Selection needs generations;
+  predators barely get any.
+- **Making predators turn over fast enough to evolve eyes drives the prey extinct.** A turnover-only
+  search (scored on generations/mortality, never eye quality) found that EVERY config where the
+  predator eye climbed to class III/IV collapsed the prey to extinction; the only long-run-stable
+  configs were ones where predators stayed blind (Δρ 126–164°). This is the **paradox of
+  enrichment**: a predator efficient enough to evolve good eyes overexploits its prey. In collapse
+  runs the prey had ALSO evolved sharp eyes (Δρ 1–2°) and still went extinct — not a tuning miss.
+- **Predator satiation** (a full predator rests; `predSatiated`, gated on hunger not vision) was
+  added as a real stabiliser. It did not resolve the collapse: the system stays **bistable**
+  (predators evolve eyes then crash prey, OR stay blind and coexist). Left in as a documented knob,
+  **default 10 = no-op** so the verified baseline is unchanged.
+
+**Interpretation & next step (not yet done):** the fix that is both standard AND thematically
+perfect for this project is a **prey refuge** — the Cambrian "agronomic revolution", i.e. burrowing:
+prey that can escape where vision doesn't work. That decouples predator efficiency from total prey
+annihilation and is exactly the real anti-vision defence. Awaiting user steer on whether to pursue
+the refuge (research-y, no guarantee) or accept the stable, watchable foraging-driven PREY climb as
+the deliverable, with predators as a non-evolving environmental pressure.

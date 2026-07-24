@@ -45,3 +45,4 @@ next-env.d.ts
 
 # eye-evolution sim diagnostic logs (generated, never committed)
 /evolutionary-sim/logs/
+evolutionary-sim/tmp/
