@@ -360,3 +360,130 @@ that produce a terrific eye.
 - **[liked / idea]** Positively chose a diagnostic instead of a new mechanism: a scatter plot of prey-eye
   resolution against how long each prey survived, with analogous plots for the other outcomes. This is
   evidence of the preference for making the selection gradient inspectable before changing the world.
+
+## 2026-07-24
+
+Context: no build request — user stepped back and asked, unprompted, what he'd be *most excited* to work
+on and how to keep personal projects feeling like play. Reported the current state plainly: "currently
+feeling pretty meh and excitingness isnt really present."
+
+- **[meta — recurrence, HIGH SIGNAL]** Second recorded instance of the flat-affect report (first:
+  2026-07-18, "the felt sense of loving the work is NOT there" across 2+ years / ~40 repos). Six days
+  apart, spanning a stretch of continuous work on the eye/predator sandbox. That it recurred *during*
+  active building — not during a gap — is the notable part; the meh is not obviously a
+  "nothing-to-work-on" problem.
+- **[meta — Claude's read, explicitly a guess]** The 07-18→07-20 arc has a visible affect gradient:
+  strongest excitement in the log was at *conception* (07-18, the predator↔prey eye arms race, "visibly
+  excited"), then 07-19 and 07-20 are diagnosis and regime-hunting on a system that hasn't paid off
+  (bootstrap valley, knife-edge extinction, plateau). Guess: excitement lives at system-conception and
+  decays through parameter-tuning, and the last five days have been almost entirely the latter. Not
+  confirmed — the user has not said tuning bores him.
+- **[tension — flagged by Claude, not user]** Standing principle "minimize researcher degrees of freedom
+  / don't author the outcome" (2026-07-17, reaffirmed 2026-07-19, 2026-07-20) may be structurally
+  in conflict with getting a rewarding result out of the sim: nearly every lever that would make the eye
+  visibly evolve is one he has ruled out as outcome-engineering. He half-named this himself on 07-19
+  ("we are going a little bit against other things I've said... but this is a specific case"). Open
+  question for him, not resolved here: is the purity constraint worth the payoff it forbids?
+- **[watch]** The 2026-07-18 "who would need to consume this?" audience signal has NOT been acted on in
+  the six days since — all work stayed solo. Still the single untested variable across ~40 repos. Watch
+  whether the meh report changes that.
+
+### 2026-07-24 (later, same day) — long think-out-loud in response to the above
+
+- **[idea — the stated dream, self-doubted]** "The best thing I could build" = a perfect-fidelity sim
+  from an early starting point (a cell with mitochondria) forward through the oxidation event,
+  dinosaurs, the asteroid — where history *reproduces itself* from initial parameters and world-rules
+  rather than from coded-in steps. Immediately self-flagged: this may be "the easy thing to say," may be
+  "obfuscating what the real pleasure would be," and asked his own test question — **"if I built it,
+  then what?"** Also named tractability (behavior systems, energy systems, laptop FPS) as the blocker,
+  and floated hard-coding un-simulated parts as boundary inputs.
+- **[correction to Claude — HIGH SIGNAL]** Rejected the framing that his "don't author the outcome"
+  principle is a purity rule he's trapped by. His actual position: authoring the *environment* is
+  legitimate and intended — "I want to see if I can author the environment in which eyes evolve because
+  I want to understand that. What are the principles that emergently allow an eye to form?" So the sim
+  is an **instrument for understanding**, not an artwork about emergence. Discretion, not a hard rule.
+- **[correction to Claude]** The "move to the content layer" suggestion lands wrong, for a reason not
+  previously logged: **authorship, not topic.** Generated content "doesn't feel like work... I'm
+  producing stuff on paper, but it's not really actually mattering." Also gave the reason earlier
+  repo content (cliff, panels) stalled: **no "so what," and no excitingly-ambitious version of it.**
+- **[insight — the crux, HIGH SIGNAL]** Named what a written-down evolutionary explanation lacks:
+  **counterfactual proof.** "Just writing it down in isolation doesn't say anything about proving it...
+  if this population of prey was larger, the predators wouldn't have faced this pressure." This is the
+  first time the log contains a stated *epistemic* motive for simulating at all — the sim is the only
+  form in which a causal claim about evolution can be tested rather than asserted.
+- **[insight — what "notable" means to him]** The one thing he remembers fondly from the whole sim arc:
+  discovering there is no selection pressure for eyes when prey is dense. Explicitly noted he'd have
+  known it if asked — the value was in *learning it by running it*. His word: "notable." The pleasure
+  unit appears to be a **discovered principle**, not a working system.
+- **[insight — user's own, strong]** Proposed inverting his method: instead of starting simple and
+  avoiding complexity (which "invariably fails"), **build the complex system until it works, then
+  remove systems one at a time to find the simple version.** Reacted to his own idea mid-sentence:
+  "that is a good point, actually." Claude's read (a guess): this dissolves the recurring simplicity
+  trap by making simplicity an *earned result* rather than an up-front constraint.
+- **[meta — likely root cause, HIGH SIGNAL]** Reported he no longer understands his own codebase:
+  Claude wrote most of it, "at the beginning I might have known what it was doing, but now... I don't
+  really know what it's doing, so it doesn't really make sense to me." Also does not understand the
+  Nilsson & Pelger optics math the fitness function is built on. Directly connected to the fizzle
+  pattern: he tries fixes, they don't work, there's "no measurable progress," and it fizzles.
+- **[meta — stated missing ingredient]** **Ambition.** "I think ambition is a piece that I've been
+  missing." Following Paul Graham's "How to Do Great Work" deliberately: produce something every day,
+  work on something excitingly ambitious. Contrasts a "high goal" (forces different thinking, has an
+  engine) with a "medium goal" (you can get away with normal work). Asked to be told if he's
+  over-indexing on this. Also defined his own success criterion for the first time: **not every day
+  exciting — but looking back over ~2 weeks to a month, "yes, this is an exciting project."** Says he
+  cannot say that about the current project.
+- **[meta]** Ruled learning-only out of scope: "just learning about it is not work because it's not
+  producing anything." Production is a hard requirement, daily.
+- **[uncertain]** On whether the sim's appeal is real: "I just think I *should* be delighted by it...
+  Maybe the key is that it isn't. Or maybe I'm just taking the wrong angle, or maybe it's as simple as
+  you should push through it, stop being a baby." Unresolved by him; flagged as worth considering.
+- **[watch]** Also untouched despite sitting high in `user_curiosity_profile.md`: the "physical evidence
+  you can stand on" hook (Frazer Beach / Permian-Triassic cliff, 2026-06-28) has never had a build
+  attempt, and the validated comparative-causation format (ramidus vs anamensis, rated 9/10) hasn't been
+  extended since early July. Both are documented delight-hits currently idle while effort goes into a
+  substrate-layer sim whose delight is theorized, not yet observed.
+
+### 2026-07-24 (third, same day) — correcting "counterfactual"; naming the AI-authorship control problem
+
+- **[correction — HIGH SIGNAL]** Rejected "counterfactual proof" as the description of what he wants,
+  after looking the word up. He is **not** interested in alternative history ("what if eyes had evolved
+  in the dark"). The move he wants is **validation by perturbation**: state the conditions under which
+  eyes plausibly *did* evolve, change one, watch them fail to evolve, and take that as evidence the
+  model captured the real mechanism. The target is confidence that the explanation is right, not
+  exploration of roads not taken. (Mechanically similar to an ablation; epistemically different in aim.)
+- **[insight — supplies the missing WHY for a long-standing value, HIGH SIGNAL]** Gave the actual reason
+  he values simplicity, which no prior entry captured: **auditability.** A complex sim is hard to judge
+  right or wrong. A simple one reduces to "are these five or six stated assumptions correct, and is
+  anything left out?" — so a wrong result points at one identifiable bad assumption. This reframes
+  simplicity from aesthetic preference to an epistemic requirement, and it is in tension with the
+  build-fat-then-ablate method he simultaneously agreed to test. (Resolvable if the fat version is
+  scaffolding and the ablated core is the deliverable — flagged, not yet confirmed by him.)
+- **[meta]** Committed to testing the build-complex-then-subtract approach: "that is the one that I'm
+  gonna test right now and see where that ends up." Not endorsed as correct in advance.
+- **[meta — recurring failure mode, named precisely]** Described his general AI-collaboration pattern,
+  from a prior three.js/WebGL project that worked well: he draws the **bold lines** (stub components,
+  interfaces, how they link, how they update against the sim clock) and AI **fills in the blanks**. When
+  he owns the structure he stays in the loop even without reading every component's internals. He loses
+  control in two specific ways: (1) asking for a non-trivial system from scratch, (2) drifting from
+  specifying *how* to specifying *goals*, after which AI makes its own structural decisions and the code
+  stops being readable to him. States the unlock plainly: better/cheaper understanding of AI-written code
+  would let him delegate far more. Open question he posed: **what are the "bold lines" for an
+  evolutionary simulator?**
+- **[idea — user's own]** Floated a **living English document of his own understanding that AI may never
+  edit** — he writes it, asks "is this correct now?", gets told what's missing, adds it, repeats. An
+  English version of the code, maintained by him.
+- **[idea]** Asked for an **authored** twin of the eye simulator: "author the outcome shamelessly …
+  force the eyes for prey and predator to get better and show the evolution of how they hunt and run."
+  Context: this comes after ~a week of work on the *honest* sim (`eye-evolution-live.html`), where the
+  eye has to be earned by selection and the interesting result kept getting buried in whether the
+  ecology balanced. Claude's read (a guess): the thing he actually wants to look at is the
+  **consequence** — how hunting and fleeing get rebuilt as acuity climbs — and making selection prove
+  itself first was standing between him and that. Note the tension with his own stated preference for
+  auditable, assumption-minimal sims (2026-07-24 entries above): here he explicitly authorised
+  authoring the result. Possibly a signal that "is this mechanism real?" and "what does this change
+  feel like?" are two different appetites he has, and the second was going unfed.
+- **[idea]** Explicitly named smoothness as the quality bar: "dont make the steps between eye evolution
+  too janky … nothing too step wise or threshold based but smooth steps like evolution would take."
+  Consistent with the existing sim's design rule that nothing is a discrete stage — but this is the
+  first time he has stated it as an *aesthetic* requirement about what the demo should feel like to
+  watch, not as a modelling constraint.

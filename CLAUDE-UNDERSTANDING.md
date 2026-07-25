@@ -456,3 +456,42 @@ prey that can escape where vision doesn't work. That decouples predator efficien
 annihilation and is exactly the real anti-vision defence. Awaiting user steer on whether to pursue
 the refuge (research-y, no guarantee) or accept the stable, watchable foraging-driven PREY climb as
 the deliverable, with predators as a non-evolving environmental pressure.
+
+## 2026-07-24 — A second, deliberately AUTHORED sim, as a companion to the honest one
+
+User asked for a twin of the eye simulator with "a similar ui but author the outcome shamelessly":
+force both lineages' eyes to improve and **show how hunting and fleeing get rebuilt** as they do.
+Built as `evolutionary-sim/eye-evolution-authored.html` (standalone, no module import, ~60 fps).
+Verification doc: `verification-criteria/2026-07-24-authored-eye-evolution.md`.
+
+**What this changes about the project's direction.** The honest sim
+(`eye-evolution-live.html` + `core/sim.mjs`) answers "*can* an eye be earned?" and has spent a week
+tangled in whether the ecology balances (see the 2026-07-23 negative result above). This new page
+answers a different question — "*what does the change do to the animals?*" — and does not wait for
+selection to prove itself. **Both are now deliverables and neither replaces the other**; the
+authored page links to the live one and says in its first sentence that its eye is scripted.
+
+**The division of labour that makes the authored version defensible.** Only the *morphology over
+time* is scripted: aperture, pit depth and lens walk one continuous path (flat patch → cup → pit →
+pinhole → lens, with the aperture **re-opening** once a lens exists — the nautilus→squid step).
+Everything downstream is still computed by the same optics as `core/sim.mjs`: Δρ, the detection law
+`p = S/(1+S)`, the ±Δρ bearing blur. Behaviour weights (flight distance, zig-zag, schooling,
+interception lead, stalking) are smoothsteps of acuity — there is no `if (eye good enough)` anywhere.
+
+**Two findings worth carrying back into the honest sim:**
+1. **Prey with 360° vision and comparable speed are uncatchable.** Measured at high acuity: every
+   sampled prey held the nearest predator at 170–250 px with p(resolve) ≈ 0.9, and the capture rate
+   fell to ~0. Adding a **±30° rear blind arc** plus rear-approach stalking is what makes a hunt
+   exist at all at class IV. The honest sim has no blind arc and may be quietly penalising predators
+   for the same reason.
+2. **Constant *proportional* improvement is the right clock.** Re-timing evolutionary time so equal
+   slices give equal % gains in Δρ (Nilsson & Pelger's own model) removed the one lurch in the
+   climb — 12.5% max change per 1% of the run became a uniform 5.45%.
+
+**Also learned (measurement, not modelling):** several "obvious" statistics were confounded and had
+to be replaced — foraging rate was **supply**-limited (no eye could show up as more food until
+primary production was raised), mate-search time tracked the population cap rather than the eye, and
+schooling could not be measured by neighbour distance or heading alignment because blind prey
+already pile onto food patches. The stats that survived are the ones that isolate the eye: share of
+kills that **began as a sighting** (11% → 84%), share of food **reached by sight** (0% → 76%),
+sighted hunts per predator (0.6 → 25.5), mate search (172 → 13 ticks).

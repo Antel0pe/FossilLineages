@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eye evolution — authored (patch → lens)</title>
+<style>
+  :root{ --bg:#0e1116; --panel:#161b22; --line:#2b333d; --ink:#e6edf3; --muted:#9aa7b4;
+    --prey:#5eb3ff; --pred:#ff5e7e; --food:#7ee787; --acc:#c8a2ff; --warm:#ffd479; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1320px;margin:0 auto;padding:16px 18px 70px}
+  h1{font-size:21px;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 12px;font-size:14px;max-width:1000px}
+  .sub b{color:var(--ink)}
+  code{background:#0b0e12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+  .controls{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:flex-end;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  .ctrl{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);min-width:120px}
+  .ctrl b{color:var(--ink);font-size:13px}
+  .ctrl input[type=range]{width:160px;accent-color:var(--acc)}
+  .ctrl.wide input[type=range]{width:300px;accent-color:var(--warm)}
+  .ctrl .val{color:var(--acc);font-variant-numeric:tabular-nums}
+  .ctrl.wide .val{color:var(--warm)}
+  label.tog{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);cursor:pointer}
+  button{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);
+    background:#1f2733;color:var(--ink);cursor:pointer}
+  button:hover{border-color:#3d4855}
+  button.primary{background:var(--food);color:#08110a;border-color:var(--food);font-weight:700}
+  .grid{display:grid;gap:14px;grid-template-columns:1.35fr 1fr}
+  @media(max-width:1040px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  .panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+  canvas{display:block;width:100%;height:auto;border-radius:8px;background:#0b0e12}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+  .stats.three{grid-template-columns:1fr 1fr 1fr}
+  .stat{background:#0b0e12;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+  .stat .k{font-size:10.5px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase}
+  .stat .v{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:1px}
+  .stat .v.sm{font-size:13px;font-weight:600}
+  .cap{color:var(--muted);font-size:12.5px;margin-top:8px}
+
+  /* era card */
+  .era{position:relative;min-height:118px}
+  .era .layer{position:absolute;inset:0}
+  .era .name{font-size:17px;font-weight:700;color:var(--warm)}
+  .era .real{font-size:12px;color:var(--muted);margin:1px 0 6px}
+  .era .txt{font-size:13.5px;line-height:1.45}
+  .era .txt em{color:var(--warm);font-style:normal}
+
+  /* eye diagrams */
+  .eyes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .eyebox{background:#0b0e12;border:1px solid var(--line);border-radius:8px;padding:8px}
+  .eyebox .hd{font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+  .eyebox .fig{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+  /* behaviour bars */
+  .bars{display:grid;gap:6px}
+  .bar{display:grid;grid-template-columns:132px 1fr 34px;align-items:center;gap:8px;font-size:12px}
+  .bar .t{color:var(--muted)}
+  .bar .track{height:8px;background:#0b0e12;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .bar .fill{height:100%;width:0%;border-radius:6px;transition:width .12s linear}
+  .bar .n{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+  .note{color:var(--muted);font-size:12px;margin-top:9px;border-top:1px solid var(--line);padding-top:8px}
+  .err{background:#2a1416;border:1px solid #ff5e7e;color:#ffd7de;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Eyes evolving — the authored run</h1>
+  <p class="sub">
+    In <code>eye-evolution-live.html</code> the eye has to be <i>earned</i>: nothing rewards it directly and you
+    wait for selection. <b>Here it is scripted.</b> A single dial — evolutionary time — walks both lineages along the
+    real morphological sequence (flat light-sensitive patch → cup → deepening pit → narrowing pinhole → lens),
+    continuously, with no stages and no thresholds. Everything downstream is still <b>computed</b>, not authored:
+    what an animal can resolve, how far off it notices, whether it eats, escapes, or finds a mate all fall out of the
+    same optics. Watch the hunt and the escape rebuild themselves as the eye sharpens.
+  </p>
+
+  <div id="err" class="err"></div>
+
+  <div class="controls">
+    <div class="ctrl wide"><b>Evolutionary time</b><span>drag to scrub the whole history</span>
+      <input id="cU" type="range" min="0" max="1000" step="1" value="0"><span class="val" id="vU"></span></div>
+    <div class="ctrl"><b>Eon length</b><span>ticks for the full climb</span>
+      <input id="cEon" type="range" min="20000" max="200000" step="5000" value="45000"><span class="val" id="vEon"></span></div>
+    <div class="ctrl"><b>Sim speed</b><span>ticks per frame</span>
+      <input id="cSpeed" type="range" min="1" max="30" step="1" value="6"><span class="val" id="vSpeed"></span></div>
+    <div class="ctrl"><b>Water clarity</b><span>attenuation length (px)</span>
+      <input id="cAtten" type="range" min="150" max="2000" step="25" value="900"><span class="val" id="vAtten"></span></div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label class="tog"><input type="checkbox" id="cHold"> hold time (study this era)</label>
+      <label class="tog"><input type="checkbox" id="cRings" checked> detection reach + intent</label>
+    </div>
+    <div style="display:flex;gap:10px;margin-left:auto">
+      <button class="primary" id="play">⏸ Pause</button>
+      <button id="reset">↻ Restart at blind</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="panel">
+        <h2>The sea (2400×1600, wraps)</h2>
+        <canvas id="world" width="900" height="600"></canvas>
+        <div class="legend">
+          <span><i style="background:var(--prey)"></i>prey</span>
+          <span><i style="background:var(--pred)"></i>predator</span>
+          <span><i style="background:var(--food)"></i>food (patchy, regrows)</span>
+          <span style="color:var(--warm)">white ring = bolting · red line = a predator committed to a target</span>
+        </div>
+        <p class="cap">Brightness of a dot is its eye. At the start nothing is steering: predators catch prey by
+          blundering into them and prey find food by bumping into it. By the end predators are cutting corners onto
+          prey they spotted a third of a sea away, and the prey are in schools.</p>
+      </div>
+
+      <div class="panel">
+        <h2>What changed in the hunt</h2>
+        <div class="stats three">
+          <div class="stat"><div class="k">captures / 1k ticks</div><div class="v" style="color:var(--pred)" id="rCap">–</div></div>
+          <div class="stat"><div class="k">captures on a <i>seen</i> chase</div><div class="v" style="color:var(--pred)" id="rSeen">–</div></div>
+          <div class="stat"><div class="k">spot distance at hunt start</div><div class="v" style="color:var(--pred)" id="rDetect">–</div></div>
+          <div class="stat"><div class="k">strikes evaded by prey</div><div class="v" style="color:var(--prey)" id="rEscape">–</div></div>
+          <div class="stat"><div class="k">prey bolts at</div><div class="v" style="color:var(--prey)" id="rFlee">–</div></div>
+          <div class="stat"><div class="k">sighted hunts / pred / 1k</div><div class="v" style="color:var(--prey)" id="rNN">–</div></div>
+          <div class="stat"><div class="k">food reached by sight</div><div class="v" style="color:var(--food)" id="rFood">–</div></div>
+          <div class="stat"><div class="k">ticks spent finding a mate</div><div class="v" style="color:var(--acc)" id="rMate">–</div></div>
+          <div class="stat"><div class="k">alive (prey · predators)</div><div class="v sm" id="rPop">–</div></div>
+        </div>
+        <canvas id="rates" width="880" height="180" style="margin-top:12px"></canvas>
+        <p class="cap">Rates over evolutionary time.
+          <span style="color:var(--pred)">■</span> share of kills that began as a sighting ·
+          <span style="color:var(--prey)">■</span> share of strikes the prey evaded ·
+          <span style="color:var(--food)">■</span> foraging rate (scaled) ·
+          <span style="color:var(--acc)">■</span> mating speed (scaled).</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <h2>Where the lineage is</h2>
+        <div class="era" id="era">
+          <div class="layer" id="eraA"></div>
+          <div class="layer" id="eraB"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>The eye itself</h2>
+        <div class="eyes">
+          <div class="eyebox"><div class="hd" style="color:var(--prey)">prey eye</div>
+            <canvas id="eyePrey" width="360" height="240"></canvas>
+            <div class="fig" id="figPrey">–</div></div>
+          <div class="eyebox"><div class="hd" style="color:var(--pred)">predator eye</div>
+            <canvas id="eyePred" width="360" height="240"></canvas>
+            <div class="fig" id="figPred">–</div></div>
+        </div>
+        <p class="cap">Cross-section: the receptor sheet is the arc, the gap is the aperture, the disc is the lens as
+          it forms. The <span style="color:var(--warm)">yellow</span> smear is where the light from a <i>single</i>
+          point in the world lands — the whole story is that smear shrinking to a spot.</p>
+      </div>
+
+      <div class="panel">
+        <h2>How they hunt · how they run</h2>
+        <div class="bars" id="barsPred"></div>
+        <div class="bars" id="barsPrey" style="margin-top:12px"></div>
+        <div class="note">Every bar is a smooth function of acuity — there is no rule anywhere in this page that
+          says “if the eye is good enough, start stalking”. The weights slide continuously, which is why the
+          behaviour bleeds from one style into the next instead of switching.</div>
+      </div>
+
+      <div class="panel">
+        <h2>The climb — Δρ over evolutionary time (log)</h2>
+        <canvas id="traj" width="620" height="200"></canvas>
+        <p class="cap">Lower is sharper. Dashed lines are Nilsson's class boundaries (100° I|II, 20° II|III,
+          2° III|IV). The two lines drift apart and cross: the arms race is authored in as a small phase lag, so
+          whichever side is momentarily ahead is the one whose numbers are winning above.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+window.addEventListener('error', e => { const b=$('err'); b.style.display='block';
+  b.innerHTML = '<b>Something went wrong:</b> ' + e.message; });
+
+/* ============================ optics (same law as core/sim.mjs) ============================ */
+const LAMBDA = 0.0005, LENS_ON = 0.15, LENS_FULL = 0.7;
+const ss = (a,b,u) => { const t = Math.max(0, Math.min(1, (u-a)/(b-a))); return t*t*(3-2*t); };
+const lerpLog = (a,b,t) => a * Math.pow(b/a, t);
+const clamp = (x,a,b) => Math.min(b, Math.max(a,x));
+
+// THE AUTHORED PART. One continuous walk through the real morphological sequence:
+//   f  — pit depth: deepens the whole way (patch → cup → pit → eyeball)
+//   A  — aperture: narrows to a pinhole, then RE-OPENS once a lens exists (nautilus → squid)
+//   L  — lens: fills the aperture late, and only counts once the pit is deep enough (lensGate)
+// Nothing here is stepped. Every one of the three is a smoothstep, and they overlap, so the
+// resulting Δρ falls monotonically with no plateau you could call a stage boundary.
+function morphRaw(u){
+  return {
+    A: lerpLog(lerpLog(1.0, 0.05, ss(0.05, 0.55, u)), 0.45, ss(0.48, 1.00, u)),
+    f: lerpLog(0.07, 3.0, ss(0.00, 0.95, u)),
+    L: 0.93 * ss(0.40, 1.00, u),
+  };
+}
+const lensGate = f => clamp((f - LENS_ON) / (LENS_FULL - LENS_ON), 0, 1);
+function drho(g){
+  const eL = g.L * lensGate(g.f);
+  const geom = 2 * Math.atan(g.A / (2*g.f)) * (1 - eL);
+  const diff = LAMBDA / g.A;
+  return Math.min(Math.PI, Math.hypot(geom, diff));
+}
+// Re-time the walk so that equal slices of evolutionary time give equal PROPORTIONAL gains
+// in resolution. Nilsson & Pelger's whole point is that the eye improves by a small constant
+// percentage per generation, so a constant relative rate is the honest clock — and it removes
+// the one place where the raw morphology ramp lurched (~12% of Δρ per 1% of the run, against
+// ~5.5% everywhere else). Δρ(u) is now exactly Δρ₀·(Δρ₁/Δρ₀)^u.
+const WARP = (() => {
+  const N = 2000, ls = new Float64Array(N+1);
+  for (let i = 0; i <= N; i++) ls[i] = Math.log(drho(morphRaw(i/N)));
+  const l0 = ls[0], l1 = ls[N];
+  return t => {
+    const target = l0 + (l1 - l0) * t;          // ls is monotonically decreasing
+    let lo = 0, hi = N;
+    while (lo < hi){ const m = (lo + hi) >> 1; if (ls[m] <= target) hi = m; else lo = m + 1; }
+    if (lo === 0) return 0;
+    const a = ls[lo-1], b = ls[lo];
+    return (lo - 1 + (b === a ? 0 : (target - a)/(b - a))) / N;
+  };
+})();
+const morph = u => morphRaw(WARP(clamp(u, 0, 1)));
+
+// photon budget: a pinhole is sharp but DARK. Displayed honestly, and it does damp detection
+// a little — but never enough to undo the acuity gain, because the outcome is authored.
+const brightness = A => clamp((A/0.30)*(A/0.30), 0.45, 1);
+const degOf = dr => dr * 180 / Math.PI;
+const sharpness = dr => Math.log2(Math.PI / dr);
+function nilssonClass(dr){ const d = degOf(dr);
+  if (d > 100) return 'I · non-directional';
+  if (d > 20)  return 'II · directional';
+  if (d > 2)   return 'III · low-res spatial';
+  return 'IV · high-res'; }
+
+/* ============================ world constants ============================ */
+const P = {
+  W: 2400, H: 1600,
+  preyD: 10, predD: 32, foodD: 3, patchD: 190,
+  // A predator cruises a little faster than a prey drifts, but a prey out-turns it and its
+  // sprint is nearly as fast — so closing the distance is possible and finishing it is not
+  // guaranteed. Same for everyone at every era: none of these depend on the eye.
+  preyCruise: 0.80, preySprint: 1.72, predCruise: 0.88, predSprint: 2.15,
+  preyTurn: 0.17, predTurn: 0.14,
+  preyTouch: 12, predTouch: 20,
+  strikeDist: 62, chaseDist: 230, bite: 6, preyBite: 5,
+  bmr: 0.030, dragK: 0.050, moveExp: 3,
+  preyStartE: 70, preyBreedE: 150, predStartE: 320, predBreedE: 620,
+  foodE: 26, preyBodyE: 430,
+  // Primary production has to outrun the herbivores, otherwise foraging is supply-limited and
+  // a better eye cannot show up as more food no matter how well it searches.
+  nPatches: 15, patchR: 85, patchStock: 230, patchRegen: 0.62, patchTurnover: 0.0006,
+  preyFloor: 50, preyCap: 120, predFloor: 5, predCap: 14,
+  maxSee: 900, mateRadius: 16, atten: 900,
+};
+const Z0 = sharpness(drho(morph(0))), Z1 = sharpness(drho(morph(1)));
+const zNorm = z => clamp((z - Z0) / (Z1 - Z0), 0, 1);
+
+/* ============================ rng / helpers ============================ */
+let seed = 12345;
+function rnd(){ seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
+function randn(){ let u=0,v=0; while(u===0)u=rnd(); while(v===0)v=rnd();
+  return Math.sqrt(-2*Math.log(u)) * Math.cos(2*Math.PI*v); }
+const wrapx = v => (v % P.W + P.W) % P.W, wrapy = v => (v % P.H + P.H) % P.H;
+function dxy(ax, ay, bx, by){
+  let dx = bx-ax, dy = by-ay;
+  if (dx >  P.W/2) dx -= P.W; else if (dx < -P.W/2) dx += P.W;
+  if (dy >  P.H/2) dy -= P.H; else if (dy < -P.H/2) dy += P.H;
+  return [dx, dy];
+}
+// allocation-free variant for the inner search loops: writes into RX/RY. The searches run
+// ~50k times a tick, and returning a fresh array from each was the whole frame budget.
+let RX = 0, RY = 0;
+function rel(ax, ay, bx, by){
+  let dx = bx-ax, dy = by-ay;
+  if (dx >  P.W/2) dx -= P.W; else if (dx < -P.W/2) dx += P.W;
+  if (dy >  P.H/2) dy -= P.H; else if (dy < -P.H/2) dy += P.H;
+  RX = dx; RY = dy;
+}
+const norm = (dx,dy) => { const m = Math.hypot(dx,dy) || 1; return [dx/m, dy/m]; };
+function steer(vx, vy, dx, dy, rate){
+  const cur = Math.atan2(vy,vx), want = Math.atan2(dy,dx);
+  let d = want - cur;
+  while (d >  Math.PI) d -= 2*Math.PI;
+  while (d < -Math.PI) d += 2*Math.PI;
+  const a = cur + clamp(d, -rate, rate);
+  return [Math.cos(a), Math.sin(a)];
+}
+const moveCost = v => P.bmr + P.dragK * Math.pow(v, P.moveExp);
+
+/* ============================ food grid (only dense thing) ============================ */
+class Grid {
+  constructor(w,h,cell){ this.cell=cell; this.cols=Math.ceil(w/cell); this.rows=Math.ceil(h/cell);
+    this.buckets=[]; for(let i=0;i<this.cols*this.rows;i++) this.buckets.push([]); }
+  clear(){ for(const b of this.buckets) b.length = 0; }
+  add(o){ const cx = Math.floor(o.x/this.cell) % this.cols, cy = Math.floor(o.y/this.cell) % this.rows;
+    this.buckets[cy*this.cols+cx].push(o); }
+  // nearest object to (px,py) within `range`, wrapping, optionally filtered by `ok(o)`.
+  // Expanding-ring search with the standard early break: once the best hit is closer than
+  // the inner edge of the next ring, no further ring can beat it.
+  // `ok` is optional, but the food search runs tens of thousands of times a tick and a
+  // sometimes-a-closure argument makes this call site polymorphic, so it gets its own copy.
+  nearest(px, py, range){ return this._scan(px, py, range, null); }
+  nearestIf(px, py, range, ok){ return this._scan(px, py, range, ok); }
+  _scan(px, py, range, ok){
+    const c = this.cell, cx = Math.floor(px/c), cy = Math.floor(py/c);
+    let bo = null, bdx = 0, bdy = 0, bd = range*range;
+    const maxR = Math.min(Math.ceil(range/c), Math.floor(Math.min(this.cols,this.rows)/2));
+    for (let r = 0; r <= maxR; r++){
+      if (bo && bd <= ((r-1)*c)*((r-1)*c)) break;
+      for (let iy = -r; iy <= r; iy++){
+        const onEdge = (iy === -r || iy === r);
+        const gy = ((cy+iy) % this.rows + this.rows) % this.rows;
+        for (let ix = -r; ix <= r; ix++){
+          if (!onEdge && ix !== -r && ix !== r) continue;
+          const gx = ((cx+ix) % this.cols + this.cols) % this.cols;
+          const b = this.buckets[gy*this.cols+gx];
+          for (let k = 0; k < b.length; k++){
+            const o = b[k]; if (o.dead) continue;
+            if (ok !== null && !ok(o)) continue;
+            rel(px, py, o.x, o.y); const d2 = RX*RX + RY*RY;
+            if (d2 < bd){ bd = d2; bo = o; bdx = RX; bdy = RY; } } } }
+    }
+    return bo ? {o:bo, dx:bdx, dy:bdy, d2:bd} : null;
+  }
+}
+const gFood = new Grid(P.W, P.H, 40), gPrey = new Grid(P.W, P.H, 150);
+
+/* ============================ detection law ============================ */
+// identical shape to core/sim.mjs, with the pinhole's photon penalty folded in:
+//   S = (θ/Δρ)² · e^(−d/atten) · b(A),  p = S/(1+S)
+function searchRadius(dr, diam, b){
+  return Math.min(diam * Math.sqrt(b) / (dr * Math.sqrt(0.02)), P.maxSee);
+}
+function pResolve(dr, diam, d, b){
+  const theta = diam / Math.max(d, 1e-6);
+  const S = (theta/dr) * (theta/dr) * Math.exp(-d / P.atten) * b;
+  return S / (1 + S);
+}
+// a seen bearing is known only to ±Δρ; a felt one is exact but short-ranged
+function blurVec(dx, dy, dr, felt){
+  if (felt) return [dx, dy];
+  const a = Math.atan2(dy,dx) + randn()*dr, m = Math.hypot(dx,dy) || 1;
+  return [Math.cos(a)*m, Math.sin(a)*m];
+}
+// linear scan over a small list (predators, prey, patches, mates) with the same optics.
+// `viewer` (optional) is the looking animal: eyes sit on a body, so anything in the arc
+// directly behind it is simply not on the retina at any acuity. That blind arc is the
+// whole reason a stalk works — see the rear-approach term in the predator loop.
+const BLIND_COS = -0.87;                       // ±30° arc dead astern
+function look(list, x, y, eye, diam, touch, skip, viewer){
+  const reach = Math.max(searchRadius(eye.dr, diam, eye.b), touch);
+  let bo = null, bdx = 0, bdy = 0, bd = reach*reach;
+  for (let i = 0; i < list.length; i++){
+    const o = list[i];
+    if (o.dead || o === skip) continue;
+    rel(x, y, o.x, o.y); const d2 = RX*RX + RY*RY;
+    if (d2 >= bd) continue;
+    if (viewer && d2 > touch*touch){
+      const d1 = Math.sqrt(d2) || 1;
+      if ((RX*viewer.vx + RY*viewer.vy)/d1 < BLIND_COS) continue;   // behind it: unseeable
+    }
+    bd = d2; bo = o; bdx = RX; bdy = RY;
+  }
+  if (!bo) return null;
+  const best = {o:bo, dx:bdx, dy:bdy, d2:bd};
+  const d = Math.sqrt(best.d2);
+  if (d <= touch){ best.felt = true; best.d = d; return best; }
+  // a slow-moving animal throws less contrast: stalking buys stealth, not just economy
+  const con = o_con(bo);
+  if (rnd() >= pResolve(eye.dr, diam * con, d, eye.b)) return null;
+  best.felt = false; best.d = d; return best;
+}
+const o_con = o => o.conspic === undefined ? 1 : o.conspic;
+
+/* ============================ evolutionary time ============================ */
+// U is the dial. The two lineages ride it with a small counter-phase wobble: the arms race,
+// authored as a phase lag rather than as an event.
+let U = 0;
+const WOB = 0.035, WOBK = 2.5;
+const uOf = kind => clamp(U + (kind === 'pred' ? 1 : -1) * WOB * Math.sin(2*Math.PI*WOBK*U) * ss(0.05,0.25,U), 0, 1);
+
+function eyeOf(u, du){
+  const g = morph(clamp(u + du, 0, 1));
+  const dr = drho(g), b = brightness(g.A);
+  return { g, dr, b, z: sharpness(dr) };
+}
+// An individual's eye only depends on (era + its own small offset), so recompute it only
+// when the era has actually moved. Purely a speed cache — 5e-4 of the climb is invisible.
+function eyeCache(a, u){
+  if (!a.eye || Math.abs(a.eyeU - u) > 5e-4){ a.eye = eyeOf(u, a.du); a.eyeU = u; }
+  return a.eye;
+}
+// behaviour weights — all smoothsteps of normalised acuity, no thresholds anywhere
+function predBeh(z){ const n = zNorm(z); return {
+  n,
+  blunder: 1 - ss(0.05, 0.45, n),      // find prey by running into it
+  track:   ss(0.10, 0.65, n),          // steer at what you can see
+  stalk:   ss(0.30, 0.85, n),          // close slowly, strike late
+  lead:    ss(0.35, 0.90, n),          // aim where it is going, not where it is
+  memory:  15 + 55 * ss(0.20, 0.80, n),
+}; }
+function preyBeh(z){ const n = zNorm(z); return {
+  n,
+  bump:   1 - ss(0.05, 0.45, n),       // notice a predator only on contact
+  flight: ss(0.10, 0.70, n),           // directed flight away from a seen threat
+  evade:  ss(0.40, 0.90, n),           // protean zig-zag under pursuit
+  school: ss(0.30, 0.85, n),           // hold station on neighbours you can see
+  panicD: 25 + 105 * ss(0.10, 0.70, n),
+  memory: 12 + 45 * ss(0.20, 0.80, n),
+}; }
+
+/* ============================ state ============================ */
+let prey = [], preds = [], food = [], patches = [], tick = 0, running = true;
+let eyePreyNow = eyeOf(0,0), eyePredNow = eyeOf(0,0);
+let behPred = predBeh(eyePredNow.z), behPrey = preyBeh(eyePreyNow.z);
+
+const W0 = { capt:0, seenCapt:0, strikes:0, strikeHits:0, detSum:0, detN:0,
+             fleeSum:0, fleeN:0, visAcq:0, predTicks:0, foodEaten:0, preyTicks:0, forageTicks:0, foodSeen:0, foodFelt:0, mateSum:0, mateN:0, };
+let win = {...W0};
+const disp = { cap:0, seen:0, det:0, escape:0, flee:0, food:0, foodSight:0, mate:0, hunts:0 };
+let hist = [];   // {u, drPrey, drPred, seen, escape, food, mate}
+
+function makePrey(x, y){
+  return { kind:'prey', x, y, vx:rnd()*2-1, vy:rnd()*2-1, E:P.preyStartE * (0.6+rnd()*0.6),
+    du: randn()*0.012, dead:false, fleeMem:0, lastThreat:null, fleeing:false, fleeLogged:false,
+    zigPhase:rnd()*100, readySince:-1, eye:null, eyeU:-9, holdT:0, holdX:0, holdY:0 };
+}
+function makePred(x, y){
+  return { kind:'pred', x, y, vx:rnd()*2-1, vy:rnd()*2-1, E:P.predStartE * (0.6+rnd()*0.6),
+    du: randn()*0.012, dead:false, huntMem:0, lastSeen:null, target:null, striking:0,
+    strikeOpen:false, strikeTick:0, acquired:false, chaseSeen:false, readySince:-1,
+    eye:null, eyeU:-9 };
+}
+function newPatch(){
+  const q = { x: rnd()*P.W, y: rnd()*P.H, stock: P.patchStock, dead:false };
+  for (let i=0;i<q.stock;i++) sprinkle(q);
+  return q;
+}
+function sprinkle(q){
+  const a = rnd()*2*Math.PI, rr = P.patchR*Math.sqrt(rnd());
+  food.push({ x: wrapx(q.x+Math.cos(a)*rr), y: wrapy(q.y+Math.sin(a)*rr), patch:q, dead:false });
+}
+function reset(keepU){
+  seed = 12345; tick = 0;
+  prey = []; preds = []; food = []; patches = [];
+  for (let i=0;i<P.nPatches;i++) patches.push(newPatch());
+  for (let i=0;i<90;i++) prey.push(makePrey(rnd()*P.W, rnd()*P.H));
+  for (let i=0;i<10;i++) preds.push(makePred(rnd()*P.W, rnd()*P.H));
+  win = {...W0};
+  if (!keepU){ U = 0; hist = []; $('cU').value = 0; }
+  running = true; $('play').textContent = '⏸ Pause';
+}
+
+/* ============================ one tick ============================ */
+function step(){
+  tick++;
+  P.atten = +$('cAtten').value;
+  if (!$('cHold').checked) U = clamp(U + 1 / (+$('cEon').value), 0, 1);
+
+  const uPrey = uOf('prey'), uPred = uOf('pred');
+  eyePreyNow = eyeOf(uPrey, 0); eyePredNow = eyeOf(uPred, 0);
+  behPrey = preyBeh(eyePreyNow.z); behPred = predBeh(eyePredNow.z);
+
+  gFood.clear(); for (const f of food) if (!f.dead) gFood.add(f);
+  gPrey.clear(); for (const a of prey) if (!a.dead) gPrey.add(a);
+
+  const livePreds = preds.filter(a => !a.dead);
+  const livePrey  = prey.filter(a => !a.dead);
+  const readyPred = livePreds.filter(a => a.E >= 0.72*P.predBreedE);
+
+  /* ---------------------------------- prey ---------------------------------- */
+  const born = [];
+  for (const p of livePrey){
+    if (p.dead) continue;
+    win.preyTicks++;
+    const eye = eyeCache(p, uPrey), B = behPrey;
+    let ax, ay, v = P.preyCruise;
+
+    // 1. eat: a particle up close, the patch it belongs to from far off. The far gradient is
+    //    a big, slow thing — an animal re-reads it every few ticks and holds the bearing in
+    //    between, which is also what keeps this loop cheap enough to run on a laptop.
+    const tgt = lookFood(p, eye);
+    if (tgt){
+      const [bx,by] = blurVec(tgt.dx, tgt.dy, eye.dr, tgt.felt);
+      [ax,ay] = norm(bx,by);
+      p.holdT = 0;
+    } else if (tick >= p.holdT){
+      const clump = look(patches, p.x, p.y, eye, P.patchD, 0);
+      if (clump){
+        const [bx,by] = blurVec(clump.dx, clump.dy, eye.dr, false);
+        [ax,ay] = norm(bx,by); p.holdX = ax; p.holdY = ay; p.holdT = tick + 3;
+      } else {
+        ax = p.vx; ay = p.vy;
+        if (rnd() < 0.06){ ax += randn()*0.7; ay += randn()*0.7; }
+        p.holdT = tick + 3; p.holdX = 0; p.holdY = 0;
+      }
+    } else if (p.holdX || p.holdY){ ax = p.holdX; ay = p.holdY; }
+    else { ax = p.vx; ay = p.vy; }
+
+    // 2. mate: once fed, go find someone. Another prey is a small target — this is
+    //    the second thing an eye buys you, and it improves on exactly the same curve.
+    if (p.E >= P.preyBreedE){
+      if (p.readySince < 0) p.readySince = tick;
+      const m = lookGrid(gPrey, p.x, p.y, eye, P.preyD, P.preyTouch, p, readyMate, 350);
+      if (m){
+        const [bx,by] = blurVec(m.dx, m.dy, eye.dr, m.felt);
+        const [nx,ny] = norm(bx,by);
+        ax = ax*0.35 + nx*1.0; ay = ay*0.35 + ny*1.0;
+        if (m.d <= P.mateRadius && m.o.E >= 0.72*P.preyBreedE){
+          // the SEARCH ended here, whether or not the world has room for the offspring —
+          // scoring it only on successful births would make the stat track the cap, not the eye
+          win.mateSum += tick - p.readySince; win.mateN++; p.readySince = -1;
+          const half = p.E/2; p.E = half;    // spawning costs the same whether or not the
+          if (prey.length + born.length < P.preyCap){   // world has room for the offspring
+            const kid = makePrey(wrapx(p.x + randn()*5), wrapy(p.y + randn()*5));
+            kid.E = half; born.push(kid);
+          }
+        }
+      }
+    } else p.readySince = -1;
+
+    // 3. run: a threat pulls the heading away with weight (panic/d)², so the same rule is
+    //    a lazy drift at range and a full bolt at contact — smooth in distance, and the
+    //    distance at which it fires grows smoothly with the eye.
+    const threat = livePreds.length ? look(livePreds, p.x, p.y, eye, P.predD, P.preyTouch, null, p) : null;
+    if (threat){ p.fleeMem = B.memory; p.lastThreat = {dx:threat.dx, dy:threat.dy, felt:threat.felt, d:threat.d}; }
+    else if (p.fleeMem > 0) p.fleeMem--;
+    const src = threat || (p.fleeMem > 0 ? p.lastThreat : null);
+    let flee = false;
+    if (src){
+      const d = Math.hypot(src.dx, src.dy) || 1;
+      const w = Math.min(4, (B.panicD/d)*(B.panicD/d)) * (0.25 + 0.75*B.flight);
+      const [bx,by] = blurVec(src.dx, src.dy, eye.dr, src.felt);
+      const [tx,ty] = norm(bx,by);
+      ax -= w*tx; ay -= w*ty;
+      if (d <= B.panicD){
+        v = P.preySprint; flee = true;
+        // 4. protean escape: the zig-zag only exists once the animal can see well enough
+        //    to be worth confusing. Amplitude slides in, it does not switch on.
+        p.zigPhase += 0.11;
+        const jitter = Math.sin(p.zigPhase) * 1.5 * B.evade;
+        const c = Math.cos(jitter), s = Math.sin(jitter);
+        const nx2 = ax*c - ay*s, ny2 = ax*s + ay*c; ax = nx2; ay = ny2;
+        if (!p.fleeLogged){ win.fleeSum += d; win.fleeN++; p.fleeLogged = true; }
+      }
+    }
+    if (!flee){ p.fleeLogged = false; win.forageTicks++; }   // ticks actually spent feeding
+    p.fleeing = flee;
+
+    // 5. school: hold station on the nearest animal you can actually see. Pure eye benefit —
+    //    a blind prey cannot school, and the weight climbs smoothly with acuity.
+    if (B.school > 0.02 && !flee){
+      const nb = gPrey.nearestIf(p.x, p.y, Math.min(260, searchRadius(eye.dr, P.preyD, eye.b)),
+                                 o => o !== p);   // p is in the grid; without this it schools with itself
+      if (nb){
+        const d = Math.sqrt(nb.d2) || 1;
+        if (rnd() < pResolve(eye.dr, P.preyD, d, eye.b)){
+          const [nx,ny] = norm(nb.dx, nb.dy);
+          const pull = d > 55 ? 1 : (d < 26 ? -1.1 : 0);
+          ax += B.school * 0.5 * (pull*nx*0.9 + nb.o.vx*0.5);
+          ay += B.school * 0.5 * (pull*ny*0.9 + nb.o.vy*0.5);
+        }
+      }
+    }
+
+    [ax,ay] = norm(ax,ay);
+    const [dx,dy] = steer(p.vx, p.vy, ax, ay, P.preyTurn); p.vx = dx; p.vy = dy;
+    p.x = wrapx(p.x + dx*v); p.y = wrapy(p.y + dy*v);
+    p.E -= moveCost(v);
+
+    const got = gFood.nearest(p.x, p.y, P.preyBite);
+    if (got){ got.o.dead = true; if (got.o.patch) got.o.patch.stock--; p.E += P.foodE; win.foodEaten++; }
+    if (p.E <= 0){ p.dead = true; }
+  }
+  prey = prey.filter(a => !a.dead).concat(born);
+
+  /* -------------------------------- predators -------------------------------- */
+  const livePrey2 = prey.filter(a => !a.dead);
+  const pBorn = [];
+  for (const pr of preds){
+    if (pr.dead) continue;
+    const eye = eyeCache(pr, uPred), B = behPred;
+    win.predTicks++;
+    let ax, ay, v = P.predCruise;
+
+    const seen = look(livePrey2, pr.x, pr.y, eye, P.preyD, P.predTouch, null, pr);
+    if (seen){
+      // A pursuit is credited to the EYE only if it BEGAN as a sighting. At the moment of
+      // contact everything is inside touch range, so scoring the final tick would score every
+      // kill as blind. A new pursuit starts when the target changes, not every tick.
+      if (pr.target !== seen.o){
+        pr.chaseSeen = !seen.felt;
+        if (!seen.felt){ win.detSum += seen.d; win.detN++; win.visAcq++; }
+      } else if (!seen.felt) pr.chaseSeen = true;
+      pr.huntMem = B.memory;
+      pr.lastSeen = {dx:seen.dx, dy:seen.dy, felt:seen.felt, d:seen.d, vx:seen.o.vx, vy:seen.o.vy};
+      pr.target = seen.o;
+    } else if (pr.huntMem > 0){ pr.huntMem--;
+      if (pr.huntMem === 0){ pr.target = null; pr.chaseSeen = false; } }
+    else { pr.target = null; pr.chaseSeen = false; }
+
+    const src = seen ? pr.lastSeen : (pr.huntMem > 0 ? pr.lastSeen : null);
+    if (src){
+      // interception: aim at where the target will be. The lead time is a smooth function of
+      // acuity — you cannot lead a target whose heading you cannot read.
+      const d = Math.hypot(src.dx, src.dy);
+      const lead = 26 * B.lead;
+      // Approach the tail. A prey that can read a bearing cannot be caught head-on by an
+      // animal of the same speed — the only way in is the arc it cannot see. Reading the
+      // target's heading well enough to swing behind it is itself an acuity-limited skill,
+      // so the rear offset fades in with B.lead and fades out at strike range.
+      const rear = 55 * B.lead * ss(P.strikeDist, P.strikeDist*2.4, d);
+      const tx = src.dx + (src.vx||0)*lead - (src.vx||0)*rear;
+      const ty = src.dy + (src.vy||0)*lead - (src.vy||0)*rear;
+      const [bx,by] = blurVec(tx, ty, eye.dr, src.felt);
+      const [nx,ny] = norm(bx,by);
+      ax = nx*(0.35 + 0.65*B.track) + pr.vx*(0.65 - 0.65*B.track);
+      ay = ny*(0.35 + 0.65*B.track) + pr.vy*(0.65 - 0.65*B.track);
+      // Sprint inside strike range — or the moment the target bolts, because a stalk that has
+      // been blown is a chase. Both are triggered by DISTANCE and by the prey's behaviour,
+      // never by how good the predator's eye is.
+      const bolted = seen && !seen.felt && seen.o.fleeing && d <= P.chaseDist;
+      if (d <= P.strikeDist || bolted){
+        v = P.predSprint; pr.striking = 12;
+        if (!pr.strikeOpen){ pr.strikeOpen = true; win.strikes++; pr.strikeTick = tick; }
+      } else {
+        // stalk: close slowly. The payoff is not economy, it is contrast — `conspic` below
+        // makes a slow animal genuinely harder for the prey to resolve.
+        v = P.predCruise * (1 - 0.16*B.stalk);
+      }
+    } else {
+      const ground = look(patches, pr.x, pr.y, eye, P.patchD, 0);
+      if (ground){ const [bx,by] = blurVec(ground.dx, ground.dy, eye.dr, false);
+        [ax,ay] = norm(bx,by); }
+      else { ax = pr.vx; ay = pr.vy; if (rnd() < 0.06){ ax += randn()*0.7; ay += randn()*0.7; } }
+    }
+    if (pr.strikeOpen && tick - pr.strikeTick > 140){ pr.strikeOpen = false; }
+    if (pr.striking > 0) pr.striking--;
+
+    // mate: predators pair up too, on the same optics
+    if (pr.E >= P.predBreedE){
+      if (pr.readySince < 0) pr.readySince = tick;
+      const m = look(readyPred, pr.x, pr.y, eye, P.predD, P.predTouch, pr);
+      if (m){
+        const [bx,by] = blurVec(m.dx, m.dy, eye.dr, m.felt);
+        const [nx,ny] = norm(bx,by);
+        ax = ax*0.4 + nx; ay = ay*0.4 + ny;
+        if (m.d <= P.mateRadius && preds.length + pBorn.length < P.predCap){
+          const kid = makePred(wrapx(pr.x+randn()*6), wrapy(pr.y+randn()*6));
+          kid.E = pr.E/2; pr.E /= 2; pBorn.push(kid); pr.readySince = -1;
+        }
+      }
+    } else pr.readySince = -1;
+
+    [ax,ay] = norm(ax,ay);
+    const [dx,dy] = steer(pr.vx, pr.vy, ax, ay, P.predTurn); pr.vx = dx; pr.vy = dy;
+    pr.x = wrapx(pr.x + dx*v); pr.y = wrapy(pr.y + dy*v);
+    pr.E -= moveCost(v);
+    // how much of a target this predator is presenting: a drifting animal is much harder to
+    // pick out than a charging one. Prey resolve it against `diam * conspic`.
+    pr.conspic = 0.55 + 0.45 * (v / P.predSprint);
+
+    let hit = null, hd = P.bite*P.bite;
+    for (let i = 0; i < livePrey2.length; i++){ const q = livePrey2[i]; if (q.dead) continue;
+      rel(pr.x, pr.y, q.x, q.y); const d2 = RX*RX + RY*RY;
+      if (d2 < hd){ hd = d2; hit = q; } }
+    if (hit){
+      hit.dead = true; pr.E += P.preyBodyE;
+      win.capt++; if (pr.chaseSeen) win.seenCapt++;
+      if (pr.strikeOpen){ win.strikeHits++; pr.strikeOpen = false; }
+      pr.target = null; pr.huntMem = 0; pr.acquired = false; pr.chaseSeen = false;
+    }
+    if (pr.E <= 0) pr.dead = true;
+  }
+  preds = preds.filter(a => !a.dead).concat(pBorn);
+  prey = prey.filter(a => !a.dead);
+
+  /* ------------------------------ food + guardrails ------------------------------ */
+  for (const q of patches){
+    if (q.stock < P.patchStock && rnd() < P.patchRegen){ sprinkle(q); q.stock++; }
+    if (rnd() < P.patchTurnover) q.dead = true;
+  }
+  if (tick % 20 === 0){
+    for (const f of food) if (f.patch && f.patch.dead) f.dead = true;
+    food = food.filter(f => !f.dead);
+    patches = patches.filter(q => !q.dead);
+    while (patches.length < P.nPatches) patches.push(newPatch());
+  }
+  // The outcome is authored: neither line is allowed to die, because the point of this page
+  // is the behaviour across the whole climb, not whether the ecology happens to balance.
+  while (prey.length < P.preyFloor){
+    const q = patches.length ? patches[Math.floor(rnd()*patches.length)] : null;
+    prey.push(q ? makePrey(wrapx(q.x + (rnd()*2-1)*P.patchR), wrapy(q.y + (rnd()*2-1)*P.patchR))
+                : makePrey(rnd()*P.W, rnd()*P.H));
+  }
+  while (preds.length < P.predFloor) preds.push(makePred(rnd()*P.W, rnd()*P.H));
+  if (prey.length > P.preyCap) prey.length = P.preyCap;
+  if (preds.length > P.predCap) preds.length = P.predCap;
+
+  /* --------------------------------- book-keeping --------------------------------- */
+  if (tick % 900 === 0) closeWindow();
+}
+const readyMate = o => o.E >= 0.72*P.preyBreedE;
+// grid version of look(), for the crowded searches (mates, neighbours). Same optics.
+// `cap` bounds how far the animal bothers looking — courtship is a local affair, and an
+// uncapped mate search at lens-grade acuity sweeps most of the sea every tick.
+function lookGrid(grid, x, y, eye, diam, touch, skip, ok, cap){
+  const reach = Math.min(cap || 1e9, Math.max(searchRadius(eye.dr, diam, eye.b), touch));
+  const c = grid.nearestIf(x, y, reach, o => o !== skip && (!ok || ok(o)));
+  if (!c) return null;
+  const d = Math.sqrt(c.d2);
+  if (d <= touch){ c.felt = true; c.d = d; return c; }
+  if (rnd() >= pResolve(eye.dr, diam, d, eye.b)) return null;
+  c.felt = false; c.d = d; return c;
+}
+// food is the one dense thing, so it gets the grid instead of a linear scan — same optics.
+function lookFood(p, eye){
+  const r = Math.max(searchRadius(eye.dr, P.foodD, eye.b), P.preyTouch);
+  const c = gFood.nearest(p.x, p.y, r);
+  if (!c) return null;
+  const d = Math.sqrt(c.d2);
+  if (d <= P.preyTouch){ c.felt = true; c.d = d; win.foodFelt++; return c; }
+  if (rnd() >= pResolve(eye.dr, P.foodD, d, eye.b)) return null;
+  c.felt = false; c.d = d; win.foodSeen++; return c;
+}
+
+function closeWindow(){
+  const k = 900;
+  const e = 0.35;   // EMA so the read-outs move as smoothly as the eye does
+  const mix = (cur, val) => cur === 0 ? val : cur*(1-e) + val*e;
+  disp.cap    = mix(disp.cap, win.capt / (k/1000));
+  disp.seen   = mix(disp.seen, win.capt ? win.seenCapt/win.capt : 0);
+  disp.det    = mix(disp.det, win.detN ? win.detSum/win.detN : disp.det);
+  disp.escape = mix(disp.escape, win.strikes ? 1 - win.strikeHits/win.strikes : disp.escape);
+  disp.flee   = mix(disp.flee, win.fleeN ? win.fleeSum/win.fleeN : disp.flee);
+  disp.food   = mix(disp.food, win.forageTicks ? win.foodEaten / (win.forageTicks/1000) : disp.food);
+  const fTot = win.foodSeen + win.foodFelt;
+  disp.foodSight = mix(disp.foodSight, fTot ? win.foodSeen/fTot : disp.foodSight);
+  disp.mate   = mix(disp.mate, win.mateN ? win.mateSum/win.mateN : disp.mate);
+  disp.hunts  = mix(disp.hunts, win.predTicks ? win.visAcq / (win.predTicks/1000) : 0);
+  hist.push({ u:U, drPrey:eyePreyNow.dr, drPred:eyePredNow.dr,
+              seen:disp.seen, escape:disp.escape,
+              food:clamp(disp.foodSight,0,1), mate:clamp(1 - disp.mate/400, 0, 1) });
+  if (hist.length > 3000) hist.shift();
+  win = {...W0};
+}
+
+/* ============================ eras (crossfaded, not switched) ============================ */
+const ERAS = [
+  { u:0.00, name:'A patch of light-sensitive skin', real:'Euglena-grade · pre-Cambrian',
+    txt:'Light or no light, and nothing else. There is no direction in the signal, so nothing steers. '+
+        'A predator eats by <em>colliding</em> with something soft; prey finds food by drifting into it, '+
+        'and finds a mate the same way. Both are running the same algorithm: wander, and hope.' },
+  { u:0.16, name:'The patch dishes into a cup', real:'Planarian eyespot',
+    txt:'Curving the sheet means one side of it is shaded before the other, so for the first time '+
+        '<em>which way</em> is a question with an answer — a bad one, off by a whole quadrant. '+
+        'Prey now creeps away from the dark thing rather than in a random direction. It is barely worth anything, '+
+        'and it is the single most important step on this page.' },
+  { u:0.32, name:'The cup deepens into a pit', real:'Nautilus juvenile grade',
+    txt:'Deeper walls shade more of the receptor sheet, so the bearing tightens from a quadrant to a wedge. '+
+        'The predator starts to <em>follow</em> instead of blunder, and the prey starts turning away from the '+
+        'threat instead of jittering. Chases become a thing that exists.' },
+  { u:0.50, name:'The opening narrows to a pinhole', real:'Nautilus adult',
+    txt:'The aperture closes to a hole and the image sharpens hard — at the cost of light. This eye is precise '+
+        'and dim, which is exactly the trap the nautilus is still in. Predators can now pick one animal out of the '+
+        'water and commit to it, so prey acquire something they never needed before: <em>distance</em>. They bolt early.' },
+  { u:0.68, name:'A lens fills the aperture', real:'Cephalopod / early vertebrate',
+    txt:'Jelly thickens in the opening and bends light to a focus, so the hole can widen again — sharp <em>and</em> bright '+
+        'for the first time. The predator stops charging and starts <em>stalking</em>: slow, quiet, sprint late. '+
+        'Prey answer with the zig-zag, because a pursuer that can track you is only beaten by being unpredictable.' },
+  { u:0.86, name:'Focus, and the school', real:'Fish-grade camera eye',
+    txt:'Resolution is now good enough to read a neighbour\'s heading at a body-length or ten. Prey stop being '+
+        'individuals: they <em>school</em>, which only works if you can see the animal beside you turn. '+
+        'The predator answers by aiming where the prey is going to be, not where it is.' },
+  { u:1.00, name:'The camera eye', real:'Modern fish, cephalopod, you',
+    txt:'A degree of arc, across a third of the sea. Hunting is now interception at range, and escape is a decision '+
+        'made long before contact. Everything on this page after the cup was the same trick applied harder — and '+
+        'the whole climb took a few hundred thousand generations, which is nothing.' },
+];
+function eraAt(u){
+  let i = 0;
+  for (let k=0;k<ERAS.length;k++) if (u >= ERAS[k].u) i = k;
+  const a = ERAS[i], b = ERAS[Math.min(i+1, ERAS.length-1)];
+  const span = (b.u - a.u) || 1;
+  const t = clamp((u - a.u)/span, 0, 1);
+  const f = ss(0.88, 1.0, t);        // the tail of an era dissolves into the next
+  return { a, b, f };
+}
+function renderEra(){
+  const { a, b, f } = eraAt(U);
+  const html = e => `<div class="name">${e.name}</div><div class="real">${e.real}</div><div class="txt">${e.txt}</div>`;
+  const A = $('eraA'), Bx = $('eraB');
+  if (A.dataset.k !== a.name){ A.innerHTML = html(a); A.dataset.k = a.name; }
+  if (Bx.dataset.k !== b.name){ Bx.innerHTML = html(b); Bx.dataset.k = b.name; }
+  // Sequential dissolve, not a true crossfade: two blocks of prose at half opacity on top of
+  // each other are unreadable. One fades out, the next fades in, and nothing ever jumps.
+  A.style.opacity = Math.max(0, 1 - 2*f).toFixed(3);
+  Bx.style.opacity = (a === b ? 0 : Math.max(0, 2*f - 1)).toFixed(3);
+}
+
+/* ============================ drawing: the sea ============================ */
+const wc = $('world'), wx = wc.getContext('2d');
+const SX = wc.width/P.W, SY = wc.height/P.H;
+const PREY_RGB=[94,179,255], PRED_RGB=[255,94,126];
+function shade(base, z){
+  // brighten toward white with acuity, but never all the way: at full whitening prey and
+  // predators both end up as white dots and you lose which is which
+  const t = clamp(zNorm(z), 0, 1) * 0.62;
+  return `rgb(${Math.round(base[0]+(255-base[0])*t)},${Math.round(base[1]+(255-base[1])*t)},${Math.round(base[2]+(255-base[2])*t)})`;
+}
+function drawWorld(){
+  wx.fillStyle = '#0b0e12'; wx.fillRect(0,0,wc.width,wc.height);
+  wx.fillStyle = 'rgba(110,200,120,0.38)';
+  for (const f of food) wx.fillRect(f.x*SX-0.5, f.y*SY-0.5, 1.3, 1.3);
+
+  const rings = $('cRings').checked;
+  if (rings && prey.length){
+    const p = prey[0], eye = p.eye || eyePreyNow;
+    ring(p.x, p.y, P.predD/eye.dr*Math.sqrt(eye.b), 'rgba(255,212,121,0.30)');
+  }
+  if (rings && preds.length){
+    const q = preds[0], eye = q.eye || eyePredNow;
+    ring(q.x, q.y, P.preyD/eye.dr*Math.sqrt(eye.b), 'rgba(255,94,126,0.28)');
+  }
+
+  for (const p of prey){
+    wx.fillStyle = shade(PREY_RGB, (p.eye||eyePreyNow).z);
+    wx.beginPath(); wx.arc(p.x*SX, p.y*SY, 2.9, 0, 7); wx.fill();
+    if (p.fleeing){ wx.strokeStyle='rgba(255,255,255,0.85)'; wx.lineWidth=1.1;
+      wx.beginPath(); wx.arc(p.x*SX, p.y*SY, 5.2, 0, 7); wx.stroke(); }
+  }
+  for (const pr of preds){
+    if (rings && pr.target && !pr.target.dead){
+      const [dx,dy] = dxy(pr.x, pr.y, pr.target.x, pr.target.y);
+      wx.strokeStyle = 'rgba(255,94,126,0.32)'; wx.lineWidth = 1;
+      wx.beginPath(); wx.moveTo(pr.x*SX, pr.y*SY); wx.lineTo((pr.x+dx)*SX, (pr.y+dy)*SY); wx.stroke();
+    }
+    wx.fillStyle = shade(PRED_RGB, (pr.eye||eyePredNow).z);
+    wx.beginPath(); wx.arc(pr.x*SX, pr.y*SY, pr.striking>0?6.2:5, 0, 7); wx.fill();
+    if (pr.striking > 0){ wx.strokeStyle='rgba(255,200,200,0.9)'; wx.lineWidth=1.2;
+      wx.beginPath(); wx.arc(pr.x*SX, pr.y*SY, 9, 0, 7); wx.stroke(); }
+  }
+}
+function ring(x, y, r, col){
+  r = Math.min(r, P.maxSee);
+  wx.strokeStyle = col; wx.lineWidth = 1.2;
+  wx.beginPath(); wx.ellipse(x*SX, y*SY, r*SX, r*SY, 0, 0, 7); wx.stroke();
+}
+
+/* ============================ drawing: the eye cross-section ============================ */
+function drawEye(cv, eye, col){
+  const cx2 = cv.getContext('2d'), W = cv.width, H = cv.height;
+  cx2.clearRect(0,0,W,H);
+  const cx = W*0.42, cy = H/2, R = Math.min(W,H)*0.36;
+  // True aperture half-angle. A real camera eye's pupil subtends only a few degrees from the
+  // retina, which is honest but unreadable at this size, so the DRAWN opening is stretched by
+  // a power law that keeps the ordering intact. The yellow smear below is not stretched — the
+  // quantity the page is actually about stays literal.
+  const half = clamp(Math.atan(eye.g.A / (2*eye.g.f)), 0.02, Math.PI*0.49);
+  const halfDraw = Math.asin(clamp(Math.pow(Math.sin(half), 0.5), 0.13, 0.999));
+  const eL = eye.g.L * lensGate(eye.g.f);
+
+  // incoming light from one point in the world (from the right)
+  cx2.strokeStyle = 'rgba(255,212,121,0.35)'; cx2.lineWidth = 1;
+  for (let i=-1;i<=1;i++){
+    const y = cy + i*R*0.62*Math.sin(halfDraw);
+    cx2.beginPath(); cx2.moveTo(W-6, y); cx2.lineTo(cx + R*Math.cos(halfDraw)*0.98, y); cx2.stroke();
+  }
+  // the receptor sheet: an arc of the sphere, open by ±half toward the light
+  cx2.strokeStyle = col; cx2.lineWidth = 5; cx2.lineCap = 'round';
+  cx2.beginPath(); cx2.arc(cx, cy, R, halfDraw, 2*Math.PI - halfDraw); cx2.stroke();
+  // pigment backing
+  cx2.strokeStyle = 'rgba(255,255,255,0.10)'; cx2.lineWidth = 11;
+  cx2.beginPath(); cx2.arc(cx, cy, R+6, halfDraw, 2*Math.PI - halfDraw); cx2.stroke();
+
+  // where one point's light actually lands: an arc of angular width Δρ on the back wall
+  const spread = clamp(eye.dr, 0.012, Math.PI*0.98)/2;
+  cx2.strokeStyle = 'rgba(255,212,121,0.95)'; cx2.lineWidth = 5;
+  cx2.beginPath(); cx2.arc(cx, cy, R, Math.PI - spread, Math.PI + spread); cx2.stroke();
+
+  // the lens filling the aperture
+  if (eL > 0.02){
+    const lr = R*Math.sin(halfDraw)*0.98;
+    cx2.fillStyle = `rgba(200,162,255,${(0.18+0.55*eL).toFixed(2)})`;
+    cx2.strokeStyle = `rgba(200,162,255,${(0.35+0.6*eL).toFixed(2)})`; cx2.lineWidth = 1.4;
+    cx2.beginPath(); cx2.ellipse(cx + R*Math.cos(halfDraw), cy, Math.max(3, lr*0.55), Math.max(4, lr), 0, 0, 7);
+    cx2.fill(); cx2.stroke();
+  }
+  cx2.fillStyle = 'rgba(230,237,243,0.55)'; cx2.font = '11px sans-serif';
+  cx2.fillText('light', W-40, cy-8);
+}
+
+/* ============================ drawing: charts ============================ */
+const tc = $('traj'), tx = tc.getContext('2d');
+function drawTraj(){
+  const W=tc.width,H=tc.height,padL=6,padR=6,padT=8,padB=16; tx.clearRect(0,0,W,H);
+  const HI=180, LO=0.4, lHi=Math.log10(HI), lLo=Math.log10(LO);
+  const Y = deg => padT + (lHi-Math.log10(clamp(deg,LO,HI)))/(lHi-lLo)*(H-padT-padB);
+  tx.fillStyle='#6b7684'; tx.font='10px sans-serif';
+  for (const [d,lab] of [[100,'100° I|II'],[20,'20° II|III'],[2,'2° III|IV']]){
+    const y=Y(d); tx.strokeStyle='#232b34'; tx.setLineDash([3,3]);
+    tx.beginPath(); tx.moveTo(padL,y); tx.lineTo(W-padR,y); tx.stroke(); tx.fillText(lab, padL+2, y-2);
+  }
+  tx.setLineDash([]);
+  if (hist.length < 2) return;
+  const X = u => padL + u*(W-padL-padR);
+  const line = (key,col) => { tx.strokeStyle=col; tx.lineWidth=2; tx.beginPath();
+    hist.forEach((h,i) => { const x=X(h.u), y=Y(degOf(h[key]));
+      i?tx.lineTo(x,y):tx.moveTo(x,y); }); tx.stroke(); };
+  line('drPred', '#ff5e7e'); line('drPrey', '#5eb3ff');
+  tx.fillStyle='#6b7684'; tx.fillText('← sharper (down) · evolutionary time →', padL+2, H-3);
+}
+const rc = $('rates'), rx2 = rc.getContext('2d');
+function drawRates(){
+  const W=rc.width,H=rc.height,padL=6,padR=6,padT=8,padB=14; rx2.clearRect(0,0,W,H);
+  const Y = v => padT + (1-clamp(v,0,1))*(H-padT-padB);
+  rx2.strokeStyle='#232b34'; rx2.setLineDash([3,3]);
+  for (const v of [0.25,0.5,0.75,1]){ const y=Y(v); rx2.beginPath(); rx2.moveTo(padL,y); rx2.lineTo(W-padR,y); rx2.stroke(); }
+  rx2.setLineDash([]);
+  if (hist.length < 2) return;
+  const X = u => padL + u*(W-padL-padR);
+  const line = (key,col) => { rx2.strokeStyle=col; rx2.lineWidth=2; rx2.beginPath();
+    hist.forEach((h,i) => { const x=X(h.u), y=Y(h[key]); i?rx2.lineTo(x,y):rx2.moveTo(x,y); }); rx2.stroke(); };
+  line('seen','#ff5e7e'); line('escape','#5eb3ff'); line('food','#7ee787'); line('mate','#c8a2ff');
+  rx2.fillStyle='#6b7684'; rx2.font='10px sans-serif'; rx2.fillText('0', padL+2, H-3);
+  rx2.fillText('evolutionary time →', W-120, H-3);
+}
+
+/* ============================ behaviour bars ============================ */
+const PRED_BARS = [
+  ['blunder into prey','blunder','#8a94a0'],
+  ['follow what it sees','track','#ff9aae'],
+  ['stalk, strike late','stalk','#ff7a95'],
+  ['cut off the escape','lead','#ff5e7e'],
+];
+const PREY_BARS = [
+  ['react only on contact','bump','#8a94a0'],
+  ['flee a seen threat','flight','#9fd0ff'],
+  ['zig-zag under chase','evade','#7cc0ff'],
+  ['school with neighbours','school','#5eb3ff'],
+];
+function buildBars(el, title, spec){
+  el.innerHTML = `<div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px">${title}</div>` +
+    spec.map(([label,key,col]) =>
+      `<div class="bar"><div class="t">${label}</div><div class="track"><div class="fill" id="f_${key}" style="background:${col}"></div></div><div class="n" id="n_${key}">0%</div></div>`
+    ).join('');
+}
+function setBars(spec, beh){
+  for (const [,key] of spec){
+    const v = clamp(beh[key], 0, 1);
+    $('f_'+key).style.width = (v*100).toFixed(1)+'%';
+    $('n_'+key).textContent = Math.round(v*100)+'%';
+  }
+}
+
+/* ============================ HUD ============================ */
+function fmtDeg(dr){ const g = degOf(dr); return g>=100 ? g.toFixed(0)+'°' : g>=10 ? g.toFixed(1)+'°' : g.toFixed(2)+'°'; }
+function hud(){
+  $('rCap').textContent    = disp.cap.toFixed(1);
+  $('rSeen').textContent   = Math.round(disp.seen*100)+'%';
+  $('rDetect').textContent = Math.round(disp.det)+' px';
+  $('rEscape').textContent = Math.round(disp.escape*100)+'%';
+  $('rFlee').textContent   = Math.round(disp.flee)+' px';
+  $('rNN').textContent     = disp.hunts.toFixed(1);
+  $('rFood').textContent   = Math.round(disp.foodSight*100)+'% · '+disp.food.toFixed(0)+'/1k';
+  $('rMate').textContent   = disp.mate ? Math.round(disp.mate) : '–';
+  $('rPop').textContent    = `${prey.length} · ${preds.length}`;
+
+  $('figPrey').innerHTML = `Δρ ${fmtDeg(eyePreyNow.dr)} · ${nilssonClass(eyePreyNow.dr)}<br>`+
+    `aperture ${eyePreyNow.g.A.toFixed(3)} · depth ${eyePreyNow.g.f.toFixed(2)} · lens ${(eyePreyNow.g.L*lensGate(eyePreyNow.g.f)).toFixed(2)} · light ${Math.round(eyePreyNow.b*100)}%`;
+  $('figPred').innerHTML = `Δρ ${fmtDeg(eyePredNow.dr)} · ${nilssonClass(eyePredNow.dr)}<br>`+
+    `aperture ${eyePredNow.g.A.toFixed(3)} · depth ${eyePredNow.g.f.toFixed(2)} · lens ${(eyePredNow.g.L*lensGate(eyePredNow.g.f)).toFixed(2)} · light ${Math.round(eyePredNow.b*100)}%`;
+
+  setBars(PRED_BARS, behPred); setBars(PREY_BARS, behPrey);
+  $('vU').textContent = (U*100).toFixed(1) + '% · tick ' + tick.toLocaleString() + ' · ' + fps.toFixed(0) + ' fps';
+  if (!dragging) $('cU').value = Math.round(U*1000);
+}
+
+/* ============================ loop ============================ */
+let fps = 60, lastT = performance.now();
+function frame(){
+  const now = performance.now();
+  fps = fps*0.9 + (1000/Math.max(1, now-lastT))*0.1; lastT = now;
+  if (running){ const n = +$('cSpeed').value; for (let i=0;i<n;i++) step(); }
+  drawWorld(); drawEye($('eyePrey'), eyePreyNow, '#5eb3ff'); drawEye($('eyePred'), eyePredNow, '#ff5e7e');
+  drawTraj(); drawRates(); renderEra(); hud();
+  requestAnimationFrame(frame);
+}
+
+/* ============================ controls ============================ */
+let dragging = false;
+function labels(){
+  $('vEon').textContent = (+$('cEon').value/1000) + 'k ticks';
+  $('vSpeed').textContent = $('cSpeed').value + '×';
+  $('vAtten').textContent = $('cAtten').value + ' px';
+}
+['cEon','cSpeed','cAtten'].forEach(id => $(id).addEventListener('input', labels));
+$('cU').addEventListener('input', () => { U = +$('cU').value/1000; win = {...W0};
+  const u = U; hist = hist.filter(h => h.u <= u); });
+$('cU').addEventListener('pointerdown', () => dragging = true);
+window.addEventListener('pointerup', () => dragging = false);
+$('play').addEventListener('click', () => { running = !running; $('play').textContent = running ? '⏸ Pause' : '▶ Play'; });
+$('reset').addEventListener('click', () => reset(false));
+
+// debug handle: lets a driver park evolutionary time and read the numbers out
+window.__sim = {
+  setU(v){ U = clamp(v,0,1); $('cU').value = Math.round(U*1000); $('cHold').checked = true; win = {...W0}; },
+  run(n){ for (let i=0;i<n;i++) step(); },
+  read(){ return { U, tick, prey: prey.length, preds: preds.length,
+    drPrey: degOf(eyePreyNow.dr), drPred: degOf(eyePredNow.dr),
+    clPrey: nilssonClass(eyePreyNow.dr), clPred: nilssonClass(eyePredNow.dr),
+    g: eyePredNow.g, bright: eyePredNow.b, ...disp }; },
+  morph, drho, degOf,
+  diag(){
+    const out = [];
+    for (let i=0;i<8 && i<prey.length;i++){
+      const p = prey[Math.floor(rnd()*prey.length)], eye = p.eye || eyePreyNow;
+      let bd = 1e9, bp = null;
+      for (const q of preds){ rel(p.x,p.y,q.x,q.y); const d = Math.hypot(RX,RY);
+        if (d < bd){ bd = d; bp = q; } }
+      out.push({ d: Math.round(bd), reach: Math.round(searchRadius(eye.dr, P.predD, eye.b)),
+        p: +pResolve(eye.dr, P.predD, bd, eye.b).toFixed(3), fleeing: p.fleeing,
+        panicD: Math.round(behPrey.panicD), fleeMem: p.fleeMem });
+    }
+    return { out, win: {...win}, behPrey: {panicD:behPrey.panicD, flight:+behPrey.flight.toFixed(2),
+      evade:+behPrey.evade.toFixed(2), school:+behPrey.school.toFixed(2)},
+      behPred: {lead:+behPred.lead.toFixed(2), stalk:+behPred.stalk.toFixed(2), track:+behPred.track.toFixed(2)} };
+  },
+};
+
+buildBars($('barsPred'), 'predator', PRED_BARS);
+buildBars($('barsPrey'), 'prey', PREY_BARS);
+labels(); reset(false); frame();
+</script>
+</body>
+</html>
