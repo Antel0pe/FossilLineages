@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Scratch git worktrees carry their own built .next/ and node_modules/.
+    ".claude/**",
   ]),
 ]);
 

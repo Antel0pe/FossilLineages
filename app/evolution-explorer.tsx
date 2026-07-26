@@ -282,10 +282,11 @@ function DivergencePanel({
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const [tab, setTab] = useState<"changed" | "context">("changed");
+  // The parent keys this component by divergence, so a new branch point remounts it and
+  // `tab` starts at "changed" on its own — this effect only has to move focus into the dialog.
   useEffect(() => {
-    setTab("changed");
     closeRef.current?.focus();
-  }, [divergence.fromId]);
+  }, []);
 
   // Only siblings with a genuinely additive fact get a row here — this is expected to be
   // situational (some branch points have none), matching how `pressures` already varies
