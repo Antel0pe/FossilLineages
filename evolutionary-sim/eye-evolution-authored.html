@@ -503,9 +503,18 @@ function step(){
       p.holdT = 0;
     } else if (tick >= p.holdT){
       const clump = look(patches, p.x, p.y, eye, P.patchD, 0);
-      if (clump){
+      // Travel to a patch you can see — but ONLY while you are still outside it. A patch is a
+      // 85px drift of food, not a point, and steering at its centroid from inside is both
+      // wrong and a trap: the turning circle (v/turnRate ≈ 5px) is wider than the error being
+      // corrected, so the animal orbits the centre forever. Once inside, real foragers switch
+      // to area-restricted search — slow down the heading, turn often, sweep the neighbourhood.
+      if (clump && Math.sqrt(clump.d2) > P.patchR * 0.9){
         const [bx,by] = blurVec(clump.dx, clump.dy, eye.dr, false);
         [ax,ay] = norm(bx,by); p.holdX = ax; p.holdY = ay; p.holdT = tick + 3;
+      } else if (clump){
+        ax = p.vx; ay = p.vy;
+        if (rnd() < 0.14){ ax += randn()*0.9; ay += randn()*0.9; }   // intensive local search
+        p.holdT = tick + 3; p.holdX = 0; p.holdY = 0;
       } else {
         ax = p.vx; ay = p.vy;
         if (rnd() < 0.06){ ax += randn()*0.7; ay += randn()*0.7; }
@@ -646,10 +655,13 @@ function step(){
         v = P.predCruise * (1 - 0.16*B.stalk);
       }
     } else {
+      // same rule as the prey: prowl TOWARD the feeding ground, quarter it once you are on it
       const ground = look(patches, pr.x, pr.y, eye, P.patchD, 0);
-      if (ground){ const [bx,by] = blurVec(ground.dx, ground.dy, eye.dr, false);
+      if (ground && Math.sqrt(ground.d2) > P.patchR * 0.9){
+        const [bx,by] = blurVec(ground.dx, ground.dy, eye.dr, false);
         [ax,ay] = norm(bx,by); }
-      else { ax = pr.vx; ay = pr.vy; if (rnd() < 0.06){ ax += randn()*0.7; ay += randn()*0.7; } }
+      else { ax = pr.vx; ay = pr.vy;
+        if (rnd() < (ground ? 0.12 : 0.06)){ ax += randn()*0.7; ay += randn()*0.7; } }
     }
     if (pr.strikeOpen && tick - pr.strikeTick > 140){ pr.strikeOpen = false; }
     if (pr.striking > 0) pr.striking--;
@@ -1028,6 +1040,41 @@ window.__sim = {
     clPrey: nilssonClass(eyePreyNow.dr), clPred: nilssonClass(eyePredNow.dr),
     g: eyePredNow.g, bright: eyePredNow.b, ...disp }; },
   morph, drho, degOf,
+  // Regression check for the orbit bug (2026-07-24): finds animals pinned at their maximum turn
+  // rate while going nowhere — the signature of steering at a point attractor they cannot turn
+  // tightly enough to reach. `circling` should stay ~0 at every era.
+  spin(ticks = 400){
+    const seen = new Map();
+    for (const a of prey.concat(preds))
+      seen.set(a, {x0:a.x, y0:a.y, path:0, px:a.x, py:a.y, ph:Math.atan2(a.vy,a.vx), sat:0, n:0});
+    for (let i=0;i<ticks;i++){
+      step();
+      for (const [a,s] of seen){ if (a.dead) continue;
+        rel(s.px, s.py, a.x, a.y); s.path += Math.hypot(RX,RY); s.px = a.x; s.py = a.y;
+        const h = Math.atan2(a.vy, a.vx);
+        let dh = h - s.ph; while (dh > Math.PI) dh -= 2*Math.PI; while (dh < -Math.PI) dh += 2*Math.PI;
+        const lim = a.kind === 'prey' ? P.preyTurn : P.predTurn;
+        if (Math.abs(dh) > lim*0.97) s.sat++;      // turning as hard as its body allows
+        s.n++; s.ph = h;
+      }
+    }
+    const out = [];
+    for (const [a,s] of seen){
+      if (a.dead) continue;
+      rel(s.x0, s.y0, a.x, a.y); const net = Math.hypot(RX,RY);
+      const satFrac = s.sat/Math.max(1,s.n);
+      if (satFrac > 0.8 && net < s.path*0.15){        // pinned at max turn AND going nowhere
+        // is it sitting on a patch centre? that is the suspected trap
+        let dq = -1;
+        for (const q of patches){ rel(a.x,a.y,q.x,q.y); const d=Math.hypot(RX,RY);
+          if (dq<0||d<dq) dq=d; }
+        out.push({ kind:a.kind, net:+net.toFixed(1), path:+s.path.toFixed(0),
+          sat:+satFrac.toFixed(2), distToPatchCentre:+dq.toFixed(0), E:+a.E.toFixed(0),
+          fleeMem:a.fleeMem|0, hasTarget:!!a.target, fleeing:!!a.fleeing });
+      }
+    }
+    return { nAgents: seen.size, circling: out.length, sample: out.slice(0,8) };
+  },
   diag(){
     const out = [];
     for (let i=0;i<8 && i<prey.length;i++){

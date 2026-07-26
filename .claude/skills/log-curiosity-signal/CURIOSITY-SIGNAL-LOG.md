@@ -487,3 +487,50 @@ feeling pretty meh and excitingness isnt really present."
   Consistent with the existing sim's design rule that nothing is a discrete stage — but this is the
   first time he has stated it as an *aesthetic* requirement about what the demo should feel like to
   watch, not as a modelling constraint.
+
+## 2026-07-25
+
+- **[idea]** Asked for a deep research doc on the real conditions eyes evolved under, explicitly to
+  parameterise "a realistic evolutionary simulator mimicking the environment eyes evolved from light
+  sensitive patch to modern eyes in the water." Wanted a specific level of granularity: "how many
+  calories a prey gave a predator, how many they ate, hunting strategies, environment like coral vs
+  open sea so we can mimic as precisely as possible." Also proposed narrowing to **one lineage with
+  the best data** rather than surveying every eye origin.
+- **[tension]** Note the tension with the 2026-07-24 entries: yesterday he authorised *authoring* the
+  eye-evolution result because the auditable version kept burying the payoff; today he is asking for
+  maximum real-world fidelity in the environment. Claude's read (a guess): these may not be in
+  conflict — he may want the *environment* to be rigorously real while the *eye's response* to it is
+  allowed to be legible/authored. Worth watching whether the next request pulls fidelity back into
+  the eye itself.
+- **[meta]** The calorie-level granularity request runs into a hard limit: there is no fossil calorie.
+  Told him so directly and tagged every number by evidence tier. Whether he finds the tiering useful
+  or finds it a hedge is itself a signal worth watching next session.
+- **[correction]** On review of the research doc, stated the build principle explicitly: **"We're going
+  to start very complex, but correct, very complex, but correct, and then remove things. That order is
+  very, very important."** Reasoning he gave: if you remove something now and find out later it was
+  necessary, you get stuck. This is a direct reversal of the usual MVP instinct and he named it as a
+  general rule, not a one-off.
+- **[correction]** Rejected the simulator parameter block ("take it out because that's not your job") —
+  wants the research doc to be *data only*, with implementation kept separate. But simultaneously wants
+  the data doc to be so complete that "the LLM that's coding shouldn't make any decision." Claude's read
+  (a guess): he's separating *what is true* from *what we build*, and wants the first fully pinned down
+  so his own bias can't leak into the second. He said this explicitly — "that limits my bias as much as
+  possible, which is what I'm looking for."
+- **[idea]** Named a specific past failure as the thing to solve: **"even if we set the cost of eye to
+  zero in some of our previous simulations, the eye still wouldn't develop."** Treated this as evidence
+  the sim is fundamentally broken rather than mistuned.
+- **[liked]** Reacted with interest to the Ediacaran-oxygen → carnivory link ("Interesting, I had no idea
+  about that") and traced the causal chain himself unprompted: more oxygen → chasing becomes affordable
+  → the bottleneck moves to *finding* something to chase → vision becomes the limiting factor. This is
+  the same shape as the causal-turning-point pattern in his profile.
+- **[correction]** Drew a line on scope that cuts against his own "keep everything" rule and flagged the
+  tension himself: burrowing and non-interacting species are out, because burrowing "happened
+  afterwards" and researching it "would take away from things that would actually matter." But asked for
+  a "things we didn't implement" section so the exclusions are recoverable. Claude's read (a guess): his
+  actual rule isn't "keep everything," it's "keep everything on the causal path, and write down what you
+  cut."
+- **[uncertain]** Asked directly whether compound vs camera eye implies a *different selection pressure*
+  — "if the selection is different from what is here, then that's not ideal because I do want the
+  evolutionary selection pressure for a camera eye." Wanted to know whether just running longer gets you
+  there. The answer (no — architectures don't interconvert) changed the recommended focal lineage from
+  arthropod to chordate.

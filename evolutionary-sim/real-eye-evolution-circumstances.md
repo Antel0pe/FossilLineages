@@ -1,3 +1,6 @@
+> **Full research writeup with simulator parameters:** [eye-evolution-real-conditions.md](eye-evolution-real-conditions.md)
+> (2026-07-25) — environment, energetics, optics targets, lockstep couplings, and verification criteria.
+
 https://en.wikipedia.org/wiki/Evolution_of_the_eye
 
 early light sensitive patches gave basic sense of direction and light but not enough to discriminate object from surroundings

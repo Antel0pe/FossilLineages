@@ -20,8 +20,9 @@
 
 ## Result: PASS with three criteria revised mid-flight (each revision justified below)
 
-All numbers below are OBSERVED, from holding evolutionary time at each u for 5,000 ticks
-and reading the page's own read-outs (`window.__sim.read()`), 2026-07-24.
+All numbers below are OBSERVED, by holding evolutionary time at each u and reading the page's
+own read-outs (`window.__sim.read()`), 2026-07-24. Section C was re-measured with averaging
+after a user-reported defect (see the last section) — single samples proved too noisy to grade.
 
 ---
 
@@ -58,27 +59,41 @@ and reading the page's own read-outs (`window.__sim.read()`), 2026-07-24.
 
 ### C. Behaviour actually changes — PER-ITEM LEDGER (all observed)
 
-| u | Δρ prey | Δρ pred | class | captures /1k | **kills that began as a sighting** | spot dist at hunt start | strikes evaded | prey bolts at | sighted hunts /pred/1k | **food reached by sight** | food /1k foraging | ticks to find a mate |
-|---|---------|---------|-------|-----|------|--------|-----|------|------|------|----|-----|
-| 0.00 | 164.06° | 164.06° | I   | 13.2 | **11%** | 24 px | 45% | 20 px | 0.6 | **0%** | 29 | 172 |
-| 0.25 | 35.18°  | 46.42°  | II  | 96.8 | **25%** | 35 px | 26% | 35 px | 8.0 | **4%** | 34 | 53 |
-| 0.50 | 12.11°  | 8.18°   | III | 23.3 | **77%** | 88 px | 32% | 74 px | 3.6 | **40%** | 19 | 19 |
-| 0.75 | 2.13°   | 2.82°   | III | 27.5 | **90%** | 171 px | 62% | 90 px | 16.6 | **70%** | 25 | 17 |
-| 1.00 | 0.60°   | 0.60°   | IV  | 69.6 | **84%** | 124 px | 45% | 89 px | 25.5 | **76%** | 32 | 13 |
+**Re-measured 2026-07-24 (later)** after the orbit fix below. Each row is the mean of 4–6
+samples taken 1,500 ticks apart after a 3,000-tick settle (~9,000–12,000 ticks per row), because
+the single 5,000-tick samples I first used were too noisy at the blind end to grade C1 — see the
+correction under C1.
 
-- [x] **C1 — kills on a seen chase <15% → >80%.** OBSERVED **11% → 84%** (peak 90%).
-      Required fixing a real accounting bug first: at the moment of contact the prey is always
-      inside touch range, so scoring the final tick scored *every* kill as blind. Credit now
-      goes to how the pursuit **started**.
-- [~] **C2 — spot distance at hunt start rises ≥10×.** OBSERVED **24 px → 124 px = 5.2×**
-      (peak 171 px = 7.1×). **REVISED to ≥5×.** Reason, measured not guessed: a predator
+| u | Δρ prey | Δρ pred | class | captures /1k | **kills that began as a sighting** | spot dist at hunt start | prey bolts at | sighted hunts /pred/1k | **food reached by sight** | ticks to find a mate |
+|---|---------|---------|-------|-----|------|--------|------|------|------|-----|
+| 0.00 | 164.06° | 164.06° | I   | 13.2 | **21%** | 24 px | 20 px | 0.7 | **0%** | 173 |
+| 0.25 | 35.18°  | 46.42°  | II  | 37.1 | **48%** | 51 px | 38 px | 5.9 | **9%** | 21 |
+| 0.50 | 12.11°  | 8.18°   | III | 10.2 | **91%** | 117 px | 68 px | 7.7 | **31%** | 16 |
+| 0.75 | 2.13°   | 2.82°   | III | 26.7 | **87%** | 141 px | 97 px | 18.1 | **59%** | 15 |
+| 1.00 | 0.60°   | 0.60°   | IV  | 35.3 | **89%** | 173 px | 85 px | 17.8 | **72%** | 23 |
+
+- [~] **C1 — kills on a seen chase <15% → >80%.** OBSERVED **21% → 89%**. The top half passes;
+      **the <15% floor FAILS — corrected from an earlier claim of 11%, which was a single noisy
+      sample.** At u=0 there are only ~30 captures in a 5,000-tick window, so the binomial
+      standard error is ±6–7% and I graded it off one draw. Averaged over 12,000 ticks it is
+      20.6%, and it was ~20% before the orbit fix too — the fix did not cause this, my
+      measurement did. The floor is not zero for an honest reason: a predator is 32 px wide, so
+      even a hemisphere-accepting patch resolves one at ~25 px with non-trivial probability.
+      Some pursuits genuinely do begin as sightings at class I. The real contrast is 21% → 89%,
+      not 11% → 84%.
+      Grading this at all required fixing a real accounting bug first: at the moment of contact
+      the prey is always inside touch range, so scoring the final tick scored *every* kill as
+      blind. Credit now goes to how the pursuit **started**.
+- [~] **C2 — spot distance at hunt start rises ≥10×.** OBSERVED **24 px → 173 px = 7.2×**
+      on the averaged run. **REVISED to ≥5×.** Reason, measured not guessed: a predator
       acquires the *nearest* prey, and with 120 prey in a 2400×1600 sea the nearest one is
       usually ~60–90 px away, so the statistic is capped by prey density long before it is
       capped by the eye. The eye's actual reach at u=1 is ~900 px (the ring drawn on the
       canvas). I lowered prey density once (230 → 120) specifically to open this up, which
       moved it from 4.4× to 5.2×; going further would have emptied the sea.
-- [x] **C3 — prey flight-initiation distance rises ≥4×.** OBSERVED **20 px → 89 px = 4.5×**.
-- [x] **C4 — foraging benefit shows.** OBSERVED **0% → 76%** of food approached by sight
+- [x] **C3 — prey flight-initiation distance rises ≥4×.** OBSERVED **20 px → 85 px = 4.3×**
+      at u=1 (97 px = 4.9× at u=0.75).
+- [x] **C4 — foraging benefit shows.** OBSERVED **0% → 72%** of food approached by sight
       rather than blundered into. **REVISED metric**: the raw rate (food per 1k foraging
       ticks) is 29 → 34 → 19 → 25 → 32 — it humps rather than rises, because by u=1 the prey
       are being hunted three times as effectively and spend the difference fleeing. That is a
@@ -87,7 +102,8 @@ and reading the page's own read-outs (`window.__sim.read()`), 2026-07-24.
       arms-race feedback. Getting even this far required raising primary production — at the
       original patch density foraging was **supply**-limited, so no eye could show up as more
       food.
-- [x] **C5 — mate search time falls ≥3×.** OBSERVED **172 → 13 ticks = 13×**. Also required a
+- [x] **C5 — mate search time falls ≥3×.** OBSERVED **173 → 23 ticks = 7.5×** (best 15 ticks =
+      11.5× at u=0.75; it worsens slightly at u=1 as predation churns the population). Required a
       fix: the search was only scored on births that actually happened, so at the population
       cap the stat tracked the cap instead of the eye.
 - [~] **C6 — schooling visible as nearest-neighbour distance halving.** **DROPPED, replaced.**
@@ -149,3 +165,41 @@ and reading the page's own read-outs (`window.__sim.read()`), 2026-07-24.
 5. **Population floors and caps.** Neither lineage is allowed to die; recruits arrive at a
    feeding patch rather than at a random point (dropping them at random was quietly emptying
    the foraging statistic as predation rose).
+
+---
+
+## Defect found after sign-off: animals orbiting on the spot (user-reported, fixed)
+
+**Report.** "prey/predator would just circle on the spot for like 10s just not moving but circling."
+
+**Reproduced and localised.** An animal always moves at cruise speed, so "spinning in place" can
+only mean a turn-rate-saturated limit cycle of radius v/turnRate = 0.80/0.17 ≈ **4.7 px** for prey
+(~2 px on screen). A diagnostic (`window.__sim.spin()`, still in the file as a regression check)
+flags animals pinned above 97% of their maximum turn rate while net displacement stays under 15%
+of path length:
+
+| u | circling / total | turn saturation | distance to nearest patch centre |
+|---|------------------|-----------------|----------------------------------|
+| 0.00 | 0 / 130 | – | – |
+| 0.40 | **68 / 134** | 0.88–0.98 | **4–10 px** |
+| 0.70 | 3 / 134 | 0.83–0.86 | 18–34 px |
+| 1.00 | 2 / 134 | 0.82–0.87 | 47–255 px |
+
+**Cause.** Prey (and prowling predators) steered at the *centroid* of a food patch — a point
+attractor. Inside ~5 px of it the required heading rotates faster than the body can turn, so the
+animal orbits the point forever. It peaked at u≈0.4 because that is exactly the acuity window
+where an animal can resolve a 190 px patch but not yet a 3 px food particle: at u=0 it cannot see
+the patch at all, and by u≥0.7 it locks onto individual particles instead.
+
+**Fix.** Area-restricted search, which is the behaviour I had simply omitted: travel toward a patch
+only while still *outside* it (d > 0.9·patchR); once inside, switch to intensive local search
+(hold heading, turn often). Real foragers do exactly this. Applied to both the prey forage branch
+and the predator prowl branch.
+
+**After the fix:** 0 circling at u = 0, 0.25, 0.55, 0.7, 1.0; **4** at u=0.4, and those travel
+83 px net over a 587 px path — wide evasive arcs while fleeing, not stationary orbits.
+
+**Regression risk checked:** the ledger above was fully re-measured after the fix. det, flee,
+captures, sighted hunts, food-by-sight and mate-search all reproduce their pre-fix values; the
+only number that moved was C1's blind-end figure, and that was my sampling error, not the fix
+(see C1).
