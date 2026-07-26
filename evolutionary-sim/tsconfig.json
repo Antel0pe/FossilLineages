@@ -1,0 +1,21 @@
+{
+  // The sim's TypeScript is Bun, not Next: it uses `Bun.serve`, `Bun.file`, and
+  // `import.meta.dir`, none of which exist in the app's browser/Node typing. The root
+  // tsconfig excludes this directory so `next build` doesn't choke on it; this project
+  // type-checks it properly instead. Run with `bun run typecheck:sim`.
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["bun"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowJs": false,
+    "isolatedModules": true,
+    "resolveJsonModule": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["logs", "tmp"]
+}

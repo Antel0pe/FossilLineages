@@ -12,8 +12,14 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Scratch git worktrees carry their own built .next/ and node_modules/.
-    ".claude/**",
+    // The defaults above are root-anchored, so a build directory nested anywhere else
+    // (a git worktree, a vendored copy) still gets linted. Match them at any depth.
+    "**/.next/**",
+    "**/node_modules/**",
+    // Agent scratch worktrees are full second checkouts of this repo. Even with their
+    // build output ignored, linting them double-reports every finding against a
+    // detached-HEAD copy of code that isn't on main.
+    ".claude/worktrees/**",
   ]),
 ]);
 
