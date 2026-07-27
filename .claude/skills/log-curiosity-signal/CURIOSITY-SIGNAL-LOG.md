@@ -534,3 +534,26 @@ feeling pretty meh and excitingness isnt really present."
   evolutionary selection pressure for a camera eye." Wanted to know whether just running longer gets you
   there. The answer (no — architectures don't interconvert) changed the recommended focal lineage from
   arthropod to chordate.
+- **[correction]** Reversed his own instruction mid-message: first said the research doc "should be 100%
+  what an llm needs to write the code," then a few paragraphs later said "maybe that shouldnt be the
+  case — let this doc have research and raw numbers and the discussions and then when i think its ready
+  we'll make another doc." Landed on: research doc stays messy and argued; a clean build spec gets
+  extracted later, on his call.
+- **[uncertain]** Circled repeatedly around the same anxiety in three separate places (§9.5 timings,
+  §11.7 handling times, the general tier-D question): **numbers he sets are frozen forever while the
+  simulation moves.** His words: "if i set them, theyre set and they wont get more accurate relative to
+  what the simulation discovers... the bias will stay the full time with huge influence." This is the
+  single most-repeated concern of the session and looks like a load-bearing principle rather than a
+  passing worry.
+- **[liked]** "good love section 11.1" — the swimming-speed table where the *asymmetry* between predator
+  top speed and prey acceleration/turning was spelled out as the thing that makes vision pay. Consistent
+  with the causal-mechanism preference in his profile: he liked the section that explained *why* a
+  pressure exists, not the one that listed the most numbers.
+- **[disliked]** Migration alarmed him — "14 scares me a little bit... migration especially far ones
+  would throw our simulation for a loop and add a ton of complexity." Notable that the trigger was
+  *implementation scope*, not interest; he'd asked the schooling question casually and did not want it
+  to become a modelled system.
+- **[idea]** Floated the colour-vision/contrast interaction unprompted while agreeing it should stay
+  excluded: a predator gaining a new spectral channel could break camouflage that worked in the old one.
+  Offered it as "just a note" but it is a genuinely new mechanism, and he raised it after accepting the
+  exclusion — i.e. he was still turning the idea over rather than closing it.

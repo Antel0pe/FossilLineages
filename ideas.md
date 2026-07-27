@@ -80,3 +80,13 @@ excitingly ambitious versions of this
 
 - claude when doing experiments often suggests we do multiple things to fix an issue whereas i prefer having a single experiment to understand its impact and prefer to have one really good solution rather than throw multiple things and have it fixed by multiple things.
 - how to evolve behavior like learning to run away, or that certain fruit colors are better, or brightly colored prey are poisonous
+    - if x then do y type behaviors where each x is an input and y is an action available
+        - too binary, prioritization of if determines action, not able to modulate action like go to food but also stay away from predator
+    - if x then add likelihood to action y
+        - each input taken into account, able to follow multiple goals like get to food, stay away from predator
+        - probability tuning needs to be accurate, another axis to tune. probability can change for example if there is 1 predator vs 2 predators in the area. 
+
+- for static parameters that i set for simulation the problem is that they
+    - encode my bias
+    - often dont change so the whole simulation does weird things based on my bias
+    - a solution might be to allow them to change and let simulation discover accurate values for them. but how is the big question

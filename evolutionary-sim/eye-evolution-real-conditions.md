@@ -37,13 +37,27 @@ The two deliberate exceptions, made on judgement, are listed with their reasonin
 (Deliberately excluded)**, which doubles as the "if it doesn't work, try adding these back"
 checklist.
 
-### 0.3 The completeness contract
+### 0.3 What this document is *for* — and what it is not
 
-**Every number needed to build the simulation must be in this document.** The implementing
-engineer/LLM should make **no numerical decisions at all** — only translate. If the implementer
-has to invent a value, a threshold, a rate, or a rule, that is a bug in this document, not a
-judgement call for them. Where the literature gives nothing, this document still gives a number,
-plus the reasoning that produced it and an honest confidence tier.
+**This is the research document.** It holds raw numbers, derivations, reasoning, open questions and
+discussion. It is deliberately not clean, and it is not the implementation spec.
+
+**The lean build spec is [eye-sim-build-spec.md](eye-sim-build-spec.md)** — only the settled
+numbers, variable names, ranges and what each affects, with none of the discussion. Argument and
+uncertainty stay in *this* file where they can be seen and challenged. When a number changes here,
+update the spec; when the spec is unclear, the answer is here.
+
+### 0.4 The completeness contract
+
+Even so, the *numbers* must be complete. When the build spec is extracted, the implementing
+engineer/LLM should make **no numerical decisions at all** — only translate. If the implementer has
+to invent a value, a threshold, a rate, or a rule, that is a bug in this document. Where the
+literature gives nothing, this document still gives a number, plus the method that produced it
+(§17.1) and an honest confidence tier.
+
+With one deliberate and important exception: **decision parameters are not supposed to have values
+here.** They belong in the genome and are discovered by the simulation, not specified by us — see
+§3B.1. A blank in the SET column is a bug; a "EVOLVED" in it is the point.
 
 The test: *it should be hard to imagine that a faithful implementation of this document fails to
 take a light-sensitive patch to a camera eye.*
@@ -90,6 +104,28 @@ the good news, and it means the environmental research below is architecture-agn
 | Consequence at high acuity | cheap; a 25 mm human eye resolves ~1 arcminute | catastrophic. Mallock (1894): a compound eye matching human central acuity needs a **6 m radius** |
 | Where it wins | high acuity, any body size ≥ a few mm | small size, wide field, fast motion detection, low acuity |
 
+**On the *Nautilus*** — this is worth correcting carefully, because the mental model it creates is
+the single most common misconception about eye evolution.
+
+*Nautilus* is **not an ancestor of anything, and it was not "the most advanced eye of its time."**
+It is a **living animal today**, and its eye is a **pinhole camera eye that never acquired a lens** —
+an evolutionary dead end held in place for ~500 Myr, not a rung that later animals climbed past.
+Each of its receptors views an angle of **>2°** (versus fractions of a degree in octopus), and its
+image is extremely dim, because a pinhole eye has an unavoidable trade-off that a lens eye does
+not: **any improvement in resolution costs sensitivity, one-for-one.** Shrink the pupil to sharpen
+the image and you starve the retina of photons. That trade-off is exactly what a lens breaks, and
+it is why the lens is the pivotal innovation in the whole sequence.
+
+The reason *Nautilus* appears in every eye-evolution diagram is that it is a convenient **living
+illustration of the pinhole grade** — one of the eight Nilsson–Pelger stages, still walking around.
+The diagrams line up flatworm cup → *Nautilus* pinhole → octopus lens eye because those are three
+*grades of construction*, not because one descended from another. Octopus and *Nautilus* are both
+cephalopods and their camera eyes evolved **separately**; vertebrate camera eyes evolved separately
+again, from a third starting point.
+
+So: yes, the sequence patch → cup → pinhole → lens is real and is what we are simulating. No, it is
+not a single lineage marching forward, and *Nautilus* is not a step on the way to us.
+
 So the answer to *"if we ran it longer, would a compound eye become a camera eye?"* is **no.** An
 arthropod lineage under unlimited selection for acuity produces a *better compound eye*, forever —
 it will hit the quadratic wall and stop, but it will never restructure into a camera eye. The two
@@ -123,7 +159,7 @@ That resolves the tension cleanly:
 | Same environment? | yes | **yes — same locality, same food web** | yes |
 | Gives what you asked for | no | **yes** | yes, plus a genuinely open outcome |
 
-**Recommendation: option B as the primary build.** Simulate the **chordate lineage** (myllokunmingid-
+**DECIDED (2026-07-26): option B.** Camera eye, chordate lineage. Simulate the **chordate lineage** (myllokunmingid-
 grade, 25–30 mm, nektobenthic) as the eye-evolving population, embedded in the Chengjiang food web
 with *Anomalocaris* and *Isoxys* as the visual predator guild. All the environmental,
 energetic, optical and light-field research below carries over unchanged — only the eye genome
@@ -184,6 +220,28 @@ Opsin itself is **given, not evolved** — the opsin gene family had already div
 three subfamilies (ciliary, rhabdomeric, Go/RGR) by ~700 Ma, ~180 Myr before any eye. Do not
 simulate the origin of light sensitivity. Simulate what happens to an animal that already has it.
 
+**What this animal can actually perceive on day one** is computed, not asserted — see §3A.7. With
+one unshielded receptor patch, `Δρ = 180°` and a 600 s integration, the percept is **a single noisy
+scalar: `intensity`, with relative error 1/√N**. No direction, no image, no object. Everything it
+can do with that is in §3A.8: estimate its depth, estimate the time of day, and nothing else.
+
+**The rest of the founder animal** (so the starting state is fully specified):
+
+| Property | Starting value | Tier |
+|---|---|---|
+| Body length / wet mass | 20 mm / **0.10 g** (epoch-1 animals are smaller than the 518 Ma fossils) | D |
+| Habit | nektobenthic, weak swimmer | B |
+| Diet | suspension/deposit: phytoplankton, floc, detritus, carrion | B |
+| Cruise / burst speed | 0.030 / 0.30 m s⁻¹ | D (allometric) |
+| Non-visual senses | chemosensory (0.5–5 m, plume-following) + mechanosensory (1–3 body lengths) — **fully functional from the start** | C |
+| Body radiance ratio ρ | 0.50 (mid, opaque) — evolvable (§15.2) | D |
+| All behavioural weights | **random small values**, evolvable (§3B.2) | — |
+| Generation time | 1.0 yr | D |
+
+**The founder must be viable while completely blind.** Non-visual foraging has to support a stable
+population on its own (criterion V15), or the eye is being selected in a world that was rigged to
+require it.
+
 ---
 
 ## 3. THE MOST IMPORTANT SECTION: why an eye may fail to evolve even when it is free
@@ -242,6 +300,283 @@ with mutable values, not genes.)
 
 ---
 
+## 3A. Perception — converting eye morphology into what the animal actually sees
+
+This is the mathematical core of the simulation, and it can be done **entirely from standard
+optics and photon statistics, with no thresholds chosen by us.** Everything below is textbook
+physics; none of it is a modelling choice.
+
+### 3A.1 The chain
+
+```
+genome morphology → optics → photon catch → signal-to-noise → detection → percept → behaviour
+```
+
+Each arrow is a published equation. Walk it in order.
+
+### 3A.2 Step 1 — Optics from morphology
+
+From the genome parameters in §12.3, derive:
+
+```
+A  = aperture diameter                     [µm]     = aperture_ratio × cup_diameter
+f  = focal length                          [µm]     from invagination + lens_index_gradient
+d  = photoreceptor cross-sectional diameter[µm]
+l  = photoreceptor length                  [µm]     = membrane_layers × layer_thickness (~30 nm)
+k  = absorption coefficient of rhabdom     [µm⁻¹]   ≈ 0.0067 µm⁻¹  (standard for visual pigment)
+λ  = wavelength                            [µm]     = 0.50 (blue-green, peak transmission in water)
+```
+
+### 3A.3 Step 2 — Angular resolution: three blur terms, take the sum in quadrature
+
+```
+Δρ_sampling   = d / f                       (receptor subtends this angle)
+Δρ_diffraction= λ / A                       (Airy limit of the aperture)
+Δρ_defocus    = A / f × |1 − lens_quality|  (geometric blur when the image is not focused)
+
+Δρ = sqrt( Δρ_sampling² + Δρ_diffraction² + Δρ_defocus² )     [radians]
+```
+
+**Why this matters: the pinhole trade-off falls out automatically.** With no lens
+(`lens_quality = 0`), Δρ_defocus = A/f and Δρ_diffraction = λ/A pull in opposite directions.
+Shrinking the aperture sharpens the geometric image but worsens diffraction *and* costs photons.
+The optimum is at `A = sqrt(λ·f)` — the classic pinhole result, and the reason *Nautilus* is stuck
+at >2° per receptor with a very dim image. **We do not code this trade-off. It emerges.** The lens
+term is what releases it, which is exactly why the lens is the pivotal innovation.
+
+### 3A.4 Step 3 — Photon catch: the Land sensitivity equation
+
+The standard equation for comparing optical performance between eyes:
+
+```
+S = (π/4)² · A² · (d/f)² · [1 − exp(−k·l)]        [µm²·sr]
+```
+
+- `(π/4)·A²` — the aperture collects light in proportion to its area
+- `(π/4)·(d/f)²` — each receptor views this solid angle of visual space
+- `[1 − exp(−k·l)]` — the fraction of incident light the receptor actually absorbs; this is where
+  **membrane stacking** enters, and it saturates, which is why Nilsson's stacking gain caps at ~3
+  log units
+
+Then the photons absorbed per receptor per integration period:
+
+```
+N = S · L · Δt · T_water · T_ocular
+```
+
+where `L` = scene radiance (photons µm⁻² s⁻¹ sr⁻¹) from §6.1 attenuated to depth by §6.2,
+`Δt` = integration time, `T` = transmission losses.
+
+### 3A.5 Step 4 — Detection: the Rose criterion, and a very satisfying check
+
+A signal is detectable when the contrast signal exceeds the photon shot noise. Shot noise on N
+photons is √N, so for an object of contrast C:
+
+```
+SNR = C · N / √N = C · √N
+
+DETECT if   C · √N  ≥  SNR_threshold        [Rose criterion; SNR_threshold = 2]
+```
+
+**Now check this against Nilsson's hand-tabulated contrast thresholds:**
+
+| Class | Nilsson's photon sample N | Nilsson's stated contrast threshold | **2/√N** |
+|---|---|---|---|
+| I | 50 | 30% | **0.283** |
+| II | 500 | 10% | **0.089** |
+| III | 5,000 | 3% | **0.028** |
+| IV | 5,000 | 3% | **0.028** |
+
+**All three match.** Nilsson's contrast thresholds *are* the Rose criterion at SNR = 2. His four
+classes are not independent assumptions — they are four points on one continuous physical curve.
+
+**The consequence is exactly what you asked for: we do not code the classes at all.** There is no
+`if class >= 3` anywhere. The simulation computes N from morphology and ambient light, applies
+`C·√N ≥ 2`, and the four classes become *descriptive labels we apply afterwards when reading the
+output*. Every threshold in §12.1 is derived, not chosen. This removes essentially all of our bias
+from the perception layer.
+
+### 3A.6 Step 5 — Apparent contrast of a real object
+
+```
+C_apparent(r) = C_inherent · exp(−c · r)                    (contrast attenuation, §6.3)
+
+θ = object_size / r                                         (angular size, radians)
+
+if θ < Δρ:   C_effective = C_apparent · (θ / Δρ)²           (unresolved point source — contrast
+                                                             diluted across the receptor's field)
+if θ ≥ Δρ:   C_effective = C_apparent
+```
+
+`C_inherent` is computed per viewing geometry from **one evolvable trait** — see §15.
+
+Detection then requires `C_effective · √N ≥ 2`. **This single inequality produces detection range
+as a function of eye morphology, ambient light, depth, water clarity, object size, object
+contrast, and viewing geometry, with no free parameters.** It is the whole sensory model.
+
+### 3A.7 Step 6 — What the animal is actually handed each tick
+
+The perception module outputs a percept list. What is in it is determined by the morphology, not
+by a class label:
+
+| Morphology state | Resolvable directions = FOV/Δρ | **Percept the animal receives** |
+|---|---|---|
+| Flat patch, no pigment | 1 | **a single scalar: `intensity`**, with relative error `1/√N`. No direction. Can distinguish depth/time-of-day only if the intensity difference exceeds the noise. |
+| Pigment on one side, no cup | 1, but modulated by body angle | `intensity` that **changes as the body turns**. Direction is recoverable only by scanning over time — which is why class II's integration time is 1 s and it requires body movement. |
+| Cup, several receptors | 2–20 | a **coarse bearing** to bright/dark regions, angular error ≈ `Δρ / SNR` |
+| Pinhole / weak lens | 20–500 | **a low-resolution image**: obstacles, patches, horizon, large shadows |
+| Focused lens, many receptors | 10³–10⁶ | **a resolved image**: individual prey with bearing, angular size, contrast sign, and frame-to-frame motion |
+
+Every one of these is the *same code path*. The difference is entirely how many directions Δρ
+divides the field of view into, and how much noise `1/√N` puts on each.
+
+### 3A.8 Step 7 — How perception reaches survival
+
+The fitness link must be through behaviour and energy, never a direct term. The four pathways of
+§3 become, concretely:
+
+| Payoff | Physical chain, no thresholds |
+|---|---|
+| **Depth-holding** (class I) | `intensity` → estimate of depth with error `1/√N` → animal holds a depth with error σ_z → UV dose from §6.4 at its *actual* depth → mortality hazard. **A noisier eye means a worse depth estimate means more UV.** Continuous, no cutoff. |
+| **Diel timing** (class I) | `intensity` → estimate of time-of-day with error `1/√N` → animal times its rise/descent → intersects the food gradient (§8.3) and the predator's diurnal activity window (§11.3) |
+| **Phototaxis** (class II) | intensity difference across a body rotation → bearing estimate → swim up-gradient → arrive at the higher-food layer sooner → intake rate |
+| **Shadow alarm** (class II) | a dark object above subtends θ; detected if `C·√N ≥ 2`; C_inherent ≈ 0.85 viewed from below (§11.5) → triggers escape → survives |
+| **Patch finding / station-holding** (class III) | resolved image of the substrate → optic-flow drift estimate → station-holding error (§11.4) → time spent on a 3–8× enriched patch → intake rate |
+| **Prey / predator detection** (class IV) | detection range from §3A.6 → time available to commit or flee (§11.6) → capture or escape → energy or death |
+
+Every arrow in that table is arithmetic on quantities already defined. **Nothing in it reads Δρ,
+acuity, or "class."**
+
+---
+
+## 3B. Behaviour — how decisions get made without us setting them
+
+Your instinct is right, and the concern in §17 about hand-set decision numbers is the correct
+concern. Here is the resolution.
+
+### 3B.1 The governing principle
+
+> **Physics and physiology are SET. Decisions are EVOLVED. Never mix them.**
+
+A number belongs in the "SET" column if it is a fact about bodies, water, chemistry or light — it
+can in principle be measured, and getting it wrong is an error we can fix with better research. A
+number belongs in the "EVOLVED" column if it is a *choice an animal makes* — and if we set it, we
+have decided the answer.
+
+| **SET** (measured / estimated; §17 applies) | **EVOLVED** (in the genome; never a constant in the code) |
+|---|---|
+| Body mass, length, drag | **Strike initiation distance** |
+| Top speed, acceleration, turning radius | **Which prey to attack / ignore** |
+| Metabolic rate, assimilation efficiency | **Flee distance and flee direction** |
+| Energy density of tissue | **Preferred depth, and how it shifts with time of day** |
+| Handling time (jaw and appendage mechanics) | **Activity window — diurnal vs nocturnal** |
+| Burst duration limit and recovery time constants | **Hunger threshold at which to resume foraging** |
+| Starvation clock, gut capacity, evacuation rate | **Satiation threshold at which to stop** |
+| Egg size ↔ number trade-off curve | **Where on that curve to sit** |
+| All optics (§3A), all water optics, all light | **All eye morphology** (§12.3) |
+| Primary production, patch statistics | **Body contrast / transparency** (§15) |
+| Predator/prey encounter geometry | **Search tortuosity, aggregation tendency** |
+
+**This directly answers the §11.7 alarm.** The numbers you flagged — strike initiation distance,
+prey selection cutoff, hunger threshold, turn angles — **move out of the SET column entirely.**
+They stop being biases we impose and become results the simulation discovers. Handling time stays
+SET, because it is jaw mechanics, not a decision.
+
+**And it answers the burst question directly:** *"would a predator burst at anything in sight, or
+would it have judgement?"* We do not decide. The strike rule is an evolved weight. If bursting at
+everything is optimal given the real burst cost (§3B.4), the population will evolve to do it and
+we will have learned something. If selectivity is optimal, selectivity evolves. Given that a burst
+costs ~12× SMR plus a recovery debt, and that a distant target is more likely to escape, my
+expectation is that **strong distance-selectivity evolves** — but that is a prediction to test, not
+a rule to write. **The same applies to §9.5's optimal-foraging rule: do not code it. Let the
+controller decide what to attack, and then check whether it *discovers* optimal foraging. If it
+does, that is a genuine validation of the energy model.**
+
+### 3B.2 The controller architecture
+
+Your option (b) — *"if x then add likelihood to action y"* — is the right instinct, and it has a
+clean formalisation. Three candidates, in increasing order of freedom:
+
+| | **(a) Threshold rules** | **(b) Evolved drive vector — RECOMMENDED** | **(c) Evolved neural network** |
+|---|---|---|---|
+| Form | `if predator within X: flee` | each percept contributes a **weighted vector** to a desired-velocity field; internal states gate the weights; all weights in the genome | small recurrent net, percepts in, action drives out, all weights in the genome |
+| Multi-objective? | **no** — priority order decides, can't do "approach food while avoiding predator" | **yes** — vectors sum, so competing goals blend naturally | yes |
+| Scales with stimulus count? | no | **yes** — 2 predators contribute 2 vectors automatically, no special case | yes |
+| Parameters we must set | **many thresholds — all bias** | **zero** | **zero** |
+| Evolvable parameters | few | **~25–40** | ~60–200 |
+| Interpretable? | yes | **yes — you can read the weights** | no |
+| Risk | bakes in our assumptions | search space is manageable | slow to evolve; hard to debug; may need many more generations |
+
+**Recommendation: (b).** It is your idea with every weight made evolvable, which is precisely what
+removes the bias. Concretely, each tick:
+
+```
+desired_velocity = Σ_percepts  w_type · g(internal_state) · shape(distance) · direction_unit_vector
+                 + w_depth · (preferred_depth − current_depth) · vertical_unit
+                 + w_noise · random_unit
+
+discrete_actions (burst / attack / spawn / freeze) fire when their accumulated drive
+exceeds an EVOLVED threshold, not a set one
+```
+
+Evolvable per animal (illustrative gene list, ~30 values): `w_food`, `w_predator`,
+`w_conspecific`, `w_substrate`, `w_flow`, one distance-shape exponent each, hunger and satiation
+gating coefficients, `preferred_depth_day`, `preferred_depth_night`, `attack_drive_threshold`,
+`flee_drive_threshold`, `burst_commit_threshold`, `search_tortuosity`, `aggregation_weight`,
+`spawn_energy_threshold`.
+
+**Fall-back position if (b) proves too slow to evolve:** seed the initial population with
+hand-chosen weights that produce sensible behaviour, then **let mutation act on them from
+generation zero**. The bias then decays instead of persisting — which is the specific failure mode
+you identified ("if I set them, they're set and they won't get more accurate"). Never leave a
+decision parameter as a constant.
+
+### 3B.3 Learning within a lifetime
+
+You raised learning (running away, colour-as-warning). **Recommendation: exclude within-lifetime
+learning from the first build**, and it is now in §18. Reason: everything the eye needs to be
+selected for is available through *evolved* behaviour, and adding learning adds a second
+adaptive timescale that will confound attribution — when the eye improves, you will not be able to
+tell whether selection or learning did it. Add it only after the eye evolves reliably without it.
+
+### 3B.4 The burst / recovery model — and why the "rest one second, burst again" exploit doesn't happen
+
+You are right that a naive single recovery timer is exploitable. The physiologically correct model
+is **two pools**, which is also what fixes it:
+
+| Pool | Fuel | Powers | Capacity | **Recovery time constant** | Tier |
+|---|---|---|---|---|---|
+| **Fast** | phosphagen (ATP / phosphocreatine) | a single 3–8 s burst | **8 bursts' worth** | **τ = 10 min** | C |
+| **Slow** | glycogen → lactate | refills the fast pool | **30 bursts' worth per day** | **τ = 5 h** (full EPOC recovery 4–6 h in salmon, up to 24 h) | C |
+
+Both recover exponentially — so **partial recovery is real and correct**, which is what you
+suspected. The exploit dies on its own arithmetic: with τ = 10 min, resting for 1 second returns
+**0.17%** of one burst. There is no way to grind out free bursts. Meanwhile the slow pool caps
+sustained bursting at ~30/day, which is comfortably above the ~16 attacks/day the energy budget
+needs (§9.4) but low enough that wasted bursts genuinely hurt.
+
+Additional: while the slow pool is below 30%, burst power scales linearly with what remains, and
+non-predation mortality hazard rises. An exhausted animal is a dead animal.
+
+*(This supersedes the "60–300 s recovery" figure in §5.1, which was too fast and would have
+permitted exactly the exploit you were worried about.)*
+
+### 3B.5 On degenerate-looking behaviour
+
+You raised animals spinning in place or stacking on one spot. Position: **cosmetically ugly, and
+only a problem if it changes the outcome.** Two cheap guards that are also physically real, so
+they cost no realism:
+
+- **Local resource depletion.** Food at a location is consumed and regrows at the §8.2 rate. An
+  animal that sits still starves. This eliminates stacking without any anti-stacking rule.
+- **Movement has a metabolic cost and stillness does not eliminate it** (SMR continues). Spinning
+  in place costs energy and returns nothing, so it is selected against automatically.
+
+If degenerate behaviour survives both of those, it is telling you something is wrong with the
+energy model — treat it as a diagnostic, not a cosmetic bug.
+
+---
+
 ## 4. Timeline
 
 | Date (Ma) | Event | Tier |
@@ -256,6 +591,77 @@ with mutable values, not genes.)
 | ~514 | **Emu Bay Shale.** *Anomalocaris* eyes: ≥16,000 lenses, ~95 µm facets, Δφ <1.4°, eye parameter <2 → **diurnal, well-lit water**. *Isoxys*: >3,000 facets with a **bright zone**. | A |
 | ~508 | Burgess Shale. *A. canadensis* — agile nektonic predator of soft-bodied prey in a well-lit water column. *Waptia* brooding up to 24 eggs >2 mm. *Metaspriggina*. | A |
 | ~480 | *Ampyx* queues (Fezouata) — orderly collective locomotion in a **blind** trilobite using spine contact. | A |
+
+### 4.1 The environment did NOT stay constant across the climb — and this matters enormously
+
+Direct answer to "is the 518–514 window representative of the whole climb?": **No. It is
+representative of the last ~5% of it, and using it for the whole run would build in a specific,
+serious error.**
+
+The Chengjiang world is a world of nektonic pursuit predators with acute eyes. **Classes I, II and
+III evolved in a world that had none of those things.** Predation itself does not appear in the
+fossil record until ~550 Ma — borings in *Cloudina* shells, with **>20% of specimens bored** in
+southern Shaanxi, and prey selectivity (no borings on co-occurring *Sinotubulites*) implying a
+choosy, neurally capable borer. Before that: **scavenging as a prelude to predation**, and before
+*that*, essentially nothing eating anything mobile at all.
+
+If you run the whole climb under Chengjiang conditions, you apply predation pressure to classes
+I–III **that did not exist when those classes evolved.** The eye would then be climbing for the
+wrong reason at the bottom of the ladder — which is the exact error §3 warns against, arrived at
+from the other direction.
+
+**Run the simulation as three epochs with a scheduled environment.** Each epoch runs until the
+population's median eye reaches the class the epoch supports, or a generation cap.
+
+| | **Epoch 1: pre-predation** | **Epoch 2: predation begins** | **Epoch 3: visual arms race** |
+|---|---|---|---|
+| Interval | ~700–560 Ma | ~560–530 Ma | ~530–510 Ma |
+| **Eye classes built here** | **I → II → III** | **III → IV** | IV refinement |
+| pO₂ | **0.05–0.16 PAL** | 0.16–0.25 PAL | 0.24–0.48 PAL |
+| Dissolved O₂ (28 °C surface) | ~0.7 mg L⁻¹ | ~1.6 mg L⁻¹ | ~2.0–2.5 mg L⁻¹ |
+| Aerobic scope | **very low — no pursuit possible at all** | low — short bursts only | moderate — bursts + brief pursuit |
+| **Predators present** | **NONE** (or negligible) | **yes, but slow, non-visual, contact/chemical** (borers, ambush worms) | **yes, fast, nektonic, visual** |
+| Predation mortality (fraction of adult deaths) | **0%** | **15%** | **45%** |
+| Prey/animal body size | 1–10 mm, mostly sessile or slow-crawling | 5–50 mm, motile benthic | 5–500 mm, nekton present |
+| Nekton (open-water swimmers) | **absent** | rare | **abundant** |
+| Seafloor | matground, firm, sharp interface | matground, first burrows | matground → mixground |
+| Water clarity K_d(PAR) | **0.12 m⁻¹** (clear — no bioturbation, low productivity) | 0.25 m⁻¹ | 0.4–0.7 m⁻¹ (deltaic) |
+| Primary production | **30 g C m⁻² yr⁻¹** | 60 g C m⁻² yr⁻¹ | 100 g C m⁻² yr⁻¹ |
+| Temperature | 20–25 °C (post-glacial) | 25–30 °C | 28 °C |
+| **Dominant fitness pathway** | **depth-holding, UV avoidance, diel timing, patch-finding** (§3, classes I–III) | **shadow-alarm, escape from slow predators, patch competition** | **prey detection, predator escape, mate recognition** (class IV) |
+
+**Two things this table gets right that a static environment cannot:**
+
+1. **Epoch 1 has zero predation and still has a full fitness gradient for classes I–III.** That is
+   the load-bearing claim of §3, and now the simulation can test it directly: if the eye climbs
+   from class I to class III in epoch 1 — a world with **no predators at all** — then the payoffs in
+   §6.4, §8.3, §8.4 and §11.4 are demonstrably sufficient. That is a far stronger result than
+   watching an eye evolve in a world where predation is doing all the work.
+2. **Epoch 1's water is clearer than epoch 3's** (K_d 0.12 vs 0.55). Lower productivity and no
+   bioturbation means less suspended material. So the *early* rungs had a **longer contrast
+   horizon** than the late ones, which is the opposite of the naive assumption and matters for
+   where the payoff curve bites.
+
+**Speculative but worth noting** (tier D, flagged as speculation): the opsin diversification at
+~711–700 Ma falls inside the **Sturtian "Snowball Earth" glaciation (~717–660 Ma)**. Light under
+sea ice is scarce and patchy. Whether that is coincidence or the reason animals first invested in
+measuring light is unresolved and should not be built into the model — but the timing is at least
+suggestive that light-sensing began as a *scarcity* problem, not an imaging one.
+
+### 4.2 Was Chengjiang representative of everywhere?
+
+Partly. The honest caveats:
+
+- **Where animals lived: yes.** Shallow tropical/subtropical continental shelf is where essentially
+  all Cambrian animal life was. The deep ocean was anoxic and uninhabitable. So "shallow, warm,
+  well-lit shelf" is representative.
+- **Water clarity: no.** Chengjiang is specifically a **delta front** — unusually turbid for a
+  shelf. Emu Bay (inner-shelf basin) was much clearer, and the *Anomalocaris* eye parameter of <2
+  independently confirms it. Since **water clarity is the master control on whether an eye pays at
+  all** (§6.3), this is not a minor difference.
+- **Therefore: sweep clarity as a primary axis, not a fixed value.** Run K_d(PAR) at 0.12 / 0.18 /
+  0.35 / 0.55 / 1.0 m⁻¹. If a camera eye only evolves in the clearest quartile, that is itself a
+  significant finding about where in the Cambrian ocean vision could have originated.
 
 ---
 
@@ -280,9 +686,10 @@ unaffordable**. No animal can chase for minutes. Therefore vision is not selecte
 and chase longer." It is selected to **commit a short, expensive burst at exactly the right
 moment.** Detection *reliability at strike distance* matters far more than detection *range*.
 
-Sim form: predator burst is anaerobic, lasts **3–8 s**, and incurs a recovery debt requiring
-**60–300 s** at cruise before the next burst is available. A wasted burst is genuinely expensive.
-Then — and only then — accuracy of the commit decision is something selection can grip.
+Sim form: predator burst is anaerobic and lasts **3–8 s**, drawing on the **two-pool model in
+§3B.4** (fast phosphagen pool, τ = 10 min; slow glycogen pool, τ = 5 h, ~30 bursts/day ceiling).
+A wasted burst is genuinely expensive. Then — and only then — accuracy of the commit decision is
+something selection can grip. **Whether to commit is an evolved weight, not a rule (§3B.1).**
 
 Second chain: the oxygenated-shallow / anoxic-deep structure **confines the entire arms race to
 the photic shelf**. There is no dark habitable refuge. Prey cannot escape vision by going deep.
@@ -470,25 +877,108 @@ jinningensis* **15.4%**, *Diandongia pista* **11%**.
 of everything alive. This is the shape of a real ecosystem and it matters: it determines what a
 predator actually encounters.
 
-### 7.2 Roster — the species that are in the simulation
+### 7.2 Roster — pruned to the species that actually touch the eye-evolving lineage
 
-Selection rule applied: include a species if it (a) evolves eyes, (b) is eaten by or eats something
-that does, or (c) is the food base for those. Excluded species are listed in §18.
+Selection rule: a species is a **full agent** only if it directly eats, is eaten by, or directly
+competes with the focal lineage. Everything below that is a **resource field** (a scalar density
+per grid cell), not an individual. Everything with no causal path to the eye is dropped entirely
+and listed in §18.
 
-| # | Taxon | Role | Length | Wet mass | Habitat | Diet | Eyes |
+**Full agents — four species:**
+
+| # | Taxon | Role in the eye story | Length | Wet mass | Habitat | Diet | Eyes |
 |---|---|---|---|---|---|---|---|
-| 1 | ***Haikouichthys / Myllokunmingia*** (myllokunmingid) | **THE EYE-EVOLVING LINEAGE** | 25–28 mm | **0.20 g** | nektobenthic, 5–25 m | suspension/deposit feeder: phytoplankton, microbial floc, detritus, small mesozooplankton | **camera** — lateral pair + pineal + parapineal |
-| 2 | *Anomalocaris canadensis* | apex visual predator | 300–500 mm | **250 g** (100–700) | nektonic, well-lit column above benthos | soft-bodied nekton **only** | compound, ≥16,000 facets, Δφ<1.4° |
-| 3 | *Isoxys* | mesopredator **and** prey | 20–40 mm | **1.0 g** | nektonic | small nekton, mesozooplankton | compound, >3,000 facets + bright zone |
-| 4 | *Waptia / Canadaspis* (hymenocarine) | prey; small-particle feeder | 50–80 mm | **3.0 g** | nektobenthic | small particles and small prey | moderate compound |
-| 5 | *Kunmingella douvillei* (bradoriid) | **superabundant base consumer** | 3–8 mm | **0.010 g** | nektobenthic | microphagous suspension feeder; sweep-net capture of items ≤0.5 mm | small/none |
-| 6 | *Cricocosmia* (priapulid) | infaunal consumer, alt. prey | 20–50 mm | **1.0 g** | infaunal (surface-accessible only) | deposit feeder / scavenger | none |
-| 7 | *Diandongia* (brachiopod) | sessile suspension feeder | 10–20 mm | **0.30 g** | sessile epibenthic | suspension | none |
-| 8 | Trilobites (*Redlichia*, *Estaingia*) | benthic; separate predator guild | 20–250 mm | 1–150 g | benthic | deposit feeding; *Redlichia rex* carnivorous, possibly cannibalistic | holochroal compound |
+| **1** | ***Haikouichthys / Myllokunmingia*** | **THE EYE-EVOLVING LINEAGE** | 25–28 mm | **0.20 g** | nektobenthic, 5–25 m | suspension/deposit: phytoplankton, floc, detritus, mesozooplankton | **camera** — evolvable; endpoint = lateral pair + pineal + parapineal |
+| **2** | *Anomalocaris canadensis* | **apex visual predator of #1** — the class-IV pressure | 300–500 mm | **250 g** (100–700) | nektonic, well-lit column above the benthos | soft-bodied nekton **only** | compound, fixed (see below) |
+| **3** | *Isoxys* | **visual mesopredator of #1, AND prey of #2** — this is what makes it a three-level arms race rather than a two-level chase | 20–40 mm | **1.0 g** | nektonic | small nekton, mesozooplankton | compound, fixed |
+| **4** | Chaetognath (arrow worm, *Protohertzina*-grade) | **THE CONTROL** — a *non-visual* pelagic ambush predator of #1 | 10–30 mm | **0.05 g** | pelagic | ambush, grasping spines; **chemo/mechanosensory only** | **none** |
 
-Mass estimates for taxa 1, 3, 4, 6, 7 are tier D, derived from length × a taxon-appropriate shape
-factor at soft-tissue density 1.05 g cm⁻³. Taxon 2's mass is tier D from a 350 × 100 × 40 mm
-streamlined body at 0.4 fill factor ≈ 560 cm³, reduced to 250 g for a mid-sized adult.
+**Taxon 4 is included for a specific and important reason.** Chaetognaths are **the oldest known
+pelagic predators**, present from the lowest Cambrian. They hunt the same prey as *Anomalocaris*
+using purely non-visual senses. That makes them the **baseline that vision has to beat**: if the
+visual predator does not out-compete the non-visual one, vision is not actually paying, and the
+simulation will say so. Without a non-visual competitor in the model, "vision works" is
+unfalsifiable.
+
+**Resource fields — not agents:**
+
+| Field | Represents | Units | Replaces |
+|---|---|---|---|
+| `phytoplankton` | acritarchs + picocyanobacteria in the water column | mg C m⁻³ | — |
+| `benthic_mat` | cyanobacterial matground | g C m⁻² | — |
+| `detritus` | sinking organic rain | g C m⁻² day⁻¹ | — |
+| `mesozooplankton` | small swimming prey ≤0.5 mm | individuals m⁻³ | *Kunmingella*, larvae |
+| `carrion` | see §7.5 | g wet m⁻² | — |
+
+**Dropped from the earlier draft:** *Waptia*/*Canadaspis*, *Kunmingella* (folded into
+`mesozooplankton`), *Cricocosmia*, *Diandongia*, trilobites. None of them eats or is eaten by the
+focal lineage; keeping them meant inventing tier-D numbers for each with no mechanism attached.
+Recorded in §18.
+
+Mass estimates for taxa 1, 3, 4 are tier D, from length × taxon shape factor at soft-tissue density
+1.05 g cm⁻³. Taxon 2 is tier D from a 350 × 100 × 40 mm streamlined body at 0.4 fill factor
+≈ 560 cm³, taken as 250 g for a mid-sized adult.
+
+**Only taxon 1's eye evolves.** Taxa 2 and 3 have fixed eyes at their measured fossil values. This
+is a deliberate simplification for the first build: it isolates the question "does this environment
+build a camera eye?" from the much harder question "what happens when both sides co-evolve?"
+Co-evolving the predator's eye is a second experiment, worth running once the first works — and
+§15 (prey contrast) already gives the arms race one live co-evolutionary axis without needing it.
+
+### 7.2a Why did *Anomalocaris* evolve compound eyes and not camera eyes?
+
+**Because it is an arthropod, and that decision was made long before it existed.** Arthropod eyes
+develop as arrays of repeated ommatidial units — the same segmental, modular developmental toolkit
+that builds their limbs and body segments. Once that architecture is established in the lineage,
+every subsequent improvement is an improvement *to the array*: more units, bigger units, tighter
+packing. There is no developmental route from an ommatidial array to a single-chambered lens eye.
+
+It is path dependence, not optimisation. And the compound eye was a perfectly good answer to
+*Anomalocaris*'s actual problem: at 30–50 cm body length, with **stalked eyes** giving
+near-panoramic coverage and excellent motion detection, the quadratic size penalty had not yet
+bitten. It reached Δφ < 1.4° — dragonfly-grade — without the eye becoming absurd. The wall that
+makes compound eyes hopeless (§2.1) only matters at acuities far beyond anything in the Cambrian.
+
+The chordates, meanwhile, started from a different place — a pigmented cup in the head of a small
+soft-bodied swimmer — and that starting point leads to a lens.
+
+### 7.2b Did eyes change what anything ate?
+
+Partially answerable. What can be said (tier A/B):
+
+- The appearance of acute vision coincides with the establishment of **macrophagous predation on
+  nekton** — the pursuit of individual large prey in open water, which is a strategy that simply
+  does not work without vision. *Anomalocaris*'s soft-prey, burst-attack ecology **is** the new
+  niche that vision opened.
+- Radiodonts subsequently **diversified back down the food chain** — at least one lineage evolved
+  into a suspension-feeding microplanktivore, abandoning raptorial predation entirely.
+- The **pelagic–benthic coupling** established in this interval (small benthic herbivores invading
+  the water column to graze phytoplankton, creating the mesozooplankton link) restructured the
+  entire food web.
+
+What **cannot** be said: we cannot trace an individual lineage switching prey *because* its eyes
+improved. Do not build a prey-switching mechanism as a modelled assumption. **Let diet composition
+be an emergent output and check whether it shifts as acuity climbs** — that is a result worth
+having, and V6/V17 test for it.
+
+### 7.2c Scavenging
+
+Yes, and it should be in the model. **Scavenging preceded predation** — it is interpreted as the
+Ediacaran prelude to it — and in the Cambrian, *Ottoia* gut contents show a dietary generalist
+feeding on **both living individuals and decaying organic matter**.
+
+| Parameter | Value | Tier |
+|---|---|---|
+| Carrion produced | 100% of the wet mass of every animal that dies of non-predation causes | derived |
+| Carrion energy density | **2.9 kJ g⁻¹ wet** (decayed; ~80% of fresh) | C |
+| Carrion decay half-life at 28 °C | **1.5 days** | C |
+| Carrion detection | chemical plume, 0.5–5 m, no vision needed | C |
+| Who scavenges | all four agent taxa, opportunistically | A (generalist feeding) |
+
+**Why this is not a throwaway:** carrion is food that **can be found without eyes**. It is
+therefore part of the baseline that vision must beat, alongside taxon 4. If carrion is abundant
+enough, foraging by smell is viable and the pressure for vision weakens. That makes the carrion
+supply rate a real control knob on the strength of visual selection — worth sweeping.
 
 ### 7.3 What *Anomalocaris* actually ate — the correction that structures everything
 
@@ -690,24 +1180,48 @@ In items per day: *Anomalocaris* needs **~4 *Waptia*** or **~12 *Isoxys*** or **
 
 At 36 J each, an *Anomalocaris* would need ~1,160 bradoriids/day: ~1,160 separate detections,
 approaches, strikes and handling events. **Handling time alone makes small prey energetically
-impossible for a large predator.** Encode the rule as a profitability calculation, not a
-whitelist:
+impossible for a large predator.**
+
+**Do NOT code the foraging rule.** Per §3B.1, "what to attack" is a decision and must be evolved.
+The classic optimal-foraging calculation —
 
 ```
-profitability = usable_energy(prey) / (search_time + pursue_time + handle_time)
-attack if profitability > current average intake rate     [classic optimal foraging]
+profitability = usable_energy(prey) / (pursue_time + handle_time)
+attack if profitability > current average intake rate
 ```
 
-which, with the handling times in §11.7, produces:
+— should be used **only as a post-hoc analysis of what the population evolved**, never as code. If
+the evolved controller converges on this rule, that is a strong independent validation of the
+energy model (criterion V18). If it converges on something else, that is more interesting still.
+
+The passive physical limits below **are** legitimate SET constraints, because they are mechanics,
+not choices:
+
+| Predator | Cannot physically handle prey above | Reason |
+|---|---|---|
+| *Anomalocaris* 250 g | **12.5 g** (5% of body mass) | soft-prey appendage failure limit, from the FEA result |
+| *Isoxys* 1.0 g | 0.05 g | grasping appendage scale |
+
+For calibration only — the diet the ledger *predicts* the population should discover, **not to be
+coded**:
 
 | Predator | Ignores prey below | Cannot handle prey above | Implied prey window |
 |---|---|---|---|
 | *Anomalocaris* 250 g | **0.75 g** (0.3% of body mass) | **12.5 g** (5% of body mass; soft-prey appendage limit) | mass ratio **20:1 to 330:1** |
 | *Isoxys* 1.0 g | 0.003 g | 0.05 g | 20:1 to 330:1 |
 
-This reproduces the fossil-derived diet (large soft-bodied nekton, not the superabundant small
-benthos) **without being told to**, and it lands inside the modern invertebrate predator–prey mass
-ratio range. Hard-coding the *rule* is fine — it is a real rule. Hard-coding the *diet* is not.
+If the evolved population lands in this window, the fossil-derived diet (large soft-bodied nekton,
+not the superabundant small benthos) has been **reproduced rather than assumed**, and it sits inside
+the modern invertebrate predator–prey mass-ratio range. That is criterion V4.
+
+**Note on the eye's role here.** You asked whether the eye helps assess whether prey is worth
+attacking, and whether prey is worth fleeing. It does, and it comes for free from §3A — no extra
+mechanism needed. A better eye returns a more accurate **angular size** (hence a better mass
+estimate) and a more accurate **bearing and range**, both with error ∝ `Δρ/SNR`. A class-II animal
+knows only "something dark, roughly that way." A class-IV animal knows "a 3 g object, 1.4 m,
+bearing 20°, closing." **Discrimination — knowing what you are looking at before you spend the
+burst — is one of the main things acuity buys**, and it is measured by the noise on the percept,
+not by a separate rule.
 
 ### 9.6 Population density and how big the world must be
 
@@ -768,9 +1282,9 @@ between energy and mortality without an arbitrary death rule.
 | Maximum single meal | 6% of body mass | C |
 | Gut evacuation time at 28 °C | **14 hours** (range 8–24) | C |
 | Digestion is | first-order: gut empties exponentially, τ = 14 h / ln2 ≈ 20 h | D |
-| **Foraging trigger** | resume active foraging when gut < **30%** full | D |
-| **Satiation** | stop attacking when gut > **90%** full | D |
-| Opportunistic override | attack regardless of satiation if profitability > 5× current intake rate | D |
+| **Foraging trigger** (gut fullness at which to resume) | **EVOLVED** — §3B.1. Seed at 0.30. | — |
+| **Satiation** (gut fullness at which to stop) | **EVOLVED** — §3B.1. Seed at 0.90. | — |
+| Opportunistic override | **EVOLVED** as a weight on the attack drive | — |
 
 ### 9.8 Cost of the eye
 
@@ -912,13 +1426,18 @@ selection differential, and it needs no fitness term.
 | Quantity | Value | Tier |
 |---|---|---|
 | Predator search mode | **cruise-search** (continuous swimming, scanning) | A (nektonic, streamlined) |
-| Predator search path | correlated random walk; turn angle SD **25°** per 1 s step | D |
-| Area-restricted search after a capture | turn angle SD rises to **70°** for **120 s** | C |
-| Prey movement, foraging | slow correlated random walk, turn SD 40° per 1 s | D |
-| Prey movement, alarmed | straight-line dash away from the threat bearing, then freeze **5–20 s** | C |
-| Fraction of day spent active | predator **10.5 h (all daylight)**; prey **14 h** | D |
-| Diel pattern | predator **strictly diurnal** (eye parameter <2); prey partially nocturnal | A/D |
-| Vertical excursion range, prey, per diel cycle | **4–15 m** | D |
+| Predator search path | **EVOLVED** (`search_tortuosity`). Seed: correlated random walk, turn SD 25°/s | — |
+| Area-restricted search after a capture | **EVOLVED**. Seed: turn SD → 70° for 120 s | — |
+| Prey movement, foraging | **EVOLVED**. Seed: turn SD 40°/s | — |
+| Prey movement, alarmed | **EVOLVED** (`flee_drive`, `freeze_duration`). Seed: dash away from threat bearing, freeze 5–20 s | — |
+| Fraction of day spent active | **EVOLVED** (`activity_window`). Seed: predator 10.5 h, prey 14 h | — |
+| Diel pattern | predator's is **constrained by physics**, not choice: eye parameter <2 means it cannot see at night (§3A.5 gives SNR < 2 below twilight), so diurnality is forced by the optics | **A** |
+| Vertical excursion range, prey | **EVOLVED** (`preferred_depth_day`, `preferred_depth_night`) | — |
+
+The predator's diurnality is worth dwelling on: **we do not set it.** It falls out of §3A — at
+night the photon catch N collapses and `C·√N` drops below 2 for every target, so the predator
+simply cannot detect anything. That hands the prey a **nocturnal refuge**, which is another
+class-I payoff (you need to know it is night to use it), and it is derived rather than assumed.
 
 **The predator being strictly diurnal is a fossil-derived constraint** (eye parameter <2 is
 diagnostic of diurnal animals in well-lit water), and it hands the prey a real refuge: **night**.
@@ -971,9 +1490,9 @@ give each object an aspect-dependent inherent contrast:
 | Stage | Parameter | Value | Tier |
 |---|---|---|---|
 | 1. Detect | range | from §6.3 contrast equation; class-dependent threshold | C |
-| 2. Identify | additional angular-size requirement | prey must subtend **≥3× the acceptance angle Δρ** to be classified rather than merely detected | D |
+| 2. Identify | mass/identity estimate error | **derived, not set** — error ∝ `Δρ/SNR` from §3A.6; no separate rule | A (physics) |
 | 3. Approach | speed | cruise 0.40 m s⁻¹ | A |
-| 4. Commit | **strike initiation distance** | **0.8–1.5 m** (use 1.2 m) | D |
+| 4. Commit | **strike initiation distance** | **EVOLVED** (`burst_commit_threshold`) — §3B.1. Seed at 1.2 m and let it move. | — |
 | 5. Burst | speed / duration | 0.90 m s⁻¹ / 3–8 s | A/D |
 | 6. Prey reacts | at range | when prey detects: visual 1.7 m (clear), mechanosensory 0.08 m | C |
 | 7. Grasp | **appendage reach** | *A. canadensis* frontal appendage **~130 mm**; effective strike envelope **0.15 m** | A |
@@ -1136,6 +1655,13 @@ Compound apposition eye genome, for the arthropod taxa or for a head-to-head:
 
 ## 14. Schooling and collective behaviour — the honest answer
 
+> **SCOPE NOTE: no migration. None.** The word "migratory" appears in the literature below only as
+> one interpretation of why *Synophalos* formed chains. **We are not modelling migration**, long-
+> distance or otherwise. It would add enormous complexity (a much larger world, seasonal drivers,
+> navigation, homing) for no connection to eye evolution. The only collective behaviour in scope is
+> **local aggregation within the simulation arena** — animals within metres of each other choosing
+> to associate. That is it. Recorded in §18.
+
 **What is actually preserved (tier A):**
 
 - ***Synophalos xynos***, Chengjiang, **~520 Ma** — the earliest known collective behaviour. Bivalved
@@ -1163,7 +1689,7 @@ Compound apposition eye genome, for the arthropod taxa or for a head-to-head:
 
 | Mechanism | Benefit | Sensory requirement | Tier |
 |---|---|---|---|
-| **Queue** (single file, contact-maintained) | drag reduction **15–25%** for followers; migration efficiency | tactile (spine contact, <1 body length) or chemical | A/C |
+| **Queue** (single file, contact-maintained) | drag reduction **15–25%** for followers | tactile (spine contact, <1 body length) or chemical | A/C |
 | **School** (3D aggregation) | predator **dilution** (1/N risk) + **confusion effect** (−20–40% predator capture success) | vision, class III+ | C |
 | Aggregation cost | local food depletion; increased detectability of the group (**group detection range ×N^0.33**) | — | D |
 
@@ -1181,10 +1707,57 @@ is **reduced contrast** — transparency, silvering, counter-illumination-analog
 armour. And prey contrast is precisely the variable Nilsson's contrast thresholds (30% → 10% → 3%)
 are denominated in.
 
+### 15.1 Contrast is NOT one global number — and it does not need to be
+
+You asked whether contrast differs by environment and viewing direction. It does, strongly — and
+the clean resolution is that the animal has **one evolvable trait** and the geometry produces all
+the different contrasts for free. No separate values to set.
+
+The evolvable trait is the animal's **body radiance ratio ρ** — effectively how much light its body
+returns relative to the water around it. ρ ≈ 1.0 is a perfectly transparent/matched animal
+(invisible); ρ ≈ 0.15 is a dark opaque one.
+
+Inherent contrast against any background is then the standard equation:
+
+```
+C_inherent = (L_body − L_background) / L_background       where L_body = ρ · L_ambient(depth)
+```
+
+and `L_background` depends entirely on **which way you are looking**:
+
+| Viewing geometry | L_background | C_inherent for a dark animal (ρ = 0.15) | Why |
+|---|---|---|---|
+| **Looking up** — object silhouetted against the bright surface | full downwelling radiance | **−0.85** | the brightest background there is; a dark body is nearly black against it |
+| **Looking horizontally** — object against scattered space-light | side-scattered radiance, ~30% of downwelling | **−0.30** | dimmer background, so less contrast |
+| **Looking down** — object against the dark seafloor | substrate reflectance 0.10–0.20 × downwelling | **+0.20** | the animal is now *brighter* than its background — contrast flips sign |
+
+**Three consequences worth having:**
+
+1. **The easiest detection task in this entire world is looking up.** That is why the
+   myllokunmingid's **upward-pointing pineal eye pair** (§11.5) is such a good detector, and why
+   shadow-alarm is available at class II when nothing else is.
+2. **The hardest is looking down.** A predator hunting benthic prey from above has a contrast of
+   ~0.2 to work with — and the sign is inverted, so it needs a *different* detection polarity.
+   This is a real, physically grounded reason the Cambrian visual arms race was **pelagic**, and it
+   reinforces §7.3 from the optics side.
+3. **Prey cannot minimise contrast in all directions at once.** Any ρ that hides you from below
+   makes you visible from above, and vice versa. The optimum depends on where your predators are —
+   which, since *Anomalocaris* hunts *above* the benthos looking down and around, is itself an
+   evolving target. That is a genuinely non-trivial co-evolutionary problem and it emerges from one
+   trait plus geometry.
+
+### 15.2 Parameters
+
 | Parameter | Range | Cost | Tier |
 |---|---|---|---|
-| `prey_contrast C0` | **0.85 → 0.03** (evolvable) | reducing C0 costs tissue transparency: **−15% muscle power at C0 < 0.10** | C/D |
-| Effect | directly reduces predator sighting range via `C(r) = C0·exp(−c·r)` | | C |
+| `body_radiance_ratio ρ` | **0.15 → 0.95** (EVOLVED) | transparency costs muscle density: **−15% burst power at ρ > 0.85** | C/D |
+| Effect | feeds `C_inherent` above, which feeds `C_effective` in §3A.6 | | C (physics) |
+| Ambient-matching (counter-shading analogue) | allow ρ to differ dorsally vs ventrally — **2 evolvable values, not 1** | small extra pigment cost | D |
+
+Splitting ρ into dorsal and ventral values costs one extra gene and lets counter-shading evolve on
+its own. Given point 3 above, that is likely to happen, and it would be a satisfying emergent
+result — countershading is one of the most widespread anti-predator adaptations in the modern
+ocean and nobody would have coded it.
 
 **Make prey contrast evolvable and the predator's contrast threshold the thing under selection, and
 the arms race becomes a direct, physically grounded co-evolutionary chase with no tuned coefficients
@@ -1227,7 +1800,77 @@ Ranked by (how uncertain) × (how load-bearing):
    density threefold.
 
 Everything in §12.1 (Nilsson's class requirements) and §12.4 (N&P rates) is tier A from the
-literature and should be the last thing questioned.
+literature and should be the last thing questioned. **Everything in §3A is physics and should never
+be questioned as a parameter at all** — if it is wrong, it is wrong as an equation.
+
+### 17.1 Where the tier-D numbers actually came from
+
+Fair question, and it deserves a straight answer. Tier D is not one thing — it is five different
+methods with very different reliability, and lumping them together makes the doc look weaker than
+it is. Method used, per number:
+
+| Method | How it works | Examples | Real reliability |
+|---|---|---|---|
+| **1. Allometric scaling** | Apply a measured, well-replicated scaling law (metabolic rate ∝ M^0.70, burst speed in body-lengths/s, gut capacity as % body mass) to a body mass estimated from fossil dimensions | SMR table §9.3, swimming speeds §11.1, starvation clocks §9.7, gut §9.7 | **Good** — these are among the most robust relationships in biology, often ±30% across whole phyla. Arguably tier C. |
+| **2. Physical derivation** | Compute it from first principles | O₂ solubility, UV attenuation depth, sighting range, world size §9.6, contrast §15.1, everything in §3A | **Very good** — it is arithmetic on tier A/B/C inputs |
+| **3. Budget closure** | Pick the value that makes two independent calculations agree | prey energy density, FMR multiplier, trophic transfer — validated by the 4.6% body mass/day cross-check against measured daily rations | **Good** — a wrong value shows up as a budget that doesn't close |
+| **4. Modern analogue transfer** | Take a value from the nearest living functional equivalent | escape latency, EPOC constants, patch statistics, larval mortality | **Moderate** — depends on how good the analogue is; a Cambrian stem-chordate is not a modern fish |
+| **5. Construction** | Nothing in the literature; I picked a defensible value | **handling times §11.7**, inherent contrast values (now superseded by §15.1), lifespan/maturity §10.2, eye cost exponent §9.8 | **Weak — this is the real tier D** |
+
+**Only method 5 is genuinely arbitrary, and it is now a short list.** That list is the one to
+worry about. Methods 1–3 would be better labelled C.
+
+### 17.2 How to upgrade a number — four routes, in order of strength
+
+**Route 1 — move it to EVOLVED (strongest; eliminates the bias entirely).**
+This is now done for every decision parameter (§3B.1). It is the direct answer to your concern
+that *"if I set them, they're set and they won't get more accurate relative to what the simulation
+discovers."* An evolved parameter **does** get more accurate relative to what the simulation
+discovers, because the simulation is what sets it. Anything that can be moved to this column
+should be.
+
+**Route 2 — sensitivity sweep (proves the number doesn't matter).**
+If the headline result is unchanged across the full plausible range of a parameter, its tier is
+irrelevant. This should be **mandatory, not optional** — see criterion V19. A number that has been
+swept and shown not to matter is as good as a measured one.
+
+**Route 3 — cross-constraint (find a second independent route to the same quantity).**
+The §9.4 daily-ration check is the model: an energy budget built from metabolic scaling landed at
+4.6% body mass/day, and that was independently checkable against measured rations for comparable
+animals. Any tier-D number with two independent derivations that agree is effectively tier C.
+
+**Route 4 — deeper literature (some of these really can be improved).**
+Honest list of numbers where I believe better values exist and I have not yet found them:
+
+| Number | Where to look |
+|---|---|
+| **Handling times** (§11.7) — the one you flagged | Functional-response studies of modern predatory crustaceans and cephalopods measure handling time directly against prey mass. This literature exists and I have not mined it. **Highest-value single upgrade in the document.** |
+| Escape latency and turning radius for a 25 mm elongate swimmer | Larval-fish C-start kinematics is a large, quantitative literature |
+| Anaerobic pool sizes (bursts per day) | Fish EPOC and white-muscle glycogen studies give this in measurable units |
+| Eye/neural tissue metabolic cost | Blowfly photoreceptor energetics (Laughlin et al.) gives ATP cost per bit directly — this could convert §9.8 from a guess to a calculation |
+| Cambrian chordate reproductive output | Modern basal chordate and agnathan fecundity, weighted by body size |
+
+The Laughlin line is the most interesting: **cost per bit of information is a measured quantity in
+insect photoreceptors.** If that transfers, §9.8's eye cost stops being tier D and becomes a
+derivation from the information rate — which is already computed in §3A. That would remove the
+single most load-bearing arbitrary number in the model.
+
+### 17.3 On the specific §11.7 worry
+
+You said: *"these numbers are mostly made up but have a huge impact on decision making... the bias
+will stay the full time with huge influence."*
+
+Correct as stated, and partially fixed. Handling time **cannot** be evolved — it is jaw and
+appendage mechanics, a fact about bodies, so it stays in the SET column. But:
+
+- The **decisions** that used to depend on it (what to attack, when to commit) are now evolved
+  (§3B.1), so handling time no longer directly determines behaviour — it only shapes the payoff
+  landscape that behaviour evolves against.
+- It is now **route-4 upgradeable** — the functional-response literature measures exactly this.
+- It must be **swept** under V19, so if the result depends on it we will know.
+
+That converts it from a silent bias to a known, bounded, testable one. That is the most that can
+honestly be done with it.
 
 ---
 
@@ -1240,13 +1883,16 @@ left out rather than a blank.
 |---|---|---|
 | **Burrowing / infaunality as an evolvable strategy** | Judgement call: the agronomic revolution is largely a *consequence* of the Cambrian radiation, and infaunality is a defence that makes vision irrelevant rather than one that shapes it. Researching and parameterising it would divert effort from things that plausibly drive the eye. | prey populations collapse under visual predation with no viable refuge; or the arms race runs away because prey has no escape axis |
 | **Bioturbation → turbidity feedback loop** | Same reason; depends on burrowing | turbidity turns out to be the dominant control on whether eyes pay |
-| **Species with no trophic connection to the eye-evolving lineages** (most brachiopods beyond taxon 7, sponges, hyoliths, chancelloriids, most trilobite diversity) | They were in the environment but have no measurable pathway to eye evolution. Including them means inventing numbers for them, which adds tier-D uncertainty for no mechanism. | the food web proves too thin to be stable, or the primary-production budget doesn't close |
+| **Species with no trophic connection to the focal lineage**: *Waptia*/*Canadaspis*, *Kunmingella* (folded into the `mesozooplankton` field), *Cricocosmia*, *Diandongia*, all trilobites, sponges, hyoliths, chancelloriids | They were in the environment but have no measurable pathway to eye evolution in taxon 1. Including them means inventing tier-D numbers for each with no mechanism attached. See §7.2. | the food web proves too thin to be stable, or the primary-production budget doesn't close |
+| **Migration of any kind** | You flagged this and you are right. Requires a far larger world, seasonal or lunar drivers, navigation and homing — enormous complexity, zero connection to eye evolution. The *Synophalos* "migratory queue" interpretation is one reading of a chain of fossils, not a modelled requirement. **Only local aggregation within the arena is in scope.** | never, realistically |
+| **Within-lifetime learning** (learned avoidance, learned prey preference, warning-colour association) | Adds a second adaptive timescale that will confound attribution — when the eye improves you could not tell whether selection or learning did it. Everything the eye needs is reachable through evolved behaviour (§3B.2). | the eye evolves reliably without it and you want to explore what learning adds on top |
+| **Co-evolution of the predator's eye** | Taxa 2 and 3 have eyes fixed at measured fossil values, isolating "does this environment build a camera eye?" from "what happens when both sides co-evolve?" §15's prey-contrast axis already supplies one live co-evolutionary loop. | the arms race stalls because the predator cannot respond to prey counter-adaptation |
 | **Genome, genes, gene duplication, developmental genetics** | A rat's nest with no payoff here. Nilsson's I→II driver is "gene duplication frees a receptor copy," but the *effect* is what matters: a second receptor lineage becomes free to specialise. Model that as a **plain mutable trait**, not as genes. | the exaptation route (§3 corollary) can't be expressed as continuous traits |
 | **Biomineralised armour as an evolvable defence** | *Anomalocaris* couldn't eat armoured prey, so armour is orthogonal to the visual arms race (§7.3) | the prey contrast axis (§15) proves insufficient as a counter-adaptation |
 | **Multiple predator guilds beyond the nektonic visual one** (durophages, priapulid ambushers) | Not on the path to eye evolution | prey mortality is unrealistically dominated by visual predation alone |
 | **Seasonality** | Greenhouse climate, low palaeolatitude, no ice — seasonal signal was weak | populations show unrealistic year-round stability |
 | **Larval dispersal and metapopulation structure** | Large connected shelf → treat as one well-mixed population | genetic structure or local extinction becomes an issue |
-| **Spectral / colour vision** | Colour is a class-IV refinement, not a driver of the climb; and Cambrian opsin spectral tuning is unconstrained | monochrome contrast detection proves insufficient to separate prey from background |
+| **Spectral / colour vision** | Colour is a class-IV refinement, not a driver of the climb; Cambrian opsin spectral tuning is unconstrained. **But your point is well taken and worth recording:** colour would make contrast *wavelength-dependent*, so a prey animal matched to its background under one opsin could become highly visible the moment a predator gains a second spectral channel. That is a real mechanism — a predator could break camouflage not by seeing more sharply but by seeing in a new colour, and prey would then have a much harder optimisation problem (match the background across *all* channels, not one). It would add a genuine new dimension to §15, and monochrome contrast is a real simplification, not a neutral one. Filed, not built. | the prey contrast race in §15 saturates — i.e. prey reaches a ρ that hides it from everything and the arms race dies. Adding a spectral channel is the natural way to restart it. |
 
 **Kept despite seeming irrelevant** (per §0.2), with the justification that emerged:
 
@@ -1279,9 +1925,17 @@ left out rather than a blank.
 | V14 | Grouping, if it emerges, is classified as **queue** or **school** and the sim reports which sensory channel it depends on | classify aggregations by dependency |
 | V15 | Blind founders remain viable (non-visual senses work) — a blind world is not auto-lethal | run fully blind, confirm persistence ≥100k ticks |
 | V16 | **The compression factor is reported** — implied generations-per-real-generation given σ | printed with every run |
+| V17 | **Epoch 1 (zero predators) still climbs class I → III** | run epoch 1 with predation disabled entirely; read final morphology. This is the strongest possible test of §3 |
+| V18 | The evolved controller **discovers optimal foraging** rather than being given it | compare realised diet against the §9.5 profitability prediction; agreement validates the energy model |
+| V19 | **No headline result depends on a single tier-D value** | mandatory sensitivity sweep over every method-5 number in §17.1 (handling times, lifespan, eye-cost exponent). Any result that flips inside the plausible range must be reported as contingent, not as a finding |
+| V20 | **Nothing in the codebase reads a Nilsson "class"** | `grep -n "class_I\|classIV\|nilsson_class\|eye_class"` outside logging/analysis returns nothing. Classes are output labels only (§3A.5) |
+| V21 | **No decision constant remains in the SET column** | audit against the §3B.1 table: strike distance, prey choice, flee distance, depth preference, activity window, hunger/satiation must all be genome entries |
+| V22 | Countershading (dorsal ρ ≠ ventral ρ) emerges without being coded | plot the two evolved ρ values over generations (§15.2) |
 
-**V1 is the most important criterion in this document.** It is the direct test of the diagnosis in
-§3, and if it fails, nothing else matters.
+**V1 and V17 are the most important criteria in this document.** They are the direct test of the
+diagnosis in §3 — that the bottom of the ladder is climbed for non-predatory reasons — and if they
+fail, nothing else matters. **V20 and V21 are the discipline checks**: they verify that we encoded
+the environment and not the outcome.
 
 ---
 
@@ -1292,6 +1946,26 @@ left out rather than a blank.
 - [Nilsson & Pelger (1994), *A pessimistic estimate of the time required for an eye to evolve*, Proc. R. Soc. B](https://royalsocietypublishing.org/doi/10.1098/rspb.1994.0048) — 1,829 × 1% steps, h²/i/V assumptions, ~364,000 generations
 - [Kirschfeld, K., *The Resolution of Lens and Compound Eyes*](https://link.springer.com/chapter/10.1007/978-3-642-66432-8_19) and [Snyder, *Acuity of compound eyes: physical limitations and design*](https://link.springer.com/article/10.1007/BF00605401) — quadratic size scaling; Mallock's 6 m calculation
 - [Feuda et al. (2012), *Metazoan opsin evolution reveals a simple route to animal vision*, PNAS](https://www.pnas.org/doi/10.1073/pnas.1204609109) — opsin subfamilies complete by ~700 Ma
+
+**Perception physics (§3A)**
+- [Land, M.F., *Optical sensitivity equation* — as reviewed in "Optical Sensitivity of Camera-Like Eyes to White Light"](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8544683/) — S = (π/4)²A²(d/f)²[1−exp(−kl)]; validated experimentally as a tool for comparing eyes
+- [*The optical sensitivity of compound eyes: theory and experiment compared*](https://pmc.ncbi.nlm.nih.gov/articles/PMC2614179/)
+- [Rose, A. (1948), the Rose criterion — CNR ≥ 3–5 for detection; SNR ≈ 2–3 at threshold](https://radiologykey.com/4-signal-detection-theory-a-brief-history/) — the photon-noise detection rule that reproduces Nilsson's contrast thresholds exactly
+- [*The adjustable "pinhole camera" eye of Nautilus*, Hurley (1978), J. Exp. Zool.](https://onlinelibrary.wiley.com/doi/abs/10.1002/jez.1402050106) and [Britannica, *Single-chambered eyes*](https://www.britannica.com/science/photoreception/Single-chambered-eyes) — >2° per receptor; resolution/sensitivity trade-off unique to lensless eyes
+
+**Ediacaran background and the onset of predation (§4.1)**
+- [Bengtson & Zhao (1992), *Predatorial borings in late Precambrian mineralized exoskeletons*, Science 257:367](https://www.science.org/doi/10.1126/science.257.5068.367) and [*Ecological interactions in Cloudina from the Ediacaran of Brazil*, Scientific Reports](https://www.nature.com/articles/s41598-017-05753-8) — ~550 Ma borings, >20% of specimens, prey-selective
+- [*Ediacaran scavenging as a prelude to predation*](https://www.researchgate.net/publication/327947415_Ediacaran_scavenging_as_a_prelude_to_predation)
+- [Bowyer et al. (2017), *Controls on the evolution of Ediacaran metazoan ecosystems: a redox perspective*, Geobiology](https://ncbi.nlm.nih.gov/pmc/articles/PMC5485040)
+- [*The latest Ediacaran Wormworld fauna: setting the ecological stage for the Cambrian explosion*, GSA Today](https://www.geosociety.org/gsa-today/november-2016/the-latest-ediacaran-wormworld-fauna-setting-the-ecological-stage-for-the) — motility from ~560 Ma
+
+**Non-visual predators (taxon 4)**
+- [Vannier et al. (2007), *Early Cambrian origin of modern food webs: evidence from predator arrow worms*, Proc. R. Soc. B](https://pubmed.ncbi.nlm.nih.gov/17254986/) — chaetognaths as the oldest pelagic predators, from the lowest Cambrian
+- [*A giant stem-group chaetognath*, Science Advances](https://www.science.org/doi/10.1126/sciadv.adi6678)
+
+**Burst physiology (§3B.4)**
+- [*Recovery metabolism of skipjack tuna white muscle: rapid and parallel changes in lactate and phosphocreatine after exercise*](https://www.researchgate.net/publication/239926221_Recovery_metabolism_of_skipjack_tuna_Katsuwonus_pelamis_white_muscle_Rapid_and_parallel_changes_in_lactate_and_phosphocreatine_after_exercise) — the two-pool basis
+- [*Excess postexercise oxygen consumption decreases with swimming duration in a labriform fish*, J. Exp. Zool.](https://onlinelibrary.wiley.com/doi/10.1002/jez.2322) and [*Acid-base and ion balance, metabolism, and their interactions after exhaustive exercise in fish*, J. Exp. Biol.](https://dx.doi.org/10.1242/jeb.160.1.285) — EPOC 4–6 h in salmon, to 24 h for full recovery
 
 **Fossil eyes**
 - [Wang et al. (2026), *Four camera-type eyes in the earliest vertebrates from the Cambrian Period*, Nature 650:150–155](https://www.nature.com/articles/s41586-025-09966-0) — myllokunmingid lateral + pineal + parapineal camera eyes with lens and RPE, ~518 Ma
