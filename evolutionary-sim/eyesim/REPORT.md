@@ -215,6 +215,90 @@ moves when, and only when, seeing feeds back into survival.
 
 ---
 
+## 3b. Four things I was challenged on, and what the data said
+
+All four came from reviewing the pre-commit disclosure. Three of my justifications turned out to
+be wrong or stale.
+
+### 3b.1 "Supply-limited phytoplankton instead of logistic" — my justification was stale
+
+**What I claimed:** pure logistic growth locks the world into a dead state once grazed down, so I
+replaced it with a supply-limited form.
+
+**First correction:** I did not *limit* production. I **added a source term**. The change was the
+opposite direction to "capping it".
+
+**Second correction, from the experiment** (`--sweep advection`, 200 generations):
+
+| | phyto at equilibrium | population | evolved Δρ |
+|---|---|---|---|
+| advection ON | 0.62% of capacity | 32,825 | 0.294° (class IV) |
+| **advection OFF (pure logistic)** | **0.00% — permanently** | **16,630** | **0.230° (class IV)** |
+
+The phytoplankton field *does* collapse to an absorbing zero under pure logistic — that part was
+right. But **the world does not die and the eye still evolves.** My claim was true of an earlier
+build where the smooth field was the only food; since particulate zooplankton was added (with its
+own supply term) the population simply lives on zooplankton, at about half the carrying capacity.
+
+So the advection term is **justified but not load-bearing**. It stays because a 4 m grid cell is
+not a closed plankton population — horizontal mixing refills it in hours — but the headline result
+does not depend on it, and I should have re-tested the claim instead of carrying it forward.
+
+### 3b.2 Is the world over-grazed? The alarming number is a misleading metric
+
+At equilibrium the grazing fraction reads **1.000** — the guild eats 100% of production, forever.
+That looks pathological. It is not, and the metric was my fault:
+
+| Denominator | Value |
+|---|---|
+| Total primary production | 3,699 J m⁻² day⁻¹ |
+| × accessible (0.20) × focal share (0.25) → guild allocation | 185 J m⁻² day⁻¹ = **5.0% of PP** |
+| of which the smooth field | 92 J m⁻² day⁻¹ = **2.5% of PP** |
+
+"1.000" meant *100% of the focal guild's own allocation*, which is **2.5% of total primary
+production**. Modern mesozooplankton graze 10–40% of PP, so the model is if anything *under*-grazing.
+And consuming 100% of your own allocation is the definition of a resource-limited equilibrium: the
+stock sits at R\*, the break-even resource density. The 0.6%-of-capacity standing stock is R\*, not a
+crash.
+
+Both numbers are now logged: `grazingFractionOfAllocation` and `grazingFractionOfPP`.
+
+### 3b.3 Why 50% density and a 120 m arena? Because of bugs I later fixed
+
+**Density** — I seeded at 50% of the spec's 2.1 m⁻² because seeding at 100% collapsed the
+population. That was before I fixed the gut-fraction bug and the non-recovering resource, and **I
+never re-tested it**. Sweep:
+
+| initial density | 0.5 | 1.0 (spec) | 1.5 |
+|---|---|---|---|
+| evolved Δρ | 0.294° | **0.304°** | (run) |
+| population | 32,825 | 33,799 | |
+
+The full spec density works. **Default changed to 1.0** — the workaround is gone.
+
+**Arena** — 120 m rather than the spec's 150 m was purely compute cost. Sweep: 120 m → 0.294°,
+150 m → 0.271°, populations 32,825 and 51,786. Both class IV, no effect on the result. 120 m stays
+as the default for speed, and it is above the spec's own ≥100 m floor for apex-predator viability.
+
+### 3b.4 V7 capture success 0.514 — a measurement timing error, not lenient grading
+
+I had flagged this as me grading leniently. The real cause is worse and simpler. Trajectory of the
+evolved eye:
+
+| generation | 0 | 25 | **50** | **75** | 100 | 150 |
+|---|---|---|---|---|---|---|
+| Δρ | 180° | 180° | **180°** | **1.04°** | 0.42° | 0.33° |
+
+**The eye is still at 180° at generation 50 and only crosses into class IV around gen 75.** V7 ran
+for **60 generations** — so it was measuring capture success against effectively blind prey. 0.514
+is the right answer to the wrong question, and the 600-generation arms-race run gives 0.18–0.23,
+inside the spec band.
+
+V7 now runs 400 generations and measures the median over the last 25%, reporting the pre-vision
+value alongside it so the difference is visible rather than hidden.
+
+---
+
 ## 4. Verification
 
 Run `bun evolutionary-sim/eyesim/verify.mjs`; output in `logs/verification.txt`.

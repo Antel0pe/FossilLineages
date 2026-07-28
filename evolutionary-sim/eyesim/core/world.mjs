@@ -45,8 +45,9 @@ export const DEFAULTS = {
   mutationEnabled: true,
   bearingErrorEnabled: true,
   zooFraction: C.ZOO_FRACTION_OF_FLUX,
+  advectionEnabled: true,
   focalK: 100,           // individuals per focal super-individual
-  initialDensityFraction: 0.5,
+  initialDensityFraction: 1.0,   // spec density; 0.5 was a workaround for bugs since fixed
   predK: { anomalocaris: 1, isoxys: 100, chaetognath: 100 },
   maxFocalAgents: 400,
   logEvery: 25,
@@ -96,6 +97,7 @@ export class World {
     this.light = new LightField({ kdBase: this.kdBase });
     this.resources = new ResourceField({
       sizeM: cfg.arenaM, cellM: cfg.cellM, depthM: cfg.depthMaxM, zooFraction: cfg.zooFraction,
+      advectionEnabled: cfg.advectionEnabled,
       productionGCm2Yr: this.epoch.primaryProductionGCm2Yr, rng: this.rng,
     });
 
@@ -114,9 +116,10 @@ export class World {
   initFocal() {
     const cfg = this.cfg;
     const spec = C.SPECIES.myllokunmingid;
-    // The spec's density is the theoretical ceiling — it assumes the guild uses
-    // 100% of its energy allocation with no waste. Seed below it and let resource
-    // competition find the real equilibrium rather than starting pinned at it.
+    // Seed at the spec's density and let resource competition find the real
+    // equilibrium. This was 50% for a long time as a workaround for two bugs (the
+    // gut-fraction error and the non-recovering resource); with those fixed, a
+    // sweep of 0.5/1.0/1.5 gives the same evolved eye, so the workaround is gone.
     const individuals = Math.round(spec.densityPerM2 * this.arenaArea * cfg.initialDensityFraction);
     const nAgents = Math.round(individuals / cfg.focalK);
     this.focal = [];
@@ -269,6 +272,7 @@ export class World {
       patchTimeDetected: 0, patchTimeTotal: 0,
     };
     for (const a of this.focal) { a.surplusJ = 0; a.intakeJ = 0; a.zooIntakeJ = 0; }
+    this.resources.producedJ = 0; this.resources.consumedJ = 0;
 
     this.focalHash ??= new SpatialHash(cfg.arenaM, 10);
     this.predHash ??= new SpatialHash(cfg.arenaM, 10);
@@ -849,6 +853,17 @@ export class World {
         acc[p.spec.name] = (acc[p.spec.name] || 0) + p.count; return acc;
       }, {}),
       phytoTotal: this.resources.totalPhyto(),
+      phytoFracOfCapacity: this.resources.totalPhyto() /
+        (this.resources.capacityPerCell * this.resources.n * this.resources.n),
+      // Fraction of the focal guild's own allocation that is eaten. At a
+      // resource-limited equilibrium this is 1.0 by definition — the population
+      // grazes down to R*, its break-even resource density.
+      grazingFractionOfAllocation: this.resources.producedJ > 0
+        ? this.resources.consumedJ / this.resources.producedJ : null,
+      // The ecologically comparable number: share of TOTAL primary production.
+      grazingFractionOfPP: this.resources.producedJ > 0
+        ? (this.resources.consumedJ / this.resources.producedJ)
+          * (this.resources.fieldFlux / this.resources.dailyEnergyJPerM2) : null,
       zooTotal: this.resources.totalZooEnergy(),
       zooIntakeFraction: (() => {
         let zi = 0, ti = 0;

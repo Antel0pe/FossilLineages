@@ -16,7 +16,8 @@ export class ResourceField {
   /**
    * @param {{sizeM:number, cellM:number, productionGCm2Yr:number, rng:object}} opts
    */
-  constructor({ sizeM, cellM, productionGCm2Yr, rng, depthM = 40, zooFraction = ZOO_FRACTION_OF_FLUX }) {
+  constructor({ sizeM, cellM, productionGCm2Yr, rng, depthM = 40, zooFraction = ZOO_FRACTION_OF_FLUX, advectionEnabled = true }) {
+    this.advectionEnabled = advectionEnabled;
     this.depthM = depthM;
     this.sizeM = sizeM;
     this.cellM = cellM;
@@ -65,6 +66,8 @@ export class ResourceField {
     this.matR = MAT_GROWTH_R_PER_DAY;
     this.carrionDecay = Math.LN2 / CARRION_HALFLIFE_DAYS;
 
+    this.producedJ = 0;
+    this.consumedJ = 0;
     this.seedPatches();
     this.patchAgeDays = 0;
   }
@@ -119,6 +122,7 @@ export class ResourceField {
     const k = this.idx(x, y);
     const taken = Math.min(this.phyto[k], joules);
     this.phyto[k] -= taken;
+    this.consumedJ += taken;
     return taken;
   }
 
@@ -142,14 +146,16 @@ export class ResourceField {
    */
   step(dtS) {
     const dtDays = dtS / SEC_PER_METABOLIC_DAY;
-    const supply = this.fieldFlux * this.cellArea * dtDays;
+    const supply = this.advectionEnabled ? this.fieldFlux * this.cellArea * dtDays : 0;
     const r = this.phytoR * dtDays;
     const decay = Math.exp(-this.carrionDecay * dtDays);
     for (let k = 0; k < this.phyto.length; k++) {
       const cap = this.capacityPerCell * this.patchMult[k];
       const v = this.phyto[k];
       const headroom = Math.max(0, 1 - v / cap);
-      this.phyto[k] = v + (supply + r * v) * headroom;
+      const grown = (supply + r * v) * headroom;
+      this.producedJ += grown;
+      this.phyto[k] = v + grown;
       if (this.phyto[k] < 0) this.phyto[k] = 0;
       this.carrion[k] *= decay;
     }

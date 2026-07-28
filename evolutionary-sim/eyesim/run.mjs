@@ -25,7 +25,7 @@ const has = k => argv.includes('--' + k);
 const TRACE_COLUMNS = [
   'generation', 'nAgents', 'nIndividuals', 'deltaRhoDeg', 'pixels', 'eyeParameter',
   'nilssonClass', 'attacks', 'captures', 'captureSuccess', 'nightCaptureFraction',
-  'meanDepthDay', 'meanDepthNight', 'patchDetectFraction', 'phytoTotal', 'zooTotal',
+  'meanDepthDay', 'meanDepthNight', 'patchDetectFraction', 'phytoTotal', 'phytoFracOfCapacity', 'grazingFractionOfAllocation', 'grazingFractionOfPP', 'zooTotal',
   'zooIntakeFraction', 'pO2',
 ];
 const GENE_COLUMNS = ['patchWidthMm', 'invagination', 'apertureRatio', 'lensIndexGradient',
@@ -90,6 +90,9 @@ const SWEEPS = {
   handling: { key: 'handlingTimeCoeff', values: [15, 30, 60] },
   epoch: { key: 'epoch', values: ['pre_predation', 'predation_begins', 'visual_arms_race'] },
   episode: { key: 'episodeDays', values: [0.5, 1, 2, 4] },
+  advection: { key: 'advectionEnabled', values: [true, false] },
+  density: { key: 'initialDensityFraction', values: [0.5, 1.0, 1.5] },
+  arena: { key: 'arenaM', values: [120, 150] },
   predation: { key: 'predationEnabled', values: [true, false] },
   bearing: { key: 'bearingErrorEnabled', values: [true, false] },
   zoo: { key: 'zooFraction', values: [0, 0.15, 0.30, 0.50, 0.70] },
@@ -112,7 +115,9 @@ async function main() {
     predationEnabled: !has('nopredation'),
     blindFounders: has('blind'),
     bearingErrorEnabled: !has('nobearing'),
+    initialDensityFraction: num('density', 1.0),
     zooFraction: num('zoo', C.ZOO_FRACTION_OF_FLUX),
+    advectionEnabled: !has('noadvection'),
     mutationEnabled: !has('nomutation'),
   };
   if (has('kd')) base.kdOverride = num('kd', null);
@@ -198,7 +203,7 @@ function table(rows) {
   const extra = Object.keys(rows[0]).filter(k => !cols.includes(k) &&
     ['kdOverride', 'mutationSigma', 'eyeCostMultiplier', 'eyeCostExponent',
      'handlingTimeCoeff', 'predationEnabled', 'bearingErrorEnabled', 'zooFraction',
-     'episodeDays'].includes(k));
+     'episodeDays', 'advectionEnabled', 'initialDensityFraction', 'arenaM'].includes(k));
   const all = [...extra, ...cols];
   const fmt = v => (v === null || v === undefined ? '-' :
     typeof v === 'number' ? (Number.isInteger(v) ? String(v) : v.toFixed(3)) : String(v));
