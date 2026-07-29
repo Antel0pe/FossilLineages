@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eye evolution — live viewer</title>
+<style>
+  :root{ --bg:#0e1116; --panel:#161b22; --line:#2b333d; --ink:#e6edf3; --muted:#9aa7b4;
+    --acc:#c8a2ff; --good:#7ee787; --warn:#ffb454; --bad:#ff5e7e; --blue:#5eb3ff; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1320px;margin:0 auto;padding:16px 18px 60px}
+  h1{font-size:21px;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 14px;font-size:14px;max-width:960px}
+  code{background:#0b0e12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12px}
+
+  .controls{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  .ctrl{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);min-width:120px}
+  .ctrl b{color:var(--ink);font-size:13px}
+  .ctrl select,.ctrl input[type=number]{font:inherit;font-size:13px;background:#0b0e12;color:var(--ink);
+    border:1px solid var(--line);border-radius:7px;padding:6px 8px}
+  .ctrl input[type=range]{width:150px;accent-color:var(--acc)}
+  .val{color:var(--acc);font-variant-numeric:tabular-nums}
+  label.tog{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink);cursor:pointer}
+  button{font:inherit;font-size:14px;padding:9px 16px;border-radius:8px;border:1px solid var(--line);
+    background:#1f2733;color:var(--ink);cursor:pointer}
+  button.primary{background:var(--acc);color:#160c28;border-color:var(--acc);font-weight:600}
+  button:disabled{opacity:.45;cursor:default}
+
+  .grid{display:grid;grid-template-columns:340px 1fr;gap:14px}
+  @media(max-width:1000px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    margin:0 0 10px;font-weight:600}
+
+  .stat{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;
+    border-bottom:1px solid #1e252e;font-size:13px}
+  .stat:last-child{border-bottom:0}
+  .stat .k{color:var(--muted)}
+  .stat .v{font-variant-numeric:tabular-nums;font-weight:600}
+
+  .classbar{display:flex;gap:4px;margin:10px 0 4px}
+  .classbar div{flex:1;height:26px;border-radius:6px;background:#0b0e12;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)}
+  .classbar div.on{background:var(--acc);color:#160c28;border-color:var(--acc);font-weight:700}
+
+  .genes{display:grid;grid-template-columns:1fr;gap:5px;margin-top:4px}
+  .gene{font-size:11px;color:var(--muted)}
+  .gene .row{display:flex;justify-content:space-between;margin-bottom:2px}
+  .gene .row span:last-child{color:var(--ink);font-variant-numeric:tabular-nums}
+  .bar{height:5px;background:#0b0e12;border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--acc);border-radius:3px;transition:width .25s}
+
+  canvas{display:block;width:100%;border-radius:8px;background:#0b0e12}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:760px){.charts{grid-template-columns:1fr}}
+  .chartbox{position:relative}
+  .chartbox .lbl{position:absolute;top:6px;left:9px;font-size:11px;color:var(--muted);
+    letter-spacing:.04em;text-transform:uppercase}
+  .chartbox .now{position:absolute;top:6px;right:9px;font-size:12px;font-variant-numeric:tabular-nums;
+    font-weight:700}
+  .note{font-size:12px;color:var(--muted);margin-top:8px}
+  .legend{font-size:12px;margin-top:8px;display:flex;gap:14px;flex-wrap:wrap}
+  .status{font-size:13px;color:var(--muted);margin-left:auto;align-self:center}
+  .status b{color:var(--good)}
+  .status.err b{color:var(--bad)}
+  .banner{background:#2a1f12;border:1px solid #5a4322;color:#ffcf8f;border-radius:10px;
+    padding:10px 12px;font-size:13px;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Eye evolution — live viewer</h1>
+  <p class="sub">Runs the real simulation core (<code>core/world.mjs</code>) in a worker, so what you
+  see here is exactly what <code>run.mjs</code> and <code>verify.mjs</code> execute. Nothing in the
+  code rewards acuity — the eye improves only if seeing better returns more energy or fewer deaths.</p>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="controls">
+    <div class="ctrl"><b>Epoch</b>
+      <select id="epoch">
+        <option value="pre_predation">1 — pre-predation (no predators)</option>
+        <option value="predation_begins">2 — predation begins</option>
+        <option value="visual_arms_race" selected>3 — visual arms race</option>
+      </select>
+    </div>
+    <div class="ctrl"><b>Generations</b>
+      <input type="number" id="gens" value="250" min="20" max="3000" step="10">
+    </div>
+    <div class="ctrl"><b>Particulate prey <span class="val" id="zooV">0.50</span></b>
+      <input type="range" id="zoo" min="0" max="0.7" step="0.05" value="0.5">
+    </div>
+    <div class="ctrl"><b>Eye cost <span class="val" id="costV">1.0×</span></b>
+      <input type="range" id="cost" min="0" max="2" step="0.25" value="1">
+    </div>
+    <div class="ctrl"><b>Water clarity K<sub>d</sub> <span class="val" id="kdV">epoch</span></b>
+      <input type="range" id="kd" min="0" max="1.0" step="0.01" value="0">
+    </div>
+    <div class="ctrl" style="min-width:auto">
+      <label class="tog"><input type="checkbox" id="nopred"> no predators</label>
+      <label class="tog"><input type="checkbox" id="blind"> blind (null control)</label>
+    </div>
+    <div class="ctrl"><b>Arena view</b>
+      <select id="live">
+        <option value="20">live — every 20 steps</option>
+        <option value="60" selected>live — every 60 steps</option>
+        <option value="200">live — every 200 steps</option>
+        <option value="0">off (fastest)</option>
+      </select>
+    </div>
+    <button class="primary" id="run">Run</button>
+    <button id="pause" disabled>Pause</button>
+    <div class="status" id="status">idle</div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <h2>The eye, in cross-section</h2>
+        <canvas id="eyeCv" width="620" height="380"></canvas>
+        <div class="classbar" id="classbar">
+          <div data-c="1">I nondirectional</div><div data-c="2">II directional</div>
+          <div data-c="3">III low-res</div><div data-c="4">IV high-res</div>
+        </div>
+        <div class="note" id="eyeNote">Waiting for a run.</div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px">
+        <h2>Arena — who is where <span id="arenaClock" style="float:right;font-weight:400;
+          text-transform:none;letter-spacing:0"></span></h2>
+        <canvas id="topCv" width="620" height="380"></canvas>
+        <div class="note" style="margin:8px 0 4px">Top-down, <span id="arenaDim">120 × 120 m</span>.
+          Prey dot size ∝ how many individuals it represents.</div>
+        <canvas id="sideCv" width="620" height="150"></canvas>
+        <div class="note">Depth cross-section — surface at the top, seafloor at 40 m. Food is
+          concentrated near the surface; UV is worst there too.</div>
+        <div class="legend" id="legend"></div>
+      </div>
+
+      <div class="card">
+        <h2>What it can resolve</h2>
+        <canvas id="sceneCv" width="620" height="200"></canvas>
+        <div class="note">A 4 mm zooplankter at 0.5 m and a predator at 3 m, blurred by the evolved
+        acceptance angle and degraded by photon noise. This is the same optics the sim uses to decide
+        detection, not an illustration.</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <h2>Now</h2>
+        <div class="stat"><span class="k">generation</span><span class="v" id="sGen">—</span></div>
+        <div class="stat"><span class="k">acceptance angle Δρ</span><span class="v" id="sRho">—</span></div>
+        <div class="stat"><span class="k">resolvable directions</span><span class="v" id="sPx">—</span></div>
+        <div class="stat"><span class="k">population</span><span class="v" id="sPop">—</span></div>
+        <div class="stat"><span class="k">capture success (on prey)</span><span class="v" id="sCap">—</span></div>
+        <div class="stat"><span class="k">deaths — starve / predation / UV</span><span class="v" id="sDeaths">—</span></div>
+        <div class="stat"><span class="k">phytoplankton, % of capacity</span><span class="v" id="sPhyto">—</span></div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px">
+        <h2>Charts</h2>
+        <div class="charts">
+          <div class="chartbox"><canvas id="cRho" width="560" height="170"></canvas>
+            <span class="lbl">Δρ (log, lower = sharper)</span><span class="now" id="nRho"></span></div>
+          <div class="chartbox"><canvas id="cPx" width="560" height="170"></canvas>
+            <span class="lbl">resolvable directions (log)</span><span class="now" id="nPx"></span></div>
+          <div class="chartbox"><canvas id="cPop" width="560" height="170"></canvas>
+            <span class="lbl">population</span><span class="now" id="nPop"></span></div>
+          <div class="chartbox"><canvas id="cCap" width="560" height="170"></canvas>
+            <span class="lbl">capture success</span><span class="now" id="nCap"></span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Evolved genome (population median)</h2>
+        <div class="genes" id="genes"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+const $ = id => document.getElementById(id);
+const PI = Math.PI, deg = r => r * 180 / PI;
+
+/* --------------------------------- state --------------------------------- */
+const hist = { gen: [], rho: [], px: [], pop: [], cap: [] };
+let worker = null, latest = null, latestGenome = null, latestEye = null, lastArenaDraw = 0;
+
+/* ------------------------------- gene meta ------------------------------- */
+const GENE_META = [
+  ['invagination',      'cup invagination',    0, 1],
+  ['apertureRatio',     'aperture ratio',      0.02, 1],
+  ['lensIndexGradient', 'lens index gradient', 0, 0.35],
+  ['screeningPigment',  'screening pigment',   0, 1],
+  ['membraneLayers',    'membrane layers',     1, 4000],
+  ['receptorCount',     'receptor count',      1, 1e6],
+  ['patchWidthMm',      'eye width (mm)',      0.05, 3],
+  ['integrationTimeS',  'integration time (s)',0.01, 600],
+];
+const LOGGY = new Set(['membraneLayers','receptorCount','integrationTimeS','patchWidthMm']);
+
+function renderGenes(g) {
+  if (!g) return;
+  $('genes').innerHTML = GENE_META.map(([k, label, lo, hi]) => {
+    const v = g[k];
+    let frac;
+    if (LOGGY.has(k)) {
+      const L = Math.log, a = L(Math.max(lo,1e-6)), b = L(hi);
+      frac = (L(Math.max(v,1e-6)) - a) / (b - a);
+    } else frac = (v - lo) / (hi - lo);
+    frac = Math.max(0, Math.min(1, frac));
+    const shown = v >= 1000 ? Math.round(v).toLocaleString()
+      : v >= 10 ? v.toFixed(1) : v >= 0.01 ? v.toFixed(3) : v.toExponential(1);
+    return `<div class="gene"><div class="row"><span>${label}</span><span>${shown}</span></div>
+      <div class="bar"><i style="width:${(frac*100).toFixed(1)}%"></i></div></div>`;
+  }).join('');
+}
+
+/* ---------------------------- eye cross-section ---------------------------- */
+/* Drawn from the genome the same way optics.mjs interprets it: invagination sets
+   how far the cup closes, apertureRatio the opening, lensIndexGradient the lens. */
+function drawEye(g, eye) {
+  const cv = $('eyeCv'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0b0e12'; ctx.fillRect(0, 0, W, H);
+  if (!g) return;
+
+  const cx = W * 0.60, cy = H / 2;
+  const R = Math.min(H * 0.36, 40 + 78 * Math.min(1, Math.log10(g.patchWidthMm / 0.05 + 1) / Math.log10(61)));
+  const v = g.invagination;                       // 0 flat .. 1 sphere+pinhole
+  const halfAngle = 0.06 + v * (PI * 0.92);       // arc the retina subtends
+
+  // --- incoming light rays -------------------------------------------------
+  const lensQ = Math.min(1, g.lensIndexGradient / 0.33);
+  const apertureHalf = Math.max(2, R * Math.sin(Math.min(halfAngle, PI/2)) * g.apertureRatio);
+  ctx.lineWidth = 1;
+  for (let i = -4; i <= 4; i++) {
+    const y = cy + i * (apertureHalf / 4.2);
+    const enterX = cx - R * Math.cos(Math.min(halfAngle, PI/2)) - 6;
+    ctx.strokeStyle = 'rgba(255,229,150,0.5)';
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(enterX, y);
+    // Converge toward the retina as the lens develops.
+    const focusY = cy + (y - cy) * (1 - lensQ);
+    ctx.lineTo(cx - R * 0.15, focusY);
+    ctx.stroke();
+  }
+
+  // --- pigment cup ---------------------------------------------------------
+  const pig = g.screeningPigment;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, PI - halfAngle, PI + halfAngle, false);
+  ctx.lineWidth = 9 + 10 * Math.min(1, g.membraneLayers / 2500);
+  ctx.strokeStyle = `rgba(${Math.round(30+40*(1-pig))},${Math.round(35+45*(1-pig))},${Math.round(45+55*(1-pig))},1)`;
+  ctx.stroke();
+
+  // --- retina (receptor layer) --------------------------------------------
+  ctx.beginPath();
+  ctx.arc(cx, cy, R - 6, PI - halfAngle, PI + halfAngle, false);
+  ctx.lineWidth = 3 + 6 * Math.min(1, g.membraneLayers / 2500);
+  ctx.strokeStyle = '#c8a2ff';
+  ctx.stroke();
+
+  // --- individual receptors ------------------------------------------------
+  const nTicks = Math.max(2, Math.min(70, Math.round(Math.sqrt(g.receptorCount) * 1.6)));
+  ctx.strokeStyle = 'rgba(200,162,255,0.55)'; ctx.lineWidth = 1;
+  for (let i = 0; i < nTicks; i++) {
+    const a = PI - halfAngle + (2 * halfAngle) * (i / Math.max(1, nTicks - 1));
+    const x1 = cx + Math.cos(a) * (R - 10), y1 = cy + Math.sin(a) * (R - 10);
+    const x2 = cx + Math.cos(a) * (R - 18), y2 = cy + Math.sin(a) * (R - 18);
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  }
+
+  // --- lens ----------------------------------------------------------------
+  if (lensQ > 0.02) {
+    const lensR = Math.max(4, apertureHalf * 0.95);
+    const lx = cx - R * Math.cos(Math.min(halfAngle, PI/2)) * 0.55;
+    const grd = ctx.createRadialGradient(lx, cy, 1, lx, cy, lensR);
+    grd.addColorStop(0, `rgba(190,225,255,${0.25 + 0.6 * lensQ})`);
+    grd.addColorStop(1, `rgba(190,225,255,${0.05 + 0.25 * lensQ})`);
+    ctx.beginPath(); ctx.ellipse(lx, cy, lensR * 0.62, lensR, 0, 0, 2 * PI);
+    ctx.fillStyle = grd; ctx.fill();
+    ctx.strokeStyle = `rgba(210,235,255,${0.4 + 0.5 * lensQ})`; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+
+  // --- labels --------------------------------------------------------------
+  ctx.font = '12px -apple-system,Segoe UI,Roboto,sans-serif';
+  ctx.fillStyle = '#9aa7b4';
+  ctx.fillText('light', 8, cy - apertureHalf - 12);
+  if (eye) {
+    ctx.fillStyle = '#e6edf3'; ctx.font = '600 13px -apple-system,Segoe UI,Roboto,sans-serif';
+    ctx.fillText(`Δρ ${deg(eye.deltaRho) < 1 ? deg(eye.deltaRho).toFixed(3) : deg(eye.deltaRho).toFixed(1)}°`, 10, 22);
+    ctx.fillStyle = '#9aa7b4'; ctx.font = '12px -apple-system,Segoe UI,Roboto,sans-serif';
+    ctx.fillText(`${eye.pixels < 2 ? 'no image' : Math.round(eye.pixels).toLocaleString() + ' directions'}`, 10, 40);
+  }
+}
+
+/* -------------------------------- arena view -------------------------------- */
+const SPECIES = [
+  { name: 'Anomalocaris', col: '#ff5e7e', r: 5.5 },
+  { name: 'Isoxys',       col: '#ffb454', r: 3.2 },
+  { name: 'chaetognath',  col: '#ff9ad5', r: 2.4 },
+  { name: 'other',        col: '#ffffff', r: 2.4 },
+];
+$('legend').innerHTML =
+  `<span style="color:#5eb3ff">● prey (myllokunmingid)</span>  ` +
+  SPECIES.slice(0, 3).map(s => `<span style="color:${s.col}">● ${s.name}</span>`).join('  ');
+
+let lastPositions = null;
+
+function drawArena(p) {
+  if (!p) return;
+  const { prey, pred, arenaM, depthM, hourOfDay, isDay } = p;
+  $('arenaDim').textContent = `${arenaM} × ${arenaM} m`;
+  $('arenaClock').textContent =
+    `${String(Math.floor(hourOfDay)).padStart(2,'0')}:${String(Math.floor((hourOfDay%1)*60)).padStart(2,'0')} ` +
+    (isDay ? '☀ day' : '☾ night');
+
+  /* --- top-down (x, y) --- */
+  const cv = $('topCv'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const S = Math.min(W, H), ox = (W - S) / 2, oy = (H - S) / 2;
+  ctx.fillStyle = '#0b0e12'; ctx.fillRect(0, 0, W, H);
+  // Water tint follows the diel cycle so night is visibly different.
+  ctx.fillStyle = isDay ? 'rgba(30,58,80,0.55)' : 'rgba(14,20,34,0.75)';
+  ctx.fillRect(ox, oy, S, S);
+  ctx.strokeStyle = '#2b333d'; ctx.lineWidth = 1; ctx.strokeRect(ox, oy, S, S);
+  for (let i = 1; i < 4; i++) {
+    const g = ox + S * i / 4;
+    ctx.strokeStyle = '#171d25';
+    ctx.beginPath(); ctx.moveTo(g, oy); ctx.lineTo(g, oy + S); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, oy + S * i / 4); ctx.lineTo(ox + S, oy + S * i / 4); ctx.stroke();
+  }
+  const sx = v => ox + (v / arenaM) * S, sy = v => oy + (v / arenaM) * S;
+
+  ctx.fillStyle = 'rgba(94,179,255,0.75)';
+  for (let i = 0; i < prey.length; i += 4) {
+    const n = prey[i + 3];
+    const r = Math.max(1, Math.min(4.5, Math.sqrt(n) * 0.28));
+    ctx.beginPath(); ctx.arc(sx(prey[i]), sy(prey[i + 1]), r, 0, 2 * PI); ctx.fill();
+  }
+  for (let i = 0; i < pred.length; i += 5) {
+    const s = SPECIES[pred[i + 4]] ?? SPECIES[3];
+    ctx.fillStyle = s.col;
+    ctx.beginPath(); ctx.arc(sx(pred[i]), sy(pred[i + 1]), s.r, 0, 2 * PI); ctx.fill();
+    if (pred[i + 4] === 0) {                   // ring the apex predator so it reads
+      ctx.strokeStyle = 'rgba(255,94,126,0.5)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(sx(pred[i]), sy(pred[i + 1]), s.r + 4, 0, 2 * PI); ctx.stroke();
+    }
+  }
+
+  /* --- side view (x, depth) --- */
+  const cv2 = $('sideCv'), c2 = cv2.getContext('2d');
+  const W2 = cv2.width, H2 = cv2.height, padT = 10, padB = 16;
+  c2.fillStyle = '#0b0e12'; c2.fillRect(0, 0, W2, H2);
+  // Light gradient with depth: bright at the surface, dark at the seafloor.
+  const grd = c2.createLinearGradient(0, padT, 0, H2 - padB);
+  grd.addColorStop(0, isDay ? 'rgba(60,110,150,0.8)' : 'rgba(20,30,50,0.85)');
+  grd.addColorStop(1, 'rgba(6,9,14,0.95)');
+  c2.fillStyle = grd; c2.fillRect(0, padT, W2, H2 - padT - padB);
+  const zx = v => (v / arenaM) * W2;
+  const zy = v => padT + (v / depthM) * (H2 - padT - padB);
+
+  c2.fillStyle = 'rgba(94,179,255,0.7)';
+  for (let i = 0; i < prey.length; i += 4) {
+    const r = Math.max(1, Math.min(3.5, Math.sqrt(prey[i + 3]) * 0.24));
+    c2.beginPath(); c2.arc(zx(prey[i]), zy(prey[i + 2]), r, 0, 2 * PI); c2.fill();
+  }
+  for (let i = 0; i < pred.length; i += 5) {
+    const s = SPECIES[pred[i + 4]] ?? SPECIES[3];
+    c2.fillStyle = s.col;
+    c2.beginPath(); c2.arc(zx(pred[i]), zy(pred[i + 2]), s.r * 0.8, 0, 2 * PI); c2.fill();
+  }
+  c2.strokeStyle = '#2b333d'; c2.lineWidth = 1;
+  c2.beginPath(); c2.moveTo(0, H2 - padB); c2.lineTo(W2, H2 - padB); c2.stroke();
+  c2.font = '10px -apple-system,Segoe UI,Roboto,sans-serif'; c2.fillStyle = '#9aa7b4';
+  c2.fillText('0 m', 4, padT + 10);
+  c2.fillText(depthM + ' m', 4, H2 - padB - 4);
+}
+
+/* ------------------------- "what it can resolve" -------------------------- */
+/* Renders two targets blurred by Δρ and noised by the photon budget. */
+function drawScene(eye) {
+  const cv = $('sceneCv'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  if (!eye) { ctx.fillStyle = '#0b0e12'; ctx.fillRect(0, 0, W, H); return; }
+
+  // Angular size of each target, converted to a blur radius in pixels.
+  const targets = [
+    { label: '4 mm zooplankter @ 0.5 m', sizeM: 0.004, rangeM: 0.5, x: W * 0.27, col: [126, 231, 135] },
+    { label: 'predator @ 3 m',           sizeM: 0.35,  rangeM: 3.0, x: W * 0.72, col: [255, 94, 126] },
+  ];
+  const PX_PER_RAD = 900;                 // display scale: how many px one radian spans
+  ctx.fillStyle = '#0b0e12'; ctx.fillRect(0, 0, W, H);
+
+  for (const t of targets) {
+    const theta = t.sizeM / t.rangeM;                    // angular size, rad
+    const rPx = Math.max(1.2, theta * PX_PER_RAD / 2);
+    const blurPx = Math.max(0.4, eye.deltaRho * PX_PER_RAD / 2);
+    const cy = H * 0.44;
+    // A target smaller than the acceptance angle smears into a low-contrast blob.
+    const spread = Math.max(rPx, blurPx);
+    const contrast = Math.min(1, (rPx / spread) ** 2);
+    const g = ctx.createRadialGradient(t.x, cy, 0, t.x, cy, spread);
+    g.addColorStop(0, `rgba(${t.col[0]},${t.col[1]},${t.col[2]},${0.15 + 0.85 * contrast})`);
+    g.addColorStop(1, `rgba(${t.col[0]},${t.col[1]},${t.col[2]},0)`);
+    ctx.beginPath(); ctx.arc(t.x, cy, spread, 0, 2 * PI); ctx.fillStyle = g; ctx.fill();
+
+    ctx.font = '11px -apple-system,Segoe UI,Roboto,sans-serif';
+    ctx.fillStyle = '#9aa7b4'; ctx.textAlign = 'center';
+    ctx.fillText(t.label, t.x, H - 26);
+    ctx.fillStyle = contrast > 0.25 ? '#7ee787' : contrast > 0.05 ? '#ffb454' : '#ff5e7e';
+    ctx.fillText(contrast > 0.25 ? 'resolved' : contrast > 0.05 ? 'marginal' : 'unresolved', t.x, H - 10);
+    ctx.textAlign = 'left';
+  }
+}
+
+/* --------------------------------- charts --------------------------------- */
+function drawChart(cvId, series, { log = false, color = '#c8a2ff', invert = false } = {}) {
+  const cv = $(cvId), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height, pad = 26;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0b0e12'; ctx.fillRect(0, 0, W, H);
+  const vals = series.filter(v => v !== null && Number.isFinite(v));
+  if (vals.length < 2) return;
+  const t = log ? vals.map(v => Math.log10(Math.max(v, 1e-6))) : vals;
+  let lo = Math.min(...t), hi = Math.max(...t);
+  if (hi - lo < 1e-9) { hi = lo + 1; }
+  ctx.strokeStyle = '#1e252e'; ctx.lineWidth = 1;
+  for (let i = 0; i <= 3; i++) {
+    const y = pad + (H - 2 * pad) * i / 3;
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - 8, y); ctx.stroke();
+  }
+  ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath();
+  t.forEach((v, i) => {
+    const x = pad + (W - pad - 8) * (i / Math.max(1, t.length - 1));
+    let f = (v - lo) / (hi - lo);
+    if (invert) f = 1 - f;
+    const y = H - pad - (H - 2 * pad) * f;
+    i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  });
+  ctx.stroke();
+}
+
+function refreshCharts() {
+  drawChart('cRho', hist.rho, { log: true, color: '#c8a2ff', invert: true });
+  drawChart('cPx',  hist.px,  { log: true, color: '#5eb3ff' });
+  drawChart('cPop', hist.pop, { color: '#7ee787' });
+  drawChart('cCap', hist.cap, { color: '#ff5e7e' });
+  const f = (v, d = 2) => (v === null || v === undefined || !Number.isFinite(v) ? '—' : v.toFixed(d));
+  const lastRho = hist.rho[hist.rho.length - 1];
+  $('nRho').textContent = lastRho === undefined ? '' : (lastRho < 1 ? lastRho.toFixed(3) : lastRho.toFixed(1)) + '°';
+  $('nRho').style.color = '#c8a2ff';
+  $('nPx').textContent = Math.round(hist.px[hist.px.length - 1] ?? 0).toLocaleString();
+  $('nPx').style.color = '#5eb3ff';
+  $('nPop').textContent = (hist.pop[hist.pop.length - 1] ?? 0).toLocaleString();
+  $('nPop').style.color = '#7ee787';
+  $('nCap').textContent = f(hist.cap[hist.cap.length - 1], 3);
+  $('nCap').style.color = '#ff5e7e';
+}
+
+/* ------------------------------- stats panel ------------------------------- */
+function renderStats(snap, eye) {
+  const f = (v, d = 2) => (v === null || v === undefined || !Number.isFinite(v) ? '—' : v.toFixed(d));
+  $('sGen').textContent = snap.generation;
+  $('sRho').textContent = eye ? (deg(eye.deltaRho) < 1 ? deg(eye.deltaRho).toFixed(3) : deg(eye.deltaRho).toFixed(2)) + '°' : '—';
+  $('sPx').textContent = eye ? Math.round(eye.pixels).toLocaleString() : '—';
+  $('sPop').textContent = snap.nIndividuals.toLocaleString();
+  $('sCap').textContent = f(snap.captureSuccess, 3);
+  $('sDeaths').textContent = `${snap.deaths.starvation.toLocaleString()} / ${snap.deaths.predation.toLocaleString()} / ${snap.deaths.uv.toLocaleString()}`;
+  $('sPhyto').textContent = snap.phytoFracOfCapacity !== undefined && snap.phytoFracOfCapacity !== null
+    ? (100 * snap.phytoFracOfCapacity).toFixed(2) + '%' : '—';
+
+  const cls = eye ? eye.nilssonClass : 0;
+  document.querySelectorAll('#classbar div').forEach(d =>
+    d.classList.toggle('on', Number(d.dataset.c) === cls));
+  const notes = {
+    1: 'Class I — a bare patch. Measures ambient light; no direction, no image.',
+    2: 'Class II — directional. Screening pigment gives it a bearing, but still no image.',
+    3: 'Class III — low-resolution vision. The first true eye: obstacles, patches, big shadows.',
+    4: 'Class IV — high-resolution vision. Individual prey resolved and pursued.',
+  };
+  $('eyeNote').textContent = notes[cls] ?? 'Waiting for a run.';
+}
+
+/* --------------------------------- runner --------------------------------- */
+function start() {
+  hist.gen.length = hist.rho.length = hist.px.length = hist.pop.length = hist.cap.length = 0;
+  const kdRaw = Number($('kd').value);
+  const config = {
+    epoch: $('epoch').value,
+    generations: Number($('gens').value),
+    zooFraction: Number($('zoo').value),
+    eyeCostMultiplier: Number($('cost').value),
+    predationEnabled: !$('nopred').checked,
+    blindFounders: $('blind').checked,
+    bearingErrorEnabled: false,
+    logEvery: 1,
+  };
+  if (kdRaw > 0) config.kdOverride = kdRaw;
+
+  worker?.terminate();
+  worker = new Worker('./viewer-worker.mjs', { type: 'module' });
+  worker.onmessage = (ev) => {
+    const m = ev.data;
+    if (m.type === 'positions') {
+      lastPositions = m;
+      // Time-throttled direct draw rather than requestAnimationFrame: rAF does not
+      // fire while the page is hidden or not compositing, which silently freezes
+      // the arena instead of just slowing it down.
+      const now = performance.now();
+      if (now - lastArenaDraw > 50) { lastArenaDraw = now; drawArena(lastPositions); }
+      return;
+    }
+    if (m.type === 'gen') {
+      latest = m.snap; latestGenome = m.genome; latestEye = m.eye;
+      hist.gen.push(m.snap.generation);
+      hist.rho.push(m.eye ? deg(m.eye.deltaRho) : null);
+      hist.px.push(m.eye ? m.eye.pixels : null);
+      hist.pop.push(m.snap.nIndividuals);
+      hist.cap.push(m.snap.captureSuccess);
+      renderStats(m.snap, m.eye);
+      renderGenes(m.genome);
+      drawEye(m.genome, m.eye);
+      drawScene(m.eye);
+      refreshCharts();
+      $('status').className = 'status';
+      $('status').innerHTML = `running — gen <b>${m.snap.generation}</b>`;
+    } else if (m.type === 'done') {
+      $('run').disabled = false; $('pause').disabled = true;
+      $('status').className = m.reason === 'extinct' ? 'status err' : 'status';
+      $('status').innerHTML = m.reason === 'extinct'
+        ? `<b>extinct</b> at gen ${m.generation}` : `<b>done</b> — ${m.generation} generations`;
+    }
+  };
+  worker.onerror = (e) => {
+    $('banner').style.display = 'block';
+    $('banner').textContent = 'Worker error: ' + e.message +
+      ' — this page must be served over http, not opened as a file. Run: bun evolutionary-sim/eyesim/serve.mjs';
+    $('run').disabled = false; $('pause').disabled = true;
+  };
+  worker.postMessage({ type: 'start', config, liveEvery: Number($('live').value) });
+  $('run').disabled = true; $('pause').disabled = false;
+  $('pause').textContent = 'Pause';
+  $('status').textContent = 'starting…';
+}
+
+$('run').onclick = start;
+$('pause').onclick = () => {
+  if (!worker) return;
+  if ($('pause').textContent === 'Pause') {
+    worker.postMessage({ type: 'pause' });
+    $('pause').textContent = 'Resume';
+    $('status').textContent = 'paused';
+  } else {
+    worker.postMessage({ type: 'resume' });
+    $('pause').textContent = 'Pause';
+  }
+};
+$('live').onchange = e => worker?.postMessage({ type: 'live', every: Number(e.target.value) });
+$('zoo').oninput = e => $('zooV').textContent = Number(e.target.value).toFixed(2);
+$('cost').oninput = e => $('costV').textContent = Number(e.target.value).toFixed(2) + '×';
+$('kd').oninput = e => $('kdV').textContent = Number(e.target.value) > 0
+  ? Number(e.target.value).toFixed(2) : 'epoch';
+
+if (location.protocol === 'file:') {
+  $('banner').style.display = 'block';
+  $('banner').innerHTML = 'Opened as a <code>file://</code> URL — module workers are blocked. ' +
+    'Serve it instead: <code>bun evolutionary-sim/eyesim/serve.mjs</code>';
+}
+drawEye(null, null); drawScene(null);
+</script>
+</body>
+</html>

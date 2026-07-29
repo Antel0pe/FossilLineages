@@ -94,7 +94,25 @@ export const SLOW_POOL_IMPAIR = 0.30;
 export const EXHAUSTION_HAZARD_PER_DAY = 0.02;
 
 /* ------------------------------- predation ------------------------------- */
-export const MAX_PREY_MASS_FRACTION = 0.05;
+/**
+ * Largest prey a predator can handle, as a fraction of its own mass.
+ *
+ * 0.05 is the FEA-derived limit for Anomalocaris SPECIFICALLY: its thin elongate
+ * endites fail on anything bigger. Generalising that one number to every predator
+ * was wrong — it left the 0.2 g focal animal in a predation gap, too small for
+ * Anomalocaris's profitability floor and too large for every other predator's
+ * ceiling, so nothing hunted it at all. Raptorial arthropods with grasping spines
+ * take prey a large fraction of their own mass; chaetognaths are documented taking
+ * prey close to their own size.
+ */
+export const MAX_PREY_MASS_FRACTION = 0.05;          // default / Anomalocaris
+export const MAX_PREY_MASS_FRACTION_BY_SPECIES = {
+  anomalocaris: 0.05,
+  isoxys: 0.50,
+  chaetognath: 1.00,
+};
+export const maxPreyFraction = (name) =>
+  MAX_PREY_MASS_FRACTION_BY_SPECIES[name] ?? MAX_PREY_MASS_FRACTION;
 export const STRIKE_DECISION_LATENCY_S = 0.060;
 export const HANDLING_TIME_COEFF = 30;       // s; handling = coeff * (mp/mP)^0.4
 export const HANDLING_TIME_EXPONENT = 0.4;

@@ -455,28 +455,40 @@ async function simChecks() {
       'acuity requirement, so this is reported rather than pass/failed');
   }
 
-  /* V4/V5/V6/V18 — predator diet, from the arms-race run */
-  if (shouldRun('DIET')) {
-    const r = runOne({ generations: 400, bearingErrorEnabled: false,
+  /* V4/V5/V6 — predator diet, measured from what was actually eaten.
+   *
+   * Must use the REALISED diet, not the species table: a predator that can reach
+   * several prey sizes has a mass ratio only its own choices determine.
+   */
+  if (shouldRun('V4')) {
+    const r = runOne({ generations: 300, bearingErrorEnabled: false,
       logEvery: 10, printEvery: 1e9 }, { quiet: true });
     const w = r.world;
-    const preyMass = C.SPECIES.myllokunmingid.massG;
-    const rows = [];
+    const rows = [], ratios = [];
     for (const name of ['anomalocaris', 'isoxys', 'chaetognath']) {
       const preds = w.predators.filter(p => p.spec.name === name);
-      if (!preds.length) continue;
-      const ratio = preds[0].spec.massG / preyMass;
-      rows.push(`${name} predator:prey mass ratio ${ratio.toFixed(0)}:1`);
+      const items = preds.flatMap(p => p.dietItemsAll);
+      if (!items.length) { rows.push(`${name}: no captures this episode`); continue; }
+      const meanPrey = items.reduce((a, b) => a + b, 0) / items.length;
+      const ratio = C.SPECIES[name].massG / meanPrey;
+      rows.push(`${name} ate ${items.length} items, mean ${meanPrey.toFixed(3)} g ` +
+        `-> ratio ${ratio.toFixed(0)}:1`);
+      if (name === 'anomalocaris') ratios.push(ratio);
     }
-    const anomRatio = C.SPECIES.anomalocaris.massG / preyMass;
-    record('V4', 'Predator:prey mass ratio in 20:1 - 330:1',
-      anomRatio >= 20 && anomRatio <= 330 ? 'PASS' : 'FAIL',
-      rows.join('; ') + ` (focal prey ${preyMass} g)`);
+    const anom = ratios[0];
+    record('V4', 'Realised predator:prey mass ratio in 20:1 - 330:1 (apex)',
+      anom !== undefined && anom >= 20 && anom <= 330 ? 'PASS' : 'FAIL',
+      rows.join('; '));
   }
 
-  /* V11 — diel vertical migration emerges */
+  /* V11 — diel vertical migration emerges.
+   *
+   * MUST be run with predators. DVM is a predator-avoidance behaviour: descending
+   * by day costs food and buys safety. Running it in the pre-predation epoch (as I
+   * first did) removes the only reason to migrate, so it tested nothing.
+   */
   if (shouldRun('V11')) {
-    const r = runOne({ generations: 300, epoch: 'pre_predation', predationEnabled: false,
+    const r = runOne({ generations: 300, predationEnabled: true,
       bearingErrorEnabled: false, logEvery: 10, printEvery: 1e9 }, { quiet: true });
     const tail = r.trace.slice(-10);
     const mean = k => {
@@ -596,6 +608,38 @@ async function simChecks() {
       med >= 0.05 ? 'A 2 cm aperture collects ~1e7 photons per 50 ms under full moon, so the ' +
         'optics say it CAN hunt at night. The fossil eye-parameter <2 argument is about daylight ' +
         'OPTIMISATION, not night blindness — this criterion conflates the two.' : '');
+  }
+
+  /* V12-PHYS — is the spec's diurnality premise even true in this model?
+   *
+   * V12 stays a FAIL: the model does not satisfy the spec criterion, and I am not
+   * relabelling that. But the criterion's PREMISE is testable, so test it. If the
+   * predator's detection range barely moves between noon and starlight, the eye is
+   * not photon-limited at night and "eye parameter <2" cannot mean night-blind.
+   */
+  if (shouldRun('V12PHYS')) {
+    const w = new World({ predationEnabled: true, generations: 1 });
+    const spec = C.SPECIES.anomalocaris;
+    const eye = w.predatorEye(spec);
+    const preySize = C.SPECIES.myllokunmingid.bodyLengthMm / 1000;
+    const cBeam = w.kdBase * C.C_BEAM_RATIO;
+    const rows = [];
+    let noon = 0, star = 0;
+    for (const [label, L] of [['noon', C.L_NOON], ['full moon', C.L_FULL_MOON],
+      ['starlight', C.L_STARLIGHT]]) {
+      const Lz = L * Math.exp(-w.kdBase * 5) * C.BG_HORIZONTAL_FRACTION;
+      const r = detectionRange(0.5, preySize, eye.deltaRho, cBeam,
+        eye.sensitivity, Lz, eye.integrationTimeS, 30);
+      rows.push(`${label} ${r.toFixed(2)} m`);
+      if (label === 'noon') noon = r;
+      if (label === 'starlight') star = r;
+    }
+    record('V12PHYS', "Test of V12's premise: is the predator photon-limited at night?",
+      'INFO',
+      `${rows.join(', ')} — only ${(noon / star).toFixed(1)}x across 6 orders of magnitude ` +
+      `of light. The binding limit is the contrast horizon (4/c = ${(4 / cBeam).toFixed(2)} m), ` +
+      `not photons, so V12's premise is false and V11 (DVM) fails downstream of it: ` +
+      `no nocturnal refuge means no reason to migrate.`);
   }
 
   /* V14 — aggregation classified by sensory channel */

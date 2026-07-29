@@ -13,13 +13,19 @@ verify that by source inspection, and no Nilsson "class" appears in any branch.
 
 **The eye now reaches Nilsson class IV, in a world with no predators in it at all.**
 
-| Run | Predators | Δρ start → end | Class | Membrane layers | Integration time | Lens |
-|---|---|---|---|---|---|---|
-| **G** pre-predation | **none** | 180° → **0.243°** | 1 → **4** | 1 → **4000** | 600 s → **0.010 s** | 0 → **0.350** |
-| **F** arms race | yes | 180° → **0.654°** | 1 → **4** | 1 → 2777 | 600 s → 0.02 s | 0 → 0.350 |
+Current numbers, from the verification run in `logs/verify-v3.txt`:
 
-In run G, **97.1% of deaths are starvation, 2.9% UV, 0% predation.** The camera eye is built
+| Run | Predators | Δρ start → end | Class | Resolvable directions | Population |
+|---|---|---|---|---|---|
+| **V17/V2** pre-predation | **none** | 180° → **0.287°** | 1 → **4** | 1 → 30 | stable 34,105 |
+| **V7** arms race | yes | 180° → **0.702°** | 1 → **4** | — | stable |
+
+In the no-predator run, **predation deaths = 0; 2,624 starvation, 71 UV.** The camera eye is built
 entirely by foraging.
+
+Earlier drafts of this table quoted 0.243°/0.654° from a previous code state. Those are superseded;
+the endpoint moved slightly as the predation defects in §3b.6 were fixed. The qualitative result —
+flat patch to class IV, with zero predators — is unchanged throughout.
 
 ### Which endpoints are actually evidence — and which are circular
 
@@ -296,6 +302,92 @@ inside the spec band.
 
 V7 now runs 400 generations and measures the median over the last 25%, reporting the pre-vision
 value alongside it so the difference is visible rather than hidden.
+
+### 3b.5 Running the rest of the spec's verifiers found three more defects
+
+Implementing V1, V3, V4, V10–V14, V16, V19–V22 (previously unrun) surfaced problems that the
+partial suite had been hiding.
+
+**V4 — the apex predator was eating the wrong prey.** Realised diet measurement showed
+*Anomalocaris* taking 157,023 items averaging **0.211 g** — a **1184:1** mass ratio, far outside
+the 20:1–330:1 the energy ledger predicts. Two causes, both mine:
+
+1. The spec makes *Isoxys* "visual mesopredator **AND** prey of *Anomalocaris*" and calls that
+   three-level structure "the engine". I had implemented *Isoxys* as predator-only, so the apex
+   had nothing to hunt but the 0.2 g focal species.
+2. I applied the spec's profitability floor (0.3% of predator mass) to the predator-on-predator
+   path but **not** to the focal path, so a 250 g animal kept hunting 0.2 g prey it should ignore.
+
+Fixed both. *Anomalocaris* now takes 2,200 items averaging **1.000 g → 250:1, inside the band** —
+and it switched to *Isoxys* on its own, from the profitability floor rather than a diet list.
+
+**A predator population that could only ever shrink.** The fix above immediately exposed the next
+one: `p.count = Math.max(1, p.count)` meant predator numbers were floored but never grew. As soon
+as *Anomalocaris* began taking *Isoxys* it ate the entire mesopredator population to extinction,
+and predation on the focal species stopped altogether — V7 and V12 started reporting *no captures*.
+Predators are environment, not the species under study, so their abundance should track carrying
+capacity: they now relax toward their spec density at a rate set by their own body condition, and
+a locally extirpated species recolonises from the surrounding shelf.
+
+**V11/V12 are one failure, not two.** V12 (predator diurnality) fails, and I checked its premise
+rather than arguing about it. Computed from the model's own optics, *Anomalocaris*'s detection
+range across six orders of magnitude of light:
+
+| noon | full moon | starlight |
+|---|---|---|
+| 3.94 m | 2.04 m | 1.31 m |
+
+**Only 3× — the binding constraint is the contrast horizon (4/c = 2.08 m), not photons.** A 2 cm
+aperture with a 0.05 s integration is not photon-limited at night. The fossil "eye parameter < 2"
+argument says the eye was *optimised* for daylight acuity; it does not say the animal was blind
+after dark, and V12 conflates the two. **V11 (diel vertical migration) then fails downstream:** with
+no nocturnal refuge there is no reason to migrate. V12 stays recorded as a FAIL — I am not
+relabelling a failure — with `V12PHYS` reporting the numbers alongside it.
+
+### 3b.6 Chasing V7 down found four more defects, and then a structural answer
+
+V7's numbers contained a clue I initially under-read: **pre-vision 0.605, equilibrium 0.604 —
+identical.** Prey vision was having *zero* effect on capture success. Computing the evolved eye's
+detection range on a predator showed it could see one at **2.72 m**, losing only 0.031 m to
+reaction latency, so capture probability against the focal species should have been ~0.004. The
+0.604 was coming from somewhere else. Four defects, each exposed by fixing the previous one:
+
+1. **A hard-coded capture rate.** I had written `if (!a.genome) return 0.6` for non-focal victims.
+   Once *Anomalocaris* switched to eating *Isoxys*, that constant *was* the measured capture rate.
+   It is now derived from the same escape curve using the victim's mechanosensory range.
+2. **The metric mixed two different quantities.** Capture success now reports the **focal species**
+   specifically (`captureSuccessAllPrey` retained separately); the all-victim figure is dominated by
+   the apex taking *Isoxys* and says nothing about prey vision.
+3. **A predation gap.** With the profitability floor applied consistently, the 0.2 g focal animal
+   was too small for *Anomalocaris* (floor 0.75 g) and too large for every other predator
+   (ceiling 0.05 g) — nothing hunted it at all. Cause: I had generalised
+   `MAX_PREY_MASS_FRACTION = 0.05` to every predator, when that number is the **FEA-derived limit
+   for *Anomalocaris*'s thin endites specifically**. It is now per-species.
+4. **Kills were not limited by digestive capacity.** A super-individual strike killed ~57 prey while
+   the gut cap truncated only the *stored* energy — the rest were killed and wasted, taking 83% of
+   the focal population per episode. Digestive room now throttles how many individuals **strike**,
+   which is both physically right and the correct denominator for capture success.
+
+**With all four fixed, the ecosystem is stable and the causal chain is visible:**
+
+| generation | 0 | 20 | 40 | 60 | 109 |
+|---|---|---|---|---|---|
+| Δρ | 180° | 25.05° | 1.85° | 0.66° | **0.61°** |
+| **capture success** | **0.672** | **0.271** | 0.089 | 0.068 | **0.047** |
+| predation, % of deaths | 8.2% | 2.8% | 2.2% | 1.7% | 1.2% |
+| population | 27,729 | 40,302 | 39,452 | 41,007 | 41,470 |
+
+**Capture success falls from 0.67 to 0.047 as the eye sharpens from 180° to 0.61°** — prey vision
+eroding predator success, which is exactly the causal chain the model is supposed to contain, and
+it is not something any term in the code asserts.
+
+**Why V7 still fails, structurally.** The trajectory passes *through* the spec's 0.15–0.35 band
+around generation 20–30 and keeps going. That band describes a **co-evolved** predator–prey system.
+In this build the predators' eyes are **fixed at measured fossil values by design** (build spec
+§7.2, which itself notes "the arms race in this build is one-sided"), so prey improve indefinitely
+and predators cannot answer. Equilibrium capture success of 0.047 is the correct outcome *of a
+one-sided arms race*. V7 cannot be satisfied until predator eyes co-evolve — that is the fix, and
+it is a scope change, not a tuning problem.
 
 ---
 

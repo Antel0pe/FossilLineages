@@ -90,3 +90,9 @@ excitingly ambitious versions of this
     - encode my bias
     - often dont change so the whole simulation does weird things based on my bias
     - a solution might be to allow them to change and let simulation discover accurate values for them. but how is the big question
+
+for simple evo sim
+- run each breed step far longer since predators tracking but dont always have enough time to catch
+- reduce world so catching is easier
+- allow choosing to step less than max distance for predators
+- design a system such that you can have ai tune a parameter/bevhaior by spinning up multiple parallel instances seeing how the value changes then either converging or spawning a new sim with a different guess as best parameter value until it doesnt oscillate much. some parameters might inherently osciliate like lotka equations

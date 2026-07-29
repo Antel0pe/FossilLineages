@@ -24,6 +24,16 @@ import {
 } from './optics.mjs';
 
 const SEC_PER_METABOLIC_DAY = 86400;
+// Handling time makes prey below this fraction of predator mass unprofitable
+// (build spec 9.5: a 250 g Anomalocaris ignores prey under 0.75 g).
+const MIN_PREY_MASS_FRACTION = 0.003;
+// Per-generation fraction of the shortfall a predator population makes up when
+// in good condition. Predators are environment; this keeps their abundance set
+// by carrying capacity instead of letting them ratchet to zero.
+const PREDATOR_RECOVERY_RATE = 0.25;
+// Escape curve: capture probability decays e-fold per ESCAPE_SCALE_M of warning.
+const CAPTURE_BASE = 0.75;
+const ESCAPE_SCALE_M = 0.5;
 const PI = Math.PI;
 
 export const DEFAULTS = {
@@ -205,7 +215,7 @@ export class World {
       slowPool: C.SLOW_POOL_CAPACITY,
       lockoutUntilS: -1,
       eye: spec.fixedEye ? this.predatorEye(spec) : null,
-      attacks: 0, captures: 0, dietJ: 0, dietItems: [],
+      attacks: 0, captures: 0, dietJ: 0, dietItems: [], dietItemsAll: [],
       alive: true,
     };
   }
@@ -262,10 +272,17 @@ export class World {
     return this;
   }
 
-  runEpisode(steps) {
+  /**
+   * @param {number} steps
+   * @param {(stepIndex:number)=>void} [onStep] optional per-step hook, used by the
+   *   viewer to sample agent positions mid-episode. Omitting it leaves behaviour
+   *   byte-for-byte unchanged for run.mjs and verify.mjs.
+   */
+  runEpisode(steps, onStep) {
     const cfg = this.cfg;
     this.episodeStats = {
       capturesByPred: {}, attacksByPred: {}, dietByPred: {},
+      attacksFocal: 0, capturesFocal: 0,
       focalDeaths: { starvation: 0, predation: 0, uv: 0, exhaustion: 0 },
       depthByHour: new Array(22).fill(0), depthCountByHour: new Array(22).fill(0),
       capturesByHour: new Array(22).fill(0),
@@ -287,6 +304,7 @@ export class World {
       if (cfg.predationEnabled) this.stepPredators(cfg.dtS);
       this.resources.step(cfg.dtS);
       this.resources.maybeReseed(cfg.dtS);
+      if (onStep) onStep(s);
     }
     this.focal = this.focal.filter(a => a.alive && a.count > 0);
     this.predators = this.predators.filter(p => p.alive && p.count > 0);
@@ -586,27 +604,45 @@ export class World {
       if (canAttack) {
         const target = this.findPrey(p, cBeam);
         if (target) {
-          p.attacks += p.count;
-          st.attacksByPred[spec.name] = (st.attacksByPred[spec.name] || 0) + p.count;
+          // Focal agents carry massG directly; a smaller predator species carries
+          // it on its spec.
+          const tgtMass = target.agent.massG ?? target.agent.spec.massG;
+
+          // Digestive capacity throttles how many individuals in this
+          // super-individual actually STRIKE, not how many of their strikes
+          // succeed. Truncating the catch instead made satiated predators look
+          // like they were missing, so capture success measured the gut rather
+          // than the chase — and, before that, let one strike kill dozens of prey
+          // and waste all but a gut-full, which drove the focal species extinct.
+          const perPreyJ = tgtMass * C.E_SOFT_PELAGIC * spec.assimilation;
+          const gutRoomJ = Math.max(0, p.gutMaxJ * p.count - p.gutJ);
+          const attackers = Math.min(p.count,
+            Math.floor(gutRoomJ / Math.max(perPreyJ, 1e-9)));
+          if (attackers <= 0) { p.lockoutUntilS = this.timeS + 60; continue; }
+
+          if (target.agent.genome) st.attacksFocal += attackers;
+          p.attacks += attackers;
+          st.attacksByPred[spec.name] = (st.attacksByPred[spec.name] || 0) + attackers;
           const pCapture = this.captureProbability(p, target, cBeam);
-          const caught = this.rng.binomial(p.count, pCapture);
+          const caught = this.rng.binomial(attackers, pCapture);
           if (caught > 0) {
             const taken = Math.min(target.agent.count, caught);
             target.agent.count -= taken;
-            st.focalDeaths.predation += taken;
+            if (target.agent.genome) { st.focalDeaths.predation += taken; st.capturesFocal += taken; }
             st.capturesByHour[Math.floor(light.hourOfDay)] += taken;
-            const energy = taken * target.agent.massG * C.E_SOFT_PELAGIC * spec.assimilation;
+            const energy = taken * tgtMass * C.E_SOFT_PELAGIC * spec.assimilation;
             p.gutJ = Math.min(p.gutMaxJ * p.count, p.gutJ + energy);
             p.captures += taken;
             p.dietJ += energy;
-            p.dietItems.push(target.agent.massG);
+            p.dietItems.push(tgtMass);
+            p.dietItemsAll.push(tgtMass);
             st.capturesByPred[spec.name] = (st.capturesByPred[spec.name] || 0) + taken;
             st.dietByPred[spec.name] = (st.dietByPred[spec.name] || 0) + energy;
             if (target.agent.count <= 0) target.agent.alive = false;
           }
           p.fastPool -= 1; p.slowPool -= 1;
           const handling = cfg.handlingTimeCoeff *
-            Math.pow(target.agent.massG / spec.massG, C.HANDLING_TIME_EXPONENT);
+            Math.pow(tgtMass / spec.massG, C.HANDLING_TIME_EXPONENT);
           p.lockoutUntilS = this.timeS + handling + C.POST_CAPTURE_LOCKOUT_S;
           p.reserveJ -= C.BURST_COST_MULT * p.smrJDay * (spec.burstDurationS / SEC_PER_METABOLIC_DAY) * p.count;
         }
@@ -615,8 +651,13 @@ export class World {
       // Most of a predator's ration comes from prey outside the modelled focal
       // population. Without this subsidy the predators must over-harvest the focal
       // species or starve, and neither matches the Cambrian food web.
+      // The subsidy must arrive as FOOD, into the gut, not as free reserve energy.
+      // Routing it straight to reserves left the predator permanently unhungry yet
+      // never satiated, so nothing throttled its kill rate: Isoxys was killing ~35x
+      // more focal prey than it needed and wiping the population out in one episode.
       const requiredJ = p.smrJDay * C.FMR_MULT * dtDays * p.count;
-      p.reserveJ += C.ALTERNATIVE_PREY_FRACTION * requiredJ;
+      const gutRoom = Math.max(0, p.gutMaxJ * p.count - p.gutJ);
+      p.gutJ += Math.min(gutRoom, C.ALTERNATIVE_PREY_FRACTION * requiredJ / p.spec.assimilation);
 
       const digested = p.gutJ * (1 - Math.exp(-p.gutEvacRate * dt));
       p.gutJ -= digested;
@@ -640,11 +681,38 @@ export class World {
     const eye = p.eye;
     let best = null, bestD = Infinity;
     const searchRadius = eye ? 8 : C.MECHANO_RANGE_BL * p.spec.bodyLengthMm / 1000;
+
+    // A large predator also hunts the smaller PREDATOR species. Isoxys is both a
+    // visual mesopredator and Anomalocaris prey — the spec calls that three-level
+    // structure the engine of the arms race, and modelling Isoxys as predator-only
+    // left Anomalocaris hunting a 0.2 g focal animal at a 1250:1 mass ratio, far
+    // outside the 20:1-330:1 the energy ledger predicts.
+    this.predHash.forEachNear(p.x, p.y, searchRadius, (q) => {
+      if (q === p || !q.alive || q.count <= 0) return;
+      if (q.spec.massG > p.spec.massG * C.maxPreyFraction(p.spec.name)) return;
+      if (q.spec.massG < p.spec.massG * MIN_PREY_MASS_FRACTION) return;
+      const d = Math.hypot(q.x - p.x, q.y - p.y);
+      if (d > searchRadius || d >= bestD) return;
+      if (!eye) { best = q; bestD = d; return; }
+      const lookingDown = p.z < q.z;
+      const dir = lookingDown ? 'down' : 'up';
+      const cInh = inherentContrast(0.35, dir);
+      const bg = light.backgroundRadiance(p.z, dir);
+      const photons = photonCatch(eye.sensitivity, bg, eye.integrationTimeS);
+      const cEff = effectiveContrast(cInh, Math.max(d, 0.05),
+        q.spec.bodyLengthMm / 1000, eye.deltaRho, cBeam);
+      if (detects(cEff, photons)) { best = q; bestD = d; }
+    });
+
     this.focalHash.forEachNear(p.x, p.y, searchRadius, (a) => {
       if (!a.alive || a.count <= 0) return;
       const d = Math.hypot(a.x - p.x, a.y - p.y);
       if (d > searchRadius || d >= bestD) return;
-      if (a.massG > p.spec.massG * C.MAX_PREY_MASS_FRACTION) return;
+      if (a.massG > p.spec.massG * C.maxPreyFraction(p.spec.name)) return;
+      // Same profitability floor as the predator-on-predator path above. Applying
+      // it to only one of the two made a 250 g Anomalocaris hunt 0.2 g prey at a
+      // 1184:1 mass ratio while ignoring the 1 g Isoxys it should prefer.
+      if (a.massG < p.spec.massG * MIN_PREY_MASS_FRACTION) return;
       if (!eye) {                                    // blind predator: contact only
         best = a; bestD = d;
         return;
@@ -669,6 +737,15 @@ export class World {
    */
   captureProbability(p, target, cBeam) {
     const a = target.agent;
+    // A non-focal victim (a smaller predator species) has no evolved eye, so it
+    // gets the mechanosensory warning only — but that warning is still DERIVED
+    // from its body size through the same escape curve, not asserted. A bare
+    // constant here silently became the dominant term in the measured capture
+    // rate once Anomalocaris switched to eating Isoxys.
+    if (!a.genome) {
+      const warn = C.MECHANO_RANGE_BL * a.spec.bodyLengthMm / 1000;
+      return Math.max(0.01, CAPTURE_BASE * Math.exp(-warn / ESCAPE_SCALE_M));
+    }
     const spec = C.SPECIES.myllokunmingid;
     const mechanoWarning = C.MECHANO_RANGE_BL * spec.bodyLengthMm / 1000;   // ~0.05 m
     let warning = mechanoWarning;
@@ -684,11 +761,10 @@ export class World {
       const latency = Math.min(a.genome.integrationTimeS, 2.0) + C.MECHANO_LATENCY_S;
       warning = Math.max(warning, r - closing * latency);
     }
-    const escapeScale = 0.5;                       // m of warning per e-fold
-    const base = 0.75;
+
     const impair = Math.max(0.3, Math.min(1, a.reserveJ / (a.reserveMaxJ * a.count + 1e-9)
       / C.IMPAIRMENT_THRESHOLD));
-    return Math.max(0.01, base * Math.exp(-Math.max(0, warning) / escapeScale) * impair);
+    return Math.max(0.01, CAPTURE_BASE * Math.exp(-Math.max(0, warning) / ESCAPE_SCALE_M) * impair);
   }
 
   currentPO2() {
@@ -753,13 +829,43 @@ export class World {
     }
     this.focal = this.resample(agents, cfg.maxFocalAgents);
 
-    // Predators recover toward their density if prey allows; they persist as a
-    // pressure rather than being re-seeded from nothing.
+    // Predators are ENVIRONMENT, not the species under study, so their abundance
+    // should be set by the shelf's carrying capacity. Previously they could only
+    // ever decline (count was merely floored at 1), so once Anomalocaris began
+    // taking Isoxys it ate the whole mesopredator population to extinction and
+    // predation on the focal species stopped altogether.
+    //
+    // They now relax toward their spec density at a rate set by their own
+    // condition, and a species wiped out locally recolonises from the surrounding
+    // shelf — which for an open, well-connected Cambrian shelf is the realistic
+    // boundary condition.
     if (cfg.predationEnabled) {
       for (const p of this.predators) {
         p.attacks = 0; p.captures = 0; p.dietJ = 0; p.dietItems = [];
-        p.count = Math.max(1, p.count);
       }
+      for (const name of this.epoch.predators) {
+        const spec = C.SPECIES[name];
+        const target = Math.max(1, Math.round(spec.densityPerM2 * this.arenaArea));
+        const members = this.predators.filter(p => p.spec.name === name && p.count > 0);
+        const current = members.reduce((s, p) => s + p.count, 0);
+        if (current >= target) continue;
+
+        if (!members.length) {                       // recolonisation
+          const K = cfg.predK[name] ?? 1;
+          const seed = this.makePredator(spec, Math.max(1, Math.round(target * 0.1)));
+          this.predators.push(seed);
+          continue;
+        }
+        // Growth scales with mean body condition: well-fed predators recruit.
+        const condition = members.reduce(
+          (s, p) => s + p.reserveJ / (p.reserveMaxJ * p.count + 1e-9), 0) / members.length;
+        const grow = Math.round((target - current)
+          * PREDATOR_RECOVERY_RATE * Math.max(0, Math.min(1, condition)));
+        if (grow <= 0) continue;
+        const per = grow / members.length;
+        for (const p of members) p.count = Math.round(p.count + per);
+      }
+      this.predators = this.predators.filter(p => p.count > 0);
       if (this.predators.length === 0) this.initPredators();
     }
   }
@@ -845,7 +951,10 @@ export class World {
       genes: geneStats,
       deaths: { ...st.focalDeaths },
       attacks, captures,
-      captureSuccess: attacks > 0 ? captures / attacks : null,
+      // Capture success ON THE FOCAL SPECIES. The all-victim figure is dominated
+      // by Anomalocaris taking Isoxys and says nothing about prey vision.
+      captureSuccess: st.attacksFocal > 0 ? st.capturesFocal / st.attacksFocal : null,
+      captureSuccessAllPrey: attacks > 0 ? captures / attacks : null,
       nightCaptureFraction: totalCaptures > 0 ? nightCaptures / totalCaptures : null,
       meanDepthDay: mean(depthDay), meanDepthNight: mean(depthNight),
       patchDetectFraction: st.patchTimeTotal ? st.patchTimeDetected / st.patchTimeTotal : 0,

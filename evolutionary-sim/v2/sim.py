@@ -25,7 +25,9 @@ def distance(a, b):
 
 
 def wrap_position(value):
-    return round(value, 2) % WORLD_SIZE
+    # wrap first, then round — rounding first leaves float dust on negatives.
+    # the outer modulo catches 99.999 rounding up to a full 100.0
+    return round(value % WORLD_SIZE, 2) % WORLD_SIZE
 
 
 def random_position():
@@ -34,13 +36,6 @@ def random_position():
 
 def living_prey(prey_list):
     return [p for p in prey_list if p.alive]
-
-
-def print_population(prey_list, predators):
-    for prey in prey_list:
-        print(f"  {prey.name}: {prey.speed:.3f}")
-    for predator in predators:
-        print(f"  {predator.name}: {predator.speed:.3f}")
 
 
 def mutate(speed):
@@ -146,23 +141,24 @@ def sim_step(prey_list, predators):
     new_prey = [p.copy() for p in prey_list]
     new_predators = [p.copy() for p in predators]
 
-    # for prey in living_prey(new_prey):
-    #     prey.move(old_predators)
+    for prey in living_prey(new_prey):
+        prey.move(old_predators)
     for predator in new_predators:
         predator.move(old_prey)
 
+    catches = []
     for predator in new_predators:
         for prey in living_prey(new_prey):
             if distance(predator, prey) <= CATCH_DISTANCE:
                 prey.alive = False
                 predator.catches += 1
-                print(f"  {predator.name} caught {prey.name}")
+                catches.append(f"{predator.name} caught {prey.name}")
                 break
 
     for prey in living_prey(new_prey):
         prey.survival_time += 1
 
-    return new_prey, new_predators
+    return new_prey, new_predators, catches
 
 
 def repopulate(prey_list, predators, predator_speeds, prey_speeds):
@@ -172,17 +168,8 @@ def repopulate(prey_list, predators, predator_speeds, prey_speeds):
     predator_speeds.append(best_predator.speed)
     prey_speeds.append(best_prey.speed)
 
-    print(
-        f"new breed population started "
-        f"(predator base: {best_predator.name} speed {best_predator.speed:.3f}, "
-        f"{best_predator.catches} catches | "
-        f"prey base: {best_prey.name} speed {best_prey.speed:.3f}, "
-        f"survived {best_prey.survival_time} steps)"
-    )
-
     new_predators = [best_predator.breed(f"predator {i + 1}") for i in range(POPULATION)]
     new_prey = [best_prey.breed(f"prey {i + 1}") for i in range(POPULATION)]
-    print_population(new_prey, new_predators)
     return new_prey, new_predators
 
 
@@ -190,16 +177,14 @@ def main():
     prey_list = [Prey.init(f"prey {i + 1}") for i in range(POPULATION)]
     predators = [Predator.init(f"predator {i + 1}") for i in range(POPULATION)]
 
-    print("starting population")
-    print_population(prey_list, predators)
-
     predator_speeds = []
     prey_speeds = []
 
     step = 0
     while step < TOTAL_STEPS:
-        print(f"step {step}")
-        prey_list, predators = sim_step(prey_list, predators)
+        prey_list, predators, catches = sim_step(prey_list, predators)
+        for line in catches:
+            print(line)
 
         step += 1
         if step % GENERATION_LENGTH == 0:
