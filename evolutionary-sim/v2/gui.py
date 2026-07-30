@@ -11,9 +11,11 @@ import os
 
 import sim
 
-SCALE = 7  # pixels per world unit -> 700x700 board
+BOARD_PX = 700  # board is always this wide, whatever WORLD_SIZE is
+SCALE = BOARD_PX / sim.WORLD_SIZE  # pixels per world unit
 DOT = 4  # dot radius in pixels
 PANEL = 110  # pixels of text below the board
+MAX_SPEEDS_SHOWN = 12  # populations grow, so the speed lines have to stop somewhere
 FRAME_DELAY_MS = 300
 
 BACKGROUND = "#111418"
@@ -29,44 +31,47 @@ class Sim:
     """Owns the same loop as sim.main(), one step at a time."""
 
     def __init__(self):
-        self.prey = [sim.Prey.init(f"prey {i + 1}") for i in range(sim.POPULATION)]
+        sim.reset_names()
+        self.prey = [sim.Prey.init(sim.next_name("prey")) for _ in range(sim.POPULATION)]
         self.predators = [
-            sim.Predator.init(f"predator {i + 1}") for i in range(sim.POPULATION)
+            sim.Predator.init(sim.next_name("predator")) for _ in range(sim.POPULATION)
         ]
         self.predator_speeds = []
         self.prey_speeds = []
         self.step = 0
+        self.extinct = False
 
     def advance(self):
         """Run one step; return a plain-data frame describing it."""
         self.prey, self.predators, catches = sim.sim_step(self.prey, self.predators)
+        self.step += 1
 
-        frame = {
-            "step": self.step,
+        catches += sim.reproduce_prey(self.prey)
+        catches += sim.starve_predators(self.predators)
+
+        live_prey = sim.living(self.prey)
+        live_predators = sim.living(self.predators)
+        self.prey_speeds.append(sim.average_speed(self.prey))
+        self.predator_speeds.append(sim.average_speed(self.predators))
+        self.extinct = not live_prey or not live_predators
+
+        return {
+            "step": self.step - 1,
             "prey": [
-                {"x": p.x, "y": p.y, "speed": round(p.speed, 2), "alive": p.alive}
-                for p in self.prey
+                {"x": p.x, "y": p.y, "speed": round(p.speed, 2), "alive": True}
+                for p in live_prey
             ],
             "predators": [
                 {"x": p.x, "y": p.y, "speed": round(p.speed, 2), "alive": True}
-                for p in self.predators
+                for p in live_predators
             ],
             "catches": catches,
-            "breed_prey": f"{self.prey_speeds[-1]:.2f}" if self.prey_speeds else "initial",
-            "breed_predator": (
-                f"{self.predator_speeds[-1]:.2f}" if self.predator_speeds else "initial"
-            ),
+            "breed_prey": f"{sim.average_speed(self.prey):.2f}",
+            "breed_predator": f"{sim.average_speed(self.predators):.2f}",
         }
 
-        self.step += 1
-        if self.step % sim.GENERATION_LENGTH == 0:
-            self.prey, self.predators = sim.repopulate(
-                self.prey, self.predators, self.predator_speeds, self.prey_speeds
-            )
-        return frame
-
     def done(self):
-        return self.step >= sim.TOTAL_STEPS
+        return self.extinct or self.step >= sim.TOTAL_STEPS
 
     def collect(self):
         frames = []
@@ -102,7 +107,7 @@ def load_font(size):
 def draw_speeds(d, x, y, label, animals, font):
     d.text((x, y), label, font=font, fill=TEXT_COLOR)
     x += d.textlength(label, font=font)
-    for a in animals:
+    for a in animals[:MAX_SPEEDS_SHOWN]:
         text = f"{a['speed']:.2f} "
         d.text((x, y), text, font=font, fill=TEXT_COLOR if a["alive"] else DEAD_COLOR)
         width = d.textlength(text, font=font)
@@ -110,13 +115,15 @@ def draw_speeds(d, x, y, label, animals, font):
             mid = y + font.size / 2
             d.line([(x, mid), (x + width - 4, mid)], fill=DEAD_COLOR, width=1)
         x += width
+    if len(animals) > MAX_SPEEDS_SHOWN:
+        d.text((x, y), f"+{len(animals) - MAX_SPEEDS_SHOWN}", font=font, fill=DEAD_COLOR)
 
 
 def render(frame):
     from PIL import Image, ImageDraw
 
     font = load_font(14)
-    board = sim.WORLD_SIZE * SCALE
+    board = BOARD_PX
     img = Image.new("RGB", (board, board + PANEL), BACKGROUND)
     d = ImageDraw.Draw(img)
 
@@ -136,7 +143,7 @@ def render(frame):
     d.text((8, y), f"step {frame['step']}", font=font, fill=TEXT_COLOR)
     d.text(
         (90, y),
-        f"breeding step. prey: {frame['breed_prey']} "
+        f"avg speed. prey: {frame['breed_prey']} "
         f"predator: {frame['breed_predator']}",
         font=font,
         fill=TEXT_COLOR,
@@ -176,7 +183,7 @@ HTML = """<!doctype html>
 <div class="catch" id="catches"></div>
 <script>
 const FRAMES = %(frames)s;
-const SCALE = %(scale)d, DOT = %(dot)d, WORLD = %(world)d;
+const SCALE = %(scale)s, DOT = %(dot)d, WORLD = %(world)d;
 const ctx = document.getElementById('c').getContext('2d');
 let i = 0, playing = true;
 
@@ -205,7 +212,8 @@ function paint(){
   }
   document.getElementById('stepLabel').textContent = 'step ' + f.step;
   document.getElementById('breed').textContent =
-    'breeding step. prey: ' + f.breed_prey + ' predator: ' + f.breed_predator;
+    'avg speed. prey: ' + f.breed_prey + ' predator: ' + f.breed_predator
+    + '   |   alive  prey: ' + f.prey.length + '  predators: ' + f.predators.length;
   document.getElementById('preySpeeds').innerHTML = speeds(f.prey);
   document.getElementById('predSpeeds').innerHTML = speeds(f.predators);
   document.getElementById('catches').textContent = f.catches.join('   ');
@@ -234,7 +242,7 @@ def run_html(path):
             HTML
             % {
                 "frames": json.dumps(frames),
-                "board": sim.WORLD_SIZE * SCALE,
+                "board": BOARD_PX,
                 "scale": SCALE,
                 "dot": DOT,
                 "world": sim.WORLD_SIZE,
