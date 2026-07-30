@@ -1,15 +1,16 @@
 import math
 import random
 
-WORLD_SIZE = 100
-MIN_SPEED = 0.75
-MAX_SPEED = 1.25
+WORLD_SIZE = 50
+MIN_SPEED = 0.95
+MAX_SPEED = 1.05
 SPEED_CAP = 5
 CATCH_DISTANCE = 0.5
-MUTATION = 0.01
+MUTATION = 0.05
 POPULATION = 10
-GENERATION_LENGTH = 10
-TOTAL_STEPS = 100
+GENERATION_LENGTH = 100
+TOTAL_GENERATIONS = 10
+TOTAL_STEPS = GENERATION_LENGTH * TOTAL_GENERATIONS
 
 
 def wrapped_delta(start, end):
@@ -67,10 +68,10 @@ class Prey:
         clone.survival_time = self.survival_time
         return clone
 
-    def breed(self, name):
+    def breed(self, name, speed):
         return Prey(
             name,
-            mutate(self.speed),
+            mutate(speed),
             random_position(),
             random_position(),
         )
@@ -111,10 +112,10 @@ class Predator:
         clone.catches = self.catches
         return clone
 
-    def breed(self, name):
+    def breed(self, name, speed):
         return Predator(
             name,
-            mutate(self.speed),
+            mutate(speed),
             random_position(),
             random_position(),
         )
@@ -161,15 +162,42 @@ def sim_step(prey_list, predators):
     return new_prey, new_predators, catches
 
 
+def pair_up(animals):
+    """Pair animals two at a time at random. An odd one out is left unpaired."""
+    if len(animals) == 1:  # nobody to pair with, so it breeds with itself
+        return [(animals[0], animals[0])]
+    shuffled = list(animals)  # a copy, so the caller's list keeps its order
+    random.shuffle(shuffled)
+    return list(zip(shuffled[::2], shuffled[1::2]))
+
+
+def breed_pairs(pairs, prefix):
+    """Fill a population from the pairs, cycling through them in turn.
+
+    Returns the children and each pair's averaged speed.
+    """
+    pair_speeds = [(a.speed + b.speed) / 2 for a, b in pairs]
+    children = []
+    for i in range(POPULATION):
+        parent = pairs[i % len(pairs)][0]
+        children.append(parent.breed(f"{prefix} {i + 1}", pair_speeds[i % len(pairs)]))
+    return children, pair_speeds
+
+
 def repopulate(prey_list, predators, predator_speeds, prey_speeds):
-    best_predator = max(predators, key=lambda p: p.catches)
-    best_prey = max(prey_list, key=lambda p: p.survival_time)
+    prey_pairs = pair_up(living_prey(prey_list))
+    predator_pairs = pair_up(predators)
 
-    predator_speeds.append(best_predator.speed)
-    prey_speeds.append(best_prey.speed)
+    if not prey_pairs:  # everything got eaten, so start the prey over
+        new_prey = [Prey.init(f"prey {i + 1}") for i in range(POPULATION)]
+        prey_pair_speeds = [p.speed for p in new_prey]
+    else:
+        new_prey, prey_pair_speeds = breed_pairs(prey_pairs, "prey")
 
-    new_predators = [best_predator.breed(f"predator {i + 1}") for i in range(POPULATION)]
-    new_prey = [best_prey.breed(f"prey {i + 1}") for i in range(POPULATION)]
+    new_predators, predator_pair_speeds = breed_pairs(predator_pairs, "predator")
+
+    prey_speeds.append(sum(prey_pair_speeds) / len(prey_pair_speeds))
+    predator_speeds.append(sum(predator_pair_speeds) / len(predator_pair_speeds))
     return new_prey, new_predators
 
 

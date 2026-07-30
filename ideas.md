@@ -95,4 +95,5 @@ for simple evo sim
 - run each breed step far longer since predators tracking but dont always have enough time to catch
 - reduce world so catching is easier
 - allow choosing to step less than max distance for predators
+
 - design a system such that you can have ai tune a parameter/bevhaior by spinning up multiple parallel instances seeing how the value changes then either converging or spawning a new sim with a different guess as best parameter value until it doesnt oscillate much. some parameters might inherently osciliate like lotka equations

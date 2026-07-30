@@ -45,6 +45,28 @@ An earlier draft of this report called these "three independent matches". That w
 
 ---
 
+## 1b. Replication — 5 seeds per condition
+
+Every number in earlier drafts came from seed 1, which I flagged as the biggest remaining
+weakness: a headline result resting on one seed is not a result. 250 generations,
+pre-predation epoch, no predators, 5 seeds each.
+
+| | seed 1 | 2 | 3 | 4 | 5 | outcome |
+|---|---|---|---|---|---|---|
+| **Particulate prey present**, Δρ | 0.287° | 0.237° | 0.227° | 0.282° | **0.335°** | **class IV in 5/5** |
+| **No particulate prey**, Δρ | 54.29° | 30.45° | 44.82° | 41.91° | **17.92°** | **class II–III in 5/5** |
+
+**The two conditions do not overlap.** The worst run with particles (0.335°) is **53× sharper** than
+the best run without (17.92°). Populations were stable in all ten runs (31,232–34,348).
+
+So the central claim is replicated rather than anecdotal: the class III → IV step requires small
+discrete targets, and given them the camera eye appears **every time**, in a world with no
+predators in it.
+
+Traces: `logs/R1-headline_*` and `logs/R2-nozoo_*`.
+
+---
+
 ## 2. How I got there — the experiment chain
 
 This is the part that matters, because the first build did *not* work: it stalled at class III
