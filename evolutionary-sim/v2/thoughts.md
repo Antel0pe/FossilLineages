@@ -26,3 +26,9 @@ Learnings
 Untested Ideas
 - some sort of counter parameter to unchecked growth like a parameter of how they monopolize food source
     - constant amount of plants/base energy available. prey have specific values and from highest to lowest they get the energy they need otherwise they starve. does add another parameter to evolve and muddy effect of speed trait. whats different from saying a hard cap or dying on some timer? purpose is to allow successful prey to survive longer
+
+
+Principles
+1. A large fraction of each cohort must fail to reproduce — think 30–70%
+2. That failure must be caused by the trait, not by a random cull
+3. Selection differential × mortality > mutation sd

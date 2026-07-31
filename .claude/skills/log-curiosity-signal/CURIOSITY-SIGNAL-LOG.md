@@ -637,3 +637,27 @@ This is the highest-information single message in the log about what the sim is 
   interesting item on his own list and the only thing he has worked on. Run #2 on the current sim as-is to
   convert nine days of tuning into a result, then attack #4 with a deliberately stupid world. His reaction
   to this is the next datapoint.
+
+## 2026-07-30
+
+- **[idea — floated, uncommitted]** Asked out of nowhere: "what are simple examples of bacterial
+  evolution from early in life's history". Context: no stated purpose; comes after nine days on the
+  eye-evolution sim and the 2026-07-27 list where the *simulator* (not the eye) looked like the real
+  subject. Claude's read, explicitly a guess: this is a hunt for a **cheaper test organism** — a
+  turning point simple enough that a sim could actually produce it, unlike the camera eye. If so it
+  matches recommendation #2/#4 from 2026-07-27 (stop rescuing the eye; pick a target that doesn't
+  need rescuing) rather than being a new *content* direction for the site. Alternative reading, also
+  a guess: a genuinely new subject area (microbial/early-life turning points) outside the
+  human-lineage scope the site has held so far. **Which of these it is, is unresolved** — watch
+  whether he next asks "could I sim this?" or "could this be a page?".
+- **[correction — resolves the ambiguity in the entry above, same session]** It is the **sim** reading,
+  not the content reading: "im looking for even simpler things to base a new evolutionary sim on so i
+  can easily replicate it... super simple, a constrained problem, clear selection pressure, limited
+  competing factors. simple simple environments, organisms, behaviors, adaptations." Note he said
+  **new** sim, and **replicate** — first explicit sign he is willing to leave the eye sim behind, and
+  that *reproducing a known result* (not producing a novel one) is the goal. This matches Claude's
+  2026-07-27 recommendation but he arrived at it himself and framed it differently: his emphasis is on
+  **constraint** (few competing factors) rather than on search dynamics. Claude's read, a guess: nine
+  days of tuning taught him that an under-constrained target is unverifiable, so he now wants a problem
+  where he can tell success from failure without judgment calls. Watch whether "replicate" means
+  matching a published experiment/analytic prediction, or just re-running his own thing more cheaply.
