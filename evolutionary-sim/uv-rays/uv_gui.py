@@ -49,6 +49,8 @@ class Sim:
             "surface": sim.surface_intensity(t),
             # uv reaching each z row, top row first — used to tint the board
             "rows": [sim.uv_at(z, t) for z in range(sim.GRID, 0, -1)],
+            # light reaching each z row — unlike uv, this goes all the way down
+            "light_rows": [sim.light_at(z, t) for z in range(sim.GRID, 0, -1)],
             # food sitting in each z row, top row first
             "food_rows": [sim.food_at(z, t) for z in range(sim.GRID, 0, -1)],
             "column_food": sim.column_food(t),
@@ -57,20 +59,19 @@ class Sim:
                     "name": o.name,
                     "x": o.x,
                     "z": o.z,
-                    "gene": round(o.move_gene, 2),
+                    "climb": round(o.climb_gene, 2),
+                    "dive": round(o.dive_gene, 2),
+                    "dz": o.drive(t),
                     "damage": round(o.damage, 2),
                     "hunger": round(o.hunger, 2),
                     "uv": sim.uv_at(o.z, t),
-                    "light": sim.light_at(o.z, t),
-                    "pref": round(o.pref_light, 2),
-                    "error": sim.light_error(o.z, t, o.pref_light),
                     "food": sim.food_at(o.z, t),
                 }
                 for o in sim.living(self.organisms)
             ],
             "events": events,
-            "avg_gene": f"{sim.average_gene(self.organisms):+.2f}",
-            "avg_pref": f"{sim.average_pref(self.organisms):.2f}",
+            "avg_climb": f"{sim.average_climb(self.organisms):.2f}",
+            "avg_dive": f"{sim.average_dive(self.organisms):.2f}",
         }
 
     def done(self):
@@ -122,17 +123,24 @@ function paint(){
   ctx.fillStyle = '%(bg)s';
   ctx.fillRect(0, 0, BOARD, BOARD);
 
-  // one band per z unit, tinted by the uv that reaches it
-  f.rows.forEach((uv, r) => {
-    ctx.fillStyle = 'rgba(167,110,255,' + (0.08 + uv * 0.75) + ')';
+  // light: a pale wash over the WHOLE column, thinning with depth
+  f.light_rows.forEach((light, r) => {
+    ctx.fillStyle = 'rgba(120,150,200,' + (light * 0.30) + ')';
     ctx.fillRect(0, r * SCALE, BOARD, SCALE);
   });
 
-  // food is only ever in the top three bands — drawn as green stipple
+  // uv: purple, and only ever in the top three bands
+  f.rows.forEach((uv, r) => {
+    if (uv <= 0) return;
+    ctx.fillStyle = 'rgba(167,110,255,' + Math.min(0.8, uv * 0.9) + ')';
+    ctx.fillRect(0, r * SCALE, BOARD, SCALE);
+  });
+
+  // food: same three bands as uv, so it gets its own strip down the left edge
   f.food_rows.forEach((food, r) => {
     if (food <= 0) return;
-    ctx.fillStyle = 'rgba(74,222,128,' + Math.min(0.55, food * 0.7) + ')';
-    ctx.fillRect(0, r * SCALE, BOARD, SCALE);
+    ctx.fillStyle = 'rgba(74,222,128,' + Math.min(0.85, 0.25 + food) + ')';
+    ctx.fillRect(0, r * SCALE, BOARD * 0.06, SCALE);
   });
 
   ctx.strokeStyle = '%(grid)s'; ctx.lineWidth = 1;
@@ -162,23 +170,24 @@ function paint(){
     'surface uv/light: ' + f.surface.toFixed(2)
     + '   column food: ' + f.column_food.toFixed(2)
     + '   alive: ' + f.orgs.length
-    + '   avg move gene: ' + f.avg_gene
-    + '   avg pref light: ' + f.avg_pref;
+    + '   avg climb: ' + f.avg_climb
+    + '   avg dive: ' + f.avg_dive;
 
-  let html = '<tr><th>x</th><th>z</th><th>light</th><th>pref</th><th>error</th>'
-           + '<th>uv</th><th>food</th><th>gene</th><th>dz</th>'
-           + '<th>damage</th><th>hunger</th></tr>';
+  // pull apart the two halves of dz so you can see which pressure is winning
+  let html = '<tr><th>x</th><th>z</th><th>uv</th><th>food</th><th>hunger</th>'
+           + '<th>climb</th><th>dive</th><th>up</th><th>down</th><th>dz</th>'
+           + '<th>damage</th></tr>';
   for (const o of f.orgs){
-    const dz = o.error * o.gene;
     html += '<tr><td>' + o.x + '</td><td>' + o.z.toFixed(2) + '</td><td>'
-          + o.light.toFixed(2) + '</td><td>'
-          + o.pref.toFixed(2) + '</td><td>'
-          + (o.error >= 0 ? '+' : '') + o.error.toFixed(2) + '</td><td>'
           + o.uv.toFixed(2) + '</td><td>'
           + o.food.toFixed(2) + '</td><td>'
-          + (o.gene >= 0 ? '+' : '') + o.gene.toFixed(2) + '</td><td>'
-          + (dz >= 0 ? '+' : '') + dz.toFixed(2) + '</td><td>'
-          + o.damage.toFixed(2) + '</td><td>' + o.hunger.toFixed(2) + '</td></tr>';
+          + o.hunger.toFixed(2) + '</td><td>'
+          + o.climb.toFixed(2) + '</td><td>'
+          + o.dive.toFixed(2) + '</td><td>'
+          + (o.climb * o.hunger).toFixed(2) + '</td><td>'
+          + (o.dive * o.uv).toFixed(2) + '</td><td>'
+          + (o.dz >= 0 ? '+' : '') + o.dz.toFixed(2) + '</td><td>'
+          + o.damage.toFixed(2) + '</td></tr>';
   }
   document.getElementById('table').innerHTML = html;
   document.getElementById('events').textContent = f.events.join('   |   ');
@@ -223,7 +232,8 @@ def run_html(path):
             }
         )
     print(f"wrote {len(frames)} frames to {path}")
-    print(f"average move gene: {sim.average_gene(state.organisms):+.3f}")
+    print(f"average climb gene: {sim.average_climb(state.organisms):.3f}")
+    print(f"average dive gene:  {sim.average_dive(state.organisms):.3f}")
 
 
 if __name__ == "__main__":
