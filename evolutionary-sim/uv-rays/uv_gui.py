@@ -22,6 +22,7 @@ BACKGROUND = "#0c0f14"
 GRID_LINE = "#232830"
 ORG_COLOR = "#4ade80"
 HURT_COLOR = "#f87171"
+STARVE_COLOR = "#fbbf24"
 TEXT_COLOR = "#d8dee9"
 EVENT_COLOR = "#fbbf24"
 
@@ -48,6 +49,9 @@ class Sim:
             "surface": sim.surface_intensity(t),
             # uv reaching each z row, top row first — used to tint the board
             "rows": [sim.uv_at(z, t) for z in range(sim.GRID, 0, -1)],
+            # food sitting in each z row, top row first
+            "food_rows": [sim.food_at(z, t) for z in range(sim.GRID, 0, -1)],
+            "column_food": sim.column_food(t),
             "orgs": [
                 {
                     "name": o.name,
@@ -55,13 +59,18 @@ class Sim:
                     "z": o.z,
                     "gene": round(o.move_gene, 2),
                     "damage": round(o.damage, 2),
+                    "hunger": round(o.hunger, 2),
                     "uv": sim.uv_at(o.z, t),
                     "light": sim.light_at(o.z, t),
+                    "pref": round(o.pref_light, 2),
+                    "error": sim.light_error(o.z, t, o.pref_light),
+                    "food": sim.food_at(o.z, t),
                 }
                 for o in sim.living(self.organisms)
             ],
             "events": events,
             "avg_gene": f"{sim.average_gene(self.organisms):+.2f}",
+            "avg_pref": f"{sim.average_pref(self.organisms):.2f}",
         }
 
     def done(self):
@@ -119,6 +128,13 @@ function paint(){
     ctx.fillRect(0, r * SCALE, BOARD, SCALE);
   });
 
+  // food is only ever in the top three bands — drawn as green stipple
+  f.food_rows.forEach((food, r) => {
+    if (food <= 0) return;
+    ctx.fillStyle = 'rgba(74,222,128,' + Math.min(0.55, food * 0.7) + ')';
+    ctx.fillRect(0, r * SCALE, BOARD, SCALE);
+  });
+
   ctx.strokeStyle = '%(grid)s'; ctx.lineWidth = 1;
   for (let g = 0; g <= GRID; g++){
     ctx.beginPath(); ctx.moveTo(g*SCALE, 0); ctx.lineTo(g*SCALE, BOARD); ctx.stroke();
@@ -126,26 +142,43 @@ function paint(){
   }
 
   for (const o of f.orgs){
+    // fill = uv damage, ring = hunger. either one alone can kill you.
     ctx.fillStyle = (o.damage / MAX_DAMAGE) > 0.6 ? '%(hurt)s' : '%(org)s';
     ctx.beginPath();
     ctx.arc(o.x*SCALE + SCALE/2, py(o.z), DOT, 0, 7);
     ctx.fill();
+    if (o.hunger > 0.6){
+      ctx.strokeStyle = '%(starve)s'; ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(o.x*SCALE + SCALE/2, py(o.z), DOT + 3, 0, 7);
+      ctx.stroke();
+      ctx.lineWidth = 1;
+    }
   }
 
   document.getElementById('stepLabel').textContent =
     'step ' + f.step + '   t=' + f.t.toFixed(1) + 's';
   document.getElementById('summary').textContent =
     'surface uv/light: ' + f.surface.toFixed(2)
+    + '   column food: ' + f.column_food.toFixed(2)
     + '   alive: ' + f.orgs.length
-    + '   avg move gene: ' + f.avg_gene;
+    + '   avg move gene: ' + f.avg_gene
+    + '   avg pref light: ' + f.avg_pref;
 
-  let html = '<tr><th>x</th><th>z</th><th>light</th><th>uv</th>'
-           + '<th>gene</th><th>damage</th></tr>';
+  let html = '<tr><th>x</th><th>z</th><th>light</th><th>pref</th><th>error</th>'
+           + '<th>uv</th><th>food</th><th>gene</th><th>dz</th>'
+           + '<th>damage</th><th>hunger</th></tr>';
   for (const o of f.orgs){
+    const dz = o.error * o.gene;
     html += '<tr><td>' + o.x + '</td><td>' + o.z.toFixed(2) + '</td><td>'
-          + o.light.toFixed(2) + '</td><td>' + o.uv.toFixed(2) + '</td><td>'
+          + o.light.toFixed(2) + '</td><td>'
+          + o.pref.toFixed(2) + '</td><td>'
+          + (o.error >= 0 ? '+' : '') + o.error.toFixed(2) + '</td><td>'
+          + o.uv.toFixed(2) + '</td><td>'
+          + o.food.toFixed(2) + '</td><td>'
           + (o.gene >= 0 ? '+' : '') + o.gene.toFixed(2) + '</td><td>'
-          + o.damage.toFixed(2) + '</td></tr>';
+          + (dz >= 0 ? '+' : '') + dz.toFixed(2) + '</td><td>'
+          + o.damage.toFixed(2) + '</td><td>' + o.hunger.toFixed(2) + '</td></tr>';
   }
   document.getElementById('table').innerHTML = html;
   document.getElementById('events').textContent = f.events.join('   |   ');
@@ -184,6 +217,7 @@ def run_html(path):
                 "grid": GRID_LINE,
                 "org": ORG_COLOR,
                 "hurt": HURT_COLOR,
+                "starve": STARVE_COLOR,
                 "text": TEXT_COLOR,
                 "event": EVENT_COLOR,
             }

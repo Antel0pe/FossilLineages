@@ -661,3 +661,16 @@ This is the highest-information single message in the log about what the sim is 
   days of tuning taught him that an under-constrained target is unverifiable, so he now wants a problem
   where he can tell success from failure without judgment calls. Watch whether "replicate" means
   matching a published experiment/analytic prediction, or just re-running his own thing more cheaply.
+- **[correction — HIGH SIGNAL, corrects Claude's read twice in one session]** "when i say simple i dont
+  mean like 2 floats or a simple genome i more mean **the example is simple and can be understood
+  simply**... it has several environmental factors but it is a simple toy example." His own example: UV
+  damage at the surface vs. food at the surface, mediated by a day/night cycle. Claude had ranked
+  candidates by *parameter count* (2 floats, 1 bit) and he rejected that axis outright — he wants
+  **legibility of the scenario**, and is fine with several interacting environmental factors. Claude's
+  read, a guess: this is the same criterion as his content work — the 2026-07-18 anatomy-as-mechanism
+  preference and the one-causal-link ceiling are both about a *story you can hold in your head*, and he
+  is now applying it to sim design. Note the tension worth watching: legible-scenario and
+  few-competing-factors (his phrasing one message earlier) are not the same constraint and can pull
+  apart. Also note his example is a **tradeoff on a single axis (depth)** rather than a single pressure
+  — the food and the danger are in the same place, which may be the actual thing he finds simple:
+  one dilemma, not one variable.
