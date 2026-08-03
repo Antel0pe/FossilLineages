@@ -51,10 +51,10 @@ POPULATION = 10  # one organism per x increment: 0, 1, ... 9
 CYCLE_SECONDS = 10  # a full 0 -> 1 -> 0 sine cycle of surface intensity
 STEPS_PER_SECOND = 10
 STEP_DT = 1 / STEPS_PER_SECOND
-TOTAL_STEPS = 1000  # 10 full day/night cycles
+TOTAL_STEPS = 100_000  # 10 full day/night cycles
 
 DECAY_PER_UNIT = 0.10  # 10% of the surface value lost per z unit going down
-MAX_DAMAGE = 50.0
+MAX_DAMAGE = 10.0
 FOOD_LAYERS = [0.70, 0.25, 0.05]  # share of the column's food, topmost layer first
 UV_LAYERS = [0.70, 0.25, 0.05]  # share of the surface uv absorbed by each top layer
 HUNGER_PER_STEP = 0.01

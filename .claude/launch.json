@@ -9,6 +9,14 @@
       "port": 3300
     },
     {
+      "name": "uv-sim",
+      "runtimeExecutable": "wsl",
+      "runtimeArgs": ["bash", "-lc", "cd ~/Projects/FossilLineages/evolutionary-sim/uv-rays && python3 -m http.server 8899"],
+      "autoPort": false,
+      "port": 8899,
+      "url": "http://localhost:8899"
+    },
+    {
       "name": "sim",
       "runtimeExecutable": "wsl",
       "runtimeArgs": ["bash", "-lc", "cd ~/Projects/FossilLineages && bun evolutionary-sim/log-server.ts"],
