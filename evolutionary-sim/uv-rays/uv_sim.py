@@ -54,10 +54,10 @@ STEP_DT = 1 / STEPS_PER_SECOND
 TOTAL_STEPS = 100_000  # 10 full day/night cycles
 
 DECAY_PER_UNIT = 0.10  # 10% of the surface value lost per z unit going down
-MAX_DAMAGE = 10.0
+MAX_DAMAGE = 1.0
 FOOD_LAYERS = [0.70, 0.25, 0.05]  # share of the column's food, topmost layer first
 UV_LAYERS = [0.70, 0.25, 0.05]  # share of the surface uv absorbed by each top layer
-HUNGER_PER_STEP = 0.01
+HUNGER_PER_STEP = 0.1
 MAX_HUNGER = 1.0
 CLIMB_LIMIT = 5.0  # climb_gene is clamped to [GENE_FLOOR, CLIMB_LIMIT]
 DIVE_LIMIT = 64.0  # dive_gene is clamped to [GENE_FLOOR, DIVE_LIMIT]
