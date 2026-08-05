@@ -1,0 +1,7 @@
+- wikipedia articles like this exist: https://en.wikipedia.org/wiki/List_of_English_words_of_Old_Norse_origin
+    - List of English words of (x) origin
+    - i knew english took a lot of french loan words due to norman conquests but estimates as high as 35-45% is crazy
+- great resource https://www.etymonline.com/
+- generally surprising amount of foreign language influence on english https://en.wikipedia.org/wiki/Foreign-language_influences_in_English
+    - this is also direct influence only, what about influenced the influence, etc
+- how languages change: https://en.wikipedia.org/wiki/Language_change

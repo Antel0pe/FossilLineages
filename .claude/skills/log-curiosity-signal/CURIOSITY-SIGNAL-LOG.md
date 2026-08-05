@@ -758,3 +758,92 @@ detail — recorded accordingly.
   preference. A logged "liked" only becomes evidence of durable interest if a later, retrospective
   entry confirms it still held after the novelty passed. Nothing in this file currently has that
   second confirmation. Weight retrospectives over reactions when the two disagree.
+
+### 2026-08-03 (third exchange) — reaction to the "discovery not legibility" reframe
+
+- **[idea — floated, not committed]** "Genuine discovery could be something I'm interested by long
+  term curiosity wise — but in what body of work, what field, what questions?" Accepted the
+  discovery framing in principle; the open question he raised is *domain selection*, not whether
+  discovery is the right act.
+- **[uncertain]** Split unknown questions into two kinds: (1) not written down anywhere but
+  interesting, (2) genuinely open, experts don't know. Called aiming at (2) "a bit of an unrealistic
+  goal to set," while explicitly saying he isn't discounting his own capability. Open tension: is
+  category (1) a consolation prize or the real thing?
+- **[meta — his stated model of how this is supposed to work]** "If I find enjoyment in this field
+  then I will continue deepening knowledge to get to the frontiers and do great work, but I need to
+  find that area that I love working in." I.e. he believes the enjoyment must come *first* and
+  select the field, with depth following. Worth watching whether this holds — it predicts continued
+  breadth-sampling across domains until one "feels right."
+- **[uncertain]** Asked directly whether discovery-in-evolution could be enthusing given that
+  everything in this repo (stories, panels, sims) wasn't. Genuinely undecided; not a rejection of
+  the domain.
+
+### 2026-08-03 (fourth exchange) — rejected "citation archaeology"; rule for generating ideas
+
+- **[disliked / correction — HIGH VALUE, applies to all future idea generation]** Rejected the
+  "citation archaeology" suggestion (chase a textbook claim back to its origin paper). His reasoning:
+  it passes only a *cursory* shape test — "tracing a lineage backward through time" — but the thing
+  being traced is a chain of documents, not a feature of the world. His actual interest is "the why
+  through time": why humans walk upright, where names came from and what they mean. Named the LLM
+  failure mode explicitly: connecting disconnected elements in a way that is superficially logical
+  but doesn't hold up.
+- **[method implication]** Filter to apply before proposing anything: **the object of the "why" must
+  be a feature of the world that exists (or existed), and the answer must be its causal history.**
+  Documents, records, datasets, methods, and institutional behavior are instruments, never the
+  object. Structural resemblance to something he liked ("it's a lineage too") is not evidence.
+- **[note]** Under this filter, "gaps in the fossil record" is also weak (the gap is a property of
+  the record, not the world), and "dataset joins" was a technique proposed as if it were an idea.
+
+### 2026-08-03 (fifth exchange) — added a feasibility criterion for ideas
+
+- **[correction — second filter for idea generation]** An idea must come with an *attack path*, not
+  just a good shape. Asked, re the "dog" etymology idea: "where would I start?" — assumed that if
+  nobody knows the origin, the records must be poor, so the question may be unanswerable.
+- **[definition — his words, do not over-tighten]** "Feasible isn't easy." Explicitly NOT asking for
+  a clear or short path — said that if a path is obvious the question is probably already answered.
+  Feasible = a path exists at all: some dataset is somehow available (need not be purpose-built,
+  well-labelled, or the exact right data), and the required tools are accessible. Hard work to find
+  or wrangle things is fine. Hard constraint named: **no supercomputer / no large compute.** Also
+  ruled out: solo reconstruction of a whole field's primary evidence from nothing.
+- **[implication]** Proposals should name the specific resources and roughly what shape the first
+  move is, so he can evaluate feasibility himself rather than take it on faith.
+
+### 2026-08-03 (sixth exchange) — floated a historical-linguistics direction
+
+- **[idea — floated, aware it may be domain-switching]** Wants to try something in linguistics
+  despite having been told repeated domain-switching is the failing pattern. Shape: apply known
+  sound-change / language-change rules across Old English → modern English and see what changed vs
+  what stayed; French loanwords (esp. high-status vocabulary) vs native words that survived; and
+  running the rules *backwards* to reconstruct what English "might have looked like."
+- **[liked]** Says the *dog/hund* cluster question has been sitting with him since the last exchange
+  — it is the thing that prompted this direction.
+- **[tension — he raised it himself]** Noted mid-sentence that he expected "most things would be
+  similar," then corrected himself about loanwords. Also independently surfaced **"what didn't
+  change"** / "what stayed in English and became English" as possibly the interesting half. That
+  sub-question is the only part of the idea whose answer isn't already textbook — worth watching
+  whether he returns to it unprompted, which would be the strongest signal in this file.
+- **[note for future readers]** Flagged to him that the reverse-reconstruction sub-idea is
+  structurally the evolutionary-simulator trap in a new domain (he authors the rules, so every
+  surprise is about his implementation). His reaction to that is the next datapoint.
+
+### 2026-08-04 — rejected predict-first; wants structural invariants instead of practices
+
+- **[disliked]** Rejected the "write your prediction before each result" practice: "likely something I
+  won't do ahead of time because the payoff is doubtful." Notably did NOT reject it on honesty
+  grounds — explicitly said he wouldn't fake having predicted correctly — and expects he'll write
+  down interesting things naturally as they come up. Read: friction too high for an uncertain payoff.
+- **[idea — his own, unprompted]** Asked for **invariants** rather than practices, and generated one
+  himself: consciously refuse to build an artifact, allow only a plain .md file as output, so he
+  can't slide back down the same path. Distinction he's drawing: a constraint on what he is *allowed
+  to produce* enforces itself; a habit he has to remember does not.
+- **[note]** This is the first time he has proposed a mechanism for avoiding his own failure mode
+  rather than being handed one. Worth watching whether self-generated constraints stick better than
+  suggested ones.
+
+### 2026-08-04 (later) — extended framework-building drained rather than energised
+
+- **[meta — process signal, not content]** After several exchanges of hypothesis / criteria /
+  invariant work with nothing concrete produced, reported feeling deflated and asked for a plan for
+  today. Signal: analysis-without-building has a cost for him, and long framing stretches should be
+  cut short in favour of a small concrete first session. Applies to how future exploratory
+  conversations in this repo are paced, regardless of subject.
