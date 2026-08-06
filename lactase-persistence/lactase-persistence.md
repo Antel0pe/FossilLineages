@@ -7,3 +7,6 @@ data sources
 https://www.ucl.ac.uk/life-sciences/gee/gee-research-centres/research-groups/global-lactase-persistence-association-database-glad
 https://github.com/ydiekmann/Evershed_Nature_2022/tree/main/data
 https://github.com/AdrianTimpson/2020-03-03523A
+
+
+Question: 

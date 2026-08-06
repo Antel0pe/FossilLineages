@@ -848,7 +848,7 @@ detail — recorded accordingly.
   cut short in favour of a small concrete first session. Applies to how future exploratory
   conversations in this repo are paced, regardless of subject.
 
-## 2026-08-05
+## 2026-08-06
 
 Context: user was handed an outside diagnosis of his curiosity ("causal transitions where both
 mechanism and outcome left evidence; the substrate rotates but the shape doesn't; the excitement
@@ -905,3 +905,39 @@ curiosity** in the Paul Graham "How to Do Great Work" sense.
   delight-shape in `user_curiosity_profile.md`. **The datapoint to watch is not whether he likes the
   topic — it is whether he produces a defended claim in a .md and whether that act pays anything.**
   That is the actual experiment; the subject is incidental to it.
+
+### 2026-08-06 (later, same day) — he actually ran it; first recorded discovery event
+
+- **[meta — the instrument reflex, self-caught, HIGH SIGNAL]** Within one paragraph of starting the
+  Evershed 2022 paper, both of his first two ideas were visualizations (map the evidence sources by
+  time; overlay archaeological cultures with milk residues). **He flagged the reflex himself,
+  unprompted**, and asked whether it was the old pattern — "having always built visualizers of data
+  and instead wanting to move more towards discovery." First instance in this log of him catching
+  the apparatus-reflex *in the act* rather than after a two-week arc. Claude's read (a guess): the
+  reflex is intact and fast; what changed is that it is now visible to him while firing.
+- **[note — one of the two ideas failed his own 2026-08-03 filter]** Idea (a), mapping residue
+  evidence by time, would have mapped *detection* (lipid preservation, excavation funding, sampling
+  bias) rather than dairying — a property of the record, not the world. Same shape as the citation
+  archaeology he rejected on 2026-08-03. Also already done: it is the paper's own Figure 1. Idea (b)
+  (culture overlay) was a genuine causal question but heavily settled by ancient DNA.
+- **[insight — user's own, empirical, correct]** Built/obtained a GLAD lactase-persistence world map
+  and read a hypothesis off it correctly: **"it pretty clearly is not latitude dependent."** Correct
+  and decisive — near-fixation LP on the Arabian peninsula at ~20°N kills the classic vitamin-D /
+  high-latitude calcium-assimilation explanation for the northern European peak. **This is the first
+  event in the entire log where he closed a real question with evidence rather than building
+  machinery toward one.** Elapsed time roughly one session.
+- **[tension — he pushed back on Claude's guardrail, and was right]** Challenged the warning against
+  "opening a notebook" — he built the map anyway and it produced the finding in one step. Claude
+  conceded: the warning was about *time allocation and the deliverable being a picture instead of a
+  claim*, not about plotting per se. Worth carrying forward: the anti-artifact invariant
+  (2026-08-04, his own) should be read as "the artifact may not be the output," NOT "never make
+  one" — a twenty-minute plot that kills a hypothesis is the good case.
+- **[watch — the actual open datapoint]** He has now made a real finding but has **not yet written a
+  defended claim in a .md**, which is the thing the whole experiment was set up to test. The
+  question was refined mid-session to: *why did LP reach near-fixation in some dairying populations
+  while stalling at 20–40% in others that had been dairying longer?* (SW Asia has the oldest
+  dairying and middling LP; northern Europe started later and approaches fixation.) Two candidate
+  explanations put to him — dependence-not-exposure, and the cheese/fermentation substitution
+  hypothesis (culture removes the selection pressure, which would explain the antiquity inversion
+  directly). **Unresolved and the thing to check next session: does producing the written claim pay
+  anything, or does "so what" arrive as it has for every prior format?**
