@@ -5,3 +5,4 @@
 - generally surprising amount of foreign language influence on english https://en.wikipedia.org/wiki/Foreign-language_influences_in_English
     - this is also direct influence only, what about influenced the influence, etc
 - how languages change: https://en.wikipedia.org/wiki/Language_change
+
