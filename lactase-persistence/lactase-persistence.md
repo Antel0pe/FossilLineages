@@ -9,4 +9,4 @@ https://github.com/ydiekmann/Evershed_Nature_2022/tree/main/data
 https://github.com/AdrianTimpson/2020-03-03523A
 
 
-Question: 
+Question: Dairying was widespread in the old world for thousands of years but only in the last few 2 thousand years did lactase persistence develop. It wasn't a slow gradual development, it was basically nothing then all at once. And lactase persistence is not correlated with how early milk arrived or for how long milk was consumed - seems to be inversely correlated in fact. Why is this?
