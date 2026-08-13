@@ -47,3 +47,24 @@ man made? no apparently natural but soviets did dam and then reflood the lagoon.
 pretty much only place on earth that is red like this. closest comparable red is small spots in the sahara.
 - due to ancient iron and rusted soil. unlike north america and europe far from poles so didnt have glaciers bury ancient soil under fresh grey rock dust. also low rainfall to wash away rusted soil
 ![alt text](image-13.png)
+
+continental shelf showing beringa is cool
+![alt text](image-14.png)
+
+wonder how that boundary got decided. russians expanded across siberia using a river and administration was built to collect fur tribute/tax. people paid tax to whatever place was closest and modern day russia inherited them. 
+![alt text](image-15.png)
+
+kara and barents sea, wonder what their name origin is? kara means hummocked ice from nenets which are indigenous samoyedic people from northern russia. super cold, arctic migrations, nomads, reindeer herders. barents named after dutch navigator. it is arctic warming hot spot and being atlantified meaning more warm and salty water from atlantic is reaching it. this means more ice free area and could lead to higher evaporation meaning much more snow fall in europe
+![alt text](image-16.png)
+
+estonia and finland basically as close as britain and france. super close relations economically, culturally 76% of finns have visited estonia, and militarily too. finland supported estonian independence even when part of soviet union
+![alt text](image-17.png)
+
+norway is like chile lol
+![alt text](image-18.png)
+
+bahama water so blue and such a clear line? is it a real boundary or satellite around land is the cause? super shallow water but also carbonate platform with no sediment so really clear and sparkling water. largest example of this  
+![alt text](image-19.png)
+
+originally thought fort lauderdale mustve been built during cold war for cuba or something but is actually from around 1838 when the government was fighting indigenous people in the florida land after they bought florida from spain
+![alt text](image-20.png)
