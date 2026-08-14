@@ -105,3 +105,20 @@ tyrrhenian sea. first used by ancient greek sources to potentially refer to etru
 
 for some reason zagreb doesnt sound like an eastern european name to me. initially wondered if there was some arab/muslim name origin to it but doesnt seem like it. interestingly first came up in 1000/1100 ad so pretty old
 ![alt text](image-32.png)
+
+crazy i can just see the site of troy
+![alt text](image-33.png)
+
+sea of japan, sea of okhotsk (name of russian port/subprefecture in japan), east china sea - i wonder why each of them is named after a different country? why did east china sea get named that instead of south korean sea or something. why was sea of japan named after japan? 
+    - sea never really named after korea because korea was closed and nobody was able to visit
+    - china because china is where people were going to, couldnt visit korea and werent going anywhere else
+    - european convention to name sea after whatever landmass prevents it from going to ocean. sea of japan because japan blocks the sea from ocean, same reason for irish sea
+    - surveyor access dependent on where charts get copied from. early charts are inconsitent with sea of japan, korea, etc
+    - yellow sea was borrowed from local languages because of the silt in the water 
+![alt text](image-34.png)
+
+not quite straight boundary of dry and green area, definitely curves especially in northern pakistan and southern china. seems to somewhat follow himalayas
+![alt text](image-35.png)
+
+spartan acropolis
+![alt text](image-36.png)
