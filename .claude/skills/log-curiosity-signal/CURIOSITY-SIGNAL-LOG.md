@@ -941,3 +941,37 @@ curiosity** in the Paul Graham "How to Do Great Work" sense.
   hypothesis (culture removes the selection pressure, which would explain the antiquity inversion
   directly). **Unresolved and the thing to check next session: does producing the written claim pay
   anything, or does "so what" arrive as it has for every prior format?**
+
+## 2026-08-13
+
+Context: no build request. User arrived with something he'd read and half-remembered — that the
+Sahara and Amazon trade places as desert/forest on a ~10k-year cycle — and asked about it. Comes
+after a week with no logged session; the `random-things-that-interest-me/` directory has been
+accumulating uncommitted images in the meantime, suggesting he's been in collection mode.
+
+- **[idea — floated, uncommitted]** Brought in the Sahara↔Amazon "desert swap" claim unprompted.
+  The claim as stated is partly wrong (the Sahara really does cycle on ~21kyr precession — the
+  African Humid Period, last one ~14.8–5.5 ka; the Amazon was never desert, and the Haffer refugia
+  hypothesis that said so is now largely rejected). The real coupled thing underneath it is the
+  precession-driven **antiphase between the northern and southern monsoons** — wet Sahara
+  correlates with drier Amazonia in Brazilian/Peruvian speleothem records — plus the present-day
+  dust link (Bodélé Depression, the dried floor of Lake Mega-Chad, fertilizing Amazon soils with
+  phosphorus from the diatoms of a lake that dried 5,000 years ago).
+- **[note — shape match, not yet a reaction]** The Bodélé fact is a textbook instance of the
+  documented delight-shape in `user_curiosity_profile.md`: a **present-day echo of a past turning
+  point**, one causal link deep (green Sahara → lake → diatom bed → dust → Amazon nutrients), and
+  it's a *life-fact* rather than a mechanism elaboration — which per the "causal depth ceiling"
+  memory is the kind of addition that pays. Claude flagged it as the fact worth keeping. **His
+  reaction to it is the datapoint and has not arrived yet** — do not treat topic-arrival as
+  endorsement.
+- **[watch — subject is outside the site's scope]** This is climate/paleoclimate, not the human
+  lineage, and is the second time recently he has arrived with a non-lineage curiosity (cf. the
+  `random-things-that-interest-me` maps material). Open and unresolved: is this idle reading, or
+  the "the substrate rotates but the shape doesn't" pattern from the 2026-08-06 outside diagnosis
+  showing up again — i.e. the same causal-reconstruction appetite reaching for a new domain
+  because the current one has gone beige? Note that domain rotation has historically preceded, not
+  followed, a stall. Watch whether he pushes on this or drops it.
+- **[watch — carried forward, still open from 2026-08-06]** He made a real finding (LP is not
+  latitude-dependent) but the log has no record of whether the **written defended claim** was ever
+  produced, or whether it paid. A week has passed. That experiment is still the highest-value
+  unresolved item in this file and today's session did not touch it.
