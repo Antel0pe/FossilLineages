@@ -1,0 +1,1 @@
+NEVER EDIT understanding.md. it is read only and will be updated as the human's understanding progresses
