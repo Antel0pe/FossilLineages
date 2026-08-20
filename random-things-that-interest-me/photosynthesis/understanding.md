@@ -2,7 +2,7 @@ carbon dioxide + water + light  →  sugar + oxygen
     6 CO₂      +  6 H₂O  + light →  C₆H₁₂O₆ + 6 O₂
 
 Relevant chemistry
-- atoms are basical materials like carbon, hydrogen
+- atoms are basic materials like carbon, hydrogen
 - molecules are atoms bonded together like CO2
     - bonded means they share electrons and stick together
 - different atoms pull electrons with varying strengths
@@ -16,10 +16,34 @@ Relevant chemistry
         - electron is in high energy, uncomfy position
           - is this because it's very far from completing a valence level? so carbon with 4 in outer level, how is 5 more uncomfy than 4?
 
+electrons around a nucleus can only fit in certain wave shapes
+    - each allowed shape is called orbital. each shape can hold 2 electrons due to spin. they can only share if they have opposite spin
+    - level 1 has 1 possible shape, simple sphere
+    - level 2 has 4 possible shapes, sphere, up-down,front-back,right-left
+    - what confuses me here is the shape. why does level 1 only have a sphere? what orientation is that sphere? in level 2 i understand the 3 dimensions allowing different orbits but how is there a 4th one? 
+
+force electrons feel at each level
+- oxygen has 8 protons, 8 electrons. 2 in first level, 6 in second level. 
+- the nucleus pulls at 6 outer electrons with 8 proton force
+    - 2 electrons site between the 6 outer electrons, each cancel's one proton force
+    - so 8 protons - 2 inner electrons = 6 proton force felt by outer electrons
+- so does this mean that electrons in the 3rd valence level would feel no proton force. since 8 protons - 2 inner - 8 = -2? i guess it makes sense since if the second level was full oxygen would attract no more electrons. what about for bigger atoms then? like lets say 12 protons - 2 inner - 8 second = 2 proton force. so would everything in the 3rd valence level feel 2 proton force? so the bigger the atom the weaker it holds progressively further electrons?
+
+negative electron sitting near strong positive pull is at lower energy than one near weak positive pull
+- it's like gravity. a ball at the bottom is deep valley is at lower energy than one in a shallow dip higher up
+- oxygen digs a deep valley +6, carbon digs shallower at +4, hydrogen digs +1
+    - the +6 is how much proton force is felt by outermost level of electrons
+    - why does hydrogen feel +1? oh i guess the single electron feels 1 proton force
+- why is a strong proton force less energy? is it literally less energy or something like it is pulled a lot so fewer atoms/molecules can pull it out of its energy state?
+- does this mean bigger atoms in general have lower energy states because more proton force for electrons?
+
+high level photosynthesis is about using photons to pull low energy electrons from oxygen into carbon higher energy orbits. that's storing energy. moving the electron from carbon back into oxygen is releasing energy.
+
 biggest question currently is what the +6 force means exactly, why it works that way, and why electrons dont repel when more electrons than protons
 how badly something wants electrons is called redox potential
   - positive voltage means terrible donor and negative means generous electron donor
     - wait but how is how badly something wanting electrons related to how easily it gives them away? i guess if they dont need them that much, then they give them away? so voltage is like how much energy to take the electron away and negative means i will happily give it to you in fact i will pay you to take it away?
+
 
 
 light → ATP + NADPH → sugar
