@@ -975,3 +975,26 @@ accumulating uncommitted images in the meantime, suggesting he's been in collect
   latitude-dependent) but the log has no record of whether the **written defended claim** was ever
   produced, or whether it paid. A week has passed. That experiment is still the highest-value
   unresolved item in this file and today's session did not touch it.
+
+## 2026-08-20
+
+- **[meta]** "right now it feels quite messy to edit with further understanding... maybe
+  should deepen one section at a time instead of updating full thing." Context: unprompted,
+  about `random-things-that-interest-me/photosynthesis/understanding.md` — he was not asking for
+  content, he was asking how to *organize his own learning artifact*. He described the doc's
+  purpose himself: track understanding, guide the LLM to where he's confused, "and the reason
+  for doing this is also to create something as i understand stuff."
+- **[idea]** He floated two structural ideas of his own before hearing any suggestion: (a) a main
+  understanding doc with questions/asides broken out at breakpoints, (b) one-section-at-a-time
+  depth instead of full-doc passes. Claude's read, marked as a guess: the second is the more
+  telling one — it's the same *causal depth ceiling* preference showing up in workflow form
+  (go one layer deeper on one thing rather than broaden everything).
+- **[note — shape match, not yet a reaction]** "create something as i understand stuff" is the
+  third domain (after lineage panels and the maps material) where he frames the artifact, not the
+  knowledge, as the point. Possible pattern with the "explorable artifacts over prose" memory.
+  **His reaction to the cleaned files has not arrived yet** — do not treat the request itself as
+  endorsement of the format Claude proposed.
+- **[watch — non-lineage domain again]** Photosynthesis is the third recent non-human-lineage
+  curiosity (cf. maps, Bodélé/paleoclimate). The 2026-08-06 "substrate rotates but the shape
+  doesn't" question is now supported by more instances and should probably be put to him directly
+  rather than kept as a watch item.

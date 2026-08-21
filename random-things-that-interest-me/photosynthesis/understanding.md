@@ -1,48 +1,44 @@
-carbon dioxide + water + light  →  sugar + oxygen
-    6 CO₂      +  6 H₂O  + light →  C₆H₁₂O₆ + 6 O₂
-
-Relevant chemistry
+## Relevant chemistry
 - atoms are basic materials like carbon, hydrogen
 - molecules are atoms bonded together like CO2
     - bonded means they share electrons and stick together
-- different atoms pull electrons with varying strengths
-    - oxygen pulls extremely hard
-      - oxygen has 8 protons and outer electrons shielded from nucleus by 2 innermost ones. so outer electrons feel +6 pull? 
-        - the 2 innermost ones are on the closest valence level right? what is the reason for valence levels? why 2 on the first level and a certain number at each?
-        - how does +6 make sense? like 8 on outer level - 2 innermost = 6?
-        - electron is in comfy position
-          - is it comfy because it almost completes the valence levels for oxygen? but also dont the protons and electrons get unbalanced? whatever oxygen's mass number is, in normal cases it has an equal number of electrons right? adding more electrons makes it negatively charged right? oh is this why O2 has 2 oxygen molecules sharing 2 electrons? but no theyre still overall negative right? why dont the electrons repel?
-    - carbon + hydrogen dont pull electron very hard because they feel +4 and +1 force
-        - electron is in high energy, uncomfy position
-          - is this because it's very far from completing a valence level? so carbon with 4 in outer level, how is 5 more uncomfy than 4?
-
-electrons around a nucleus can only fit in certain wave shapes
+- electrons around a nucleus can only fit in certain wave shapes
     - each allowed shape is called orbital. each shape can hold 2 electrons due to spin. they can only share if they have opposite spin
     - level 1 has 1 possible shape, simple sphere
     - level 2 has 4 possible shapes, sphere, up-down,front-back,right-left
-    - what confuses me here is the shape. why does level 1 only have a sphere? what orientation is that sphere? in level 2 i understand the 3 dimensions allowing different orbits but how is there a 4th one? 
+    
+- different atoms pull electrons with varying strengths
+    - oxygen pulls extremely hard
+      - oxygen has 8 protons, 8 electrons. 2 in first level, 6 in second level. 
+        - the nucleus pulls at 6 outer electrons with 8 proton force
+            - 2 electrons site between the 6 outer electrons, each cancel's one proton force
+            - so 8 protons - 2 inner electrons = 6 proton force felt by outer electrons
+    - carbon + hydrogen dont pull electron very hard because they feel +4 and +1 force
 
-force electrons feel at each level
-- oxygen has 8 protons, 8 electrons. 2 in first level, 6 in second level. 
-- the nucleus pulls at 6 outer electrons with 8 proton force
-    - 2 electrons site between the 6 outer electrons, each cancel's one proton force
-    - so 8 protons - 2 inner electrons = 6 proton force felt by outer electrons
-- so does this mean that electrons in the 3rd valence level would feel no proton force. since 8 protons - 2 inner - 8 = -2? i guess it makes sense since if the second level was full oxygen would attract no more electrons. what about for bigger atoms then? like lets say 12 protons - 2 inner - 8 second = 2 proton force. so would everything in the 3rd valence level feel 2 proton force? so the bigger the atom the weaker it holds progressively further electrons?
 
 negative electron sitting near strong positive pull is at lower energy than one near weak positive pull
 - it's like gravity. a ball at the bottom is deep valley is at lower energy than one in a shallow dip higher up
 - oxygen digs a deep valley +6, carbon digs shallower at +4, hydrogen digs +1
     - the +6 is how much proton force is felt by outermost level of electrons
-    - why does hydrogen feel +1? oh i guess the single electron feels 1 proton force
+
+how badly something wants electrons is called redox potential
+  - positive voltage means terrible donor and negative means generous electron donor
+    - so voltage is like how much energy to take the electron away and negative means i will happily give it to you in fact i will pay you to take it away?
+
+### Questions
+- what confuses me here is the shape. why does level 1 only have a sphere? what orientation is that sphere? in level 2 i understand the 3 dimensions allowing different orbits but how is there a 4th one? 
+- so does this mean that electrons in the 3rd valence level would feel no proton force. since 8 protons - 2 inner - 8 = -2? i guess it makes sense since if the second level was full oxygen would attract no more electrons. what about for bigger atoms then? like lets say 12 protons - 2 inner - 8 second = 2 proton force. so would everything in the 3rd valence level feel 2 proton force? so the bigger the atom the weaker it holds progressively further electrons?
 - why is a strong proton force less energy? is it literally less energy or something like it is pulled a lot so fewer atoms/molecules can pull it out of its energy state?
 - does this mean bigger atoms in general have lower energy states because more proton force for electrons?
+- biggest question currently is what the +6 force means exactly, why it works that way, and why electrons dont repel when more electrons than protons
+
+
+
 
 high level photosynthesis is about using photons to pull low energy electrons from oxygen into carbon higher energy orbits. that's storing energy. moving the electron from carbon back into oxygen is releasing energy.
 
-biggest question currently is what the +6 force means exactly, why it works that way, and why electrons dont repel when more electrons than protons
-how badly something wants electrons is called redox potential
-  - positive voltage means terrible donor and negative means generous electron donor
-    - wait but how is how badly something wanting electrons related to how easily it gives them away? i guess if they dont need them that much, then they give them away? so voltage is like how much energy to take the electron away and negative means i will happily give it to you in fact i will pay you to take it away?
+
+
 
 
 
@@ -53,6 +49,14 @@ light → ATP + NADPH → sugar
 Catching photon
 - when a photon hits chlorophyll, one of its electrons absorbs it and jumps into a higher energy state. it is energized and wants to fall into a lower state
     - what does it mean to be energized? what does falling into lower state mean? how does it do that
+        - energized means the electron orbits a bigger looser shape. falling back = returning to earlier pattern
+            - ways to get rid of energy
+                - spit out as light
+                    - how is light created from the orbit?
+                - heat by jiggling near molecules
+                - let something take electron away -> photosynthesis
+        - jump is all or nothing
+            - so what happens if a photon has just a little less energy for a jump? where does the energy go? is it heat or light? it's only all or nothing when considering electron jumping to higher orbit? if an electron stays in the same orbit is it still capable of giving off heat/light? what happens if too much energy? 
 - in a dead leaf/chlorophyll extract the electron falls into lower energy and emits heat and faint red glow
     - can see this happen. maybe cool small experiment to do?
       - yup this is doable by blending spinach and rubbing alcohol, filtering and shining light. why rubbing alcohol though?
@@ -63,6 +67,7 @@ chlorophyll absorbs red and blue strongly but bounces green
       - light is not bottleneck so absorbing more light does nothing. excess light also can damage plant, excite chlorophyll with nowhere to send it to and then bad things happen
     - color is related to photon wavelength right? what does that mean for the evolutionary selection and energy able to be extracted if anything?
       - color is the wavelength of the photon = energy per photon. shorter wavelength means more energy. blue, green, red from shortest to largest wavelength and highest to lowest energy. 
+    - past 700nm red changing into infrared, photons too weak to run reaction since jump has to give enough energy to excite electron. big supply of infrared and lights plants cant touch
 
 single chlorophyll molecule doesnt get hit often
 - so chloroplasts group them together into a funnel
