@@ -35,104 +35,110 @@ how badly something wants electrons is called redox potential
 
 
 
+
+
+    
+
 high level photosynthesis is about using photons to pull low energy electrons from oxygen into carbon higher energy orbits. that's storing energy. moving the electron from carbon back into oxygen is releasing energy.
 
-
-
-
-
-
-light → ATP + NADPH → sugar
-- ATP = molecule with phosphate group attached that when snapped off gives burst of energy?
-- NADPH delivery van for electrons
-    
-Catching photon
+## Catching photon
 - when a photon hits chlorophyll, one of its electrons absorbs it and jumps into a higher energy state. it is energized and wants to fall into a lower state
-    - what does it mean to be energized? what does falling into lower state mean? how does it do that
-        - energized means the electron orbits a bigger looser shape. falling back = returning to earlier pattern
-            - ways to get rid of energy
-                - spit out as light
-                    - how is light created from the orbit?
-                - heat by jiggling near molecules
-                - let something take electron away -> photosynthesis
-        - jump is all or nothing
-            - so what happens if a photon has just a little less energy for a jump? where does the energy go? is it heat or light? it's only all or nothing when considering electron jumping to higher orbit? if an electron stays in the same orbit is it still capable of giving off heat/light? what happens if too much energy? 
+    - energized means the electron orbits a bigger looser shape. falling back = returning to earlier pattern
+        - ways to get rid of energy
+            - spit out as light
+                - how is light created from the orbit?
+            - heat by jiggling near molecules
+            - let something take electron away -> photosynthesis
+    - jump is all or nothing
 - in a dead leaf/chlorophyll extract the electron falls into lower energy and emits heat and faint red glow
-    - can see this happen. maybe cool small experiment to do?
-      - yup this is doable by blending spinach and rubbing alcohol, filtering and shining light. why rubbing alcohol though?
-
-chlorophyll absorbs red and blue strongly but bounces green
-    - why is this? is green lower energy? is this inefficient? why no evolutionary selection for absorbing more photons?
-      - different colors deliver same amount of energy by exciting electron. the additional energy from a higher energy color is immediately dumped as heat and settles into the same state
-      - light is not bottleneck so absorbing more light does nothing. excess light also can damage plant, excite chlorophyll with nowhere to send it to and then bad things happen
-    - color is related to photon wavelength right? what does that mean for the evolutionary selection and energy able to be extracted if anything?
-      - color is the wavelength of the photon = energy per photon. shorter wavelength means more energy. blue, green, red from shortest to largest wavelength and highest to lowest energy. 
-    - past 700nm red changing into infrared, photons too weak to run reaction since jump has to give enough energy to excite electron. big supply of infrared and lights plants cant touch
+    - can see this happen. by blending spinach and rubbing alcohol, filtering and shining light. why rubbing alcohol though?
 
 single chlorophyll molecule doesnt get hit often
 - so chloroplasts group them together into a funnel
 - any of them catch photon, the energy hops molecule to molecule 
     - NOT the electron that hops
-        - how is the energy passed molecule to molecule
-          - FRET (Förster Resonance Energy Transfer). electron is oscillating in cloud which creates electrical field. nearby electrons get energized by that field.
-            - how exactly does this happen? i still dont understand how fields work
+        - energy passed molecule to molecule
+          - FRET (Förster Resonance Energy Transfer). electron is oscillating in cloud which creates electrical field. nearby electrons get energized by that field. 
 - hop until they reach central reaction center
-    - fact check is energy passed through reaction center close to 95%? how much energy is lost in the energy transfer process to reaction center? other stages? where does the 5% go?
+    
 
-photosystem 2 (named 2nd because discovered 2nd but is first step)
+### Questions
+- so what happens if a photon has just a little less energy for a jump? where does the energy go? is it heat or light? it's only all or nothing when considering electron jumping to higher orbit? if an electron stays in the same orbit is it still capable of giving off heat/light? what happens if too much energy? 
+- how exactly does FRET happen? i still dont understand how fields work and how electrons get energized via field with nothing physically there
+- fact check is energy passed through reaction center close to 95%? how much energy is lost in the energy transfer process to reaction center? other stages? where does the 5% go?
+
+
+## Chlorophyll
+chlorophyll absorbs red and blue strongly but bounces green
+    - different colors deliver same amount of energy by exciting electron. the additional energy from a higher energy color is immediately dumped as heat and settles into the same state
+    - light is not bottleneck so absorbing more light does nothing. excess light also can damage plant, excite chlorophyll with nowhere to send it to and then bad things happen
+    - color is the wavelength of the photon = energy per photon. shorter wavelength means more energy. blue, green, red from shortest to largest wavelength and highest to lowest energy. 
+    - past 700nm red changing into infrared, photons too weak to run reaction since jump has to give enough energy to excite electron. big supply of infrared and lights plants cant touch
+
+### Questions
+
+
+
+## Photosystem 2
+- named 2nd because discovered 2nd but is first step
 - continuing from last stage energy hops to central reaction center. then an electron in reaction center gets excited and yanked by neighboring molecule?
-    - is this accurate?
-    - how does energy hop and excite electrons without electrons being moved? what molecule yanks the electron? why doesnt this happen anywhere else but reaction center? what is the efficiency cost if this happens elsewhere? what is it called?
-      - it doesnt happen anywhere but reaction center because electrons only get energized if they match the electrical field and distance? so outer ones are slightly wider and inner ones slightly smaller to downhill hops much more likely and uphill hops cant go anywhere
-- the molecule is now missing an electron (what molecule?) 
+    it doesnt happen anywhere but reaction center because electrons only get energized if they match the electrical field and distance? so outer ones are slightly wider and inner ones slightly smaller to downhill hops much more likely and uphill hops cant go anywhere
+- the molecule is now missing an electron 
 - this molecule then rips electron out of water
-    - why is this molecule uniquely able to do this?
-      - redox potential of this molecule P680+ is 1.25V and water is 0.82V so comfortably able to split water.
+    - molecule able to do this because
+      - redox potential of this molecule P680+ is 1.25V and water is 0.82V so comfortably able to split water
       - doesnt do it all at once. uses an Oxygen Evolving Complex
-        - did not understand explanation at all with capacitator, ratchet, states
     2 H₂O  →  4 electrons + 4 H⁺ (protons) + O₂
         - water is the electron source
         - oxygen leaks out of leaf
         - protons dumped into thylakoid sac
 
+### Questions
+- how does energy hop and excite electrons without electrons being moved? what molecule yanks the electron? 
+- what molecule is now missing an electron?
+- did not understand explanation at all with capacitator, ratchet, states about Oxygen Evolving Complex
+
+
+## After photosystem 2
 stolen electron from photosystem 2 is passed down series of molecules in thylakoid membrane
 - plastoquinone -> cytochrome b6f -> plastocyanin
-    - what does each of these do and why?
 - each step drops electron to lower state instead of one big drop
     - this allows energy at each step to be captured rather than wasted as heat
-        - how much heat do plants generally emit?
 - the captured energy allows more protons from reaction center ripping electron from water to be pumped into thylakoid sac from stroma
-    - diagram would be nice to place all these components
 
 2 systems pumping protons into thylakoid
     - splitting water
     - transport chain pumping protons in
-        - where are they being pumped from and how?
-          - nothing really pumped more like shuttle bus chemically forced to go one way? something called vectorial chemistry? high level understand like each sideof membrane has a different receiver so only way can go or something like that
+        - nothing really pumped more like shuttle bus chemically forced to go one way. this is called vectorial chemistry? high level understanding: each side of membrane has a different receiver so only way can go
     
 inside of thylakoid becomes intensely positive
     - 1000x concentration difference / 3ph difference between membranes
-        - how does a concentration of protons correlate with 3 ph difference?
-          - ph is defined as -log10 of protons
+        - ph is defined as -log10 of protons
 
 membrane is greasy so protons cant get out even though theyre all super positive and crowding
-    - how is it greasy? how does the greasiness prevent it? is it sticky somehow? how?
 
+
+### Questions
+- what does each of plastoquinone -> cytochrome b6f -> plastocyanin do and why? 
+- how much heat do plants generally emit due to inefficiency
+- diagram would be nice to place all these components
+- do i know how the transport chain pumping protons works? is it discussed in this doc?
+- how is membrane greasy? how does the greasiness prevent it? is it sticky somehow? how?
+
+
+## ATP Synthase
 ATP synthase is an enzyme that physically spins as protons rush through it
     - this is the only way for protons to get out
     - the rotation mechanically deforms the top part of enzyme and squeezes ADP and phosphate together into ATP
     - spins at 100 rotations/second
 
-electron from earlier initially excited in photosystem 2 now arrives in photosystem 1
+another electron now arrives in photosystem 1
 - gets hit by another photon and kicked to high energy again
-    - is it actually the same electron? how does a photon kick it into high energy?
-      - no but also doesnt seem to matter as electrons are interchangeable
-      - photons absorbed all or nothing by electrons. excited means orbiting higher level. in photosynthesis electron leaves before it can fall to lower energy state
-        - does orbiting higher level mean it gets physically shoved out or some other mechanism?
 - passed to carrier called ferrodoxin and then loaded onto NADP+ to make NADPH
 
 this was factory 1 to take light and water to create ATP, NADPH and O2 as waste
-- was this the krebs cycle or something different?
+
+### Questions
 
 calvin cycle below
 
