@@ -25,17 +25,16 @@ how badly something wants electrons is called redox potential
   - positive voltage means terrible donor and negative means generous electron donor
     - so voltage is like how much energy to take the electron away and negative means i will happily give it to you in fact i will pay you to take it away?
 
+
+bond breaking does not necessarily mean loss and bond making does not mean gain. common intuition trap, what matters is how much energy is available before/after
+- bond energy is a real tabulated number
+- you can think of it as a series of valleys. the higher the bond energy, the deeper the valley
+- it always costs energy to break a bond because you are taking an electron out of the valley
+- but if you then place it in a deeper valley, it releases more energy typically as heat
+- the bigger the bond energy the more energy required to break the bond and the more inert it typically is
+- this is the concept photosynthesis takes to use photons to take high bond energy electrons from oxygen and place them into carbon low bond energy orbits. to release energy it reverses this and the energy the electron releases by going into deeper valley is captured and used
+
 ### Questions
-- what confuses me here is the shape. why does level 1 only have a sphere? what orientation is that sphere? in level 2 i understand the 3 dimensions allowing different orbits but how is there a 4th one? 
-- so does this mean that electrons in the 3rd valence level would feel no proton force. since 8 protons - 2 inner - 8 = -2? i guess it makes sense since if the second level was full oxygen would attract no more electrons. what about for bigger atoms then? like lets say 12 protons - 2 inner - 8 second = 2 proton force. so would everything in the 3rd valence level feel 2 proton force? so the bigger the atom the weaker it holds progressively further electrons?
-- why is a strong proton force less energy? is it literally less energy or something like it is pulled a lot so fewer atoms/molecules can pull it out of its energy state?
-- does this mean bigger atoms in general have lower energy states because more proton force for electrons?
-- biggest question currently is what the +6 force means exactly, why it works that way, and why electrons dont repel when more electrons than protons
-
-
-
-
-
 
     
 
@@ -140,65 +139,60 @@ this was factory 1 to take light and water to create ATP, NADPH and O2 as waste
 
 ### Questions
 
-calvin cycle below
-
+## Calvin Cycle
 inside stroma, fluid around thylakoid sacs, theres a 5 carbon molecule called RuBP
-- i assume 5 carbon means 5 carbon molecules but dont really remember chemistry. should have diagrams eventually and piece the enzymes/molecules together
-  - no they mean 5 carbon atoms
 
 RuBisCO takes CO2 and welds it onto RuBP
 - the resulting 6 carbon is unstable and breaks into 2 3-carbon molecules called 3-PGA
-    - how is it unstable, how does it break?
-      - RuBisCO holds it and cleaves it deliberately
-    - is there lost energy here since the bond is broken and energy not captured?
-      - bond breaking does not necessarily mean loss and bond making does not mean gain. common intuition trap, what matters is how much energy is available before/after
+    - RuBisCO holds it and cleaves it deliberately
 
 3-PGA is low energy, it needs to react with
 - ATP to donate phosphate, energizing the molecule
-    - how does ATP donate phosphate? what is the mechanism? how does this energize the molecule?
-      - 3-PGA is stable and unreactive. ATP donates phosphate making it loaded and twitchy intermediate
-        - turning something stable into unstable, does this usually require energy? what mechanism allows ATP to do this then?
+    - 3-PGA is stable and unreactive. ATP donates phosphate making it loaded and twitchy intermediate
 - NADPH to donate high energy electron and hydrogen
-    - this moves electrons away from oxygen?
-        - what does this mean? 
-    - how does this donate an electron and hydrogen? is the hydrogen just a proton? why do NADPH and ATP energize the molecule?
 - result is G3P, small energized 3 carbon sugar
     - glucose is just 2 G3P
-        - does it automatically become glucose or does it take energy to stitch them together?
 
 most G3P recycled to create more RuBP 
     - run the cycle 3 times, 6 G3P produced
     - 5 of the 6 produced rearranged back into 3 RuBP
-        - how are they rearranged? also seems like theyre somehow split smaller because 5 does not divide evenly into 3
-          - have to count atoms not molecules
+        - 5 doesnt divide evenly into 3 because have to count atoms not molecules
             5 molecules × 3 carbons = 15 carbons
-            3 molecules × 5 carbons = 15 carbons 
     - 1 G3P is profit
 
 profit G3P can then become glucose, sucrose, starch, cellulose
 
+### Questions
+- why is resulting 6 carbon unstable? how is it welded onto RuBP
+- should have diagram to place stroma, thylakoid sacs, etc
+- what does RuBisCO hold and cleave?
+- turning something stable into unstable, does this usually require energy? what mechanism allows ATP to do this then?
+    - why does the phosphate make 3-PGA loaded and twitchy? donating electron?
+- NADPH moves electrons away from oxygen right?
+    - how does this donate an electron and hydrogen?
+- does G3P automatically become glucose or does it take energy to stitch them together?
 
-RuBisCO flaws
+## RuBisCO flaws - we should go into RuBiSCO into depth rather than like this
 - typical enzyme processes thousands of molecules per second  
-    - how the fuck is that possible?
       - do enzymes work by connecting to starting material that doesnt quite fit well but fits the end result better? so it moulds them into the correct shape? how do they release them and why dont they always connect to floating end result rather than starting material?
 - RuBisCO manages roughly 3-10
-    - why this number? and why so slow?
       - multi step process and each step has to go well and fully complete otherwise result is really dangerous
       - distinguishing CO2 and O2 is really hard because they are very similar. plant solution is to make the transition state much more selective which means it is harder to reach
-        - what is transition state?
 - plants compensate by making a metric butt load of it
-    - how is it made? RuBP made by G3P but where does RuBisCO come from?
 - can confuse CO2 with O2 about 25% of the time
     - produces toxic byproduct that costs energy to clean up using photorespiration 
         - wastes 20-30% of plant's photosynthetic output
-        - why is this not something evolution has selected against? is it just so much energy from the sun that lost energy doesn't matter? sure when it evolved there wasn't much oxygen so it wasn't really a problem but billions of years have passed since then - why in that time since oxygen became abundant was this not a negative trait? there are specific plants like C4 or CAM but how abundant are they and how many plants dont have those adaptations? why did C4/CAM select for energy conservation vs these other ones?
+          - evolution has cared and produced C4 plants which are 3% of plant species but do 23% land productivity and it's also not a uniform selection because photorespiration tax gets much worse as temperature rises
           - C4 is 3% of plant species but do 23% land productivity
           - photorespiration tax gets much worse as temperature rises so not universal tax. 
 
+### Questions
+- what is transition state with CO2?
+- how is it made? RuBP made by G3P but where does RuBisCO come from?
+
+## C4 and CAM Plants
 C4 plants (maize, sugarcane) solve the RuBisCO problem by
 - more discriminating enzyme grabs CO2 from outer cells then pumps into sealed inner chamber where RuBisCO is. in this chamber RuBisCO rarely encounters oxygen and eliminates the problem
-    - what enzyme, what inner chamber, how does the enzyme release it inside the chamber?
       - PEP carboxylase, CO2 partially dissolved in water converts into bicarbonate and O2 has no such form. 
       - then traveling into inner chamber, it is de-carboxylated and dumped as CO2
 
@@ -207,5 +201,5 @@ CAM plants (pineapple, cactus)
 - only open pores in night and store carbon in acid
 - then run calvin cycle by day with little water to leak out
 
-
+### Questions
 
