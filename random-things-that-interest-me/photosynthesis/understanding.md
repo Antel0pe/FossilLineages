@@ -34,6 +34,12 @@ bond breaking does not necessarily mean loss and bond making does not mean gain.
 - the bigger the bond energy the more energy required to break the bond and the more inert it typically is
 - this is the concept photosynthesis takes to use photons to take high bond energy electrons from oxygen and place them into carbon low bond energy orbits. to release energy it reverses this and the energy the electron releases by going into deeper valley is captured and used
 
+- photons are strange, act like particles and waves and do weird things
+- fields dont need anything in between to propogate the wave. the wave just moves through empty space
+    - not to say there isnt anything more to be discovered about fields because quantum field theory, gauge space try to explain fields as everything and particles are ripples in field. point is for now fields seem to just exist but there is a deep rabbit hole and where a frontier lies
+
+- photosynthesis takes advantage of quantum properties and need a surprising amount of it to explain seemingly simple questions
+
 ### Questions
 
     
@@ -45,12 +51,11 @@ high level photosynthesis is about using photons to pull low energy electrons fr
     - energized means the electron orbits a bigger looser shape. falling back = returning to earlier pattern
         - ways to get rid of energy
             - spit out as light
-                - how is light created from the orbit?
             - heat by jiggling near molecules
             - let something take electron away -> photosynthesis
-    - jump is all or nothing
+    - jump is all or nothing - photon has to have roughly the exact energy otherwise it passes by with no effect
 - in a dead leaf/chlorophyll extract the electron falls into lower energy and emits heat and faint red glow
-    - can see this happen. by blending spinach and rubbing alcohol, filtering and shining light. why rubbing alcohol though?
+    - can see this happen. by blending spinach and rubbing alcohol, filtering and shining light.
 
 single chlorophyll molecule doesnt get hit often
 - so chloroplasts group them together into a funnel
@@ -62,9 +67,10 @@ single chlorophyll molecule doesnt get hit often
     
 
 ### Questions
-- so what happens if a photon has just a little less energy for a jump? where does the energy go? is it heat or light? it's only all or nothing when considering electron jumping to higher orbit? if an electron stays in the same orbit is it still capable of giving off heat/light? what happens if too much energy? 
-- how exactly does FRET happen? i still dont understand how fields work and how electrons get energized via field with nothing physically there
-- fact check is energy passed through reaction center close to 95%? how much energy is lost in the energy transfer process to reaction center? other stages? where does the 5% go?
+
+
+
+- how does an electron going to higher orbit with more energy produce light/photon?
 
 
 ## Chlorophyll
