@@ -68,6 +68,32 @@ A `PreToolUse` hook (`.claude/hooks/pre-commit-disclosure-gate.sh`) enforces thi
 `git commit` until you create the one-shot token `.claude/.disclosure-ok` (do that only after
 the disclosure has been posted and seen).
 
+# Visualizations always ship with their explanation
+When you produce a visualization (diagram, chart, widget), **the visual and the prose that
+explains it must appear in the SAME message**. Never render a visual at the end of one message
+and explain it in the next, and never explain something first and render the visual in a
+follow-up message. The user has to scroll between messages to connect them, which defeats the
+point of the visual.
+
+Also: **state what the visual is showing before or immediately after it** — the viewing angle,
+what each axis means, what a bar's length encodes. A diagram whose frame of reference is
+unstated is unreadable, even when the content is correct.
+
+# Answering a block of questions
+When the user asks several questions in one message:
+- **Restate each question simply, as its own heading, before answering it.** By the time they
+  read answer four they will not remember what question four was. Never answer a barrage as
+  flowing prose with no markers.
+- **Keep the user's original order.**
+- **Each answer must be complete and self-contained.** Do NOT reference a previous answer,
+  patch one detail, and move on ("I explained that badly, here is the fix"). When a question
+  shows the earlier explanation did not land, REBUILD it from the context they actually need —
+  even if that repeats ground already covered. A patch assumes they retained the thing that
+  did not work.
+- **Answer the guesses they made, explicitly.** If they proposed a mechanism in the question,
+  say whether it is right or wrong and why, by name. Do not silently supply a different answer
+  and leave their hypothesis hanging.
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 

@@ -998,3 +998,137 @@ accumulating uncommitted images in the meantime, suggesting he's been in collect
   curiosity (cf. maps, Bodélé/paleoclimate). The 2026-08-06 "substrate rotates but the shape
   doesn't" question is now supported by more instances and should probably be put to him directly
   rather than kept as a watch item.
+
+## 2026-08-24
+
+Context: no build request. User ran a deliberate "bus ticket theory of genius" exercise (Paul
+Graham) — asked what a year of disinterested obsession would be spent on, and explicitly
+instructed that **all previously expressed interests be discounted** and treated as evidence from
+a decade before the real obsession is identified.
+
+- **[correction — META, applies to how this whole file is used]** Instructed that his stated
+  interests (evolution, weather, deep time, linguistics, photosynthesis) be **discounted entirely**
+  as evidence of the underlying obsession. Extends the 2026-08-03 meta-correction: not only are
+  same-day reactions over-sampled spikes, the *topics themselves* may be prestige-picks rather than
+  the real thing. Read the record for what he does unprompted and doesn't count, not what he selects.
+- **[idea — his own framing]** Named the target explicitly as PG's **disinterested obsession** — the
+  fine-grained, pointless-looking interest, not the defensible project. Note this is the first time
+  he has supplied the selection criterion himself rather than reacting to one offered to him.
+- **[insight — new evidence volunteered by him, HIGH SIGNAL]** Reported that he looks up **personal
+  name origins and meanings, first and last, "pretty frequently."** Unprompted, voluntary, produces
+  nothing, and had never appeared anywhere in this log or in the memory profile. Same class as the
+  `random-things-that-interest-me/` maps material and the etymology habit — activities he does for
+  free and does not count as work. Note it independently corroborates the names/boundaries reading
+  proposed earlier the same session, and he supplied it *after* that reading, not before.
+- **[correction — kills the recommendation I had just given]** Rejected the catalogue form outright:
+  **"is there a version of this project for names that isnt just catalogue as ive tried that and
+  churned."** I had recommended exactly a catalogue (pick a 10km map square, list twenty settlement
+  names, don't build anything). He has run that form before and it did not sustain. Treat
+  "collection/catalogue" as a **tested and failed output form**, alongside sims, lineage pages,
+  explorables, and narrative prose.
+- **[note — the distinction that survives the correction]** `random-things.md` is a catalogue and has
+  NOT churned (still accumulating after months). Proposed discriminator, a guess: its entries are
+  *why*-questions whose answers are mechanisms, and several chain into each other (green Sahara →
+  Lake Mega-Chad → Bodélé diatom bed → Amazon phosphorus). A name-meaning lookup terminates on
+  arrival and connects to nothing. If that's right, the failure mode is not "cataloguing" but
+  **collecting items whose answers close**. Test: does entry #50 change how he reads entry #12?
+- **[watch]** He is now three-for-three arriving with non-lineage material (maps, paleoclimate,
+  photosynthesis, and now personal names). The 2026-08-06 "the substrate rotates but the shape
+  doesn't" question has effectively been answered by him this session — he asked for the substrate
+  to be discounted. The open item is no longer *which domain* but **which output form doesn't
+  churn**, given that catalogue, sim, page, explorable, and prose are all now spent.
+
+### 2026-08-24 (later, same day) — the criterion he'd been missing: transfer, not novelty
+
+- **[correction — HIGHEST SIGNAL IN THIS FILE; kills the place-name/surname direction and much
+  of the repo's premise]** Rejected the toponymy/surname direction on a criterion he had never
+  stated before: an answer must **tell him something novel about the world**, where "novel" means
+  it *reorganizes something he already knew*. His example, unprompted and the key to the whole
+  entry: learning photosynthesis let him work out that **heat is excess molecular movement, so hot
+  food just needs a way for a lot of molecules to give off their energy.** The payoff was not the
+  target topic — it was the transfer to an unrelated mundane thing. His objection to place-names:
+  "it might be evidence of the same kind repeated instead of telling me something really new about
+  the world." Self-hedged ("may be true may not be").
+- **[insight — the distinction underneath it, Claude's naming of his point]** **Contingent vs.
+  generative domains.** In contingent domains (history, toponymy, archaeology, evolutionary
+  particulars) each answer is a *new fact* — N answers, N facts, no structure carries over. In
+  generative domains (chemistry, thermodynamics, scaling, diffusion) one mechanism retroactively
+  explains an unbounded set of previously unconnected observations. He has spent ~2 years and ~40
+  repos in the two most contingent domains available (history, evolutionary history), varying the
+  **format** every time (sim, lineage page, explorable, prose, catalogue) while holding
+  **contingency** constant. This is the first hypothesis in this file that explains the recurring
+  "so what" as *structural to the domain* rather than as a taste or format problem.
+- **[insight — resolves the depth-ceiling paradox better than the audience theory]** The 2026-07-07
+  "one causal link is the ceiling, more mechanism dilutes" memory and the current photosynthesis
+  doc (eight layers deep and still asking for more) are not in conflict and it is NOT about
+  audience: **deeper in a contingent domain yields more particulars (dilution); deeper in a
+  generative domain yields more coverage (unification).** Falsifiable and worth testing.
+- **[note — retrodiction that supports the above]** The single thing he reports remembering fondly
+  from the entire nine-day sim arc — "there is no selection pressure for eyes when prey is dense" —
+  is the one *generalizable principle* produced in it, not a fact about eyes. Consistent.
+- **[insight — relocates the bus ticket]** The tell in his own message: he was not delighted by
+  learning photosynthesis, he was delighted that it let him think about **hot food**. Candidate
+  obsession, replacing the names/maps reading offered earlier today: **mundane everyday phenomena,
+  pushed to the bottom** — disinterested (nobody needs to know why food is hot) but sitting on top
+  of maximally generative structure. Not yet reacted to by him.
+- **[watch]** He has already written the unifying sentence himself in `understanding.md` ("using
+  photons to pull electrons into higher-energy carbon orbits… moving the electron back is releasing
+  energy") without treating it as a spine. Open: does he accept the energy-accounting spine, and
+  does the **transfer** (rather than the note) work as a unit of production given his standing rule
+  that "learning isn't work because it doesn't produce anything"?
+
+### 2026-08-24 (third, same day) — rejected the kitchen/cooking proposal; isolates a missing constraint
+
+- **[disliked — clean rejection]** Rejected a proposal to spend the year on cooking-as-thermodynamics
+  (adjudicating folk kitchen claims against real mechanism, chosen purely to maximise the *transfer*
+  criterion he stated earlier today): **"this feels like something completely different - not sure
+  its anywhere in my interest field."** No hedge, immediate.
+- **[insight — what the rejection isolates, more valuable than the rejection itself]** The transfer/
+  generative criterion is **necessary but not sufficient**. Cooking scored maximally on transfer and
+  still landed outside. The constraint it violates, present in every voluntary activity on record:
+  the subject must be **the natural world**, and preferably one with a **history** — how it came to
+  be that way. Maps, etymology, paleoclimate, fossils, weather, photosynthesis, lactase persistence
+  all have it; cooking is an engineered, present-tense, human-artifact domain with no origin
+  dimension. Sharpens the target to a three-part filter: **generative mechanism + natural world +
+  it has a history.** All three, not any two.
+- **[note — retrodiction check]** The filter explains the record without exceptions: place-names
+  (natural-ish + history, no generative mechanism) → churned; sims (natural + generative, but
+  authored so the history is his own) → misery; cooking (generative, neither of the others) →
+  alien on sight; photosynthesis (all three, though he is currently only travelling the mechanism
+  axis) → the only thing still running.
+- **[note — direction of travel, unexplored]** His photosynthesis work has gone consistently
+  **downward** (chlorophyll → orbitals → redox → quantum). The **outward** axis — same mechanism at
+  planetary scale and across deep time — is untouched, and is where his two documented-but-never-
+  built-on hooks live: "physical evidence you can stand on" (2026-06-28, Permian-Triassic cliff,
+  never attempted) and the Ediacaran-oxygen → carnivory link he reacted to on 2026-07-25 with
+  "Interesting, I had no idea about that." Also note his own first line in
+  `photosynthesis/questions.md` is evolutionary, not mechanical: "is there evolutionary selection
+  for more efficient variants of rubisco?" — he wrote the outward question himself and has not
+  pursued it. **His reaction to the outward reframe is the next datapoint.**
+
+### 2026-08-24 (fourth, same day) — META correction on how to read "discount my stated interests"
+
+- **[correction — METHOD, applies to every future reading of this file]** Corrected my
+  interpretation of his opening instruction. "Discount the interests I've expressed" does **not**
+  mean delete them and search for a hidden essence elsewhere: *"when i say dont fit a theory to
+  todays evidence i dont mean completely ignore it but treat it as the early work of someone."*
+  I.e. read the record the way you'd read an artist's juvenilia — the **subject is usually already
+  correct**; what is immature is depth, form, and the absence of a real question. He flagged the
+  last three proposals (place names → cooking → follow-the-oxygen) as **"really going out to left
+  field"** and asked for grounding. Recorded as a method error on my side: successive proposals
+  drifted further from his actual body of work because I was treating the surface as noise.
+- **[insight — the grounded reading, offered to him, reaction pending]** Taken at face value, the
+  ~40 repos are not five domains rotating. Weather, paleoclimate, tectonics/physical geography,
+  fossils/evolution, and now photosynthesis are **one field** — Earth-and-life-over-time
+  (paleoclimate / paleobiology / geobiology). The "domain rotation is my failing pattern" anxiety
+  (2026-08-03, 08-06) may therefore be a misreading of normal within-field breadth. Genuine
+  outliers, and worth keeping outside the claim: **etymology and personal-name origins**, which he
+  *browses* rather than works on.
+- **[implication]** If the subject has been right for two years, the missing ingredient is **depth,
+  not domain** — which is PG's actual claim (curiosity deepens with knowledge; open questions only
+  exist at the edge) and the direct inverse of his stated model (2026-08-03: find the field you
+  love first, deepen after). Proposal made: one narrow problem in the field he is already in,
+  taken to the depth where answers stop being retrievable. Candidates named, both already present
+  in his own files: the **end-Permian extinction** (his untouched 2026-06-28 "evidence you can
+  stand on" hook, Frazer Beach) and the **African Humid Period / Sahara cycling** (random-things.md,
+  raised unprompted 2026-08-13).

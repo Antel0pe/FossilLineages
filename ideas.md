@@ -103,3 +103,6 @@ for simple evo sim
 - possible other ideas to tackle. 
     - writing fantasy, giving it an honest try and trying to make a world with cool origins of things, based on some historical thing with a twist
     - something in biology, computational biology, something there
+
+- photons as a battery
+    - if they dont lose energy and specific properties of what can absorb energy of a photon

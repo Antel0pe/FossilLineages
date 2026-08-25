@@ -4,6 +4,7 @@
     - bonded means they share electrons and stick together
 - electrons around a nucleus can only fit in certain wave shapes
     - each allowed shape is called orbital. each shape can hold 2 electrons due to spin. they can only share if they have opposite spin
+        - the shape can have 1/2 electrons. when there is 1 it can take a dumbell shape. when there are 2, both occupy the same dumbell shape
     - level 1 has 1 possible shape, simple sphere
     - level 2 has 4 possible shapes, sphere, up-down,front-back,right-left
     
@@ -53,9 +54,21 @@ high level photosynthesis is about using photons to pull low energy electrons fr
             - spit out as light
             - heat by jiggling near molecules
             - let something take electron away -> photosynthesis
+                - the structure to yank the electron is so close that it becomes the easiest and fastest option
+                    - the other options do happen but much rarer. can happen due to random chance or the electron acceptor is full
+                    - in that case cartenoids exist that have all the electrons they need. without it the electron would go to oxygen and be super dangerous. 
+                    - cartenoids work by exchanging electrons with the chlorophyll so net result is nothing but the energy is emitted as heat and the electron does not cause damage
+        - it jumps out of the valley of the bond just enough to be yanked by nearby molecule
     - jump is all or nothing - photon has to have roughly the exact energy otherwise it passes by with no effect
 - in a dead leaf/chlorophyll extract the electron falls into lower energy and emits heat and faint red glow
     - can see this happen. by blending spinach and rubbing alcohol, filtering and shining light.
+
+chlorophyll has a ring of carbon + nitrogen atoms that form a porphyrin ring
+- some of the electrons form 2 flat discs of electron clouds above and below that catch the light
+- space is the region an electron can occupy, shape is the way it takes up that space. squeeze the space and the shape is compressed which raises energy
+    - squeezing space also spreads gap between 2 shapes. easy to visualize if they were humps, squeezing spaces increases distance between the 2 humps because each hump becomes more extreme
+- electron sits in one shape at a time. photon is only absorbed if its energy matches the gap between the electron's current shape and another shape the molecule allows
+- chlorophyll works because the ring gives electron huge space so even weak visible light photons can be absorbed
 
 single chlorophyll molecule doesnt get hit often
 - so chloroplasts group them together into a funnel
@@ -63,6 +76,7 @@ single chlorophyll molecule doesnt get hit often
     - NOT the electron that hops
         - energy passed molecule to molecule
           - FRET (Förster Resonance Energy Transfer). electron is oscillating in cloud which creates electrical field. nearby electrons get energized by that field. 
+        - energy hops downward to lower and lower valleys emitting excess energy as heat
 - hop until they reach central reaction center
     
 
@@ -79,6 +93,8 @@ chlorophyll absorbs red and blue strongly but bounces green
     - light is not bottleneck so absorbing more light does nothing. excess light also can damage plant, excite chlorophyll with nowhere to send it to and then bad things happen
     - color is the wavelength of the photon = energy per photon. shorter wavelength means more energy. blue, green, red from shortest to largest wavelength and highest to lowest energy. 
     - past 700nm red changing into infrared, photons too weak to run reaction since jump has to give enough energy to excite electron. big supply of infrared and lights plants cant touch
+
+chlorophyll a and b absorb red/blue because they are structured to match the wavelengths for them. green isnt absorbed as much because the chlorophyll molecules arent optimized for their wave length
 
 ### Questions
 
