@@ -41,33 +41,28 @@ bond breaking does not necessarily mean loss and bond making does not mean gain.
 
 - photosynthesis takes advantage of quantum properties and need a surprising amount of it to explain seemingly simple questions
 
+ways for electron to get rid of energy
+- spit out as light
+    - electron sloshing around creates an electromagnetic field which creates a photon whose wavelength is same as vibration of electron
+- heat by jiggling near molecules
+- let something take electron away
+
+in dead leaf can see the photon catching mechanism radiate the energy as red light
+
 ### Questions
 
     
 
 high level photosynthesis is about using photons to pull low energy electrons from oxygen into carbon higher energy orbits. that's storing energy. moving the electron from carbon back into oxygen is releasing energy.
 
-## Catching photon
-- when a photon hits chlorophyll, one of its electrons absorbs it and jumps into a higher energy state. it is energized and wants to fall into a lower state
-    - energized means the electron orbits a bigger looser shape. falling back = returning to earlier pattern
-        - ways to get rid of energy
-            - spit out as light
-            - heat by jiggling near molecules
-            - let something take electron away -> photosynthesis
-                - the structure to yank the electron is so close that it becomes the easiest and fastest option
-                    - the other options do happen but much rarer. can happen due to random chance or the electron acceptor is full
-                    - in that case cartenoids exist that have all the electrons they need. without it the electron would go to oxygen and be super dangerous. 
-                    - cartenoids work by exchanging electrons with the chlorophyll so net result is nothing but the energy is emitted as heat and the electron does not cause damage
-        - it jumps out of the valley of the bond just enough to be yanked by nearby molecule
-    - jump is all or nothing - photon has to have roughly the exact energy otherwise it passes by with no effect
-- in a dead leaf/chlorophyll extract the electron falls into lower energy and emits heat and faint red glow
-    - can see this happen. by blending spinach and rubbing alcohol, filtering and shining light.
 
+## Catching photon
 chlorophyll has a ring of carbon + nitrogen atoms that form a porphyrin ring
 - some of the electrons form 2 flat discs of electron clouds above and below that catch the light
 - space is the region an electron can occupy, shape is the way it takes up that space. squeeze the space and the shape is compressed which raises energy
-    - squeezing space also spreads gap between 2 shapes. easy to visualize if they were humps, squeezing spaces increases distance between the 2 humps because each hump becomes more extreme
+    - squeezing space also spreads gap between 2 shapes. easy to visualize if they were humps, squeezing horizontal spaces vertically increases gap between the 2 humps/energy shapes because each hump becomes more extreme
 - electron sits in one shape at a time. photon is only absorbed if its energy matches the gap between the electron's current shape and another shape the molecule allows
+    - reason for this is that a photon's wavelength can be thought of as push and pull. each push pushes it a super tiny amount. when the electron naturally sloshes back, if the wavelength is in sync then it pulls too, then it pushes in sync and like a swing if you align your legs forward and back the motion gradually builds. if it's not perfectly aligned then it will fizzle out. thats why it has to match the energy gap instead of just being enough energy
 - chlorophyll works because the ring gives electron huge space so even weak visible light photons can be absorbed
 
 single chlorophyll molecule doesnt get hit often
@@ -78,23 +73,43 @@ single chlorophyll molecule doesnt get hit often
           - FRET (Förster Resonance Energy Transfer). electron is oscillating in cloud which creates electrical field. nearby electrons get energized by that field. 
         - energy hops downward to lower and lower valleys emitting excess energy as heat
 - hop until they reach central reaction center
+
+after photon energizes reaction center electron
+- the structure to yank the electron is so close that it becomes the easiest and fastest option
+    - the other options do happen but much rarer. can happen due to random chance or the electron acceptor is full
+        - are dangerous because if the electron is excited, the spin can flip, then instead of staying excited for 5ns it stays excited for 1ms giving it enough time to bump into an oxygen and be very dangerous
+    - in that case cartenoids exist. their excited state sits below energy required to excite oxygen. without it the energy would go to oxygen and become singlet oxygen
+        - super reactive dangerous form of oxygen and only takes a little bit of energy to do so
+    - cartenoids work by exchanging electrons with the chlorophyll so net result is nothing but the energy is emitted as heat and the energy does not cause damage
     
 
 ### Questions
 
 
-
-- how does an electron going to higher orbit with more energy produce light/photon?
-
-
 ## Chlorophyll
 chlorophyll absorbs red and blue strongly but bounces green
     - different colors deliver same amount of energy by exciting electron. the additional energy from a higher energy color is immediately dumped as heat and settles into the same state
+        - blue has slightly higher energy than red and red has much more than ground state
+        - the amount of time to drop down increases exponentially the bigger the gap. so it takes 0.0001ns to drop from blue to red. it takes 5ns to drop from red to ground state. this is why the blue to red is dissipated as heat but red to ground state is much more likely to have the energy yanked than as heat
     - light is not bottleneck so absorbing more light does nothing. excess light also can damage plant, excite chlorophyll with nowhere to send it to and then bad things happen
+        - reaction center takes 1ms and antenna chlorphyll deliver excitations much faster. so light isnt the bottleneck its the reaction center
+        - when plants have too much light they can start dumping energy as heat rather than risk a singlet oxygen
     - color is the wavelength of the photon = energy per photon. shorter wavelength means more energy. blue, green, red from shortest to largest wavelength and highest to lowest energy. 
     - past 700nm red changing into infrared, photons too weak to run reaction since jump has to give enough energy to excite electron. big supply of infrared and lights plants cant touch
+        - for excitation an individual photon has to match the energy gap to excite the electron. regardless of how many infrared photons there are, they dont have the required energy to excite the electron
+            - actually apparently they can but they have to appear basically simultaneously but only in laser intensities and they land on different shape than standard red/blue
 
-chlorophyll a and b absorb red/blue because they are structured to match the wavelengths for them. green isnt absorbed as much because the chlorophyll molecules arent optimized for their wave length
+- the porphyrin ring has a number of possible electron shapes. 2 in particular are a red photon's energy above ground and another is a blue photon's energy level
+- there are chlorophyll a,b,c,f and each electron cloud is slightly offset to absorb a different wavelength of red/blue light
+    - red algae has evolved phycobilins which is a line instead of a ring changing available shapes. this allows them to absorb blue and green and reflect red because red is strongly filtered out by water.
+    - no hard reason that green isnt absorbed by most land plants. simply because they never were starved for enough light
+- the photon has to be able to push the electron in its current shape such that it gets pushed to another viable shape
+- the porphyrin ring actually has shapes that match the energy gap of green too but they dont absorb the energy
+- high level explanation. a photon unbalances an electron cloud. the red and blue shapes are reachable via an unbalanced shape. green shape cannot be reached via an unbalanced cloud - the electron cloud needs to be hit by 2 photons near instantly to be unbalanced then rebalanced again to reach the green shape
+    - 
+
+
+
 
 ### Questions
 

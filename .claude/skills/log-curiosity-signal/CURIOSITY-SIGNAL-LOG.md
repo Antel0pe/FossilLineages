@@ -1132,3 +1132,55 @@ a decade before the real obsession is identified.
   in his own files: the **end-Permian extinction** (his untouched 2026-06-28 "evidence you can
   stand on" hook, Frazer Beach) and the **African Humid Period / Sahara cycling** (random-things.md,
   raised unprompted 2026-08-13).
+
+### 2026-08-24 (fifth, same day) — floated "photons as a battery"; first self-generated idea that clears his own filter
+
+- **[idea — his own, unprompted, written into `ideas.md` as the newest entry]** "photons as a
+  battery - if they dont lose energy and specific properties of what can absorb energy of a
+  photon." Context: comes directly out of the photosynthesis reading, and he asked "what do you
+  think about this idea?" rather than asking for a mechanism explanation — i.e. he is evaluating it
+  as a *thing to work on*, not as a fact to learn.
+- **[note — why this entry matters relative to the same day's earlier four]** Every direction
+  proposed to him earlier today (place names, cooking, follow-the-oxygen) came from me and was
+  rejected, twice as "left field." This one he generated himself, and unlike those it lands inside
+  the three-part filter he stated today (generative mechanism + natural world + has a history)
+  without anyone having to argue it there. **Datapoint on method, not just on content: his own
+  half-formed ideas may be better raw material than my proposals.** Guess, not established — one
+  instance.
+- **[insight — Claude's read, offered to him, reaction pending]** Told him "battery" is the wrong
+  word and is concealing the better one: **denomination** — energy arrives as fixed-size coins and
+  every absorber is an exact-change machine; what matters is piece size, not amount. Offered as
+  evidence that it is generative rather than cute: it answers a question left unanswered in his own
+  `understanding.md` (why there are TWO photosystems — the plant needs ~2.5 V of *reach* in a single
+  charge separation and a red photon only buys 1.8 eV, so it spends two coins in series). Also gave
+  three transfers to mundane things he already knows (microwave/wifi can never ionize at any
+  intensity; no sunburn through a window; color as a receipt of refused denominations) and the
+  planetary one (Earth is in energy balance — the sun gives coin size, not energy; ~20 small photons
+  out per big one in).
+- **[note — where I pushed, and the risk in it]** Pointed out his photosynthesis doc has travelled
+  consistently *downward* (chlorophyll → orbitals → spin) and that the denomination idea's history
+  axis is *outward* (sun's surface temperature → reachable chemistry → why oxygenic photosynthesis
+  has the architecture it has → oxygen rebuilds the planet). This is the second time today I have
+  recommended the outward axis; the first got no reaction. If it gets none again, stop pushing it
+  and treat the downward travel as the actual preference rather than a gap.
+- **[watch]** Open question this does NOT resolve: his standing objection that "learning isn't work
+  because it doesn't produce anything." Denomination is a *lens*, not an artifact, and every output
+  form is spent (sim, page, explorable, prose, catalogue). If he likes the idea, the immediate next
+  problem is what a unit of production looks like for it.
+- **[note — partial answer to the "reaction pending" above, same session]** I told him "battery is
+  the wrong word, use *denomination*." His immediate next move was not to take the reframe but to
+  **defend the battery**: "what if the photons were just bouncing around inside?" Weak evidence that
+  **storage/containment is the framing that actually grips him**, and that denomination is my
+  abstraction rather than his hook. Alternative reading, equally live: he was simply curious about
+  cavities and this says nothing about which framing he prefers. Do not treat as settled — watch
+  whether he keeps returning to storage-shaped questions.
+- **[note — what I answered with]** Optical cavities (real, milliseconds-to-seconds, LIGO's 4 km
+  arms hold a few joules vs ~10,000 J in a AA); the structural reason it can't work (a mirror IS an
+  absorb-and-re-emit, so bouncing re-rolls the destruction dice rather than avoiding it); then the
+  two natural systems that DO run his idea — the Sun's ~10⁴–10⁵ yr photon random walk, and the
+  greenhouse effect as literally "outgoing photons bouncing around inside." Closed by looping back
+  to a line he wrote himself in `understanding.md` (the electron gets yanked because it is the
+  fastest of three exits) as the same principle from the other end. **The greenhouse-as-
+  denomination-mismatch point (CO₂ transparent to 2 eV in, opaque to 0.08 eV out) is the strongest
+  transfer produced so far and connects to paleoclimate, which is already in his body of work.**
+  His reaction to that specifically is the datapoint worth having.
