@@ -106,9 +106,6 @@ chlorophyll absorbs red and blue strongly but bounces green
 - the photon has to be able to push the electron in its current shape such that it gets pushed to another viable shape
 - the porphyrin ring actually has shapes that match the energy gap of green too but they dont absorb the energy
 - high level explanation. a photon unbalances an electron cloud. the red and blue shapes are reachable via an unbalanced shape. green shape cannot be reached via an unbalanced cloud - the electron cloud needs to be hit by 2 photons near instantly to be unbalanced then rebalanced again to reach the green shape
-    - 
-
-
 
 
 ### Questions
@@ -117,22 +114,30 @@ chlorophyll absorbs red and blue strongly but bounces green
 
 ## Photosystem 2
 - named 2nd because discovered 2nd but is first step
-- continuing from last stage energy hops to central reaction center. then an electron in reaction center gets excited and yanked by neighboring molecule?
-    it doesnt happen anywhere but reaction center because electrons only get energized if they match the electrical field and distance? so outer ones are slightly wider and inner ones slightly smaller to downhill hops much more likely and uphill hops cant go anywhere
-- the molecule is now missing an electron 
-- this molecule then rips electron out of water
-    - molecule able to do this because
-      - redox potential of this molecule P680+ is 1.25V and water is 0.82V so comfortably able to split water
-      - doesnt do it all at once. uses an Oxygen Evolving Complex
-    2 H₂O  →  4 electrons + 4 H⁺ (protons) + O₂
-        - water is the electron source
-        - oxygen leaks out of leaf
-        - protons dumped into thylakoid sac
+    - 2 photosystems are needed because ps2 excites an electron and yanks it from p680 which becomes p680+ and is in a deep enough energy valley to pull an electron from water which is very hard. the second photosystem needs to donate an electron to create nadph. nadp+ doesnt pull an electron very hard so the electron needs to be excited into a shallow energy valley such that even nadph can pull it off
+- continuing from last stage the antenna chlorophyll pass energy to excite nearby electron via FRET. once they get to the reaction center specifically the P680 -> pheophytin -> plastoquinone (PQ) chain, the P680 electron gets energized then yanked by pheophytin then PQ.
+    - all antenna chlorophyll, P680, pheophytin, PQ have all the electrons they need initially. 
+    - pheophytin is regular antenna chlorophyll minus magnesium which makes it much more electron receptive
+    - after pheophytin takes the electron it becomes negative and the P680 becomes P680+
+    - the energy passes from antenna chlorophyll because they dont have any electron acceptors next to them. P680 gets its electron instead of energy yanked because pheophytin can accept the electron rather than just energy
+- P680 is now missing an electron and is strongest electron ripper in biology
+    - protein D1 which isolates it is rebuilt every 30mins in bright sunlight and highest turnover rate in biology
+- P680 is able to rip electron out of water because redox potential is 1.25V and water is 0.82V. can think of redox potential as how deep of an energy valley/how hard it pulls on electrons. since P680+ pulls harder than water, it can take it's electron
+    - the first photosynthesizers actually ripped electrons out of hydrogen sulfide and iron because it wasn't so hard to pull electrons from them. water eventually won because of how plentiful it is
+- the actual pulling uses an Oxygen Evolving Complex (OEC)
+- the p680 is bundled together with 1 oec and there are tons of pairs like this along the plant
+- the OEC is made up of an Mn cluster that holds the 2 water molecules. the tryosine and P680 are nearby parts of ps2 that connect to it
+    - the P680+ pulls an electron from the tryosine, the tyrosine pulls an electron from the Mn cluster, the Mn cluster pulls from the water
+        - this chain works because P680+ is at deeper energy valley than tyrosine, tyrosine at lower energy valley than Mn cluster, Mn cluster lower than water. same idea as antenna chlorophyll but with electrons instead of energy
+        - also moves in this specific way because they are the closest structures to each other
+    - each electron that is pulled from water, the stronger the bond between the water and the Mn cluster becomes due to maganese-oxygen bonds
+        - this is very important because h2o with missing electrons becomes extremely dangerous
+    - as the electrons are pulled h2o also discards a hydrogen proton with it
+    - once the p680 has yanked 4 electrons off the maganese-oxygen bonds are overwhelmed by the oxygen-oxygen O2 bond and are released
+- hydrogen protons from water dumped where they are
+    - another proton pump gets protons from the stroma inside via just regular protons that are present and determine pH
 
 ### Questions
-- how does energy hop and excite electrons without electrons being moved? what molecule yanks the electron? 
-- what molecule is now missing an electron?
-- did not understand explanation at all with capacitator, ratchet, states about Oxygen Evolving Complex
 
 
 ## After photosystem 2
