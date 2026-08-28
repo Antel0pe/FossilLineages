@@ -1184,3 +1184,49 @@ a decade before the real obsession is identified.
   denomination-mismatch point (CO₂ transparent to 2 eV in, opaque to 0.08 eV out) is the strongest
   transfer produced so far and connects to paleoclimate, which is already in his body of work.**
   His reaction to that specifically is the datapoint worth having.
+
+## 2026-08-26
+
+Context: no build request. Three-message arc, all about `random-things-that-interest-me/photosynthesis/understanding.md` —
+asked Claude to grade its level, then what reaching the frontier would take, then pasted PG's
+"How to Do Great Work" in full and asked what PG would advise. A mid-turn correction narrowed scope.
+
+- **[correction — scope, mid-turn and unhedged]** While Claude was reading the direction docs to
+  answer the PG question, he interrupted: *"pay attention specifically to the photosynthesis
+  section, everything else is kinda irrelevant here."* **Strongest evidence yet for the 2026-08-24
+  reading** that photosynthesis is the live thread — he did not argue it, he assumed it and dismissed
+  the rest of the body of work as noise. Note it also implicitly declines the "one field:
+  Earth-and-life-over-time" unification offered 2026-08-24 (fourth) — he did not treat
+  paleoclimate/fossils as continuous with this.
+- **[idea — his own framing]** The escalation across his three questions is itself the datapoint:
+  *grade this* → *what would frontier require* → *what would PG say*. He is not asking for content
+  about photosynthesis; he is asking **where the doc sits on a trajectory and whether the trajectory
+  is worth continuing.** First time he has asked for a calibration of his own depth rather than more depth.
+- **[note]** He supplied the PG essay unprompted and in full. Second self-administered PG exercise
+  (cf. 2026-08-24 bus-ticket). Treat PG's vocabulary as one he actively thinks in, not Claude's imposition.
+- **[insight — Claude's read, offered, reaction pending]** Told him he is at PG's step 3 (noticing
+  gaps), not step 2 — his `### Questions` blocks ARE step 3 implemented — but step 4 never happens
+  because every question gets closed by asking an LLM. Proposed sorting questions into *retrievable*
+  (someone knows; closing = learning) vs *nobody knows* (carrying = production), using PG's own
+  criterion: puzzlement is valuable when "no one else understands them either."
+- **[insight — his transfer criterion is PG's, independently arrived at]** His 2026-08-24 payoff
+  criterion (an answer must reorganize something already known — the hot-food transfer) is
+  point-for-point PG's *"noticing that two unanswered questions are the same,"* which PG names as the
+  more exciting payoff of carrying open questions. If the mapping holds, **closing questions fast is
+  directly destructive of the thing he says he values.**
+- **[correction — Claude's own, retracting two prior recommendations]** Withdrew the outward-axis push
+  (2026-08-24, made twice, no reaction both times). Reason given to him: outward lands in Earth
+  history, *contingent* by his own 08-24 distinction; downward lands in thermodynamics/quantum,
+  *generative* — and the hot-food transfer he cites as the payoff came from travelling **down**, not
+  out. His two non-reactions were correct rejections, not gaps.
+- **[note — a closed question that should not have been]** Flagged line 104 of `understanding.md`
+  ("no hard reason that green isnt absorbed... simply because they never were starved for enough
+  light") as a place he accepted a shrug and marked it settled. Why plants are green is genuinely
+  contested. Cheapest available instance of a carried question already in his own file, mis-sorted as closed.
+- **[note — self-critical, method]** On 2026-08-24 he floated "photons as a battery" and Claude
+  resolved it. By today's PG reading that was the wrong move — it converted his one self-generated
+  question into a retrieved answer. **Open method question: should Claude decline to close some of his
+  questions?** Not put to him yet.
+- **[watch]** Output-form problem untouched this session. Today's answer implies the unit of production
+  is a *carried question*, not an artifact — which would dissolve "every format is spent," but he has
+  not reacted and it contradicts his standing "learning isn't work because it doesn't produce anything."

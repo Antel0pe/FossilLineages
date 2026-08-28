@@ -26,6 +26,9 @@ how badly something wants electrons is called redox potential
   - positive voltage means terrible donor and negative means generous electron donor
     - so voltage is like how much energy to take the electron away and negative means i will happily give it to you in fact i will pay you to take it away?
 
+ph is defined as log10 of protons
+    - does not necessarily mean electrically positive just that hydrogen protons exist
+
 
 bond breaking does not necessarily mean loss and bond making does not mean gain. common intuition trap, what matters is how much energy is available before/after
 - bond energy is a real tabulated number
@@ -143,28 +146,43 @@ chlorophyll absorbs red and blue strongly but bounces green
 ## After photosystem 2
 stolen electron from photosystem 2 is passed down series of molecules in thylakoid membrane
 - plastoquinone -> cytochrome b6f -> plastocyanin
-- each step drops electron to lower state instead of one big drop
-    - this allows energy at each step to be captured rather than wasted as heat
-- the captured energy allows more protons from reaction center ripping electron from water to be pumped into thylakoid sac from stroma
+- plastoquinone gets the electron from p680
+    - p680+ from before gets the electron from water
+- plastoquinone waits to get 2 electrons from p680 then attracts 2 protons from stroma to balance charge
+    - the split protons from water are already in lumen. pq attracts 2 protons from outside to inside
+- pq lives inside the non polar hydrocarbon membrane barrier because it is a long non polar tail and a tiny reactive but not charged/polar tip
+    - the tip is pointed towards the stroma and gets the protons from stroma
+- once the pq has 2 electrons + 2 protons the ps2 socket no longer fits it so it drifts randomly until it finds the stationary b6f that fits it
+- b6f in the same hydrocarbon membrane but pq socket is closer to the lumen rather than stroma
+- b6f then releases both electrons which release the 2 protons too
+    - the first electron released to plastocyanin
+    - the second electron loops to pq on stroma side
+        - via heme relay system
+            - this is why b6f is such a big molecule because it spans the membrane
+        - cycle repeats re-using electrons to bring 2 more protons
+        - both p680 electron and b6f electron load pq at stroma side but are separate sockets
+- plastocyanin is polar so stays in the lumen  
+- it then takes the electron via its copper atom to ps1 and drops electron off at p700
+    - the geometry fits plastocyanin and the energy valley of p700 deeper than plastocyanin
 
 2 systems pumping protons into thylakoid
     - splitting water
-    - transport chain pumping protons in
-        - nothing really pumped more like shuttle bus chemically forced to go one way. this is called vectorial chemistry? high level understanding: each side of membrane has a different receiver so only way can go
+    - pq pulling protons from stroma and dropping them off at b6f pq socket which is closer to lumen
     
-inside of thylakoid becomes intensely positive
+inside of thylakoid becomes intensely acidic due to protons
     - 1000x concentration difference / 3ph difference between membranes
-        - ph is defined as -log10 of protons
+    - negative ions come to balance out charge so not electrically positive
 
-membrane is greasy so protons cant get out even though theyre all super positive and crowding
+lumen is full of polar water molecules surrounding hydrogen proton
+- the membrane barrier to stroma is non polar hydrocarbon molecules so theres no reason for the proton to move away from water towards non attractive hydrocarbon membrane
+
+this chain pq -> b6f -> plastocyanin exists because
+- ps2 and ps1 stay in separate regions so something needs to transport them
+- the membrane is non polar so needs a specific non polar carrier that can live in membrane and not enter lumen
+- a second carrier is needed to live in polar lumen but cant enter non polar membrane
 
 
 ### Questions
-- what does each of plastoquinone -> cytochrome b6f -> plastocyanin do and why? 
-- how much heat do plants generally emit due to inefficiency
-- diagram would be nice to place all these components
-- do i know how the transport chain pumping protons works? is it discussed in this doc?
-- how is membrane greasy? how does the greasiness prevent it? is it sticky somehow? how?
 
 
 ## ATP Synthase
