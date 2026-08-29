@@ -186,18 +186,73 @@ this chain pq -> b6f -> plastocyanin exists because
 
 
 ## ATP Synthase
-ATP synthase is an enzyme that physically spins as protons rush through it
-    - this is the only way for protons to get out
-    - the rotation mechanically deforms the top part of enzyme and squeezes ADP and phosphate together into ATP
-    - spins at 100 rotations/second
+<insert png from claude manually>
 
-another electron now arrives in photosystem 1
-- gets hit by another photon and kicked to high energy again
-- passed to carrier called ferrodoxin and then loaded onto NADP+ to make NADPH
+structure of the atp synthase (the whole thing)
+- the c ring sits inside the membrane between the stroma and lumen. imagine a cylinder, the 2 circular faces are facing the stroma and the lumen and the side is the width of the membrane
+- c ring connected to a subunit which is a little block from the stroma to the lumen that is sitting along the height of the c ring from one circular face to the other. the a sub unit is polar and has water molecules inside of it
+- the 2 ends of the a subunit has 2 half channels that are not connected. half reaches into lumen, half reaches into stroma and both connected by via positive arinine so it's not just a straight tunnel through
+- the c ring has a shaft sitting on the circular face on the stroma side connected to a little sphere the f head. the shaft goes inside the sphere. as the c ring rotates, the shaft rotates
+- the sphere the shaft is inside does not rotate because it is held by a peripheral stalk that holds it in place. the peripheral stalk extends from the a subunit out into the stroma and holds the sphere in place
+- the shaft pushes against the inside of the sphere as it rotates
 
-this was factory 1 to take light and water to create ATP, NADPH and O2 as waste
+we know the inside of the lumen has a ton of hydrogen protons and the stroma has fewer because they are taken from stroma into lumen in previous steps
+- this concentration difference is part of what powers the rotation
+we also know the lumen and stroma are polar and the membrane is non polar
+
+the c ring has 14 subunits that are by default negatively charged
+- protons come in through the lumen side of the a subunit and attach to negatively charged subunit on c ring
+    - both half channels are filled with water so not really hard for the proton to enter
+- the subunit is now neutral and has no problem spinning around the non polar membrane
+- the subunit is neutral for 95% of the rotation
+- the subunit rotates all the way around and gets to the stroma half channel loses its proton and is now negative
+- it travels just slightly through the watery half channel to the positive arginine, into to the lumen side and gets a proton and is neutral again to repeat the rotation
+
+in the f head sphere has 3 catalytic sites
+- each of these fits an ADP and a phosphate group
+- these 2 things do not really want to get together so the catalytic site holds them in place
+- once the enzyme clamps them together the negative portions are shielded by positive groups + ions to form bonds and stay together
+- but they will fly apart very easily -> this is the stored energy in ATP
+
+as the f head rotates, the shaft pushes against one side of the inside of the f head
+- this deforms the enzyme and forces it to unclamp and release the ATP
+
+the shaft spins at around 100 rotations/second
+each rotation produces 3 ATP because of 3 catalytic sites
+- each rotation requires 14 subunits to rotate meaning 14 protons
+- 14 protons / 3 ATP produced = 4.7 protons per ATP
+
+the ring's size is what sets the price of ATP
+- both the proton ring and ATP ring determine the efficiency of producing ATP?
+- ATP genuinely costs different amounts in different organisms
 
 ### Questions
+
+
+
+## Photosystem 1
+we left the electron from PS2 at P700. PS1 has its own antenna like PS2 and then its reaction chamber is P700. the electron at p700 is depleted at this point from splitting water and travelling all this way. it needs new energy from another photon to raise its energy level high enough that a weak grabber like NADP+ can take the electron from it
+
+from previous step plastocyanin docks on lumen face and delivers the electron there to what?
+electron then hops through line of iron sulfur clusters onto stroma side where ferredoxin is floating around and takes it
+
+NADP+ is also floating around in stroma
+- somehow NADP+ takes 2 electrons from ferredoxin?
+- also takes a proton floating around in the stroma
+- this makes it NADPH
+
+so PS2 + PS1 were the first factory to take light + water to create ATP + NADPH + O2 as waste
+- ATP and NADPH are now in the stroma ready for the Calvin cycle
+Calvin cycle needs 3 ATP for every 2 NADPH
+
+so the electron from ferredoxin loops back into the PQ pool after PS2 to go through the full b6f, pc, ps1 loop again
+- this is distinct from the b6f electron loop
+- i thought the electron from ferredoxin went to NADP+ but here it says the electron goes from ferredoxin into the PQ pool?
+
+
+### Questions
+
+
 
 ## Calvin Cycle
 inside stroma, fluid around thylakoid sacs, theres a 5 carbon molecule called RuBP
