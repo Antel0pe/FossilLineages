@@ -186,17 +186,17 @@ this chain pq -> b6f -> plastocyanin exists because
 
 
 ## ATP Synthase
-<insert png from claude manually>
+![alt text](atp-synthase.png)
 
 structure of the atp synthase (the whole thing)
 - the c ring sits inside the membrane between the stroma and lumen. imagine a cylinder, the 2 circular faces are facing the stroma and the lumen and the side is the width of the membrane
-- c ring connected to a subunit which is a little block from the stroma to the lumen that is sitting along the height of the c ring from one circular face to the other. the a sub unit is polar and has water molecules inside of it
-- the 2 ends of the a subunit has 2 half channels that are not connected. half reaches into lumen, half reaches into stroma and both connected by via positive arinine so it's not just a straight tunnel through
-- the c ring has a shaft sitting on the circular face on the stroma side connected to a little sphere the f head. the shaft goes inside the sphere. as the c ring rotates, the shaft rotates
+- c ring sits against "A subunit" which is a little block from the stroma to the lumen that is sitting along the height of the c ring from one circular face to the other. the a sub unit is polar and has water molecules inside of it
+- the 2 ends of the a subunit has 2 half channels that are not connected. half reaches into lumen, half reaches into stroma. they are not connected and separated/held together by positive arginine. no straight tunnel through both sides
+- the c ring has a shaft sitting on the circular face on the stroma side connected to a little sphere, the f head. the shaft goes inside the sphere. as the c ring rotates, the shaft rotates
 - the sphere the shaft is inside does not rotate because it is held by a peripheral stalk that holds it in place. the peripheral stalk extends from the a subunit out into the stroma and holds the sphere in place
 - the shaft pushes against the inside of the sphere as it rotates
 
-we know the inside of the lumen has a ton of hydrogen protons and the stroma has fewer because they are taken from stroma into lumen in previous steps
+we know the inside of the lumen has a ton of hydrogen protons and the stroma has fewer because of proton transport from stroma into lumen + water splitting from previous steps
 - this concentration difference is part of what powers the rotation
 we also know the lumen and stroma are polar and the membrane is non polar
 
@@ -214,7 +214,23 @@ in the f head sphere has 3 catalytic sites
 - once the enzyme clamps them together the negative portions are shielded by positive groups + ions to form bonds and stay together
 - but they will fly apart very easily -> this is the stored energy in ATP
 
-as the f head rotates, the shaft pushes against one side of the inside of the f head
+interestingly pretty much all organisms have 3 catalytic sites on f head but varying amounts of subunits in c ring
+- each catalytic site holds a different stage of loading components, holding finished ATP, released finished ATP
+    - if there were other than 3, advancing to next site might not be a ready site or waiting to be released for a long time
+    - head is basically identical across mitochondria, bacteria, chloroplasts -> ancient structure that has specific+interlocking geometry
+- c ring stack of identical blocks so changing the number doesn't require redesigning anything
+
+the ring's size is what sets the price of ATP
+- ATP genuinely costs different amounts in different organisms
+- since the head always has 3 catalytic sites and moves a fixed amount, its energy requirement is roughly 150kj/mol 
+- if we have a smaller ring, that means fewer subunits, which means fewer protons are needed to move the ring. however the energy the ring outputs is the same regardless of the number of subunits. this means each proton has to proportionally deliver more energy to the ring. the energy the proton delivers is dependent on the concentration difference between stroma and lumen in plants. however because fewer protons are needed to push the c ring, the same number of photosystem 2 + 1 loops produces more ATP so cheaper ATP. so the tradeoff for a small ring is the concentration difference of protons between stroma and lumen has to be higher so that each proton provides more force to the ring but each ATP costs less photosystem loops to produce
+- in a big ring, each proton has to proportionally deliver less force. this means the concentration difference doesn't have to be as high. however because more protons are required to turn the wheel to produce ATP, each photosystem loop produces proportionally fewer ATP making it more costly.
+- the tradeoff of more protons meaning more photosystem loops vs more photosystem loops to separate protons to increase concentration difference generally cancels out
+    - steep concentration differences leak and can stall the pumps
+    - weak concentration differences waste more electron energy as heat
+    - small rings more efficient when conditions good but big rings keep working even when they arent
+
+as the shaft rotates, it pushes against one side of the inside of the f head
 - this deforms the enzyme and forces it to unclamp and release the ATP
 
 the shaft spins at around 100 rotations/second
@@ -222,32 +238,35 @@ each rotation produces 3 ATP because of 3 catalytic sites
 - each rotation requires 14 subunits to rotate meaning 14 protons
 - 14 protons / 3 ATP produced = 4.7 protons per ATP
 
-the ring's size is what sets the price of ATP
-- both the proton ring and ATP ring determine the efficiency of producing ATP?
-- ATP genuinely costs different amounts in different organisms
-
 ### Questions
 
 
 
 ## Photosystem 1
-we left the electron from PS2 at P700. PS1 has its own antenna like PS2 and then its reaction chamber is P700. the electron at p700 is depleted at this point from splitting water and travelling all this way. it needs new energy from another photon to raise its energy level high enough that a weak grabber like NADP+ can take the electron from it
+we left the electron from PS2 at P700. PS1 has its own antenna like PS2 and then its reaction center is P700. the electron at p700 is depleted at this point from travelling all this way. it needs new energy from another photon to raise its energy level high enough that a weak grabber like NADP+ can take the electron from it
 
-from previous step plastocyanin docks on lumen face and delivers the electron there to what?
+from previous step plastocyanin docks on lumen face and delivers the electron to p700+
+- p700+ had its electron excited by antenna and left down ferredoxin chain as explained below
 electron then hops through line of iron sulfur clusters onto stroma side where ferredoxin is floating around and takes it
 
+the electron is on ferredoxin and it has 2 options
+- by default it makes NADPH
+- if it needs more ATP than NADPH
+    -  loop around back into PQ loop after PS2 to go through full b6f, pc, ps1 loop again
+    - this is distinct from b6f electon loop
+- the plant shifts where the electron goes based on what product is short  
+    - if the calvin cycle is consuming NADPH quickly, theres a ton of NADP+ available which makes more ferredoxin electrons go to it
+    - if NADPH piles up then supply of NADP+ lowers so the electron supply backs up because FNR has no electron acceptor and loops back around to PQ pool
+
 NADP+ is also floating around in stroma
-- somehow NADP+ takes 2 electrons from ferredoxin?
-- also takes a proton floating around in the stroma
+- each ferredoxin takes 1 electron
+- theres a ferredoxin-NADP+ reductase (FNR) which binds 2 ferredoxin one at a time and takes their electrons. then it pulls a proton and hands everything to the NADP+
 - this makes it NADPH
 
 so PS2 + PS1 were the first factory to take light + water to create ATP + NADPH + O2 as waste
 - ATP and NADPH are now in the stroma ready for the Calvin cycle
 Calvin cycle needs 3 ATP for every 2 NADPH
 
-so the electron from ferredoxin loops back into the PQ pool after PS2 to go through the full b6f, pc, ps1 loop again
-- this is distinct from the b6f electron loop
-- i thought the electron from ferredoxin went to NADP+ but here it says the electron goes from ferredoxin into the PQ pool?
 
 
 ### Questions
