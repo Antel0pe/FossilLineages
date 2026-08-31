@@ -306,6 +306,44 @@ profit G3P can then become glucose, sucrose, starch, cellulose
     - how does this donate an electron and hydrogen?
 - does G3P automatically become glucose or does it take energy to stitch them together?
 
+## Calvin Cycle
+carbon in CO2 has super strong bonds around 800kJ/mol
+- why use co2 if carbon-oxygen bonds so strong? just super available?
+
+co2 awkward to get ahold of because the carbon and oxygens are in a straight line with carbon in middle and oxygen on either side
+- the oxygens are pulling the electrons from the carbon so the ends are negative and carbon middle is positive *up close*
+- however at a distance the 2 oxygens are both pulling outwards equally so it cancels out and cant be oriented/attracted from a distance
+
+3 main steps to turn ATP/NADPH/CO2 into end product G3P that can be glucose/starch/etc
+1. fixation, CO2 welded into RuBP
+2. 3-PGA becomes 2 G3P costing 6 ATP + 6 NADPH
+3. 5 G3P rebuild 3 RuBP costing 3 ATP
+
+in total 9 ATP + 6 NADPH = 1 profit G3P
+
+### Fixation
+- RuBP is 5 carbons with 2 phosphates on both ends
+- phosphates exist so rubisco can grip them to hold the molecule rigid
+
+general rule that carbon-hydrogen bonds are fixed but oxygen-hydrogen bonds swap the hydrogen millions of times per second in surrounding water
+- why? doesnt oxygen pull much harder?
+
+rubisco grips 2 phosphates then plucks hydrogen proton off of carbon 3 (c3) in rubp
+- proton sits in energy valley just like electrons
+- rubisco holds spare electron pair aimed at c3
+- proton hops off onto rubisco and leaves it electron pairs in c3
+- this leaves negative charge on c3/c2 area 
+
+rubisco then closes flexible loop over its pocket and holds rubp in place
+- it does not have co2 specific binding site or any specific way to target co2
+- it simply waits for co2 to float close enough that the negatively charged area on c2/c3 can form bond with carbon in co2
+    - this is why rubisco is unreliable and sometimes catches o2 and does bad stuff
+    - there is no gate/test for co2, the negative area simply bonds with whatever wants electrons. oxygen pulls really hard and can take those electrons up
+    - what happens when o2 gets it?
+
+
+
+
 ## RuBisCO flaws - we should go into RuBiSCO into depth rather than like this
 - typical enzyme processes thousands of molecules per second  
       - do enzymes work by connecting to starting material that doesnt quite fit well but fits the end result better? so it moulds them into the correct shape? how do they release them and why dont they always connect to floating end result rather than starting material?
