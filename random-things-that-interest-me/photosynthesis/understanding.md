@@ -340,8 +340,78 @@ rubisco then closes flexible loop over its pocket and holds rubp in place
     - this is why rubisco is unreliable and sometimes catches o2 and does bad stuff
     - there is no gate/test for co2, the negative area simply bonds with whatever wants electrons. oxygen pulls really hard and can take those electrons up
     - what happens when o2 gets it?
+- this molecule is strained but stable
+- rubisco adds h2o to c3
+- at this point the molecule breaks at c2-c3 because electrons settle into lower energy valley into oxygen
+    - which electrons? where do they settle to c3?
 
+![alt text](image.png)
+- after weld
+    - rubisco plucked c3 hydrogen
+    - co2 lands on c2
+    - 2nd hydrogen on c3 slides to c2
+- after water
+    - 1 hydrogen/1 oxygen goes on c3
+    - second hydrogen comes from surrounding water
 
+c2/c3 bond breaks into 2 3-PGA each with 3 carbon molecules
+2 loose protons released into stroma from the initial rubisco plucking and when the c2/c3 bond breaks
+RuBP destroyed and needs to be rebuilt
+
+2 3-PGA float away, rubisco opens up and grabs fresh rubp
+
+### Reduction
+3-PGA ends in carboxyl group, G3P ends in aldehyde
+- carbon has to end up holding a hydrogen where it holds oxygen
+    - why? just structure?
+
+carbon holds 4 attachments so when hydride (hydrogen with 2 electrons) lands, oxygen must depart at the same time
+- oxygen grips tightly so hard to make it let go
+
+ATP has 3 phosphate groups, each carrying negative charge and repelling each other
+- permanently keen to let go of phosphates
+- phosphate comfortably spreads charge over 4 oxygens 
+- hands ending phosphate with 3 oxygens to 1 oxygen in 3-PGA
+    - this phosphate attaches to 3-PGA and leaving with in 4 oxygen total
+
+NADPH is a flat ring that is bent and strained due to extra hydrogen
+- like a spring under tension
+- this is what delivers the hydride
+
+produced G3P at this point
+
+so in total an oxygen left and hydride arrived
+
+the first step of bolting phosphate onto 3-PGA is uphill even with ATP 
+- so how does this happen? does it happen randomly by chance even though higher energy but typically things that go up in energy are instantly brought down by better options in lower energy?
+- runs because NADPH install destroys the intermediate product so it never accumulates
+- does the NADPH only donate hydride to intermediate molecule why cant it donate it anywhere else?
+
+### Regeneration
+RuBP is the only molecule that can attack carbon but it is used up every time to form 3-PGA
+
+15 carbons arrive as 5 3-carbon molecules
+- 10 enzymes shuffle through 4,6,7 carbon intermediates until 3 5-carbon molecules are complete
+- 1 final enzyme spends 3 ATP to reinstall phosphate handles that rubisco grips
+    - how does it use the ATP?
+
+### In Total
+3 RuBP (15 carbon) + 3 CO2 = 6 3-PGA (18 carbons)
+6 3-PGA = 6 G3P
+5 G3P (15 carbons) rebuild 3 RuBP (15 carbons)
+1 G3P (3 carbon) leave as profit
+
+Per 3 CO2
+- 6 ATP + 6 NADPH for producing G3P
+- 3 ATP to rebuild 3 RuBP
+- 9 ATP + 6 NADPH = 1 profit G3P
+
+this ATP to NADPH ratio of 9:6 = 3:2 is what the photosystems deliver
+- this is why the cyclic flow around PS1 + ferredoxin switch to produce more ATP rather than NADPH exist
+
+resulting profit G3P can be used to turn into starch, cellulose, glucose
+- how do plants and us take energy from glucose/G3P?
+- do plants produce ATP again during respiration?
 
 
 ## RuBisCO flaws - we should go into RuBiSCO into depth rather than like this
