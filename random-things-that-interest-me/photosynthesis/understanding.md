@@ -308,15 +308,16 @@ profit G3P can then become glucose, sucrose, starch, cellulose
 
 ## Calvin Cycle
 carbon in CO2 has super strong bonds around 800kJ/mol
-- why use co2 if carbon-oxygen bonds so strong? just super available?
+- co2 is super abundant because it sits at the bottom of the energy valley. accumulates because nothing else can change it
+- the super abundant option that plants have to use
 
 co2 awkward to get ahold of because the carbon and oxygens are in a straight line with carbon in middle and oxygen on either side
 - the oxygens are pulling the electrons from the carbon so the ends are negative and carbon middle is positive *up close*
 - however at a distance the 2 oxygens are both pulling outwards equally so it cancels out and cant be oriented/attracted from a distance
 
-3 main steps to turn ATP/NADPH/CO2 into end product G3P that can be glucose/starch/etc
+3 main steps to turn ATP/NADPH/CO2 into end product G3P that can be glucose/starch/etc in stroma
 1. fixation, CO2 welded into RuBP
-2. 3-PGA becomes 2 G3P costing 6 ATP + 6 NADPH
+2. 3, 3-PGA becomes 6 G3P costing 6 ATP + 6 NADPH
 3. 5 G3P rebuild 3 RuBP costing 3 ATP
 
 in total 9 ATP + 6 NADPH = 1 profit G3P
@@ -339,31 +340,32 @@ rubisco then closes flexible loop over its pocket and holds rubp in place
 - it simply waits for co2 to float close enough that the negatively charged area on c2/c3 can form bond with carbon in co2
     - this is why rubisco is unreliable and sometimes catches o2 and does bad stuff
     - there is no gate/test for co2, the negative area simply bonds with whatever wants electrons. oxygen pulls really hard and can take those electrons up
-    - what happens when o2 gets it?
+    - when o2 gets in instead of co2, G3P splits into 2 unequal halves with 1 normal 3-PGA and then mildly toxic 2 carbon group that is cleaned up by photorespiration and ATP used
 - this molecule is strained but stable
 - rubisco adds h2o to c3
 - at this point the molecule breaks at c2-c3 because electrons settle into lower energy valley into oxygen
-    - which electrons? where do they settle to c3?
+    - c2-c3 electron bonding pair move to c2 and this takes back the original proton rubisco plucked to become stable
 
-![alt text](image.png)
+![alt text](fixation.png)
 - after weld
     - rubisco plucked c3 hydrogen
     - co2 lands on c2
-    - 2nd hydrogen on c3 slides to c2
+    - 2nd hydrogen on c3 goes into surrounding water
+    - c2 picks up a hydrogen from surrounding water
 - after water
-    - 1 hydrogen/1 oxygen goes on c3
-    - second hydrogen comes from surrounding water
+    - h2o attaches onto c3 giving 2 hydrogens and 1 oxygen
 
 c2/c3 bond breaks into 2 3-PGA each with 3 carbon molecules
 2 loose protons released into stroma from the initial rubisco plucking and when the c2/c3 bond breaks
 RuBP destroyed and needs to be rebuilt
 
 2 3-PGA float away, rubisco opens up and grabs fresh rubp
+whole step is free no ATP, NADPH used
 
 ### Reduction
 3-PGA ends in carboxyl group, G3P ends in aldehyde
 - carbon has to end up holding a hydrogen where it holds oxygen
-    - why? just structure?
+    - carbon was originally bonded to 2 oxygen with a deep energy valley. we took it out of the oxygen valley and put it in hydrogen that is much more shallow. this means the electron wants to move to deeper energy valley and can be used to produce energy later
 
 carbon holds 4 attachments so when hydride (hydrogen with 2 electrons) lands, oxygen must depart at the same time
 - oxygen grips tightly so hard to make it let go
@@ -372,7 +374,7 @@ ATP has 3 phosphate groups, each carrying negative charge and repelling each oth
 - permanently keen to let go of phosphates
 - phosphate comfortably spreads charge over 4 oxygens 
 - hands ending phosphate with 3 oxygens to 1 oxygen in 3-PGA
-    - this phosphate attaches to 3-PGA and leaving with in 4 oxygen total
+    - this phosphate attaches to 3-PGA and leaves with 4 oxygen in total
 
 NADPH is a flat ring that is bent and strained due to extra hydrogen
 - like a spring under tension
@@ -383,12 +385,12 @@ produced G3P at this point
 so in total an oxygen left and hydride arrived
 
 the first step of bolting phosphate onto 3-PGA is uphill even with ATP 
-- so how does this happen? does it happen randomly by chance even though higher energy but typically things that go up in energy are instantly brought down by better options in lower energy?
-- runs because NADPH install destroys the intermediate product so it never accumulates
-- does the NADPH only donate hydride to intermediate molecule why cant it donate it anywhere else?
+- molecules are bumping into each other millions of times. occasionally they get bumped into a shallower uphill valley by chance. however they instantly fall back down to more comfy position. so the bolting of phosphate onto 3-PGA is uphill and by chance but the reason why it doesn't fall down is NADPH gives the intermediate an electron that instantly makes it unable to fall back down. the intermediate is usually reversible but NADPH quickly makes it irreversible and stay where it is
+- NADPH only donates hydride when an enzyme exists to hold NADPH and partner in specific geometry to allow the electron hops
+    - used by dozens of reactions and the purpose of enzyme is just to facillitate the electron passing
 
 ### Regeneration
-RuBP is the only molecule that can attack carbon but it is used up every time to form 3-PGA
+RuBP is the only molecule that can attack co2 but it is used up every time to form 3-PGA
 
 15 carbons arrive as 5 3-carbon molecules
 - 10 enzymes shuffle through 4,6,7 carbon intermediates until 3 5-carbon molecules are complete
@@ -410,8 +412,10 @@ this ATP to NADPH ratio of 9:6 = 3:2 is what the photosystems deliver
 - this is why the cyclic flow around PS1 + ferredoxin switch to produce more ATP rather than NADPH exist
 
 resulting profit G3P can be used to turn into starch, cellulose, glucose
-- how do plants and us take energy from glucose/G3P?
-- do plants produce ATP again during respiration?
+- plants and animals produce energy from sugars by running this loop in reverse
+    - strip electrons off carbon, load onto carriers, let them fall into oxygen, membrane chain, ATP synthase, etc
+    - carbon ends back onto O2 as CO2
+- plants produce ATP during respiration 
 
 
 ## RuBisCO flaws - we should go into RuBiSCO into depth rather than like this
