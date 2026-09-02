@@ -272,40 +272,6 @@ Calvin cycle needs 3 ATP for every 2 NADPH
 ### Questions
 
 
-
-## Calvin Cycle
-inside stroma, fluid around thylakoid sacs, theres a 5 carbon molecule called RuBP
-
-RuBisCO takes CO2 and welds it onto RuBP
-- the resulting 6 carbon is unstable and breaks into 2 3-carbon molecules called 3-PGA
-    - RuBisCO holds it and cleaves it deliberately
-
-3-PGA is low energy, it needs to react with
-- ATP to donate phosphate, energizing the molecule
-    - 3-PGA is stable and unreactive. ATP donates phosphate making it loaded and twitchy intermediate
-- NADPH to donate high energy electron and hydrogen
-- result is G3P, small energized 3 carbon sugar
-    - glucose is just 2 G3P
-
-most G3P recycled to create more RuBP 
-    - run the cycle 3 times, 6 G3P produced
-    - 5 of the 6 produced rearranged back into 3 RuBP
-        - 5 doesnt divide evenly into 3 because have to count atoms not molecules
-            5 molecules × 3 carbons = 15 carbons
-    - 1 G3P is profit
-
-profit G3P can then become glucose, sucrose, starch, cellulose
-
-### Questions
-- why is resulting 6 carbon unstable? how is it welded onto RuBP
-- should have diagram to place stroma, thylakoid sacs, etc
-- what does RuBisCO hold and cleave?
-- turning something stable into unstable, does this usually require energy? what mechanism allows ATP to do this then?
-    - why does the phosphate make 3-PGA loaded and twitchy? donating electron?
-- NADPH moves electrons away from oxygen right?
-    - how does this donate an electron and hydrogen?
-- does G3P automatically become glucose or does it take energy to stitch them together?
-
 ## Calvin Cycle
 carbon in CO2 has super strong bonds around 800kJ/mol
 - co2 is super abundant because it sits at the bottom of the energy valley. accumulates because nothing else can change it
@@ -317,7 +283,7 @@ co2 awkward to get ahold of because the carbon and oxygens are in a straight lin
 
 3 main steps to turn ATP/NADPH/CO2 into end product G3P that can be glucose/starch/etc in stroma
 1. fixation, CO2 welded into RuBP
-2. 3, 3-PGA becomes 6 G3P costing 6 ATP + 6 NADPH
+2. 6, 3-PGA becomes 6 G3P costing 6 ATP + 6 NADPH
 3. 5 G3P rebuild 3 RuBP costing 3 ATP
 
 in total 9 ATP + 6 NADPH = 1 profit G3P
@@ -327,12 +293,12 @@ in total 9 ATP + 6 NADPH = 1 profit G3P
 - phosphates exist so rubisco can grip them to hold the molecule rigid
 
 general rule that carbon-hydrogen bonds are fixed but oxygen-hydrogen bonds swap the hydrogen millions of times per second in surrounding water
-- why? doesnt oxygen pull much harder?
+- oxygen pulls electron much harder so OH bonds are a deeper energy valley than CH bonds but the swapping of hydrogens is a different thing. the reason why OH swaps and CH almost never does is because oxygen pulls so hard that the hydrogen's electron pair is basically fully at the oxygen atom. this makes it very easy for the hydrogen to leave because it has no electrons with it. it is instantly replaced when it leaves. for ch bonds the electrons are genuinely shared so the hydrogen cant leave because the electron pair is shared and it's not strong enough to take them off carbon or weak enough to leave them at carbon. the energy valley is about what pulls electrons harder, the swapping is about how much energy it requires to take a molecule and either give/take an electron pair fully to one atom
 
 rubisco grips 2 phosphates then plucks hydrogen proton off of carbon 3 (c3) in rubp
 - proton sits in energy valley just like electrons
 - rubisco holds spare electron pair aimed at c3
-- proton hops off onto rubisco and leaves it electron pairs in c3
+- proton hops off onto rubisco and leaves its electron pair in c3
 - this leaves negative charge on c3/c2 area 
 
 rubisco then closes flexible loop over its pocket and holds rubp in place
@@ -340,7 +306,7 @@ rubisco then closes flexible loop over its pocket and holds rubp in place
 - it simply waits for co2 to float close enough that the negatively charged area on c2/c3 can form bond with carbon in co2
     - this is why rubisco is unreliable and sometimes catches o2 and does bad stuff
     - there is no gate/test for co2, the negative area simply bonds with whatever wants electrons. oxygen pulls really hard and can take those electrons up
-    - when o2 gets in instead of co2, G3P splits into 2 unequal halves with 1 normal 3-PGA and then mildly toxic 2 carbon group that is cleaned up by photorespiration and ATP used
+    - when o2 gets in instead of co2, 1 3-PGA and then a mildly toxic 2 carbon group that is cleaned up by photorespiration and requires ATP to clean up
 - this molecule is strained but stable
 - rubisco adds h2o to c3
 - at this point the molecule breaks at c2-c3 because electrons settle into lower energy valley into oxygen
@@ -356,7 +322,6 @@ rubisco then closes flexible loop over its pocket and holds rubp in place
     - h2o attaches onto c3 giving 2 hydrogens and 1 oxygen
 
 c2/c3 bond breaks into 2 3-PGA each with 3 carbon molecules
-2 loose protons released into stroma from the initial rubisco plucking and when the c2/c3 bond breaks
 RuBP destroyed and needs to be rebuilt
 
 2 3-PGA float away, rubisco opens up and grabs fresh rubp
@@ -385,9 +350,9 @@ produced G3P at this point
 so in total an oxygen left and hydride arrived
 
 the first step of bolting phosphate onto 3-PGA is uphill even with ATP 
-- molecules are bumping into each other millions of times. occasionally they get bumped into a shallower uphill valley by chance. however they instantly fall back down to more comfy position. so the bolting of phosphate onto 3-PGA is uphill and by chance but the reason why it doesn't fall down is NADPH gives the intermediate an electron that instantly makes it unable to fall back down. the intermediate is usually reversible but NADPH quickly makes it irreversible and stay where it is
+- molecules are bumping into each other millions of times. occasionally they get bumped into a shallower uphill valley by chance. however they instantly fall back down to more comfy position. so the bolting of phosphate onto 3-PGA is uphill and by chance but the reason why it doesn't fall down is NADPH gives the intermediate a hydride that instantly changes the molecule irreversibly and unable to fall back because the new molecule physically cant fall back. the intermediate is usually reversible but NADPH quickly makes it irreversible and stay as new molecule
 - NADPH only donates hydride when an enzyme exists to hold NADPH and partner in specific geometry to allow the electron hops
-    - used by dozens of reactions and the purpose of enzyme is just to facillitate the electron passing
+    - used by dozens of reactions and the purpose of enzyme is to select the partners and facillitate the electron passing
 
 ### Regeneration
 RuBP is the only molecule that can attack co2 but it is used up every time to form 3-PGA
@@ -395,7 +360,7 @@ RuBP is the only molecule that can attack co2 but it is used up every time to fo
 15 carbons arrive as 5 3-carbon molecules
 - 10 enzymes shuffle through 4,6,7 carbon intermediates until 3 5-carbon molecules are complete
 - 1 final enzyme spends 3 ATP to reinstall phosphate handles that rubisco grips
-    - how does it use the ATP?
+    - ATP used similarly as in reduction. ATP phosphate groups are negative, so the enzyme shields negative charge with positive magnesium ion and pulls phosphate group onto RuBP
 
 ### In Total
 3 RuBP (15 carbon) + 3 CO2 = 6 3-PGA (18 carbons)
@@ -414,7 +379,7 @@ this ATP to NADPH ratio of 9:6 = 3:2 is what the photosystems deliver
 resulting profit G3P can be used to turn into starch, cellulose, glucose
 - plants and animals produce energy from sugars by running this loop in reverse
     - strip electrons off carbon, load onto carriers, let them fall into oxygen, membrane chain, ATP synthase, etc
-    - carbon ends back onto O2 as CO2
+    - carbon ends up as CO2, electrons go to oxygen as water
 - plants produce ATP during respiration 
 
 
