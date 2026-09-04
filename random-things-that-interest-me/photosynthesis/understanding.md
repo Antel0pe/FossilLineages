@@ -332,14 +332,14 @@ whole step is free no ATP, NADPH used
 - carbon has to end up holding a hydrogen where it holds oxygen
     - carbon was originally bonded to 2 oxygen with a deep energy valley. we took it out of the oxygen valley and put it in hydrogen that is much more shallow. this means the electron wants to move to deeper energy valley and can be used to produce energy later
 
-carbon holds 4 attachments so when hydride (hydrogen with 2 electrons) lands, oxygen must depart at the same time
-- oxygen grips tightly so hard to make it let go
-
 ATP has 3 phosphate groups, each carrying negative charge and repelling each other
 - permanently keen to let go of phosphates
 - phosphate comfortably spreads charge over 4 oxygens 
 - hands ending phosphate with 3 oxygens to 1 oxygen in 3-PGA
     - this phosphate attaches to 3-PGA and leaves with 4 oxygen in total
+
+carbon holds 4 attachments so oxygen must leave as hydride (hydrogen with 2 electrons) lands
+- oxygen grips tightly so when it leaves it grabs the shared bonding pair. the oxygen ends up net negative and with all the electrons repelling each other in such a small atom. this oxygen-carbon bond can break due to random thermal jostles but always re-attaches because it's uncomfy to be so negative. when the bond breaks with the ATP donated phosphate with 3 oxygens, the oxygen can spread its negative charge over the molecule and 3 other oxygens that pull the electrons just as hard. because of this the oxygen doesnt rebond and floats away with the phosphate. 
 
 NADPH is a flat ring that is bent and strained due to extra hydrogen
 - like a spring under tension
