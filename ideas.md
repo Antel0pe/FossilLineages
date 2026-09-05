@@ -106,3 +106,5 @@ for simple evo sim
 
 - photons as a battery
     - if they dont lose energy and specific properties of what can absorb energy of a photon
+
+- chemical simulation to show how molecules actually fit together?
