@@ -1230,3 +1230,55 @@ asked Claude to grade its level, then what reaching the frontier would take, the
 - **[watch]** Output-form problem untouched this session. Today's answer implies the unit of production
   is a *carried question*, not an artifact — which would dissolve "every format is spent," but he has
   not reacted and it contradicts his standing "learning isn't work because it doesn't produce anything."
+
+## 2026-09-06
+
+Context: long reply to the 2026-09-05 oracle reading. Retrospective, not same-day reaction, so
+weight it per the 2026-08-03 rule. Corrections and his own ranking of where
+PG-style "excessive interest" actually occurred.
+
+- **[correction — METHOD, his own rule]** "Asking the so-what question is evidence that
+  excessive interest isn't there." Names, places, history: Google search, then move on, so-what
+  present, therefore not excessive. Topology and weather: so-what only asked at the very end,
+  when already bored. Use this as the discriminator going forward.
+- **[correction — ratings]** Same-day ratings decay: "if I really thought something was a 9/10
+  I would still be doing it." Moving on = found something more pulling. Treat every abandoned
+  9/10 as a demoted rating, not a lost one.
+- **[insight — his own list, HIGH SIGNAL]** Named four places he was "excessively interested"
+  in the bus-ticket sense: (1) reversing embedding networks to build "a Google Maps of how
+  embedding networks see the world" (still remembers the technical crux: attention sums to one
+  number, infinitely many preimages, only a few feasible from the previous layer; refuses the
+  dictionary shortcut, wants a truly reversible network); (2) flattening the MNIST manifold with
+  topology ideas (same vein, half-remembered); (3) WaterTransport atmospheric-river fine-detail
+  case study; (4) atmospheric-structures elegant definition of hot vs cold air. Flagged possible
+  prestige in (1) but "relatively pure." Had completely forgotten (1) and (2) existed.
+- **[correction — audience]** "No audience" was inaccurate: weekly Twitter demo posts since
+  Buildspace summer 2024, kept up to now, some engagement; the embedding work was itself
+  sparked by someone else's embedding post. Note for method: the weekly-demo constraint selects
+  for demoable artifacts.
+- **[insight — sims, the load-bearing value restated]** Sea-level viewer and eye sim died in
+  "parameter tuning hell": "if I make it work, that feels like it works because I forced it,
+  instead of it works because it is true." Wants "real hard numbers as principles." UV sim
+  organisms exploited his reproduction setup; "felt like the simulation was actively working
+  against me." Navier-Stokes: "isn't as simple as entering equations and seeing weather play
+  out"; admits half-hearted attempt. Asks himself whether he should have been more persistent.
+- **[insight — why projects ended, his account]** Hurricane engine: clouds never looked real,
+  and it "looked pretty but didn't really do anything." WaterTransport: answer collapsed to
+  "this is what the initial condition was." Atmospheric structures: wanted an elegant definition
+  of hot/cold air, calls himself "maybe a little stupid" for it.
+- **[uncertain — weather as identity]** Suspects weather interest was partly forced: "I identify
+  as someone interested in weather so I must be amazed by the clouds." . Also: forecasting "comes down to better initial state" and he is "at
+  the mercy of companies like WindBorne and hardware."
+- **[disliked — surprised]** "Best work is prose": "wtf that is extremely extremely strange."
+  "Temperamentally a verifier": "highly surprising"; self-image is "high level, big picture,
+  creative, thoughtful," not detail-oriented.
+- **[idea — the ambition, and its decay]** "Making food cost pennies," long dismissed as scary
+  and out of field, adopted as the excitingly-ambitious aim per PG; photosynthesis chosen as the
+  entry. Week 1: 1-2 h/night, "couldn't get out of my chair." Week 2: yawning at 10 min, doing
+  the 25-min minimum. Now suspects the wrong lever: plants are not photosynthesis-limited.
+- **[meta — stated end goal, in full]** Work he would rather do than YouTube; absorbed, in
+  flow, building something that is his; highly competent at something; freedom
+- **[watch]** His reaction to: (a) the four "excessive" hits sharing one shape (hidden structure
+  made navigable, and the two that survived longest are the ones with exact ground truth);
+  (b) embedding inversion being a live research area he independently rediscovered pieces of;
+  (c) the weekly-demo constraint as a bias toward instruments.
